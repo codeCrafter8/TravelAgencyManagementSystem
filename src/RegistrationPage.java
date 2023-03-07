@@ -9,6 +9,7 @@ import java.awt.Color;
 /**
  *
  * @author zuzan
+ *
  */
 public class RegistrationPage extends javax.swing.JFrame {
 
