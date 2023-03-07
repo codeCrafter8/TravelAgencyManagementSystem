@@ -1,5 +1,8 @@
 
 import java.awt.Color;
+import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,7 +12,6 @@ import java.awt.Color;
 /**
  *
  * @author zuzan
- *
  */
 public class RegistrationPage extends javax.swing.JFrame {
 
@@ -39,7 +41,7 @@ public class RegistrationPage extends javax.swing.JFrame {
         phoneNumberLabel = new javax.swing.JLabel();
         phoneNumberTextField = new javax.swing.JTextField();
         emailLabel = new javax.swing.JLabel();
-        phoneNumberTextField1 = new javax.swing.JTextField();
+        emailTextField = new javax.swing.JTextField();
         passwordLabel = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         cofirmPasswordLabel = new javax.swing.JLabel();
@@ -75,9 +77,9 @@ public class RegistrationPage extends javax.swing.JFrame {
         emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         emailLabel.setText("E-mail");
 
-        phoneNumberTextField1.addActionListener(new java.awt.event.ActionListener() {
+        emailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneNumberTextField1ActionPerformed(evt);
+                emailTextFieldActionPerformed(evt);
             }
         });
 
@@ -90,6 +92,12 @@ public class RegistrationPage extends javax.swing.JFrame {
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         submitButton.setText("Submit");
+
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setBackground(new java.awt.Color(189, 165, 111));
         cancelButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -114,7 +122,7 @@ public class RegistrationPage extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(phoneNumberTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                            .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
                             .addComponent(cofirmPasswordLabel)
                             .addComponent(passwordLabel)
                             .addComponent(emailLabel)
@@ -154,7 +162,7 @@ public class RegistrationPage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(phoneNumberTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
@@ -195,9 +203,9 @@ public class RegistrationPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_phoneNumberTextFieldActionPerformed
 
-    private void phoneNumberTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberTextField1ActionPerformed
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_phoneNumberTextField1ActionPerformed
+    }//GEN-LAST:event_emailTextFieldActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
@@ -208,6 +216,33 @@ public class RegistrationPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            Socket socket = new Socket("localhost", 1522);
+            InputStream socket_input = socket.getInputStream();
+            DataInputStream socket_input_data = new DataInputStream(socket_input);
+            OutputStream socket_output = socket.getOutputStream();
+            DataOutputStream socket_output_data = new DataOutputStream(socket_output);
+            socket_output_data.writeUTF("Register");
+            socket_output_data.writeUTF(firstNameTextField.getText());
+            socket_output_data.flush();
+            socket_output_data.writeUTF(lastNameTextField.getText());
+            socket_output_data.flush();
+            socket_output_data.writeUTF(phoneNumberTextField.getText());
+            socket_output_data.flush();
+            socket_output_data.writeUTF(emailTextField.getText());
+            socket_output_data.flush();
+            socket_output_data.writeUTF(new String(passwordField.getPassword()));
+            socket_output_data.flush();
+            socket_output_data.close();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (
+                IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -249,6 +284,7 @@ public class RegistrationPage extends javax.swing.JFrame {
     private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JLabel createLabel;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JTextField firstNameTextField;
     private javax.swing.JLabel lastNameLabel;
@@ -257,7 +293,6 @@ public class RegistrationPage extends javax.swing.JFrame {
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel phoneNumberLabel;
     private javax.swing.JTextField phoneNumberTextField;
-    private javax.swing.JTextField phoneNumberTextField1;
     private javax.swing.JPanel regPanel;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables

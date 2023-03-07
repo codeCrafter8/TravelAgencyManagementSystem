@@ -69,7 +69,7 @@
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="passwordField" alignment="1" max="32767" attributes="0"/>
-                              <Component id="phoneNumberTextField1" alignment="0" pref="363" max="32767" attributes="0"/>
+                              <Component id="emailTextField" alignment="0" pref="363" max="32767" attributes="0"/>
                               <Component id="cofirmPasswordLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="emailLabel" min="-2" max="-2" attributes="0"/>
@@ -116,7 +116,7 @@
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="emailLabel" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="phoneNumberTextField1" min="-2" max="-2" attributes="0"/>
+                  <Component id="emailTextField" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="passwordLabel" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
@@ -185,9 +185,9 @@
             <Property name="text" type="java.lang.String" value="E-mail"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="phoneNumberTextField1">
+        <Component class="javax.swing.JTextField" name="emailTextField">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="phoneNumberTextField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailTextFieldActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="passwordLabel">

@@ -1,6 +1,9 @@
 
 import java.awt.Color; 
 import java.awt.Font;
+import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import javax.swing.JLabel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -176,17 +179,30 @@ public class StartPageFrame extends javax.swing.JFrame {
         if(emailTextField.getText().isEmpty()){
             emailTextField.setText("Type your e-mail");
         }
-        /*String value = emailTextField.getText();
-        emailTextField.setText(value);*/
+        try{
+            Socket socket = new Socket("localhost", 1522);
+            InputStream socket_input = socket.getInputStream();
+            DataInputStream socket_input_data = new DataInputStream(socket_input);
+            OutputStream socket_output = socket.getOutputStream();
+            DataOutputStream socket_output_data = new DataOutputStream(socket_output);
+            socket_output_data.writeUTF("Login");
+            socket_output_data.writeUTF(emailTextField.getText());
+            socket_output_data.flush();
+            socket_output_data.writeUTF(new String(passwordField.getPassword()));
+            socket_output_data.flush();
+            socket_output_data.close();
+        }
+        catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }//GEN-LAST:event_signInButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
-        RegistrationPage rp = new RegistrationPage();
-        StartPageFrame sp = new StartPageFrame();
-        rp.setVisible(true);
-        sp.setVisible(false);
         dispose();
+        new RegistrationPage().setVisible(true);
     }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
@@ -235,3 +251,4 @@ public class StartPageFrame extends javax.swing.JFrame {
     private javax.swing.JButton signInButton;
     // End of variables declaration//GEN-END:variables
 }
+
