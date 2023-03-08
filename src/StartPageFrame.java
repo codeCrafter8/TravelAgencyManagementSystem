@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.regex.Pattern;
 import javax.swing.JLabel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,6 +20,8 @@ public class StartPageFrame extends javax.swing.JFrame {
     /**
      * Creates new form StartPageFrame
      */
+    private static final String email_pattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+    private static final Pattern pattern = Pattern.compile(email_pattern);
     public StartPageFrame() {
         initComponents();
         
@@ -54,6 +57,8 @@ public class StartPageFrame extends javax.swing.JFrame {
         signInButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
+        typeEmailLabel = new javax.swing.JLabel();
+        typePasswordLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,6 +102,14 @@ public class StartPageFrame extends javax.swing.JFrame {
         passwordField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         passwordField.setPreferredSize(new java.awt.Dimension(64, 28));
 
+        typeEmailLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        typeEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        typeEmailLabel.setMinimumSize(new java.awt.Dimension(94, 18));
+        typeEmailLabel.setPreferredSize(new java.awt.Dimension(94, 18));
+
+        typePasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        typePasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
         loginPanelLayout.setHorizontalGroup(
@@ -118,10 +131,13 @@ public class StartPageFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(loginPanelLayout.createSequentialGroup()
-                                .addComponent(emailLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(emailLabel)
+                                    .addComponent(typeEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(typePasswordLabel))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         loginPanelLayout.setVerticalGroup(
@@ -131,11 +147,15 @@ public class StartPageFrame extends javax.swing.JFrame {
                 .addComponent(emailLabel)
                 .addGap(7, 7, 7)
                 .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(2, 2, 2)
+                .addComponent(typeEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordLabel)
                 .addGap(7, 7, 7)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(2, 2, 2)
+                .addComponent(typePasswordLabel)
+                .addGap(40, 40, 40)
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,38 +193,43 @@ public class StartPageFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
-        // TODO add your handling code here:
-        //setVisible(false);
-        if(emailTextField.getText().isEmpty()){
-            emailTextField.setText("Type your e-mail");
-        }
-        try{
-            Socket socket = new Socket("localhost", 1522);
-            InputStream socket_input = socket.getInputStream();
-            DataInputStream socket_input_data = new DataInputStream(socket_input);
-            OutputStream socket_output = socket.getOutputStream();
-            DataOutputStream socket_output_data = new DataOutputStream(socket_output);
-            socket_output_data.writeUTF("Login");
-            socket_output_data.writeUTF(emailTextField.getText());
-            socket_output_data.flush();
-            socket_output_data.writeUTF(new String(passwordField.getPassword()));
-            socket_output_data.flush();
-            socket_output_data.close();
-        }
-        catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }//GEN-LAST:event_signInButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
+        RegistrationPage rp = new RegistrationPage();
+        StartPageFrame sp = new StartPageFrame();
+        rp.setVisible(true);
+        sp.setVisible(false);
         dispose();
-        new RegistrationPage().setVisible(true);
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
+        // TODO add your handling code here:
+        ;
+        if(emailTextField.getText().isEmpty() || !pattern.matcher(emailTextField.getText()).matches()){
+            typeEmailLabel.setText("Type your e-mail");
+        }
+        else {
+            typeEmailLabel.setText("");
+            try {
+                Socket socket = new Socket("localhost", 1522);
+                InputStream socket_input = socket.getInputStream();
+                DataInputStream socket_input_data = new DataInputStream(socket_input);
+                OutputStream socket_output = socket.getOutputStream();
+                DataOutputStream socket_output_data = new DataOutputStream(socket_output);
+                socket_output_data.writeUTF("Login");
+                socket_output_data.writeUTF(emailTextField.getText());
+                socket_output_data.flush();
+                socket_output_data.writeUTF(new String(passwordField.getPassword()));
+                socket_output_data.flush();
+                socket_output_data.close();
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }//GEN-LAST:event_signInButtonActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -249,6 +274,7 @@ public class StartPageFrame extends javax.swing.JFrame {
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton registerButton;
     private javax.swing.JButton signInButton;
+    private javax.swing.JLabel typeEmailLabel;
+    private javax.swing.JLabel typePasswordLabel;
     // End of variables declaration//GEN-END:variables
 }
-
