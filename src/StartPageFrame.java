@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 public class StartPageFrame extends javax.swing.JFrame {
     public static final String emailPattern = "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public static final Pattern compiledEmailPattern = Pattern.compile(emailPattern);
+
+    public static final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
+    public static final Pattern compiledPasswordPattern = Pattern.compile(passwordPattern);
     /**
      * Creates new form StartPageFrame
      */
@@ -206,17 +209,42 @@ public class StartPageFrame extends javax.swing.JFrame {
         sp.setVisible(false);
         dispose();
     }//GEN-LAST:event_registerButtonActionPerformed
+    private boolean emailIsValid(){
+        if(emailTextField.getText().isEmpty()) {
+            typeEmailLabel.setText("Pole jest wymagane.");
+            return false;
+        }
+        else if(!compiledEmailPattern.matcher(emailTextField.getText()).matches()) {
+            typeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+            return false;
+        }
+        else {
+            typeEmailLabel.setText("");
+            return true;
+        }
+    }
+
+    private boolean passwordIsValid(){
+        if(new String(passwordField.getPassword()).equals("")) {
+            typePasswordLabel.setText("Pole jest wymagane.");
+            return false;
+        }
+        else if(!compiledPasswordPattern.matcher(new String(passwordField.getPassword())).matches()) {
+            typePasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
+            return false;
+        }
+        else {
+            typePasswordLabel.setText("");
+            return true;
+        }
+    }
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
         // TODO add your handling code here:
-        ;
-        if(emailTextField.getText().isEmpty())
-            typeEmailLabel.setText("Pole jest wymagane.");
 
-        else if(!compiledEmailPattern.matcher(emailTextField.getText()).matches())
-            typeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+        emailIsValid(); passwordIsValid();
 
-        else {
+        if(emailIsValid() && passwordIsValid()) {
             typeEmailLabel.setText("");
             try {
                 Socket socket = new Socket("localhost", 1522);

@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.GregorianCalendar;
 
 public class database {
     static Statement statement;
@@ -23,10 +24,12 @@ public class database {
             emailPreparedState.setString(1, Server.emailReg);
             ResultSet result = emailPreparedState.executeQuery();
             if (result.next()) {
-                //EkranUtworzKonto.blad = "Podany uzytkownik istnieje juz w bazie danych!";
+                RegistrationPage.user_exists = "Tak";
+                System.out.println("Udalo sie");
             }
             else {
                 //EkranUtworzKonto.blad = " ";
+                RegistrationPage.user_exists = "Nie";
                 String query = "INSERT INTO users (ID_user, email, password, firstName, lastName, phoneNumber, userLogged) VALUES (users_seq.nextval, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, Server.emailReg);
@@ -41,6 +44,7 @@ public class database {
                 statement.executeUpdate(commit);
                 System.out.println("Zarejestrowano");
             }
+            System.out.println(RegistrationPage.user_exists);
             emailPreparedState.close();
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);

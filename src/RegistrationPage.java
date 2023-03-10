@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.awt.Color;
 import java.io.*;
 import java.net.Socket;
@@ -15,8 +16,15 @@ import java.util.regex.Pattern;
  * @author zuzan
  */
 public class RegistrationPage extends javax.swing.JFrame {
-    public static final String phoneNumberPattern = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
-    public static final Pattern compiledPhoneNumberPattern = Pattern.compile(phoneNumberPattern);
+    private static final String phoneNumberPattern = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
+    private static final Pattern compiledPhoneNumberPattern = Pattern.compile(phoneNumberPattern);
+
+    private static final String firstNamePattern = "[a-zA-Z-]{2,}";
+    private static final Pattern compiledFirstNamePattern = Pattern.compile(firstNamePattern);
+
+    private static final String lastNamePattern = "[a-zA-Z-']{2,}";
+    private static final Pattern compiledLastNamePattern = Pattern.compile(lastNamePattern);
+    public static String user_exists;
     /**
      * Creates new form RegistrationPage
      */
@@ -264,33 +272,101 @@ public class RegistrationPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private boolean firstNameIsValid(){
+        if(firstNameTextField.getText().isEmpty()) {
+            TypeFirstnameLabel.setText("Pole jest wymagane.");
+            return false;
+        }
+        else if(!compiledFirstNamePattern.matcher(firstNameTextField.getText()).matches()) {
+            TypeFirstnameLabel.setText("Sprawdź czy podane imię jest poprawne.");
+            return false;
+        }
+        else {
+            TypeFirstnameLabel.setText("");
+            return true;
+        }
+    }
+
+    private boolean lastNameIsValid(){
+        if(lastNameTextField.getText().isEmpty()) {
+            TypeLastNameLabel.setText("Pole jest wymagane.");
+            return false;
+        }
+        else if(!compiledLastNamePattern.matcher(lastNameTextField.getText()).matches()) {
+            TypeLastNameLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
+            return false;
+        }
+        else {
+            TypeLastNameLabel.setText("");
+            return true;
+        }
+    }
+
+    private boolean phoneNumberIsValid(){
+        if(compiledPhoneNumberPattern.matcher(phoneNumberTextField.getText()).matches() || phoneNumberTextField.getText().isEmpty()) {
+            TypePhoneNumberLabel.setText("");
+            return true;
+        }
+        else {
+            TypePhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
+            return false;
+        }
+    }
+
+    private boolean emailIsValid(){
+        if(emailTextField.getText().isEmpty()) {
+            TypeEmailLabel.setText("Pole jest wymagane.");
+            return false;
+        }
+        else if(!StartPageFrame.compiledEmailPattern.matcher(emailTextField.getText()).matches()) {
+            TypeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+            return false;
+        }
+        /*else if(user_exists == true){
+            TypeEmailLabel.setText("Użytkownik o tym adresie email już istnieje. Podaj inny");
+            return false;
+        }*/
+        else {
+            TypeEmailLabel.setText("");
+            return true;
+        }
+    }
+
+    private boolean passwordIsValid(){
+        if(new String(passwordField.getPassword()).equals("")) {
+            TypePasswordLabel.setText("Pole jest wymagane.");
+            return false;
+        }
+        else if(!StartPageFrame.compiledPasswordPattern.matcher(new String(passwordField.getPassword())).matches()) {
+            TypePasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
+            return false;
+        }
+        else {
+            TypePasswordLabel.setText("");
+            return true;
+        }
+    }
+
+    private boolean confirmPasswordIsValid(){
+        if(!new String(passwordField.getPassword()).equals(new String(confirmPasswordField.getPassword()))){
+            TypeConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
+            return false;
+        }
+        else {
+            TypeConfirmPasswordLabel.setText("");
+            return true;
+        }
+    }
+
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        if(firstNameTextField.getText().isEmpty())
-            TypeFirstnameLabel.setText("Pole jest wymagane.");
-
-        if(lastNameTextField.getText().isEmpty())
-            TypeLastNameLabel.setText("Pole jest wymagane.");
-
-        if(compiledPhoneNumberPattern.matcher(phoneNumberTextField.getText()).matches() || phoneNumberTextField.getText().isEmpty())
-            TypePhoneNumberLabel.setText("");
-        else
-            TypePhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
-        /*if(phoneNumberTextField.getText().isEmpty())
-            TypePhoneNumberLabel.setText("This field is required.");*/
-
-        if(emailTextField.getText().isEmpty())
-            TypeEmailLabel.setText("Pole jest wymagane.");
-        else if(!StartPageFrame.compiledEmailPattern.matcher(emailTextField.getText()).matches())
-            TypeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
-
-        if(new String(passwordField.getPassword()).equals(""))
-            TypePasswordLabel.setText("Pole jest wymagane.");
-
-        if(!new String(passwordField.getPassword()).equals(new String(confirmPasswordField.getPassword())))
-            TypeConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
-
-        else{
+        boolean firstNameCorrect = firstNameIsValid();
+        boolean lastNameCorrect = lastNameIsValid();
+        boolean phoneNumberCorrect = phoneNumberIsValid();
+        boolean emailCorrect = emailIsValid();
+        boolean passwordCorrect = passwordIsValid();
+        boolean confirmPasswordCorrect = confirmPasswordIsValid();
+        if(firstNameCorrect && lastNameCorrect && phoneNumberCorrect && emailCorrect && passwordCorrect && confirmPasswordCorrect) {
             try {
                 Socket socket = new Socket("localhost", 1522);
                 InputStream socket_input = socket.getInputStream();
@@ -308,7 +384,13 @@ public class RegistrationPage extends javax.swing.JFrame {
                 socket_output_data.flush();
                 socket_output_data.writeUTF(new String(passwordField.getPassword()));
                 socket_output_data.flush();
+                user_exists = socket_input_data.readUTF();
+                System.out.println(user_exists);
+                if (user_exists.equals("Tak"))
+                    TypeEmailLabel.setText("Użytkownik o tym adresie email już istnieje. Podaj inny.");
                 socket_output_data.close();
+                socket_input_data.close();
+                socket.close();
             } catch (UnknownHostException e) {
                 throw new RuntimeException(e);
             } catch (
@@ -318,7 +400,6 @@ public class RegistrationPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-   
     /**
      * @param args the command line arguments
      */

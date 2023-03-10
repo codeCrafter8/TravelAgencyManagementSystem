@@ -39,6 +39,11 @@ public class Server {
                         passwordReg = socket_input_data.readUTF();
                         System.out.println("Reg " + firstName + lastName + phoneNumber + emailReg + passwordReg);
                         database.connect_with_database();
+                        socket_output_data.writeUTF(RegistrationPage.user_exists);
+                        socket_output_data.flush();
+                        socket_input_data.close();
+                        socket_output_data.close();
+                        client.close();
                     break;
                 }
             }
