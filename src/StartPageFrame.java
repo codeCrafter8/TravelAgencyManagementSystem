@@ -16,12 +16,11 @@ import javax.swing.JLabel;
  * @author zuzan
  */
 public class StartPageFrame extends javax.swing.JFrame {
-
+    public static final String emailPattern = "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+    public static final Pattern compiledEmailPattern = Pattern.compile(emailPattern);
     /**
      * Creates new form StartPageFrame
      */
-    private static final String email_pattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-    private static final Pattern pattern = Pattern.compile(email_pattern);
     public StartPageFrame() {
         initComponents();
         
@@ -78,12 +77,16 @@ public class StartPageFrame extends javax.swing.JFrame {
         emailTextField.setPreferredSize(new java.awt.Dimension(64, 28));
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        passwordLabel.setText("Password");
+        passwordLabel.setText("Hasło");
 
         signInButton.setBackground(new java.awt.Color(189, 165, 111));
         signInButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        signInButton.setText("Sign In");
+        signInButton.setText("Zaloguj się");
+        signInButton.setActionCommand("Zaloguj się");
         signInButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        signInButton.setMaximumSize(new java.awt.Dimension(105, 25));
+        signInButton.setMinimumSize(new java.awt.Dimension(105, 25));
+        signInButton.setPreferredSize(new java.awt.Dimension(105, 25));
         signInButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signInButtonActionPerformed(evt);
@@ -92,7 +95,7 @@ public class StartPageFrame extends javax.swing.JFrame {
 
         registerButton.setBackground(new java.awt.Color(189, 165, 111));
         registerButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        registerButton.setText("Register");
+        registerButton.setText("Utwórz konto");
         registerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerButtonActionPerformed(evt);
@@ -109,35 +112,36 @@ public class StartPageFrame extends javax.swing.JFrame {
 
         typePasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         typePasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        typePasswordLabel.setMinimumSize(new java.awt.Dimension(94, 18));
+        typePasswordLabel.setPreferredSize(new java.awt.Dimension(94, 18));
 
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
         loginPanelLayout.setHorizontalGroup(
             loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginPanelLayout.createSequentialGroup()
-                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loginPanelLayout.createSequentialGroup()
-                        .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(loginPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(passwordLabel))
-                            .addGroup(loginPanelLayout.createSequentialGroup()
-                                .addGap(102, 102, 102)
-                                .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 101, Short.MAX_VALUE))
-                    .addGroup(loginPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPanelLayout.createSequentialGroup()
+                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, loginPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(typeEmailLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(loginPanelLayout.createSequentialGroup()
-                                .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(emailLabel)
-                                    .addComponent(typeEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(typePasswordLabel))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(emailLabel)
+                                .addGap(0, 365, Short.MAX_VALUE))
+                            .addComponent(typePasswordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, loginPanelLayout.createSequentialGroup()
+                        .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, loginPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(passwordLabel))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, loginPanelLayout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(registerButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         loginPanelLayout.setVerticalGroup(
@@ -154,8 +158,8 @@ public class StartPageFrame extends javax.swing.JFrame {
                 .addGap(7, 7, 7)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(typePasswordLabel)
-                .addGap(40, 40, 40)
+                .addComponent(typePasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(loginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -206,9 +210,12 @@ public class StartPageFrame extends javax.swing.JFrame {
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
         // TODO add your handling code here:
         ;
-        if(emailTextField.getText().isEmpty() || !pattern.matcher(emailTextField.getText()).matches()){
-            typeEmailLabel.setText("Type your e-mail");
-        }
+        if(emailTextField.getText().isEmpty())
+            typeEmailLabel.setText("Pole jest wymagane.");
+
+        else if(!compiledEmailPattern.matcher(emailTextField.getText()).matches())
+            typeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+
         else {
             typeEmailLabel.setText("");
             try {

@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.regex.Pattern;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,7 +15,8 @@ import java.net.UnknownHostException;
  * @author zuzan
  */
 public class RegistrationPage extends javax.swing.JFrame {
-
+    public static final String phoneNumberPattern = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
+    public static final Pattern compiledPhoneNumberPattern = Pattern.compile(phoneNumberPattern);
     /**
      * Creates new form RegistrationPage
      */
@@ -48,25 +50,31 @@ public class RegistrationPage extends javax.swing.JFrame {
         confirmPasswordField = new javax.swing.JPasswordField();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        TypeConfirmPasswordLabel = new javax.swing.JLabel();
+        TypePasswordLabel = new javax.swing.JLabel();
+        TypeEmailLabel = new javax.swing.JLabel();
+        TypePhoneNumberLabel = new javax.swing.JLabel();
+        TypeLastNameLabel = new javax.swing.JLabel();
+        TypeFirstnameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Travel Agency - Registration");
         setPreferredSize(new java.awt.Dimension(1024, 768));
 
         regPanel.setBackground(new java.awt.Color(247, 233, 201));
-        regPanel.setPreferredSize(new java.awt.Dimension(450, 512));
+        regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
 
         createLabel.setFont(new java.awt.Font("Myanmar Text", 0, 24)); // NOI18N
-        createLabel.setText("Create an account");
+        createLabel.setText("Utwórz konto");
 
         firstNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        firstNameLabel.setText("First Name");
+        firstNameLabel.setText("Imię");
 
         lastNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lastNameLabel.setText("Last Name");
+        lastNameLabel.setText("Nazwisko");
 
         phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        phoneNumberLabel.setText("Phone number");
+        phoneNumberLabel.setText("Numer telefonu");
 
         phoneNumberTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,15 +92,14 @@ public class RegistrationPage extends javax.swing.JFrame {
         });
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        passwordLabel.setText("Password");
+        passwordLabel.setText("Hasło");
 
         cofirmPasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cofirmPasswordLabel.setText("Confirm Password");
+        cofirmPasswordLabel.setText("Potwierdź hasło");
 
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        submitButton.setText("Submit");
-
+        submitButton.setText("Zarejestruj się");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -101,46 +108,75 @@ public class RegistrationPage extends javax.swing.JFrame {
 
         cancelButton.setBackground(new java.awt.Color(189, 165, 111));
         cancelButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cancelButton.setText("Cancel");
+        cancelButton.setText("Anuluj");
+        cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
 
+        TypeConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        TypeConfirmPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        TypeConfirmPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+
+        TypePasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        TypePasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        TypePasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+
+        TypeEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        TypeEmailLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        TypeEmailLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+
+        TypePhoneNumberLabel.setForeground(new java.awt.Color(255, 0, 0));
+        TypePhoneNumberLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        TypePhoneNumberLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+
+        TypeLastNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        TypeLastNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
+        TypeLastNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+
+        TypeFirstnameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        TypeFirstnameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
+        TypeFirstnameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
         regPanelLayout.setHorizontalGroup(
             regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(regPanelLayout.createSequentialGroup()
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, regPanelLayout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(createLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, regPanelLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(emailTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                            .addComponent(cofirmPasswordLabel)
-                            .addComponent(passwordLabel)
-                            .addComponent(emailLabel)
-                            .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(firstNameLabel)
-                                .addComponent(firstNameTextField)
-                                .addComponent(lastNameLabel)
-                                .addComponent(lastNameTextField)
-                                .addComponent(phoneNumberLabel)
-                                .addComponent(phoneNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
-                            .addComponent(confirmPasswordField))))
-                .addGap(44, 44, 44))
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
+                .addComponent(submitButton)
+                .addGap(18, 18, 18)
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TypeConfirmPasswordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(emailTextField)
+                    .addComponent(confirmPasswordField)
+                    .addComponent(cofirmPasswordLabel)
+                    .addComponent(passwordLabel)
+                    .addComponent(emailLabel)
+                    .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(firstNameLabel)
+                        .addComponent(firstNameTextField)
+                        .addComponent(lastNameLabel)
+                        .addComponent(lastNameTextField)
+                        .addComponent(phoneNumberLabel)
+                        .addComponent(phoneNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                        .addComponent(TypePhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TypeLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(TypeFirstnameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(TypeEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(TypePasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addComponent(createLabel)
+                .addGap(152, 152, 152))
         );
         regPanelLayout.setVerticalGroup(
             regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,31 +187,43 @@ public class RegistrationPage extends javax.swing.JFrame {
                 .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
+                .addComponent(TypeFirstnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
+                .addComponent(TypeLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
+                .addComponent(TypePhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
+                .addComponent(TypeEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, 0)
+                .addComponent(TypePasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addComponent(cofirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(0, 0, 0)
+                .addComponent(TypeConfirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -190,9 +238,9 @@ public class RegistrationPage extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77))
+                .addContainerGap(54, Short.MAX_VALUE)
+                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
 
         pack();
@@ -216,33 +264,61 @@ public class RegistrationPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
-        try {
-            Socket socket = new Socket("localhost", 1522);
-            InputStream socket_input = socket.getInputStream();
-            DataInputStream socket_input_data = new DataInputStream(socket_input);
-            OutputStream socket_output = socket.getOutputStream();
-            DataOutputStream socket_output_data = new DataOutputStream(socket_output);
-            socket_output_data.writeUTF("Register");
-            socket_output_data.writeUTF(firstNameTextField.getText());
-            socket_output_data.flush();
-            socket_output_data.writeUTF(lastNameTextField.getText());
-            socket_output_data.flush();
-            socket_output_data.writeUTF(phoneNumberTextField.getText());
-            socket_output_data.flush();
-            socket_output_data.writeUTF(emailTextField.getText());
-            socket_output_data.flush();
-            socket_output_data.writeUTF(new String(passwordField.getPassword()));
-            socket_output_data.flush();
-            socket_output_data.close();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        } catch (
-                IOException e) {
-            throw new RuntimeException(e);
+        if(firstNameTextField.getText().isEmpty())
+            TypeFirstnameLabel.setText("Pole jest wymagane.");
+
+        if(lastNameTextField.getText().isEmpty())
+            TypeLastNameLabel.setText("Pole jest wymagane.");
+
+        if(compiledPhoneNumberPattern.matcher(phoneNumberTextField.getText()).matches() || phoneNumberTextField.getText().isEmpty())
+            TypePhoneNumberLabel.setText("");
+        else
+            TypePhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
+        /*if(phoneNumberTextField.getText().isEmpty())
+            TypePhoneNumberLabel.setText("This field is required.");*/
+
+        if(emailTextField.getText().isEmpty())
+            TypeEmailLabel.setText("Pole jest wymagane.");
+        else if(!StartPageFrame.compiledEmailPattern.matcher(emailTextField.getText()).matches())
+            TypeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+
+        if(new String(passwordField.getPassword()).equals(""))
+            TypePasswordLabel.setText("Pole jest wymagane.");
+
+        if(!new String(passwordField.getPassword()).equals(new String(confirmPasswordField.getPassword())))
+            TypeConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
+
+        else{
+            try {
+                Socket socket = new Socket("localhost", 1522);
+                InputStream socket_input = socket.getInputStream();
+                DataInputStream socket_input_data = new DataInputStream(socket_input);
+                OutputStream socket_output = socket.getOutputStream();
+                DataOutputStream socket_output_data = new DataOutputStream(socket_output);
+                socket_output_data.writeUTF("Register");
+                socket_output_data.writeUTF(firstNameTextField.getText());
+                socket_output_data.flush();
+                socket_output_data.writeUTF(lastNameTextField.getText());
+                socket_output_data.flush();
+                socket_output_data.writeUTF(phoneNumberTextField.getText());
+                socket_output_data.flush();
+                socket_output_data.writeUTF(emailTextField.getText());
+                socket_output_data.flush();
+                socket_output_data.writeUTF(new String(passwordField.getPassword()));
+                socket_output_data.flush();
+                socket_output_data.close();
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (
+                    IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
+    }//GEN-LAST:event_submitButtonActionPerformed
+
+   
     /**
      * @param args the command line arguments
      */
@@ -279,6 +355,12 @@ public class RegistrationPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel TypeConfirmPasswordLabel;
+    private javax.swing.JLabel TypeEmailLabel;
+    private javax.swing.JLabel TypeFirstnameLabel;
+    private javax.swing.JLabel TypeLastNameLabel;
+    private javax.swing.JLabel TypePasswordLabel;
+    private javax.swing.JLabel TypePhoneNumberLabel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel cofirmPasswordLabel;
     private javax.swing.JPasswordField confirmPasswordField;
