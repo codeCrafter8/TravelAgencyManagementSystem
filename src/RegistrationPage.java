@@ -385,9 +385,8 @@ public class RegistrationPage extends javax.swing.JFrame {
                 socket_output_data.writeUTF(new String(passwordField.getPassword()));
                 socket_output_data.flush();
                 user_exists = socket_input_data.readUTF();
-                System.out.println(user_exists);
                 if (user_exists.equals("Tak"))
-                    TypeEmailLabel.setText("Użytkownik o tym adresie email już istnieje. Podaj inny.");
+                    TypeEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
                 socket_output_data.close();
                 socket_input_data.close();
                 socket.close();

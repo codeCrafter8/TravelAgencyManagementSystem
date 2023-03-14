@@ -21,6 +21,9 @@ public class StartPageFrame extends javax.swing.JFrame {
 
     public static final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
     public static final Pattern compiledPasswordPattern = Pattern.compile(passwordPattern);
+
+    public static String user_exists;
+    public static String password_valid;
     /**
      * Creates new form StartPageFrame
      */
@@ -242,9 +245,10 @@ public class StartPageFrame extends javax.swing.JFrame {
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
         // TODO add your handling code here:
 
-        emailIsValid(); passwordIsValid();
+        boolean emailCorrect = emailIsValid();
+        boolean passwordCorrect = passwordIsValid();
 
-        if(emailIsValid() && passwordIsValid()) {
+        if(emailCorrect && passwordCorrect) {
             typeEmailLabel.setText("");
             try {
                 Socket socket = new Socket("localhost", 1522);
@@ -257,7 +261,15 @@ public class StartPageFrame extends javax.swing.JFrame {
                 socket_output_data.flush();
                 socket_output_data.writeUTF(new String(passwordField.getPassword()));
                 socket_output_data.flush();
+                user_exists = socket_input_data.readUTF();
+                if (user_exists.equals("Nie"))
+                    typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
+                password_valid = socket_input_data.readUTF();
+                if (password_valid.equals("Nie"))
+                    typePasswordLabel.setText("Błędne hasło.");
                 socket_output_data.close();
+                socket_input_data.close();
+                socket.close();
             } catch (UnknownHostException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
