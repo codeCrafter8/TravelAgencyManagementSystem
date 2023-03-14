@@ -1,6 +1,8 @@
 
 import java.awt.Color; 
 import java.awt.Font;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -81,6 +83,25 @@ public class StartPageFrame extends javax.swing.JFrame {
 
         emailTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         emailTextField.setPreferredSize(new java.awt.Dimension(64, 28));
+
+        emailTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(registerButton)) {
+                    emailIsValid();
+                }
+            }
+        });
+
+        passwordField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(registerButton)) {
+                    passwordIsValid();
+                }
+            }
+        });
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         passwordLabel.setText("Hasło");
@@ -203,15 +224,16 @@ public class StartPageFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         // TODO add your handling code here:
+        //emailTextField.setText("");
         RegistrationPage rp = new RegistrationPage();
         StartPageFrame sp = new StartPageFrame();
         rp.setVisible(true);
         sp.setVisible(false);
         dispose();
     }//GEN-LAST:event_registerButtonActionPerformed
+
     private boolean emailIsValid(){
         if(emailTextField.getText().isEmpty()) {
             typeEmailLabel.setText("Pole jest wymagane.");

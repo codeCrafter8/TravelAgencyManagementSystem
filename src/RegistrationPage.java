@@ -1,6 +1,8 @@
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -78,32 +80,74 @@ public class RegistrationPage extends javax.swing.JFrame {
         firstNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         firstNameLabel.setText("Imię");
 
+        firstNameTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    firstNameIsValid();
+                }
+            }
+        });
+
         lastNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         lastNameLabel.setText("Nazwisko");
+
+        lastNameTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    lastNameIsValid();
+                }
+            }
+        });
 
         phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         phoneNumberLabel.setText("Numer telefonu");
 
-        phoneNumberTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneNumberTextFieldActionPerformed(evt);
+        phoneNumberTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    phoneNumberIsValid();
+                }
             }
         });
 
         emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         emailLabel.setText("E-mail");
 
-        emailTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailTextFieldActionPerformed(evt);
+        emailTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    emailIsValid();
+                }
             }
         });
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         passwordLabel.setText("Hasło");
 
+        passwordField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    passwordIsValid();
+                }
+            }
+        });
+
         cofirmPasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         cofirmPasswordLabel.setText("Potwierdź hasło");
+
+        confirmPasswordField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    confirmPasswordIsValid();
+                }
+            }
+        });
 
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -322,10 +366,6 @@ public class RegistrationPage extends javax.swing.JFrame {
             TypeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
             return false;
         }
-        /*else if(user_exists == true){
-            TypeEmailLabel.setText("Użytkownik o tym adresie email już istnieje. Podaj inny");
-            return false;
-        }*/
         else {
             TypeEmailLabel.setText("");
             return true;

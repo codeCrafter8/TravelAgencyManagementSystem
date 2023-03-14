@@ -13,7 +13,7 @@ public class database {
                 send_data();
             }
             if(Server.operation.equals("Login")) {
-                check_if_user_exists();
+                login();
             }
         }
         catch(Exception ex){
@@ -52,7 +52,7 @@ public class database {
 
     }
 
-    public static void check_if_user_exists(){
+    public static void login(){
         try{
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
