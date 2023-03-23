@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.GregorianCalendar;
 
 public class database {
     static Statement statement;
@@ -59,7 +58,7 @@ public class database {
             emailPreparedState.setString(1, Server.email);
             ResultSet result = emailPreparedState.executeQuery();
             if(result.next()){
-                StartPageFrame.user_exists = "Tak";
+                StartPageFrame.user_exists = true;
                 //System.out.println("Jest");
                 String passwordQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
                 PreparedStatement passwordPreparedState = connection.prepareStatement(passwordQuery);
@@ -67,16 +66,21 @@ public class database {
                 passwordPreparedState.setString(2, Server.email);
                 ResultSet resultPassword = passwordPreparedState.executeQuery();
                 if(resultPassword.next()){
-                    StartPageFrame.password_valid = "Tak";
+                    StartPageFrame.password_valid = true;
+                    if(resultPassword.getString("userRank").equals("admin")){
+                        System.out.println("Admin");
+                        StartPageFrame.admin_logged = true;
+                    }
+
                     //dalsze działania
                 }
                 else{
-                    StartPageFrame.password_valid = "Nie";
+                    StartPageFrame.password_valid = false;
                 }
             }
             else{
-                StartPageFrame.user_exists = "Nie";
-                StartPageFrame.password_valid = "Null";
+                StartPageFrame.user_exists = false;
+                StartPageFrame.password_valid = false;
                 System.out.println("nie ma");
             }
         }catch (SQLException ex) {

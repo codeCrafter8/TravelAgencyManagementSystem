@@ -1,8 +1,6 @@
-import javax.crypto.spec.PSource;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Server {
     private static boolean running = true;
@@ -31,9 +29,11 @@ public class Server {
                         password = socket_input_data.readUTF();
                         System.out.println("login " + email + password);
                         database.connect_with_database();
-                        socket_output_data.writeUTF(StartPageFrame.user_exists);
+                        socket_output_data.writeBoolean(StartPageFrame.user_exists);
                         socket_output_data.flush();
-                        socket_output_data.writeUTF(StartPageFrame.password_valid);
+                        socket_output_data.writeBoolean(StartPageFrame.password_valid);
+                        socket_output_data.flush();
+                        socket_output_data.writeBoolean(StartPageFrame.admin_logged);
                         socket_output_data.flush();
                     break;
                     case "Register":

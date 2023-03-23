@@ -1,5 +1,3 @@
-
-import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -308,12 +306,8 @@ public class RegistrationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_emailTextFieldActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
-        RegistrationPage rp =new RegistrationPage();
-        StartPageFrame sp =new StartPageFrame();
-        rp.setVisible(false);
-        sp.setVisible(true);
         dispose();
+        new StartPageFrame().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private boolean firstNameIsValid(){

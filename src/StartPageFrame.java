@@ -20,12 +20,11 @@ import javax.swing.JLabel;
 public class StartPageFrame extends javax.swing.JFrame {
     public static final String emailPattern = "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public static final Pattern compiledEmailPattern = Pattern.compile(emailPattern);
-
     public static final String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
     public static final Pattern compiledPasswordPattern = Pattern.compile(passwordPattern);
-
-    public static String user_exists;
-    public static String password_valid;
+    public static boolean user_exists;
+    public static boolean password_valid;
+    public static boolean admin_logged;
     /**
      * Creates new form StartPageFrame
      */
@@ -95,7 +94,6 @@ public class StartPageFrame extends javax.swing.JFrame {
 
         passwordField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {}
-
             public void focusLost(FocusEvent e) {
                 if(!e.getOppositeComponent().equals(registerButton)) {
                     passwordIsValid();
@@ -193,7 +191,7 @@ public class StartPageFrame extends javax.swing.JFrame {
                 .addContainerGap(46, Short.MAX_VALUE))
         );
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tets.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("img/tets.jpg"))); // NOI18N
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,13 +223,8 @@ public class StartPageFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
-        //emailTextField.setText("");
-        RegistrationPage rp = new RegistrationPage();
-        StartPageFrame sp = new StartPageFrame();
-        rp.setVisible(true);
-        sp.setVisible(false);
         dispose();
+        new RegistrationPage().setVisible(true);
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private boolean emailIsValid(){
@@ -283,12 +276,18 @@ public class StartPageFrame extends javax.swing.JFrame {
                 socket_output_data.flush();
                 socket_output_data.writeUTF(new String(passwordField.getPassword()));
                 socket_output_data.flush();
-                user_exists = socket_input_data.readUTF();
-                if (user_exists.equals("Nie"))
+                user_exists = socket_input_data.readBoolean();
+                if (!user_exists)
                     typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
-                password_valid = socket_input_data.readUTF();
-                if (password_valid.equals("Nie"))
+                password_valid = socket_input_data.readBoolean();
+                if (!password_valid)
                     typePasswordLabel.setText("Błędne hasło.");
+                admin_logged = socket_input_data.readBoolean();
+                if(admin_logged) {
+                    System.out.println("Admin StartPage");
+                    dispose();
+                    new Dashboard().setVisible(true);
+                }
                 socket_output_data.close();
                 socket_input_data.close();
                 socket.close();
