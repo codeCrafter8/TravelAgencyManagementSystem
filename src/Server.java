@@ -23,6 +23,7 @@ public class Server {
                 socket_output = client.getOutputStream();
                 socket_output_data = new DataOutputStream(socket_output);
                 operation = socket_input_data.readUTF();
+                //System.out.println(operation);
                 switch(operation){
                     case "Login":
                         email = socket_input_data.readUTF();
@@ -35,7 +36,7 @@ public class Server {
                         socket_output_data.flush();
                         socket_output_data.writeBoolean(StartPageFrame.admin_logged);
                         socket_output_data.flush();
-                    break;
+                        break;
                     case "Register":
                         firstName = socket_input_data.readUTF();
                         lastName = socket_input_data.readUTF();
@@ -46,7 +47,14 @@ public class Server {
                         database.connect_with_database();
                         socket_output_data.writeUTF(RegistrationPage.user_exists);
                         socket_output_data.flush();
-                    break;
+                        break;
+                    case "dashboardUpdate":
+                        database.connect_with_database();
+                        socket_output_data.writeUTF(Dashboard.adminName);
+                        socket_output_data.flush();
+                        socket_output_data.writeInt(Dashboard.howManyClients);
+                        socket_output_data.flush();
+                        break;
                 }
             }
         }

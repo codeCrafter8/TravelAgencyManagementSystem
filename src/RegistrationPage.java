@@ -1,4 +1,5 @@
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.*;
@@ -155,6 +156,12 @@ public class RegistrationPage extends javax.swing.JFrame {
                 submitButtonActionPerformed(evt);
             }
         });
+        //nowe
+        submitButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover())
+                submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        });
 
         cancelButton.setBackground(new java.awt.Color(189, 165, 111));
         cancelButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -164,6 +171,12 @@ public class RegistrationPage extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
+        });
+        //nowe
+        cancelButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover())
+                cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
 
         TypeConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));

@@ -11,14 +11,41 @@ public class database {
             if(Server.operation.equals("Register")) {
                 send_data();
             }
-            if(Server.operation.equals("Login")) {
+            else if(Server.operation.equals("Login")) {
                 login();
+            }
+            else if(Server.operation.equals("dashboardUpdate")){
+                updateDashboard();
             }
         }
         catch(Exception ex){
             System.out.println("Ex: " + ex);
         }
     }
+
+    private static void updateDashboard() {
+        try {
+            String adminQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
+            PreparedStatement adminPreparedState = connection.prepareStatement(adminQuery);
+            adminPreparedState.setString(1, Server.password);
+            adminPreparedState.setString(2, Server.email);
+            ResultSet resultAdmin = adminPreparedState.executeQuery();
+            if(resultAdmin.next()){
+                Dashboard.adminName = resultAdmin.getString("FirstName");
+               // System.out.println(Dashboard.adminName);
+            }
+
+            String howManyClientsQuery = "SELECT COUNT(*) as clientsCount FROM users WHERE userRank = 'client'";
+            ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
+            if(resultHowManyClients.next()) {
+                System.out.println(resultHowManyClients.getInt("clientsCount"));
+                Dashboard.howManyClients = resultHowManyClients.getInt("clientsCount");
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+        }
+    }
+
     public static void send_data(){
         try {
             String emailQuery = "SELECT * FROM users WHERE email = ?";
@@ -48,7 +75,6 @@ public class database {
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
         }
-
     }
 
     public static void login(){
@@ -71,7 +97,8 @@ public class database {
                         System.out.println("Admin");
                         StartPageFrame.admin_logged = true;
                     }
-
+                    else
+                        StartPageFrame.admin_logged = false;
                     //dalsze działania
                 }
                 else{
@@ -80,7 +107,7 @@ public class database {
             }
             else{
                 StartPageFrame.user_exists = false;
-                StartPageFrame.password_valid = false;
+                //StartPageFrame.password_valid = false;
                 System.out.println("nie ma");
             }
         }catch (SQLException ex) {

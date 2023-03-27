@@ -1,13 +1,12 @@
 
-import java.awt.Color; 
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.regex.Pattern;
-import javax.swing.JLabel;
+import javax.swing.*;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -24,11 +23,12 @@ public class StartPageFrame extends javax.swing.JFrame {
     public static final Pattern compiledPasswordPattern = Pattern.compile(passwordPattern);
     public static boolean user_exists;
     public static boolean password_valid;
-    public static boolean admin_logged;
+    public static boolean admin_logged = false;
     /**
      * Creates new form StartPageFrame
      */
     public StartPageFrame() {
+       // System.out.println(admin_logged);
         initComponents();
         
         //frame background color
@@ -117,6 +117,12 @@ public class StartPageFrame extends javax.swing.JFrame {
                 signInButtonActionPerformed(evt);
             }
         });
+        //nowe
+        signInButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover())
+                signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        });
 
         registerButton.setBackground(new java.awt.Color(189, 165, 111));
         registerButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -125,6 +131,12 @@ public class StartPageFrame extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registerButtonActionPerformed(evt);
             }
+        });
+        //nowe
+        registerButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover())
+                registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
 
         passwordField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
@@ -279,14 +291,18 @@ public class StartPageFrame extends javax.swing.JFrame {
                 user_exists = socket_input_data.readBoolean();
                 if (!user_exists)
                     typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
-                password_valid = socket_input_data.readBoolean();
-                if (!password_valid)
-                    typePasswordLabel.setText("Błędne hasło.");
-                admin_logged = socket_input_data.readBoolean();
-                if(admin_logged) {
-                    System.out.println("Admin StartPage");
-                    dispose();
-                    new Dashboard().setVisible(true);
+                else {
+                    password_valid = socket_input_data.readBoolean();
+                    if (!password_valid)
+                        typePasswordLabel.setText("Błędne hasło.");
+                    else {
+                        admin_logged = socket_input_data.readBoolean();
+                        if(admin_logged) {
+                            System.out.println("Admin StartPage");
+                            dispose();
+                            new Dashboard().setVisible(true);
+                        }
+                    }
                 }
                 socket_output_data.close();
                 socket_input_data.close();
