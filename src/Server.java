@@ -18,6 +18,7 @@ public class Server {
             DataOutputStream socket_output_data;
             while (running) {
                 client = socket.accept();
+                System.out.println(client);
                 socket_input = client.getInputStream();
                 socket_input_data = new DataInputStream(socket_input);
                 socket_output = client.getOutputStream();

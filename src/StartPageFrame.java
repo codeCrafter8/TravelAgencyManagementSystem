@@ -24,6 +24,8 @@ public class StartPageFrame extends javax.swing.JFrame {
     public static boolean user_exists;
     public static boolean password_valid;
     public static boolean admin_logged = false;
+    public static String email;
+    public static String password;
     /**
      * Creates new form StartPageFrame
      */
@@ -276,9 +278,12 @@ public class StartPageFrame extends javax.swing.JFrame {
         boolean passwordCorrect = passwordIsValid();
 
         if(emailCorrect && passwordCorrect) {
+            email = emailTextField.getText();
+            password = new String(passwordField.getPassword());
             typeEmailLabel.setText("");
-            try {
-                Socket socket = new Socket("localhost", 1522);
+            //try {
+                Client.operate("Login");
+                /*Socket socket = new Socket("localhost", 1522);
                 InputStream socket_input = socket.getInputStream();
                 DataInputStream socket_input_data = new DataInputStream(socket_input);
                 OutputStream socket_output = socket.getOutputStream();
@@ -288,30 +293,32 @@ public class StartPageFrame extends javax.swing.JFrame {
                 socket_output_data.flush();
                 socket_output_data.writeUTF(new String(passwordField.getPassword()));
                 socket_output_data.flush();
-                user_exists = socket_input_data.readBoolean();
+                user_exists = socket_input_data.readBoolean();*/
+
                 if (!user_exists)
                     typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
                 else {
-                    password_valid = socket_input_data.readBoolean();
+                    //password_valid = socket_input_data.readBoolean();
                     if (!password_valid)
                         typePasswordLabel.setText("Błędne hasło.");
                     else {
-                        admin_logged = socket_input_data.readBoolean();
-                        if(admin_logged) {
+                        // admin_logged = socket_input_data.readBoolean();
+                        if (admin_logged) {
                             System.out.println("Admin StartPage");
                             dispose();
                             new Dashboard().setVisible(true);
                         }
                     }
                 }
-                socket_output_data.close();
+           // }
+                /*socket_output_data.close();
                 socket_input_data.close();
-                socket.close();
-            } catch (UnknownHostException e) {
+                socket.close();*/
+            /*} catch (UnknownHostException e) {
+                throw new RuntimeException(e);*/
+           /* catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            }*/
         }
     }//GEN-LAST:event_signInButtonActionPerformed
     /**

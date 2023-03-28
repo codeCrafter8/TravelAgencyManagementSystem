@@ -759,27 +759,28 @@ public class Dashboard extends javax.swing.JFrame {
      */
     //nowe
     private void generateData(){
-        try{
+       /* try{
             Socket socket = new Socket("localhost", 1522);
             InputStream socket_input = socket.getInputStream();
             DataInputStream socket_input_data = new DataInputStream(socket_input);
             OutputStream socket_output = socket.getOutputStream();
             DataOutputStream socket_output_data = new DataOutputStream(socket_output);
             socket_output_data.writeUTF("dashboardUpdate");
-            socket_output_data.flush();
-            adminName = socket_input_data.readUTF();
+            socket_output_data.flush();*/
+            //adminName = socket_input_data.readUTF();
+            Client.operate("dashboardUpdate");
             adminNameLabel.setText(adminName);
-            howManyClients = socket_input_data.readInt();
+           // howManyClients = socket_input_data.readInt();
             String howManyClientsString = String.valueOf(howManyClients);
             clientsNumberLabel.setText(howManyClientsString);
-            socket_output_data.close();
+           /* socket_output_data.close();
             socket_input_data.close();
             socket.close();
         }catch (UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
     //nowe
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed

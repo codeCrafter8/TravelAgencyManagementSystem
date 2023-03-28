@@ -26,6 +26,11 @@ public class RegistrationPage extends javax.swing.JFrame {
     private static final String lastNamePattern = "[a-zA-Z-']{2,}";
     private static final Pattern compiledLastNamePattern = Pattern.compile(lastNamePattern);
     public static String user_exists;
+    public static String firstName;
+    public static String lastName;
+    public static String phoneNumber;
+    public static String email;
+    public static String password;
     /**
      * Creates new form RegistrationPage
      */
@@ -414,13 +419,19 @@ public class RegistrationPage extends javax.swing.JFrame {
         boolean passwordCorrect = passwordIsValid();
         boolean confirmPasswordCorrect = confirmPasswordIsValid();
         if(firstNameCorrect && lastNameCorrect && phoneNumberCorrect && emailCorrect && passwordCorrect && confirmPasswordCorrect) {
-            try {
-                Socket socket = new Socket("localhost", 1522);
+            firstName = firstNameTextField.getText();
+            lastName = lastNameTextField.getText();
+            phoneNumber = phoneNumberTextField.getText();
+            email = emailTextField.getText();
+            password = new String(passwordField.getPassword());
+            Client.operate("Register");
+           // try {
+              /*  Socket socket = new Socket("localhost", 1522);
                 InputStream socket_input = socket.getInputStream();
                 DataInputStream socket_input_data = new DataInputStream(socket_input);
                 OutputStream socket_output = socket.getOutputStream();
-                DataOutputStream socket_output_data = new DataOutputStream(socket_output);
-                socket_output_data.writeUTF("Register");
+                DataOutputStream socket_output_data = new DataOutputStream(socket_output);*/
+                /*socket_output_data.writeUTF("Register");
                 socket_output_data.writeUTF(firstNameTextField.getText());
                 socket_output_data.flush();
                 socket_output_data.writeUTF(lastNameTextField.getText());
@@ -431,18 +442,18 @@ public class RegistrationPage extends javax.swing.JFrame {
                 socket_output_data.flush();
                 socket_output_data.writeUTF(new String(passwordField.getPassword()));
                 socket_output_data.flush();
-                user_exists = socket_input_data.readUTF();
+                user_exists = socket_input_data.readUTF();*/
                 if (user_exists.equals("Tak"))
                     TypeEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
-                socket_output_data.close();
+                /*socket_output_data.close();
                 socket_input_data.close();
-                socket.close();
-            } catch (UnknownHostException e) {
+                socket.close();*/
+            /*} catch (UnknownHostException e) {
                 throw new RuntimeException(e);
             } catch (
                     IOException e) {
                 throw new RuntimeException(e);
-            }
+            }*/
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 

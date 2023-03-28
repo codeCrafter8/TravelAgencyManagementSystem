@@ -38,7 +38,7 @@ public class database {
             String howManyClientsQuery = "SELECT COUNT(*) as clientsCount FROM users WHERE userRank = 'client'";
             ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
             if(resultHowManyClients.next()) {
-                System.out.println(resultHowManyClients.getInt("clientsCount"));
+               // System.out.println(resultHowManyClients.getInt("clientsCount"));
                 Dashboard.howManyClients = resultHowManyClients.getInt("clientsCount");
             }
         }catch (SQLException ex) {
