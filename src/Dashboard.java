@@ -204,6 +204,11 @@ public class Dashboard extends javax.swing.JFrame {
             else
                 clientsButton.setForeground(null);
         });
+        clientsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientsButtonActionPerformed(evt);
+            }
+        });
 
         tripsButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tripsButton.setText("Wycieczki");
@@ -787,6 +792,11 @@ public class Dashboard extends javax.swing.JFrame {
        // StartPageFrame.admin_logged = false;
         dispose();
         new StartPageFrame().setVisible(true);
+    }
+    private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // StartPageFrame.admin_logged = false;
+        dispose();
+        new Clients().setVisible(true);
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

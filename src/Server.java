@@ -1,11 +1,15 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     private static boolean running = true;
     public static String email, password, firstName, lastName, phoneNumber, emailReg, passwordReg;
+    public static int clientIDToRemove;
     public static String operation;
+    public static List<String> clientEditList = new ArrayList<>();
     public static void operate(){
         ServerSocket socket;
         Socket client;
@@ -26,7 +30,7 @@ public class Server {
                 operation = socket_input_data.readUTF();
                 //System.out.println(operation);
                 switch(operation){
-                    case "Login":
+                    case "Login" -> {
                         email = socket_input_data.readUTF();
                         password = socket_input_data.readUTF();
                         System.out.println("login " + email + password);
@@ -37,8 +41,8 @@ public class Server {
                         socket_output_data.flush();
                         socket_output_data.writeBoolean(StartPageFrame.admin_logged);
                         socket_output_data.flush();
-                        break;
-                    case "Register":
+                    }
+                    case "Register" -> {
                         firstName = socket_input_data.readUTF();
                         lastName = socket_input_data.readUTF();
                         phoneNumber = socket_input_data.readUTF();
@@ -48,14 +52,40 @@ public class Server {
                         database.connect_with_database();
                         socket_output_data.writeUTF(RegistrationPage.user_exists);
                         socket_output_data.flush();
-                        break;
-                    case "dashboardUpdate":
+                    }
+                    case "dashboardUpdate" -> {
                         database.connect_with_database();
                         socket_output_data.writeUTF(Dashboard.adminName);
                         socket_output_data.flush();
                         socket_output_data.writeInt(Dashboard.howManyClients);
                         socket_output_data.flush();
-                        break;
+                    }
+                    case "clientsUpdate" -> {
+                        database.connect_with_database();
+                        socket_output_data.writeUTF(Clients.adminName);
+                        socket_output_data.flush();
+                        socket_output_data.writeInt(Clients.listDataLength);
+                        socket_output_data.flush();
+                        for (String s : database.data) {
+                            socket_output_data.writeUTF(s);
+                            socket_output_data.flush();
+                        }
+                        database.data.clear();
+                    }
+                    case "deleteClient" -> {
+                        clientIDToRemove = socket_input_data.readInt();
+                        database.connect_with_database();
+                    }
+                    case "editClient" -> {
+                        for(int i = 0; i < 5; i++){
+                            if(i == 0)
+                                clientEditList.add(Integer.toString(socket_input_data.readInt()));
+                            else
+                                clientEditList.add(socket_input_data.readUTF());
+                        }
+                        database.connect_with_database();
+                        clientEditList.clear();
+                    }
                 }
             }
         }

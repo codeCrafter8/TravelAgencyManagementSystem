@@ -12,7 +12,7 @@ public class Client {
             DataOutputStream socket_output_data = new DataOutputStream(socket_output);
             socket_output_data.writeUTF(operation);
             switch(operation) {
-                case "Login":
+                case "Login" -> {
                     socket_output_data.writeUTF(StartPageFrame.email);
                     socket_output_data.flush();
                     socket_output_data.writeUTF(StartPageFrame.password);
@@ -20,8 +20,8 @@ public class Client {
                     StartPageFrame.user_exists = socket_input_data.readBoolean();
                     StartPageFrame.password_valid = socket_input_data.readBoolean();
                     StartPageFrame.admin_logged = socket_input_data.readBoolean();
-                    break;
-                case "Register":
+                }
+                case "Register" -> {
                     socket_output_data.writeUTF(RegistrationPage.firstName);
                     socket_output_data.flush();
                     socket_output_data.writeUTF(RegistrationPage.lastName);
@@ -33,11 +33,34 @@ public class Client {
                     socket_output_data.writeUTF(RegistrationPage.password);
                     socket_output_data.flush();
                     RegistrationPage.user_exists = socket_input_data.readUTF();
-                    break;
-                case "dashboardUpdate":
+                }
+                case "dashboardUpdate"-> {
                     Dashboard.adminName = socket_input_data.readUTF();
                     Dashboard.howManyClients = socket_input_data.readInt();
-                    break;
+                }
+                case "clientsUpdate" -> {
+                    Clients.adminName = socket_input_data.readUTF();
+                    Clients.listDataLength = socket_input_data.readInt();
+                    for (int i = 0; i < Clients.listDataLength; i++) {
+                        Clients.data.add(socket_input_data.readUTF());
+                    }
+                }
+                case "deleteClient" -> {
+                    socket_output_data.writeInt(Clients.clientIDToRemove);
+                    socket_output_data.flush();
+                }
+                case "editClient" -> {
+                    socket_output_data.writeInt(Clients.id);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Clients.firstName);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Clients.lastName);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Clients.email);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Clients.phoneNumber);
+                    socket_output_data.flush();
+                }
             }
             socket_output_data.close();
             socket_input_data.close();
