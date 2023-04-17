@@ -6,8 +6,10 @@ import java.util.List;
 
 public class Server {
     private static boolean running = true;
-    public static String email, password, firstName, lastName, phoneNumber, emailReg, passwordReg;
+    public static String email, password, firstName, lastName, phoneNumber, emailReg, passwordReg, passwordChanged;
     public static int clientIDToRemove;
+    public static int clientIDToChangePassword;
+    public static String tableToRemove;
     public static String operation;
     public static List<String> clientEditList = new ArrayList<>();
     public static void operate(){
@@ -85,6 +87,33 @@ public class Server {
                         }
                         database.connect_with_database();
                         clientEditList.clear();
+                    }
+                    case "changeClientPassword" -> {
+                        passwordChanged = socket_input_data.readUTF();
+                        clientIDToChangePassword = socket_input_data.readInt();
+                        database.connect_with_database();
+                    }
+                    case "deleteTable" -> {
+                        tableToRemove = socket_input_data.readUTF();
+                        database.connect_with_database();
+                    }
+                    case "checkTables" -> {
+                        database.connect_with_database();
+                        socket_output_data.writeUTF(DatabasePanel.usersTableName);
+                        socket_output_data.flush();
+                        socket_output_data.writeUTF(DatabasePanel.tripsTableName);
+                        socket_output_data.flush();
+                        socket_output_data.writeUTF(DatabasePanel.reservationsTableName);
+                        socket_output_data.flush();
+                    }
+                    case "checkSequences" -> {
+                        database.connect_with_database();
+                        socket_output_data.writeUTF(DatabasePanel.usersSeqName);
+                        socket_output_data.flush();
+                        socket_output_data.writeUTF(DatabasePanel.tripsSeqName);
+                        socket_output_data.flush();
+                        socket_output_data.writeUTF(DatabasePanel.reservationsSeqName);
+                        socket_output_data.flush();
                     }
                 }
             }

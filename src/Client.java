@@ -61,6 +61,26 @@ public class Client {
                     socket_output_data.writeUTF(Clients.phoneNumber);
                     socket_output_data.flush();
                 }
+                case "changeClientPassword" -> {
+                    socket_output_data.writeUTF(ChangeClientPassword.password);
+                    socket_output_data.flush();
+                    socket_output_data.writeInt(Clients.clientIDToChangePassword);
+                    socket_output_data.flush();
+                }
+                case "deleteTable" -> {
+                    socket_output_data.writeUTF(DatabasePanel.tableToRemove);
+                    socket_output_data.flush();
+                }
+                case "checkTables" -> {
+                    DatabasePanel.usersTableName = socket_input_data.readUTF();
+                    DatabasePanel.tripsTableName = socket_input_data.readUTF();
+                    DatabasePanel.reservationsTableName = socket_input_data.readUTF();
+                }
+                case "checkSequences" -> {
+                    DatabasePanel.usersSeqName = socket_input_data.readUTF();
+                    DatabasePanel.tripsSeqName = socket_input_data.readUTF();
+                    DatabasePanel.reservationsSeqName = socket_input_data.readUTF();
+                }
             }
             socket_output_data.close();
             socket_input_data.close();

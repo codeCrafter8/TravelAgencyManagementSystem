@@ -71,7 +71,7 @@ public class RegistrationPage extends javax.swing.JFrame {
         TypeLastNameLabel = new javax.swing.JLabel();
         TypeFirstnameLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Travel Agency - Registration");
         setPreferredSize(new java.awt.Dimension(1024, 768));
 
@@ -155,7 +155,8 @@ public class RegistrationPage extends javax.swing.JFrame {
 
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        submitButton.setText("Zarejestruj się");
+        submitButton.setMinimumSize(new java.awt.Dimension(116, 27));
+        submitButton.setText("Utwórz");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submitButtonActionPerformed(evt);
@@ -325,7 +326,10 @@ public class RegistrationPage extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         dispose();
-        new StartPageFrame().setVisible(true);
+        if(StartPageFrame.admin_logged)
+            new Clients().setVisible(true);
+        else
+            new StartPageFrame().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private boolean firstNameIsValid(){
@@ -425,35 +429,14 @@ public class RegistrationPage extends javax.swing.JFrame {
             email = emailTextField.getText();
             password = new String(passwordField.getPassword());
             Client.operate("Register");
-           // try {
-              /*  Socket socket = new Socket("localhost", 1522);
-                InputStream socket_input = socket.getInputStream();
-                DataInputStream socket_input_data = new DataInputStream(socket_input);
-                OutputStream socket_output = socket.getOutputStream();
-                DataOutputStream socket_output_data = new DataOutputStream(socket_output);*/
-                /*socket_output_data.writeUTF("Register");
-                socket_output_data.writeUTF(firstNameTextField.getText());
-                socket_output_data.flush();
-                socket_output_data.writeUTF(lastNameTextField.getText());
-                socket_output_data.flush();
-                socket_output_data.writeUTF(phoneNumberTextField.getText());
-                socket_output_data.flush();
-                socket_output_data.writeUTF(emailTextField.getText());
-                socket_output_data.flush();
-                socket_output_data.writeUTF(new String(passwordField.getPassword()));
-                socket_output_data.flush();
-                user_exists = socket_input_data.readUTF();*/
-                if (user_exists.equals("Tak"))
-                    TypeEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
-                /*socket_output_data.close();
-                socket_input_data.close();
-                socket.close();*/
-            /*} catch (UnknownHostException e) {
-                throw new RuntimeException(e);
-            } catch (
-                    IOException e) {
-                throw new RuntimeException(e);
-            }*/
+            if (user_exists.equals("Tak"))
+                TypeEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
+            else{
+                dispose();
+                if(StartPageFrame.admin_logged){
+                    new Clients().setVisible(true);
+                }
+            }
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 

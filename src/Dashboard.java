@@ -257,6 +257,11 @@ public class Dashboard extends javax.swing.JFrame {
             else
                 databaseButton.setForeground(null);
         });
+        databaseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                databaseButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
@@ -797,6 +802,11 @@ public class Dashboard extends javax.swing.JFrame {
         // StartPageFrame.admin_logged = false;
         dispose();
         new Clients().setVisible(true);
+    }
+    //nowe
+    private void databaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        new DatabasePanel().setVisible(true);
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

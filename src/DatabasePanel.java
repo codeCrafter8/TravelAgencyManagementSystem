@@ -1,13 +1,9 @@
+
 import java.awt.*;
-import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableCellRenderer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,44 +14,44 @@ import javax.swing.table.TableRowSorter;
  *
  * @author zuzan
  */
-public class Clients extends javax.swing.JFrame {
-    public static String adminName = "";
-    public static List<String> data = new ArrayList<>();
-    public static int listDataLength = 0;
-    private static TableRowSorter<TableModel> rowSorter;
-    public static int clientIDToRemove = 0;
-    public static int clientIDToChangePassword = 0;
-    public static int id = 0;
-    public static String firstName = "";
-    public static String lastName = "";
-    public static String email = "";
-    public static String phoneNumber = "";
+public class DatabasePanel extends javax.swing.JFrame {
+    public static String tableToRemove;
+    public static String usersTableName;
+    public static String tripsTableName;
+    public static String reservationsTableName;
+    public static String usersSeqName;
+    public static String tripsSeqName;
+    public static String reservationsSeqName;
     /**
-     * Creates new form Clients
+     * Creates new form Database
      */
-    public Clients() {
+    public DatabasePanel() {
+        Client.operate("checkTables");
+        Client.operate("checkSequences");
         initComponents();
-        //nowe
-        generateData();
-        populateTable();
-        searchClients();
-       // UI
         getContentPane().setBackground(new Color(215,198,151));
-        /*clientsTable.getTableHeader().setOpaque(true);
-        clientsTable.getTableHeader().setBackground(new Color(239,198,46));*/
+        
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
-        for (int i = 0; i < clientsTable.getModel().getColumnCount(); i++) {
-                clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
-        //nowe
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                data.clear();
-                dispose();
-            }
-        });
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tablesTable.getColumnModel().getColumn(0).setHeaderRenderer(headerRenderer);
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+        
+        DefaultTableCellRenderer cellsRenderer = new DefaultTableCellRenderer();
+        cellsRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tablesTable.getColumnModel().getColumn(0).setCellRenderer(cellsRenderer);
+        
+        DefaultTableCellRenderer header2Renderer = new DefaultTableCellRenderer();
+        header2Renderer.setBackground(new Color(151,123,92));
+        header2Renderer.setHorizontalAlignment(JLabel.CENTER);
+        sequencesTable.getColumnModel().getColumn(0).setHeaderRenderer(headerRenderer);
+        jScrollPane2.getViewport().setBackground(Color.WHITE);
+        
+        DefaultTableCellRenderer cells2Renderer = new DefaultTableCellRenderer();
+        cells2Renderer.setHorizontalAlignment(JLabel.CENTER);
+        sequencesTable.getColumnModel().getColumn(0).setCellRenderer(cells2Renderer);
+
+        adminNameLabel.setText(Clients.adminName);
     }
 
     /**
@@ -81,19 +77,19 @@ public class Clients extends javax.swing.JFrame {
         reservationsButton = new javax.swing.JButton();
         databaseButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        clientsTable = new javax.swing.JTable();
-        searchClientTextField = new javax.swing.JTextField();
-        searchClientLabel = new javax.swing.JLabel();
-        addClientButton = new javax.swing.JButton();
-        deleteClientButton = new javax.swing.JButton();
-        editClientButton = new javax.swing.JButton();
-        wrongEmailLabel = new javax.swing.JLabel();
-        editPasswordButton = new javax.swing.JButton();
+        tablesTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        sequencesTable = new javax.swing.JTable();
+        deleteTableButton = new javax.swing.JButton();
+        addTableButton = new javax.swing.JButton();
+        deleteSequenceButton = new javax.swing.JButton();
+        addSequenceButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Klienci");
+        setTitle("Baza Danych");
 
         topPanel.setBackground(new java.awt.Color(151, 123, 92));
+        topPanel.setMaximumSize(new java.awt.Dimension(205, 34));
         topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
 
         logOutButton.setBackground(new java.awt.Color(242, 242, 242));
@@ -124,7 +120,7 @@ public class Clients extends javax.swing.JFrame {
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(737, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -200,9 +196,9 @@ public class Clients extends javax.swing.JFrame {
             }
         });
 
-        clientsButton.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        clientsButton.setText("   Klienci");
-        clientsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        clientsButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        clientsButton.setText("    Klienci");
+        clientsButton.setBorder(null);
         clientsButton.setContentAreaFilled(false);
         clientsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -216,6 +212,11 @@ public class Clients extends javax.swing.JFrame {
             }
             else
                 clientsButton.setForeground(null);
+        });
+        clientsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientsButtonActionPerformed(evt);
+            }
         });
 
         tripsButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -252,8 +253,9 @@ public class Clients extends javax.swing.JFrame {
                 reservationsButton.setForeground(null);
         });
 
-        databaseButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        databaseButton.setText("Baza danych");
+        databaseButton.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        databaseButton.setText("   Baza danych");
+        databaseButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         databaseButton.setContentAreaFilled(false);
         databaseButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         databaseButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -267,11 +269,6 @@ public class Clients extends javax.swing.JFrame {
             }
             else
                 databaseButton.setForeground(null);
-        });
-        databaseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                databaseButtonActionPerformed(evt);
-            }
         });
 
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
@@ -311,118 +308,95 @@ public class Clients extends javax.swing.JFrame {
                 .addComponent(adminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(316, Short.MAX_VALUE))
+                .addContainerGap(318, Short.MAX_VALUE))
         );
 
-        clientsTable.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 402));
+
+        tablesTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                    //nowe
-                /*{null, null, null, "", null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}*/
             },
             new String [] {
-                "Id", "Imię", "Nazwisko", "E-mail", "Nr telefonu"
+                "Tabele"
             }
-        )//nowe
-        {public boolean isCellEditable(int row, int column){
-            if(column == 0)
-                return false;
-            else
-                return true;}});
-        clientsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        clientsTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        clientsTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        clientsTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        clientsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
-        jScrollPane1.setViewportView(clientsTable);
+        ));
+        //nowe
+        DefaultTableModel model = (DefaultTableModel) tablesTable.getModel();
+        model.addRow(new Object[]{ usersTableName });
+        model.addRow(new Object[]{ tripsTableName });
+        model.addRow(new Object[]{ reservationsTableName });
 
-        searchClientTextField.addActionListener(new java.awt.event.ActionListener() {
+        tablesTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablesTable.setRowHeight(25);
+        tablesTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        jScrollPane1.setViewportView(tablesTable);
+
+        jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        sequencesTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        //nowe
+        sequencesTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        sequencesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Sekwencje"
+            }
+        ));
+        //nowe
+        DefaultTableModel model2 = (DefaultTableModel) sequencesTable.getModel();
+        model2.addRow(new Object[]{ usersSeqName });
+        model2.addRow(new Object[]{ tripsSeqName });
+        model2.addRow(new Object[]{ reservationsSeqName });
+
+        sequencesTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sequencesTable.setRowHeight(25);
+        jScrollPane2.setViewportView(sequencesTable);
+
+        deleteTableButton.setBackground(new java.awt.Color(241, 227, 185));
+        deleteTableButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        deleteTableButton.setText("Usuń Tabelę");
+        deleteTableButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteTableButton.setMaximumSize(new java.awt.Dimension(120, 25));
+        deleteTableButton.setPreferredSize(new java.awt.Dimension(120, 25));
+        //nowe
+        deleteTableButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchClientTextFieldActionPerformed(evt);
+                deleteTableButtonActionPerformed(evt);
             }
         });
 
-        searchClientLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        searchClientLabel.setText("Wyszukaj klienta po e-mailu");
-
-        addClientButton.setBackground(new java.awt.Color(241, 227, 185));
-        addClientButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        addClientButton.setText("+ Dodaj Klienta");
-        addClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addTableButton.setBackground(new java.awt.Color(241, 227, 185));
+        addTableButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        addTableButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addTableButton.setLabel("Dodaj Tabelę");
+        addTableButton.setPreferredSize(new java.awt.Dimension(120, 25));
         //nowe
-        addClientButton.addActionListener(new java.awt.event.ActionListener() {
+        addTableButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addClientButtonActionPerformed(evt);
+                addTableButtonActionPerformed(evt);
             }
         });
 
-        deleteClientButton.setBackground(new java.awt.Color(241, 227, 185));
-        deleteClientButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        deleteClientButton.setText("Usuń Klienta");
-        deleteClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteSequenceButton.setBackground(new java.awt.Color(241, 227, 185));
+        deleteSequenceButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        deleteSequenceButton.setText("Usuń Sekwencję");
+        deleteSequenceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         //nowe
-        deleteClientButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteSequenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteClientButtonActionPerformed(evt);
+                deleteSequenceButtonActionPerformed(evt);
             }
         });
 
-        editClientButton.setBackground(new java.awt.Color(241, 227, 185));
-        editClientButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        editClientButton.setText("Edytuj Klienta");
-        editClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addSequenceButton.setBackground(new java.awt.Color(241, 227, 185));
+        addSequenceButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        addSequenceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addSequenceButton.setLabel("Dodaj Sekwencję");
         //nowe
-        editClientButton.addActionListener(new java.awt.event.ActionListener() {
+        addSequenceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editClientButtonActionPerformed(evt);
-            }
-        });
-
-        wrongEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongEmailLabel.setText("");
-        wrongEmailLabel.setPreferredSize(new java.awt.Dimension(222, 16));
-
-        editPasswordButton.setBackground(new java.awt.Color(241, 227, 185));
-        editPasswordButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        editPasswordButton.setText("Zmień hasło Klienta");
-        editPasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        //nowe
-        editPasswordButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editPasswordButtonActionPerformed(evt);
+                addSequenceButtonActionPerformed(evt);
             }
         });
 
@@ -434,189 +408,91 @@ public class Clients extends javax.swing.JFrame {
                 .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(searchClientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(searchClientLabel)
-                                    .addComponent(wrongEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addClientButton)
-                                .addGap(68, 68, 68))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(295, 295, 295)
-                                .addComponent(deleteClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(editClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(352, 352, 352)
-                                .addComponent(editPasswordButton)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(92, 92, 92)
+                        .addComponent(deleteTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(addTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(150, 150, 150)
+                        .addComponent(deleteSequenceButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(addSequenceButton)
+                        .addContainerGap(82, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(searchClientLabel)
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchClientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(wrongEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(96, 96, 96)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteClientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(deleteTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addTableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteSequenceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addSequenceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchClientTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchClientTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchClientTextFieldActionPerformed
     //nowe
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         dispose();
-        data.clear();
         StartPageFrame.admin_logged = false;
         new StartPageFrame().setVisible(true);
     }
     //nowe
     private void panelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         dispose();
-        data.clear();
         new Dashboard().setVisible(true);
     }
     //nowe
-    private void databaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         dispose();
-        new DatabasePanel().setVisible(true);
+        new Clients().setVisible(true);
     }
     //nowe
-    private void editPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        int row = clientsTable.getSelectedRow();
+    private void addTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tablesTable.getModel();
+        int row = tablesTable.getSelectedRow();
         if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {
-            new ChangeClientPassword().setVisible(true);
-            clientIDToChangePassword = Integer.parseInt(model.getValueAt(row, 0).toString());
-        }
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej tabeli.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
     //nowe
-    private void generateData(){
-        Client.operate("clientsUpdate");
-        adminNameLabel.setText(adminName);
-    }
-    //nowe
-    private void populateTable(){
-        int counter = 0;
-        int size = (listDataLength/5);
-        DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
-                    data.get(counter+4)});
-            if(size > 1)
-                counter+=5;
-        }
-    }
-    //nowe
-    private void checkEmailValidation(){
-        if(!StartPageFrame.compiledEmailPattern.matcher(searchClientTextField.getText()).matches())
-            wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
-        else
-            wrongEmailLabel.setText("");
-        if(searchClientTextField.getText().isEmpty())
-            wrongEmailLabel.setText("");
-    }
-    //nowe
-    private void searchClients(){
-        //clientsTable.setDefaultEditor(Object.class, null);
-        clientsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        rowSorter = new TableRowSorter<>(clientsTable.getModel());
-        clientsTable.setRowSorter(rowSorter);
-        searchClientTextField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                checkEmailValidation();
-                String text = searchClientTextField.getText();
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text, 3));
-                }
-            }
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                checkEmailValidation();
-                String text = searchClientTextField.getText();
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text));
-                }
-            }
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                checkEmailValidation();
-                throw new UnsupportedOperationException("Unsupported event!");
-            }
-        });
-    }
-    //nowe
-    private void deleteClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        int row = clientsTable.getSelectedRow();
+    private void deleteTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tablesTable.getModel();
+        int row = tablesTable.getSelectedRow();
         if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {
-            clientIDToRemove = Integer.parseInt(model.getValueAt(row, 0).toString());
-            model.removeRow(row);
-            Client.operate("deleteClient");
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej tabeli.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else{
+            tableToRemove = model.getValueAt(row, 0).toString();
+            Client.operate("deleteTable");
         }
     }
     //nowe
-    private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        dispose();
-        new RegistrationPage().setVisible(true);
-    }
-    //nowe
-    private void editClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        int row = clientsTable.getSelectedRow();
+    private void addSequenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) sequencesTable.getModel();
+        int row = sequencesTable.getSelectedRow();
         if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {
-            id = Integer.parseInt(model.getValueAt(row, 0).toString());
-            firstName = model.getValueAt(row, 1).toString();
-            lastName = model.getValueAt(row, 2).toString();
-            email = model.getValueAt(row, 3).toString();
-            phoneNumber = model.getValueAt(row, 4).toString();
-            System.out.println(id + " " + firstName + " " + lastName + " " + email + " " + phoneNumber);
-            if (firstName.equals("") || lastName.equals("") || email.equals("") || phoneNumber.equals("")) {
-                JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
-            } else {
-                Client.operate("editClient");
-            }
-        }
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej sekwencji.", "Informacja", JOptionPane.ERROR_MESSAGE);
+    }
+    //nowe
+    private void deleteSequenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) sequencesTable.getModel();
+        int row = sequencesTable.getSelectedRow();
+        if(row == -1)
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej sekwencji.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
     /**
      * @param args the command line arguments
@@ -635,46 +511,46 @@ public class Clients extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Clients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatabasePanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Clients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatabasePanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Clients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatabasePanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Clients.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DatabasePanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Clients().setVisible(true);
+                new DatabasePanel().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addClientButton;
+    private javax.swing.JButton addSequenceButton;
+    private javax.swing.JButton addTableButton;
     private javax.swing.JLabel adminIconLabel;
     private javax.swing.JLabel adminLabel;
     private javax.swing.JLabel adminNameLabel;
     private javax.swing.JPanel adminPanel;
     private javax.swing.JButton clientsButton;
-    private javax.swing.JTable clientsTable;
     private javax.swing.JButton databaseButton;
-    private javax.swing.JButton deleteClientButton;
-    private javax.swing.JButton editClientButton;
-    private javax.swing.JButton editPasswordButton;
+    private javax.swing.JButton deleteSequenceButton;
+    private javax.swing.JButton deleteTableButton;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logOutButton;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JPanel optionsPanel;
     private javax.swing.JButton panelButton;
     private javax.swing.JButton reservationsButton;
-    private javax.swing.JLabel searchClientLabel;
-    private javax.swing.JTextField searchClientTextField;
+    private javax.swing.JTable sequencesTable;
+    private javax.swing.JTable tablesTable;
     private javax.swing.JPanel topPanel;
     private javax.swing.JButton tripsButton;
-    private javax.swing.JLabel wrongEmailLabel;
     // End of variables declaration//GEN-END:variables
 }

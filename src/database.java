@@ -1,6 +1,7 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class database {
     static Statement statement;
@@ -30,8 +31,117 @@ public class database {
             else if (Server.operation.equals("editClient")) {
                 editClient();
             }
+            else if(Server.operation.equals("changeClientPassword")){
+                changeClientPassword();
+            }
+            else if(Server.operation.equals("deleteTable")){
+                deleteTable();
+            }
+            else if(Server.operation.equals("checkTables")){
+                checkTables();
+            }
+            else if(Server.operation.equals("checkSequences")){
+                checkSequences();
+            }
         }
         catch(Exception ex){
+            System.out.println("Ex: " + ex);
+        }
+    }
+
+    private static void checkTables() {
+        checkTable("users");
+        checkTable("trips");
+        checkTable("reservations");
+    }
+    private static void checkTable(String tableName){
+        try{
+            String query = "SELECT * FROM " + tableName;
+            ResultSet resultSet = statement.executeQuery(query);
+            if(resultSet.next()) {
+                System.out.println("res1");
+                switch(tableName){
+                    case "users" -> {
+                        DatabasePanel.usersTableName = tableName;
+                    }
+                    case "trips" -> {
+                        DatabasePanel.tripsTableName = tableName;
+                    }
+                    case "reservations" -> {
+                        DatabasePanel.reservationsTableName = tableName;
+                    }
+                }
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            switch(tableName){
+                case "users" -> {
+                    DatabasePanel.usersTableName = tableName + " (usunięta)";
+                }
+                case "trips" -> {
+                    DatabasePanel.tripsTableName = tableName + " (usunięta)";
+                }
+                case "reservations" -> {
+                    DatabasePanel.reservationsTableName = tableName + " (usunięta)";
+                }
+            }
+        }
+    }
+    private static void checkSequences() {
+        checkSequence("users_seq");
+        checkSequence("trips_seq");
+        checkSequence("reservations_seq");
+    }
+    private static void checkSequence(String seqName){
+        try{
+            String query = "SELECT * FROM user_sequences WHERE sequence_name = '" + seqName.toUpperCase() + "'";
+            System.out.println(query);
+            ResultSet resultSet = statement.executeQuery(query);
+            switch(seqName){
+                case "users_seq" -> {
+                    if(resultSet.next())
+                        DatabasePanel.usersSeqName = seqName;
+                    else
+                        DatabasePanel.usersSeqName = seqName + " (usunięta)";
+                }
+                case "trips_seq" -> {
+                    if(resultSet.next())
+                        DatabasePanel.tripsSeqName = seqName;
+                    else
+                        DatabasePanel.tripsSeqName = seqName + " (usunięta)";
+                }
+                case "reservations_seq" -> {
+                    if(resultSet.next())
+                        DatabasePanel.reservationsSeqName = seqName;
+                    else
+                        DatabasePanel.reservationsSeqName = seqName + " (usunięta)";
+                }
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+        }
+    }
+    private static void deleteTable() {
+        try{
+            String query = "DROP table " + Server.tableToRemove + " CASCADE CONSTRAINTS";
+            statement.executeQuery(query);
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+        }
+    }
+
+    private static void changeClientPassword() {
+        try{
+            String query = "UPDATE users SET password = ? WHERE id_user = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setString(1, Server.passwordChanged);
+            preparedState.setInt(2, Server.clientIDToChangePassword);
+            preparedState.executeUpdate();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+        }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
         }
     }
@@ -84,21 +194,11 @@ public class database {
     }
     private static void updateDashboard() {
         try {
-            /*String adminQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
-            PreparedStatement adminPreparedState = connection.prepareStatement(adminQuery);
-            adminPreparedState.setString(1, Server.password);
-            adminPreparedState.setString(2, Server.email);
-            ResultSet resultAdmin = adminPreparedState.executeQuery();
-            if(resultAdmin.next()){
-                Dashboard.adminName = resultAdmin.getString("FirstName");
-               // System.out.println(Dashboard.adminName);
-            }*/
             findAdminName();
             Dashboard.adminName = adminName;
             String howManyClientsQuery = "SELECT COUNT(*) as clientsCount FROM users WHERE userRank = 'client'";
             ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
             if(resultHowManyClients.next()) {
-               // System.out.println(resultHowManyClients.getInt("clientsCount"));
                 Dashboard.howManyClients = resultHowManyClients.getInt("clientsCount");
             }
         }catch (SQLException ex) {
