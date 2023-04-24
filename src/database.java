@@ -13,38 +13,72 @@ public class database {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
             statement = connection.createStatement();
-            if(Server.operation.equals("Register")) {
-                send_data();
-            }
-            else if(Server.operation.equals("Login")) {
-                login();
-            }
-            else if(Server.operation.equals("dashboardUpdate")){
-                updateDashboard();
-            }
-            else if(Server.operation.equals("clientsUpdate")){
-                updateClients();
-            }
-            else if (Server.operation.equals("deleteClient")) {
-                deleteClient();
-            }
-            else if (Server.operation.equals("editClient")) {
-                editClient();
-            }
-            else if(Server.operation.equals("changeClientPassword")){
-                changeClientPassword();
-            }
-            else if(Server.operation.equals("deleteTable")){
-                deleteTable();
-            }
-            else if(Server.operation.equals("checkTables")){
-                checkTables();
-            }
-            else if(Server.operation.equals("checkSequences")){
-                checkSequences();
+            switch (Server.operation) {
+                case "Register" -> send_data();
+                case "Login" -> login();
+                case "dashboardUpdate" -> updateDashboard();
+                case "clientsUpdate" -> updateClients();
+                case "deleteClient" -> deleteClient();
+                case "editClient" -> editClient();
+                case "changeClientPassword" -> changeClientPassword();
+                case "deleteTable" -> deleteTable();
+                case "checkTables" -> checkTables();
+                case "checkSequences" -> checkSequences();
+                case "deleteSequence" -> deleteSequence();
+                case "addSequence" -> addSequence();
+                case "addTable" -> addTable();
             }
         }
         catch(Exception ex){
+            System.out.println("Ex: " + ex);
+        }
+    }
+
+    private static void addTable() {
+        try{
+            String query = "";
+            int index = Server.tableName.indexOf("(usunięta)");
+            switch(Server.tableName.substring(0, index - 1)){
+                case "users" -> {
+                    query = "CREATE TABLE " + Server.tableName + " (ID_user NUMBER(6) PRIMARY KEY, email VARCHAR(70), password VARCHAR(70), " +
+                            "firstName VARCHAR(70), lastName VARCHAR(70), phoneNumber VARCHAR(25), userLogged NUMBER(6))";
+                }
+                case "trips" -> {
+                    query = "CREATE TABLE " + Server.tableName.substring(0, index - 1) + "(ID_trip NUMBER(6))";
+                    System.out.println(query);
+                }
+                case "reservations" -> {
+                    query = "CREATE TABLE " + Server.tableName.substring(0, index - 1) + "(ID_reservations NUMBER(6))";
+                }
+            }
+            statement.executeQuery(query);
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+        }
+    }
+
+    private static void addSequence() {
+        try{
+            int index = Server.seqName.indexOf("(usunięta)");
+            String query = "CREATE SEQUENCE " + Server.seqName.substring(0, index);
+            statement.executeQuery(query);
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            System.out.println("add seq");
+        }catch (SQLException ex) {
+            System.out.println("Ex add: " + ex);
+        }
+    }
+
+    private static void deleteSequence() {
+        try{
+            String query = "DROP SEQUENCE " + Server.seqName;
+            statement.executeQuery(query);
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+        }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
         }
     }
@@ -56,35 +90,31 @@ public class database {
     }
     private static void checkTable(String tableName){
         try{
-            String query = "SELECT * FROM " + tableName;
+            String query = "SELECT * FROM user_tables WHERE table_name = '" + tableName.toUpperCase() + "'";
+            System.out.println(query);
             ResultSet resultSet = statement.executeQuery(query);
-            if(resultSet.next()) {
-                System.out.println("res1");
-                switch(tableName){
-                    case "users" -> {
+            switch(tableName) {
+                case "users" -> {
+                    if (resultSet.next())
                         DatabasePanel.usersTableName = tableName;
-                    }
-                    case "trips" -> {
+                    else
+                        DatabasePanel.usersTableName = tableName + " (usunięta)";
+                }
+                case "trips" -> {
+                    if (resultSet.next())
                         DatabasePanel.tripsTableName = tableName;
-                    }
-                    case "reservations" -> {
+                    else
+                        DatabasePanel.tripsTableName = tableName + " (usunięta)";
+                }
+                case "reservations" -> {
+                    if (resultSet.next())
                         DatabasePanel.reservationsTableName = tableName;
-                    }
+                    else
+                        DatabasePanel.reservationsTableName = tableName + " (usunięta)";
                 }
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            switch(tableName){
-                case "users" -> {
-                    DatabasePanel.usersTableName = tableName + " (usunięta)";
-                }
-                case "trips" -> {
-                    DatabasePanel.tripsTableName = tableName + " (usunięta)";
-                }
-                case "reservations" -> {
-                    DatabasePanel.reservationsTableName = tableName + " (usunięta)";
-                }
-            }
         }
     }
     private static void checkSequences() {
@@ -123,7 +153,7 @@ public class database {
     }
     private static void deleteTable() {
         try{
-            String query = "DROP table " + Server.tableToRemove + " CASCADE CONSTRAINTS";
+            String query = "DROP table " + Server.tableName + " CASCADE CONSTRAINTS";
             statement.executeQuery(query);
             String commit = "COMMIT";
             statement.executeUpdate(commit);
@@ -265,7 +295,7 @@ public class database {
             ResultSet result = emailPreparedState.executeQuery();
             if(result.next()){
                 StartPageFrame.user_exists = true;
-                //System.out.println("Jest");
+                System.out.println("Jest");
                 String passwordQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
                 PreparedStatement passwordPreparedState = connection.prepareStatement(passwordQuery);
                 passwordPreparedState.setString(1, Server.password);

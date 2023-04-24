@@ -281,44 +281,21 @@ public class StartPageFrame extends javax.swing.JFrame {
             email = emailTextField.getText();
             password = new String(passwordField.getPassword());
             typeEmailLabel.setText("");
-            //try {
-                Client.operate("Login");
-                /*Socket socket = new Socket("localhost", 1522);
-                InputStream socket_input = socket.getInputStream();
-                DataInputStream socket_input_data = new DataInputStream(socket_input);
-                OutputStream socket_output = socket.getOutputStream();
-                DataOutputStream socket_output_data = new DataOutputStream(socket_output);
-                socket_output_data.writeUTF("Login");
-                socket_output_data.writeUTF(emailTextField.getText());
-                socket_output_data.flush();
-                socket_output_data.writeUTF(new String(passwordField.getPassword()));
-                socket_output_data.flush();
-                user_exists = socket_input_data.readBoolean();*/
+            Client.operate("Login");
 
-                if (!user_exists)
-                    typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
+            if (!user_exists)
+                typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
+            else {
+                if (!password_valid)
+                    typePasswordLabel.setText("Błędne hasło.");
                 else {
-                    //password_valid = socket_input_data.readBoolean();
-                    if (!password_valid)
-                        typePasswordLabel.setText("Błędne hasło.");
-                    else {
-                        // admin_logged = socket_input_data.readBoolean();
-                        if (admin_logged) {
-                            System.out.println("Admin StartPage");
-                            dispose();
-                            new Dashboard().setVisible(true);
-                        }
+                    if (admin_logged) {
+                        System.out.println("Admin StartPage");
+                        dispose();
+                        new Dashboard().setVisible(true);
                     }
                 }
-           // }
-                /*socket_output_data.close();
-                socket_input_data.close();
-                socket.close();*/
-            /*} catch (UnknownHostException e) {
-                throw new RuntimeException(e);*/
-           /* catch (IOException e) {
-                throw new RuntimeException(e);
-            }*/
+            }
         }
     }//GEN-LAST:event_signInButtonActionPerformed
     /**

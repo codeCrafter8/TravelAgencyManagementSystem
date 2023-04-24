@@ -9,7 +9,8 @@ public class Server {
     public static String email, password, firstName, lastName, phoneNumber, emailReg, passwordReg, passwordChanged;
     public static int clientIDToRemove;
     public static int clientIDToChangePassword;
-    public static String tableToRemove;
+    public static String tableName;
+    public static String seqName;
     public static String operation;
     public static List<String> clientEditList = new ArrayList<>();
     public static void operate(){
@@ -94,7 +95,7 @@ public class Server {
                         database.connect_with_database();
                     }
                     case "deleteTable" -> {
-                        tableToRemove = socket_input_data.readUTF();
+                        tableName = socket_input_data.readUTF();
                         database.connect_with_database();
                     }
                     case "checkTables" -> {
@@ -114,6 +115,19 @@ public class Server {
                         socket_output_data.flush();
                         socket_output_data.writeUTF(DatabasePanel.reservationsSeqName);
                         socket_output_data.flush();
+                    }
+                    case "deleteSequence" -> {
+                        seqName = socket_input_data.readUTF();
+                        database.connect_with_database();
+                    }
+                    case "addSequence" -> {
+                        System.out.println("serwer wchodzi");
+                        seqName = socket_input_data.readUTF();
+                        database.connect_with_database();
+                    }
+                    case "addTable" -> {
+                        tableName = socket_input_data.readUTF();
+                        database.connect_with_database();
                     }
                 }
             }

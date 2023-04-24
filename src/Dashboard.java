@@ -794,12 +794,10 @@ public class Dashboard extends javax.swing.JFrame {
     }
     //nowe
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-       // StartPageFrame.admin_logged = false;
         dispose();
         new StartPageFrame().setVisible(true);
     }
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // StartPageFrame.admin_logged = false;
         dispose();
         new Clients().setVisible(true);
     }

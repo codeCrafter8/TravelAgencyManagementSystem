@@ -68,7 +68,7 @@ public class Client {
                     socket_output_data.flush();
                 }
                 case "deleteTable" -> {
-                    socket_output_data.writeUTF(DatabasePanel.tableToRemove);
+                    socket_output_data.writeUTF(DatabasePanel.tableName);
                     socket_output_data.flush();
                 }
                 case "checkTables" -> {
@@ -80,6 +80,19 @@ public class Client {
                     DatabasePanel.usersSeqName = socket_input_data.readUTF();
                     DatabasePanel.tripsSeqName = socket_input_data.readUTF();
                     DatabasePanel.reservationsSeqName = socket_input_data.readUTF();
+                }
+                case "deleteSequence" -> {
+                    socket_output_data.writeUTF(DatabasePanel.seqName);
+                    socket_output_data.flush();
+                }
+                case "addSequence" -> {
+                    System.out.println("klient wchodzi");
+                    socket_output_data.writeUTF(DatabasePanel.seqName);
+                    socket_output_data.flush();
+                }
+                case "addTable" -> {
+                    socket_output_data.writeUTF(DatabasePanel.tableName);
+                    socket_output_data.flush();
                 }
             }
             socket_output_data.close();

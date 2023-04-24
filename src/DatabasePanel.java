@@ -15,7 +15,8 @@ import javax.swing.table.TableCellRenderer;
  * @author zuzan
  */
 public class DatabasePanel extends javax.swing.JFrame {
-    public static String tableToRemove;
+    public static String tableName;
+    public static String seqName;
     public static String usersTableName;
     public static String tripsTableName;
     public static String reservationsTableName;
@@ -468,6 +469,16 @@ public class DatabasePanel extends javax.swing.JFrame {
         int row = tablesTable.getSelectedRow();
         if(row == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej tabeli.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else
+            tableName = model.getValueAt(row, 0).toString();
+
+        int index = tableName.indexOf("(usunięta)");
+        if(index != -1) {
+            Client.operate("addTable");
+            model.setValueAt(tableName.substring(0, index - 1), row, 0);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Ta tabela już istnieje.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
     //nowe
     private void deleteTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
@@ -475,9 +486,15 @@ public class DatabasePanel extends javax.swing.JFrame {
         int row = tablesTable.getSelectedRow();
         if(row == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej tabeli.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else{
-            tableToRemove = model.getValueAt(row, 0).toString();
+        else
+            tableName = model.getValueAt(row, 0).toString();
+
+        if(tableName.indexOf("(usunięta)") == -1){
             Client.operate("deleteTable");
+            model.setValueAt(tableName + " (usunięta)", row, 0);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Ta tabela jest już usunięta.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
     }
     //nowe
@@ -486,6 +503,17 @@ public class DatabasePanel extends javax.swing.JFrame {
         int row = sequencesTable.getSelectedRow();
         if(row == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej sekwencji.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else {
+            seqName = model.getValueAt(row, 0).toString();
+        }
+
+        int index = seqName.indexOf("(usunięta)");
+        if(index != -1) {
+            Client.operate("addSequence");
+            model.setValueAt(seqName.substring(0, index - 1), row, 0);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Ta sekwencja już istnieje.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
     //nowe
     private void deleteSequenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
@@ -493,6 +521,15 @@ public class DatabasePanel extends javax.swing.JFrame {
         int row = sequencesTable.getSelectedRow();
         if(row == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej sekwencji.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else
+            seqName = model.getValueAt(row, 0).toString();
+
+        if(seqName.indexOf("(usunięta)") == -1) {
+            Client.operate("deleteSequence");
+            model.setValueAt(seqName + " (usunięta)", row, 0);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Ta sekwencja jest już usunięta.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
     /**
      * @param args the command line arguments
