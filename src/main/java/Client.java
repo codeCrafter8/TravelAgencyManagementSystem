@@ -41,6 +41,7 @@ public class Client {
                 case "dashboardUpdate"-> {
                     Dashboard.adminName = socket_input_data.readUTF();
                     Dashboard.howManyClients = socket_input_data.readInt();
+                    Dashboard.howManyTrips = socket_input_data.readInt();
                 }
                 case "clientsUpdate" -> {
                     Clients.adminName = socket_input_data.readUTF();

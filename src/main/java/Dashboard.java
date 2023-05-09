@@ -16,6 +16,7 @@ import javax.swing.*;
 public class Dashboard extends javax.swing.JFrame {
     public static String adminName = "";
     public static int howManyClients;
+    public static int howManyTrips;
     public static List<String> phoneNumbers = new ArrayList<>();
     public static int phoneNumbersListLength;
     /**
@@ -484,6 +485,8 @@ public class Dashboard extends javax.swing.JFrame {
         adminNameLabel.setText(adminName);
         String howManyClientsString = String.valueOf(howManyClients);
         clientsNumberLabel.setText(howManyClientsString);
+        String howManyTripsString = String.valueOf(howManyTrips);
+        tripsNumberLabel.setText(howManyTripsString);
         Client.operate("getNumbers");
         DefaultListModel model = new DefaultListModel();
         for(String number : phoneNumbers)

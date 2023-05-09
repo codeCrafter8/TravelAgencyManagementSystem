@@ -48,6 +48,8 @@ public class BackgroundThreads extends SwingWorker<Void, Void> {
                         ServerGUI.socket_output_data.flush();
                         ServerGUI.socket_output_data.writeInt(Dashboard.howManyClients);
                         ServerGUI.socket_output_data.flush();
+                        ServerGUI.socket_output_data.writeInt(Dashboard.howManyTrips);
+                        ServerGUI.socket_output_data.flush();
                     }
                     case "clientsUpdate" -> {
                         database.connect_with_database();

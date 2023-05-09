@@ -35,6 +35,9 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
     public static int departureListLength;
     public static int listDataLength = 0;
     public static String number;
+    public static int selectedRow;
+    public static int howManyAdults;
+    public static int howManyChildren;
     /**
      * Creates new form WYSZUKIWARKA
      */
@@ -118,14 +121,14 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
 
     private void populateTable(){
         int counter = 0;
-        int size = (listDataLength/7);
+        int size = (listDataLength/8);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                     data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=7;
+                counter+=8;
         }
     }
 
@@ -539,6 +542,36 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         tabela.setShowGrid(true);
         tabela.getTableHeader().setResizingAllowed(false);
         scroll_tabela.setViewportView(tabela);
+        //nowe
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                howManyAdults = (int)ilosc_doroslych.getValue();
+                howManyChildren = (int)ilosc_dzieci.getValue();
+                if (howManyAdults == 0 && howManyChildren > 0) {
+                    JOptionPane.showMessageDialog(null,"Wymagany jest przynajmniej jeden dorosły.","Alert",JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    selectedRow = tabela.rowAtPoint(evt.getPoint());
+                    if (selectedRow >= 0) {
+                        int counter = 0;
+                        int size = (listDataLength/8);
+                        for(int i=0; i<size; i++) {
+                            if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
+                                if(howManyAdults + howManyChildren > Integer.parseInt(WYSZUKIWARKA.data.get(counter+6))){
+                                    JOptionPane.showMessageDialog(null,"Limit miejsc dla tej wycieczki wynosi: " + WYSZUKIWARKA.data.get(counter+6),"Alert",JOptionPane.WARNING_MESSAGE);
+                                }else{
+                                    dispose();
+                                    new oferty().setVisible(true);
+                                }
+                            }
+                            if(size > 1)
+                                counter+=8;
+                        }
+                    }
+                }
+            }
+        });
 
         zarzadzanie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moje konto", "Moje rezerwacje", "Wyloguj" }));
         zarzadzanie.setBorder(null);
@@ -673,21 +706,24 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    //nowe
     private void zarzadzanieActionPerformed(ActionEvent evt) {
         if(zarzadzanie.getSelectedItem().equals("Wyloguj")) {
-            JOptionPane.showMessageDialog(null, "Niepoprawnie wpisany numer telefonu.", "Informacja", JOptionPane.ERROR_MESSAGE);
-            /*dispose();
-            Client.operate("logOut");
-            StartPageFrame.client_logged = false;
-            new StartPageFrame().setVisible(true);*/
+            Object[] options = {"Tak", "Nie"};
+            if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
+                dispose();
+                Client.operate("logOut");
+                StartPageFrame.client_logged = false;
+                new StartPageFrame().setVisible(true);
+            }
         }
     }
     //nowe
     private void lato2023ActionPerformed(ActionEvent evt) {
         //nowe
         int counter = 0;
-        int size = (listDataLength/7);
+        int size = (listDataLength/8);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -714,7 +750,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                     data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=7;
+                counter+=8;
         }
     }
 
@@ -780,7 +816,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
     //nowe
     private void filterTable(String country){
         int counter = 0;
-        int size = (listDataLength/7);
+        int size = (listDataLength/8);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
@@ -788,13 +824,13 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                         data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=7;
+                counter+=8;
         }
     }
     //nowe
     private void filterTable(String country1, String country2){
         int counter = 0;
-        int size = (listDataLength/7);
+        int size = (listDataLength/8);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
@@ -802,7 +838,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                         data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=7;
+                counter+=8;
         }
     }
     private void egzotykaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_egzotykaActionPerformed
@@ -815,7 +851,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         // TODO add your handling code here:
         //nowe
         int counter = 0;
-        int size = (listDataLength/7);
+        int size = (listDataLength/8);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -831,7 +867,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                         data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=7;
+                counter+=8;
         }
     }//GEN-LAST:event_lastminuteActionPerformed
     //nowe
@@ -849,37 +885,41 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         // TODO add your handling code here:
         //nowe
         boolean isDateValid = checkDate();
-        if(isDateValid){
-            String country = (String) dokad.getSelectedItem();
-            String departure_city = (String) skad.getSelectedItem();
-            int howManyAdults = (int) ilosc_doroslych.getValue();
-            int howManyChildren = (int) ilosc_dzieci.getValue();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat formatterSearch = new SimpleDateFormat("dd/MM/yyyy");
-            Date departure = null;
-            Date arrival = null;
-            Date date1 = null;
-            Date date2 = null;
+        if(isDateValid) {
+            howManyAdults = (int) ilosc_doroslych.getValue();
+            howManyChildren = (int) ilosc_dzieci.getValue();
+            if (howManyAdults == 0 && howManyChildren > 0) {
+                JOptionPane.showMessageDialog(null,"Wymagany jest przynajmniej jeden dorosły.","Alert",JOptionPane.WARNING_MESSAGE);
+            } else {
+                String country = (String) dokad.getSelectedItem();
+                String departure_city = (String) skad.getSelectedItem();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat formatterSearch = new SimpleDateFormat("dd/MM/yyyy");
+                Date departure = null;
+                Date arrival = null;
+                Date date1 = null;
+                Date date2 = null;
 
-            int counter = 0;
-            int size = (listDataLength/7);
-            DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-            model.setRowCount(0);
-            for(int i=0; i<size; i++){
-                try {
-                    date1 = formatter.parse(String.valueOf(data.get(counter+2)));
-                    date2 = formatter.parse(String.valueOf(data.get(counter+3)));
-                    departure = formatterSearch.parse(wyjazd.getText());
-                    arrival = formatterSearch.parse(przyjazd.getText());
-                }catch (ParseException e) {
-                    e.printStackTrace();
+                int counter = 0;
+                int size = (listDataLength / 8);
+                DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+                model.setRowCount(0);
+                for (int i = 0; i < size; i++) {
+                    try {
+                        date1 = formatter.parse(String.valueOf(data.get(counter + 2)));
+                        date2 = formatter.parse(String.valueOf(data.get(counter + 3)));
+                        departure = formatterSearch.parse(wyjazd.getText());
+                        arrival = formatterSearch.parse(przyjazd.getText());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if (data.get(counter).equals(country) && data.get(counter + 5).equals(departure_city) && departure.compareTo(date1) == 0
+                            && arrival.compareTo(date2) == 0 && (howManyChildren + howManyAdults) <= Integer.parseInt(data.get(counter + 6)))
+                        model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
+                                data.get(counter + 4) + " zł"});
+                    if (size > 1)
+                        counter += 8;
                 }
-                if(data.get(counter).equals(country) && data.get(counter+5).equals(departure_city) && departure.compareTo(date1) == 0
-                && arrival.compareTo(date2) == 0 && (howManyChildren + howManyAdults) <= Integer.parseInt(data.get(counter+6)))
-                    model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
-                        data.get(counter+4) + " zł"});
-                if(size > 1)
-                    counter+=7;
             }
         }
     }//GEN-LAST:event_lupaActionPerformed

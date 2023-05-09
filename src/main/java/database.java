@@ -87,6 +87,7 @@ public class database {
                 tripsData.add(Integer.toString((result.getInt("price_per_person"))));
                 tripsData.add(result.getString("departure_city"));
                 tripsData.add(Integer.toString(result.getInt("people_limit")));
+                tripsData.add(Integer.toString(result.getInt("id_trip")));
             }
             WYSZUKIWARKA.listDataLength = tripsData.size();
         }catch (SQLException ex) {
@@ -345,6 +346,11 @@ public class database {
             ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
             if(resultHowManyClients.next()) {
                 Dashboard.howManyClients = resultHowManyClients.getInt("clientsCount");
+            }
+            String howManyTripsQuery = "SELECT COUNT(*) as tripsCount FROM trips";
+            ResultSet resultHowManyTrips = statement.executeQuery(howManyTripsQuery);
+            if(resultHowManyTrips.next()) {
+                Dashboard.howManyTrips = resultHowManyTrips.getInt("tripsCount");
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
