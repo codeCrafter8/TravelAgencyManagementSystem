@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-import javax.swing.table.DefaultTableModel;
-import java.sql.SQLOutput;
+import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,17 +20,24 @@ public class oferty extends javax.swing.JFrame {
     public oferty() {
         initComponents();
         generate_data();
+        miasto_kraj.setFont(new Font("Segoe Print", Font.PLAIN, 15));
+        nazwa_hotelu.setFont(new Font("Segoe Print", Font.PLAIN, 20));
+        miejsce_na_opis.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        //nazwa_hotelu.setText("Binkowski");
         //typePrice.setText("15 407 zł");
         //miasto_kraj.setText("Francja, Paryż"); 
+        //miejsce_wylotu_dane.setText("Krakow");
+        //liczba_osob_dane.setText("5");
+        //termin_dane.setText("od");
+        //dlugosc_pobytu_dane.setText("2");
         //jLabel10.setText("<html>Hotel to idealne miejsce dla osób, które cenią sobie komfortowy wypoczynek w otoczeniu pięknej przyrody. Nasz hotel znajduje się w urokliwej okolicy, z dala od zgiełku miasta. W naszej ofercie znajdą Państwo różnorodne pokoje, które zostały urządzone z myślą o zapewnieniu maksymalnego komfortu i wypoczynku. Wliczone w cenę noclegu śniadania to połączenie tradycyjnych smaków z nowoczesnymi trendami kulinarnej sztuki. W restauracji hotelowej serwujemy również obiady i kolacje, które zachwycą każde podniebienie. Dodatkowo, nasz hotel oferuje wiele atrakcji, takich jak basen, spa, sala fitness czy siłownia. Zapraszamy do skorzystania z naszych usług i spędzenia niezapomnianego wypoczynku w Hotelu.</html>");
     }
-
     private void generate_data() {
         int counter = 0;
-        int size = (WYSZUKIWARKA.listDataLength/8);
+        int size = (WYSZUKIWARKA.listDataLength/WYSZUKIWARKA.attributesQuantity);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = null;
-        Date date2 = null;
+        Date date1;
+        Date date2;
         int daysBetween = 0;
         for(int i=0; i<size; i++){
             if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
@@ -43,19 +49,23 @@ public class oferty extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
                 miasto_kraj.setText(WYSZUKIWARKA.data.get(counter) + ", " + WYSZUKIWARKA.data.get(counter+1));
-                termin_dane.setText("  od " + WYSZUKIWARKA.data.get(counter+2) + " do " + WYSZUKIWARKA.data.get(counter+3));
+                termin_dane.setText("od " + WYSZUKIWARKA.data.get(counter+2) + " do " + WYSZUKIWARKA.data.get(counter+3));
                 miejsce_wylotu_dane.setText(WYSZUKIWARKA.data.get(counter+5));
-                dlugosc_pobytu_dane.setText("  " + daysBetween + " dni");
+                dlugosc_pobytu_dane.setText(daysBetween + " dni");
+                liczba_osob_dane.setText(String.valueOf(WYSZUKIWARKA.howManyAdults + WYSZUKIWARKA.howManyChildren) + " (" +
+                        String.valueOf(WYSZUKIWARKA.howManyAdults) + " dorosly, " + WYSZUKIWARKA.howManyChildren + " dzieci)");
+                zdjecie.setIcon(new javax.swing.ImageIcon("src/img/zdjecie" + (WYSZUKIWARKA.selectedRow + 1) + ".jpg"));
+                miejsce_na_opis.setText("<html>" + WYSZUKIWARKA.data.get(counter+8) + "<html>");
+                nazwa_hotelu.setText(WYSZUKIWARKA.data.get(counter+9));
                 if(WYSZUKIWARKA.howManyAdults == 0 && WYSZUKIWARKA.howManyChildren == 0)
-                    typePrice.setText(WYSZUKIWARKA.data.get(counter+4) + " zł/os.");
+                    typePrice.setText(WYSZUKIWARKA.data.get(counter+4) + " zł");
                 else
                     typePrice.setText(Integer.parseInt(WYSZUKIWARKA.data.get(counter+4)) * (WYSZUKIWARKA.howManyAdults + WYSZUKIWARKA.howManyChildren) + " zł");
             }
             if(size > 1)
-                counter+=8;
+                counter+=WYSZUKIWARKA.attributesQuantity;
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,6 +91,8 @@ public class oferty extends javax.swing.JFrame {
         rezerwuj = new javax.swing.JButton();
         cena = new javax.swing.JLabel();
         typePrice = new javax.swing.JLabel();
+        liczba_osob = new javax.swing.JLabel();
+        liczba_osob_dane = new javax.swing.JLabel();
         ubezpieczenie = new javax.swing.JLabel();
         ubezpieczenie_wariant1 = new javax.swing.JCheckBox();
         ubezpieczenie_wariant2 = new javax.swing.JCheckBox();
@@ -125,6 +137,8 @@ public class oferty extends javax.swing.JFrame {
 
         cena.setText("CENA:");
 
+        liczba_osob.setText("Liczba osób:");
+
         javax.swing.GroupLayout panel_rezerwujLayout = new javax.swing.GroupLayout(panel_rezerwuj);
         panel_rezerwuj.setLayout(panel_rezerwujLayout);
         panel_rezerwujLayout.setHorizontalGroup(
@@ -134,30 +148,32 @@ public class oferty extends javax.swing.JFrame {
                 .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_rezerwujLayout.createSequentialGroup()
                         .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_rezerwujLayout.createSequentialGroup()
-                                .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(miejsce_wylotu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(dlugosc_pobytu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dlugosc_pobytu_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(miejsce_wylotu_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(miasto_kraj, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(nazwa_hotelu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panel_rezerwujLayout.createSequentialGroup()
-                        .addComponent(termin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(nazwa_hotelu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+                            .addGroup(panel_rezerwujLayout.createSequentialGroup()
+                                .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panel_rezerwujLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(miejsce_wylotu, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(termin)
+                                        .addComponent(dlugosc_pobytu)
+                                        .addComponent(liczba_osob)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(liczba_osob_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dlugosc_pobytu_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(miejsce_wylotu_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(termin_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_rezerwujLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cena)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(termin_dane, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(178, 178, 178))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_rezerwujLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cena)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(typePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rezerwuj, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(typePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rezerwuj, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panel_rezerwujLayout.setVerticalGroup(
@@ -167,7 +183,11 @@ public class oferty extends javax.swing.JFrame {
                 .addComponent(nazwa_hotelu, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(miasto_kraj)
-                .addGap(103, 103, 103)
+                .addGap(81, 81, 81)
+                .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(liczba_osob)
+                    .addComponent(liczba_osob_dane))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panel_rezerwujLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(termin)
                     .addComponent(termin_dane))
@@ -295,6 +315,9 @@ public class oferty extends javax.swing.JFrame {
 
     private void rezerwujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rezerwujActionPerformed
         // TODO add your handling code here:
+        //nowe
+        //dispose();
+        new Payment().setVisible(true);
     }//GEN-LAST:event_rezerwujActionPerformed
 
     private void ubezpieczenie_wariant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ubezpieczenie_wariant2ActionPerformed
@@ -350,6 +373,8 @@ public class oferty extends javax.swing.JFrame {
     private javax.swing.JLabel dlugosc_pobytu;
     private javax.swing.JLabel dlugosc_pobytu_dane;
     private javax.swing.JPanel glowne_okno;
+    private javax.swing.JLabel liczba_osob;
+    private javax.swing.JLabel liczba_osob_dane;
     private javax.swing.JLabel miasto_kraj;
     private javax.swing.JLabel miejsce_na_opis;
     private javax.swing.JLabel miejsce_wylotu;

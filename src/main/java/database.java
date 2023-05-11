@@ -88,6 +88,8 @@ public class database {
                 tripsData.add(result.getString("departure_city"));
                 tripsData.add(Integer.toString(result.getInt("people_limit")));
                 tripsData.add(Integer.toString(result.getInt("id_trip")));
+                tripsData.add(result.getString("description"));
+                tripsData.add(result.getString("hotel_name"));
             }
             WYSZUKIWARKA.listDataLength = tripsData.size();
         }catch (SQLException ex) {

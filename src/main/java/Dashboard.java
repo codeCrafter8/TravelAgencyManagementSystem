@@ -1,5 +1,6 @@
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -174,6 +175,11 @@ public class Dashboard extends javax.swing.JFrame {
             else
                 tripsButton.setForeground(null);
         });
+        tripsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tripsButtonActionPerformed(evt);
+            }
+        });
 
         reservationsButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         reservationsButton.setText("Rezerwacje");
@@ -190,6 +196,11 @@ public class Dashboard extends javax.swing.JFrame {
             }
             else
                 reservationsButton.setForeground(null);
+        });
+        reservationsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationsButtonActionPerformed(evt);
+            }
         });
 
         databaseButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -479,6 +490,16 @@ public class Dashboard extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    //nowe
+    private void tripsButtonActionPerformed(ActionEvent evt) {
+        new Wycieczki().setVisible(true);
+    }
+
+    //nowe
+    private void reservationsButtonActionPerformed(ActionEvent evt) {
+        new Rezerwacje().setVisible(true);
+    }
+
     //nowe
     private void generateData(){
         Client.operate("dashboardUpdate");

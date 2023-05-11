@@ -155,44 +155,47 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="miejsce_wylotu" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="dlugosc_pobytu" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="dlugosc_pobytu_dane" min="-2" pref="89" max="-2" attributes="0"/>
-                                          <Component id="miejsce_wylotu_dane" min="-2" pref="180" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="miasto_kraj" alignment="0" max="32767" attributes="0"/>
                                       <Component id="nazwa_hotelu" alignment="0" pref="228" max="32767" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                              <Component id="miejsce_wylotu" min="-2" pref="86" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Component id="termin" min="-2" max="-2" attributes="0"/>
+                                              <Component id="dlugosc_pobytu" min="-2" max="-2" attributes="0"/>
+                                              <Component id="liczba_osob" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="liczba_osob_dane" min="-2" pref="278" max="-2" attributes="0"/>
+                                          <Component id="dlugosc_pobytu_dane" min="-2" pref="89" max="-2" attributes="0"/>
+                                          <Component id="miejsce_wylotu_dane" alignment="0" min="-2" pref="180" max="-2" attributes="0"/>
+                                          <Component id="termin_dane" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="termin" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="cena" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="termin_dane" min="-2" pref="160" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
+                              <Component id="typePrice" min="-2" pref="59" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="rezerwuj" min="-2" pref="118" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="cena" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="typePrice" min="-2" pref="59" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="rezerwuj" min="-2" pref="118" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -204,7 +207,12 @@
                       <Component id="nazwa_hotelu" min="-2" pref="29" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="miasto_kraj" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="liczba_osob" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="liczba_osob_dane" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="termin" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="termin_dane" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -285,6 +293,13 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="typePrice">
+            </Component>
+            <Component class="javax.swing.JLabel" name="liczba_osob">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Liczba os&#xf3;b:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="liczba_osob_dane">
             </Component>
           </SubComponents>
         </Container>

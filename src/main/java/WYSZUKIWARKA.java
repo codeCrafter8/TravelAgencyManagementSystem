@@ -28,6 +28,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
             "^\\d{2}/\\d{2}/\\d{4}$");
     private Timer time;
     private int counter = 1;
+    public static int attributesQuantity = 10;
     public static List<String> data = new ArrayList<>();
     public static List<String> destination = new ArrayList<>();
     public static int destinationListLength;
@@ -43,6 +44,8 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
      */
     public WYSZUKIWARKA() {
         initComponents();
+        howManyChildren = 0;
+        howManyAdults = 1;
         //nowe
         zostaw_numer.addFocusListener(new FocusListener() {
         @Override
@@ -121,14 +124,14 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
 
     private void populateTable(){
         int counter = 0;
-        int size = (listDataLength/8);
+        int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                     data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=8;
+                counter+=attributesQuantity;
         }
     }
 
@@ -183,7 +186,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         wyjazd = new javax.swing.JTextField();
         przyjazd = new javax.swing.JTextField();
         //nowe
-        ilosc_doroslych = new JSpinner(new SpinnerNumberModel(0, 0, 6, 1));
+        ilosc_doroslych = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
         //nowe
         ilosc_dzieci = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
         lupa = new javax.swing.JButton();
@@ -546,28 +549,17 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                howManyAdults = (int)ilosc_doroslych.getValue();
-                howManyChildren = (int)ilosc_dzieci.getValue();
-                if (howManyAdults == 0 && howManyChildren > 0) {
-                    JOptionPane.showMessageDialog(null,"Wymagany jest przynajmniej jeden dorosły.","Alert",JOptionPane.WARNING_MESSAGE);
-                }
-                else {
-                    selectedRow = tabela.rowAtPoint(evt.getPoint());
-                    if (selectedRow >= 0) {
-                        int counter = 0;
-                        int size = (listDataLength/8);
-                        for(int i=0; i<size; i++) {
-                            if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
-                                if(howManyAdults + howManyChildren > Integer.parseInt(WYSZUKIWARKA.data.get(counter+6))){
-                                    JOptionPane.showMessageDialog(null,"Limit miejsc dla tej wycieczki wynosi: " + WYSZUKIWARKA.data.get(counter+6),"Alert",JOptionPane.WARNING_MESSAGE);
-                                }else{
-                                    dispose();
-                                    new oferty().setVisible(true);
-                                }
-                            }
-                            if(size > 1)
-                                counter+=8;
+                selectedRow = tabela.rowAtPoint(evt.getPoint());
+                if (selectedRow >= 0) {
+                    int counter = 0;
+                    int size = (listDataLength/attributesQuantity);
+                    for(int i=0; i<size; i++) {
+                        if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
+                                dispose();
+                                new oferty().setVisible(true);
                         }
+                        if(size > 1)
+                            counter+=attributesQuantity;
                     }
                 }
             }
@@ -723,7 +715,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
     private void lato2023ActionPerformed(ActionEvent evt) {
         //nowe
         int counter = 0;
-        int size = (listDataLength/8);
+        int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -750,7 +742,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                     data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=8;
+                counter+=attributesQuantity;
         }
     }
 
@@ -816,7 +808,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
     //nowe
     private void filterTable(String country){
         int counter = 0;
-        int size = (listDataLength/8);
+        int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
@@ -824,13 +816,13 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                         data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=8;
+                counter+=attributesQuantity;
         }
     }
     //nowe
     private void filterTable(String country1, String country2){
         int counter = 0;
-        int size = (listDataLength/8);
+        int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
@@ -838,7 +830,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                         data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=8;
+                counter+=attributesQuantity;
         }
     }
     private void egzotykaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_egzotykaActionPerformed
@@ -851,7 +843,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         // TODO add your handling code here:
         //nowe
         int counter = 0;
-        int size = (listDataLength/8);
+        int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -867,7 +859,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                         data.get(counter+4) + " zł"});
             if(size > 1)
-                counter+=8;
+                counter+=attributesQuantity;
         }
     }//GEN-LAST:event_lastminuteActionPerformed
     //nowe
@@ -901,7 +893,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 Date date2 = null;
 
                 int counter = 0;
-                int size = (listDataLength / 8);
+                int size = (listDataLength / attributesQuantity);
                 DefaultTableModel model = (DefaultTableModel) tabela.getModel();
                 model.setRowCount(0);
                 for (int i = 0; i < size; i++) {
@@ -918,7 +910,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                         model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
                                 data.get(counter + 4) + " zł"});
                     if (size > 1)
-                        counter += 8;
+                        counter += attributesQuantity;
                 }
             }
         }

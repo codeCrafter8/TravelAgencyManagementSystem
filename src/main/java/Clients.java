@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -251,6 +252,11 @@ public class Clients extends javax.swing.JFrame {
             else
                 reservationsButton.setForeground(null);
         });
+        reservationsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationsButtonActionPerformed(evt);
+            }
+        });
 
         databaseButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         databaseButton.setText("Baza danych");
@@ -488,6 +494,9 @@ public class Clients extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void reservationsButtonActionPerformed(ActionEvent evt) {
+    }
 
     private void searchClientTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchClientTextFieldActionPerformed
         // TODO add your handling code here:
