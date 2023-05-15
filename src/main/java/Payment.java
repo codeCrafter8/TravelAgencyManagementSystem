@@ -382,6 +382,7 @@ public class Payment extends javax.swing.JFrame {
             miejsce_na_blad.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {
+            Client.operate("addReservation");
             dispose();
         }
     }

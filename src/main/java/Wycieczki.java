@@ -4,8 +4,18 @@
  */
 //package oferty;
 
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 
 /**
@@ -13,19 +23,42 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author Kamil
  */
 public class Wycieczki extends javax.swing.JFrame {
-
+    //nowe
+    public static String adminName = "";
+    public static List<String> data = new ArrayList<>();
+    public static int listDataLength = 0;
+    private static TableRowSorter<TableModel> rowSorter;
+    public static int tripIDToRemove = 0;
+    private static final String cityPattern = "^[A-Za-z\\p{L}\\s]+$";
+    private static final Pattern compiledCityPattern = Pattern.compile(cityPattern);
+    public static int id = 0;
+    public static String country = "";
+    public static String city = "";
+    public static String price = "";
+    public static String peopleLimit = "";
     /**
      * Creates new form Wycieczki
      */
     public Wycieczki() {
         initComponents();
+        //nowe
+        generateData();
+        populateTable();
+        searchTrips();
         getContentPane().setBackground(new Color(215,198,151));
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
         for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
                 tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-        
+        //nowe
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                data.clear();
+                dispose();
+            }
+        });
     }
 
     /**
@@ -113,6 +146,22 @@ public class Wycieczki extends javax.swing.JFrame {
         panelButton1.setContentAreaFilled(false);
         panelButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        //nowe
+        Color hoverColor = new Color(190, 190, 192);
+        panelButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                panelButton1.setForeground(hoverColor);
+                panelButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                panelButton1.setForeground(null);
+        });
+        panelButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panelButtonActionPerformed(evt);
+            }
+        });
 
         clientsButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         clientsButton1.setText("    Klienci");
@@ -121,6 +170,21 @@ public class Wycieczki extends javax.swing.JFrame {
         clientsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         clientsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        clientsButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                clientsButton1.setForeground(hoverColor);
+                clientsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                clientsButton1.setForeground(null);
+        });
+        clientsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientsButtonActionPerformed(evt);
+            }
+        });
 
         tripsButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         tripsButton1.setText("   Wycieczki");
@@ -130,6 +194,16 @@ public class Wycieczki extends javax.swing.JFrame {
         tripsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         tripsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        tripsButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                tripsButton1.setForeground(hoverColor);
+                tripsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                tripsButton1.setForeground(null);
+        });
 
         reservationsButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         reservationsButton1.setText("Rezerwacje");
@@ -137,6 +211,21 @@ public class Wycieczki extends javax.swing.JFrame {
         reservationsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         reservationsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        reservationsButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                reservationsButton1.setForeground(hoverColor);
+                reservationsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                reservationsButton1.setForeground(null);
+        });
+        reservationsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationsButtonActionPerformed(evt);
+            }
+        });
 
         databaseButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         databaseButton1.setText("Baza danych");
@@ -144,6 +233,21 @@ public class Wycieczki extends javax.swing.JFrame {
         databaseButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         databaseButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         databaseButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        databaseButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                databaseButton1.setForeground(hoverColor);
+                databaseButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                databaseButton1.setForeground(null);
+        });
+        databaseButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                databaseButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel1);
         optionsPanel1.setLayout(optionsPanel1Layout);
@@ -195,6 +299,21 @@ public class Wycieczki extends javax.swing.JFrame {
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
+        //nowe
+        logOutButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                logOutButton.setForeground(Color.lightGray);
+                logOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                logOutButton.setForeground(Color.white);
+        });
+        logOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -241,7 +360,12 @@ public class Wycieczki extends javax.swing.JFrame {
             new String [] {
                 "Id", "Kraj", "Miasto", "Cena/Osoba", "Limit osób"
             }
-        ));
+        )//nowe
+        {public boolean isCellEditable(int row, int column){
+            if(column == 0)
+                return false;
+            else
+                return true;}});
         tripsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsTable.setMaximumSize(new java.awt.Dimension(375, 550));
         tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
@@ -263,6 +387,12 @@ public class Wycieczki extends javax.swing.JFrame {
         editTripButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         editTripButton.setText("Edytuj Wycieczkę");
         editTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        //nowe
+        editTripButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTripButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -323,18 +453,138 @@ public class Wycieczki extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void editTripButtonActionPerformed(ActionEvent evt) {
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
+        int row = tripsTable.getSelectedRow();
+        if(row == -1)
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else {
+            id = Integer.parseInt(model.getValueAt(row, 0).toString());
+            country = model.getValueAt(row, 1).toString();
+            city = model.getValueAt(row, 2).toString();
+            price = model.getValueAt(row, 3).toString();
+            peopleLimit = model.getValueAt(row, 4).toString();
+            //System.out.println(id + " " + firstName + " " + lastName + " " + email + " " + phoneNumber);
+            if (country.equals("") || city.equals("") || price.equals("") || peopleLimit.equals("")) {
+                JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Client.operate("editTrip");
+            }
+        }
+    }
+
+    //nowe
+    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        data.clear();
+        StartPageFrame.admin_logged = false;
+        Client.operate("logOut");
+        new StartPageFrame().setVisible(true);
+    }
+    //nowe
+    private void generateData(){
+        Client.operate("tripsUpdate");
+        adminNameLabel1.setText(Dashboard.adminName);
+    }
+    //nowe
+    private void populateTable(){
+        int counter = 0;
+        int size = (listDataLength/5);
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
+        for(int i=0; i<size; i++){
+            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
+                    data.get(counter+4)});
+            if(size > 1)
+                counter+=5;
+        }
+    }
+    //nowe
+    private void checkCityValidation(){
+        if(!compiledCityPattern.matcher(searchClientTextField.getText()).matches())
+            wrongTripLabel.setText("Sprawdź czy podane miasto jest poprawne.");
+        else
+            wrongTripLabel.setText("");
+        if(searchClientTextField.getText().isEmpty())
+            wrongTripLabel.setText("");
+    }
+    //nowe
+    private void searchTrips(){
+        //clientsTable.setDefaultEditor(Object.class, null);
+        tripsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        rowSorter = new TableRowSorter<>(tripsTable.getModel());
+        tripsTable.setRowSorter(rowSorter);
+        searchClientTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                checkCityValidation();
+                String text = searchClientTextField.getText();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text, 2));
+                }
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                checkCityValidation();
+                String text = searchClientTextField.getText();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text));
+                }
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkCityValidation();
+                throw new UnsupportedOperationException("Unsupported event!");
+            }
+        });
+    }
     private void searchClientTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchClientTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchClientTextFieldActionPerformed
 
     private void deleteTripButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTripButtonActionPerformed
         // TODO add your handling code here:
+        //nowe
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
+        int row = tripsTable.getSelectedRow();
+        if(row == -1)
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else {tripIDToRemove = Integer.parseInt(model.getValueAt(row, 0).toString());
+            model.removeRow(row);
+            Client.operate("deleteTrip");
+        }
     }//GEN-LAST:event_deleteTripButtonActionPerformed
 
     private void addTripButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTripButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addTripButtonActionPerformed
-
+    //nowe
+    private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        data.clear();
+        new Clients().setVisible(true);
+    }
+    //nowe
+    private void databaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        data.clear();
+        new DatabasePanel().setVisible(true);
+    }
+    //nowe
+    private void reservationsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new Rezerwacje().setVisible(true);
+    }
+    //nowe
+    private void panelButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new Dashboard().setVisible(true);
+    }
     /**
      * @param args the command line arguments
      */

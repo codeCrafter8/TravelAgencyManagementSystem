@@ -492,11 +492,13 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     //nowe
     private void tripsButtonActionPerformed(ActionEvent evt) {
+        dispose();
         new Wycieczki().setVisible(true);
     }
 
     //nowe
     private void reservationsButtonActionPerformed(ActionEvent evt) {
+        dispose();
         new Rezerwacje().setVisible(true);
     }
 

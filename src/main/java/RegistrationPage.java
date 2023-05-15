@@ -24,7 +24,7 @@ public class RegistrationPage extends javax.swing.JFrame {
     private static final Pattern compiledFirstNamePattern = Pattern.compile(firstNamePattern);
 
     private static final String lastNamePattern = "[a-zA-Z-']{2,}";
-    private static final Pattern compiledLastNamePattern = Pattern.compile(lastNamePattern);
+    public static final Pattern compiledLastNamePattern = Pattern.compile(lastNamePattern);
     public static String user_exists;
     public static String firstName;
     public static String lastName;

@@ -28,12 +28,18 @@ public class ServerGUI extends javax.swing.JFrame {
     static Socket client;
     private static boolean running = true;
     public static String email, password, firstName, lastName, phoneNumber, emailReg, passwordReg, passwordChanged;
+    public static int userIdToRes, tripIdToRes, peopleQuantity;
+    public static String insurance;
     public static int clientIDToRemove;
+    public static int tripIDToRemove;
+    public static int resIDToRemove;
     public static int clientIDToChangePassword;
     public static String tableName;
     public static String seqName;
     public static String operation;
     public static List<String> clientEditList = new ArrayList<>();
+    public static List<String> tripEditList = new ArrayList<>();
+    public static List<String> resEditList = new ArrayList<>();
     private static ServerSocket socket;
     public static int usersCounter;
     public static List<String> phoneNumbers = new ArrayList<>();

@@ -235,6 +235,11 @@ public class Clients extends javax.swing.JFrame {
             else
                 tripsButton.setForeground(null);
         });
+        tripsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tripsButtonActionPerformed(evt);
+            }
+        });
 
         reservationsButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         reservationsButton.setText("Rezerwacje");
@@ -495,7 +500,16 @@ public class Clients extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tripsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new Wycieczki().setVisible(true);
+    }
+
     private void reservationsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new Rezerwacje().setVisible(true);
     }
 
     private void searchClientTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchClientTextFieldActionPerformed
@@ -518,6 +532,7 @@ public class Clients extends javax.swing.JFrame {
     //nowe
     private void databaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         dispose();
+        data.clear();
         new DatabasePanel().setVisible(true);
     }
     //nowe

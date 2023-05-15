@@ -22,6 +22,7 @@ public class Client {
                     StartPageFrame.admin_logged = socket_input_data.readBoolean();
                     StartPageFrame.client_logged = socket_input_data.readBoolean();
                     StartPageFrame.message = socket_input_data.readUTF();
+                    oferty.userID = socket_input_data.readInt();
                 }
                 case "Register" -> {
                     socket_output_data.writeUTF(RegistrationPage.firstName);
@@ -129,6 +130,63 @@ public class Client {
                     for (int i = 0; i < WYSZUKIWARKA.departureListLength; i++) {
                         WYSZUKIWARKA.departure.add(socket_input_data.readUTF());
                     }
+                }
+                case "tripsUpdate" -> {
+                    Wycieczki.listDataLength = socket_input_data.readInt();
+                    for (int i = 0; i < Wycieczki.listDataLength; i++) {
+                        Wycieczki.data.add(socket_input_data.readUTF());
+                    }
+                }
+                case "deleteTrip" -> {
+                    socket_output_data.writeInt(Wycieczki.tripIDToRemove);
+                    socket_output_data.flush();
+                }
+                case "editTrip" -> {
+                    socket_output_data.writeInt(Wycieczki.id);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Wycieczki.country);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Wycieczki.city);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Wycieczki.price);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Wycieczki.peopleLimit);
+                    socket_output_data.flush();
+                }
+                case "resUpdate" -> {
+                    System.out.println("klient przechodzi");
+                    Rezerwacje.listDataLength = socket_input_data.readInt();
+                    for (int i = 0; i < Rezerwacje.listDataLength; i++) {
+                        Rezerwacje.data.add(socket_input_data.readUTF());
+                    }
+                }
+                case "deleteRes" -> {
+                    socket_output_data.writeInt(Rezerwacje.resIDToRemove);
+                    socket_output_data.flush();
+                }
+                case "editRes" -> {
+                    socket_output_data.writeInt(Rezerwacje.id);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Rezerwacje.firstName);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Rezerwacje.lastName);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Rezerwacje.departure);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Rezerwacje.arrival);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Rezerwacje.phoneNumber);
+                    socket_output_data.flush();
+                }
+                case "addReservation" -> {
+                    socket_output_data.writeInt(oferty.tripID);
+                    socket_output_data.flush();
+                    socket_output_data.writeInt(oferty.userID);
+                    socket_output_data.flush();
+                    socket_output_data.writeInt(oferty.peopleQuantity);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(oferty.insurance);
+                    socket_output_data.flush();
                 }
             }
             socket_output_data.close();

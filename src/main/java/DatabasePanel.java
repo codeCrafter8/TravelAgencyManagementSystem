@@ -1,5 +1,6 @@
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -236,6 +237,11 @@ public class DatabasePanel extends javax.swing.JFrame {
             else
                 tripsButton.setForeground(null);
         });
+        tripsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tripsButtonActionPerformed(evt);
+            }
+        });
 
         reservationsButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         reservationsButton.setText("Rezerwacje");
@@ -252,6 +258,11 @@ public class DatabasePanel extends javax.swing.JFrame {
             }
             else
                 reservationsButton.setForeground(null);
+        });
+        reservationsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reservationsButtonActionPerformed(evt);
+            }
         });
 
         databaseButton.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -447,6 +458,17 @@ public class DatabasePanel extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void reservationsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        new Rezerwacje().setVisible(true);
+    }
+
+    private void tripsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        new Wycieczki().setVisible(true);
+    }
+
     //nowe
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         dispose();

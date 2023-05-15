@@ -29,6 +29,8 @@ public class BackgroundThreads extends SwingWorker<Void, Void> {
                         ServerGUI.socket_output_data.flush();
                         ServerGUI.socket_output_data.writeUTF(StartPageFrame.message);
                         ServerGUI.socket_output_data.flush();
+                        ServerGUI.socket_output_data.writeInt(oferty.userID);
+                        ServerGUI.socket_output_data.flush();
                     }
                     case "Register" -> {
                         ServerGUI.firstName = ServerGUI.socket_input_data.readUTF();
@@ -169,6 +171,62 @@ public class BackgroundThreads extends SwingWorker<Void, Void> {
                             ServerGUI.socket_output_data.flush();
                         }
                         ServerGUI.departure.clear();
+                    }
+                    case "tripsUpdate" -> {
+                        database.connect_with_database();
+                        ServerGUI.socket_output_data.writeInt(Wycieczki.listDataLength);
+                        ServerGUI.socket_output_data.flush();
+                        for (String s : database.tripsAdminData) {
+                            ServerGUI.socket_output_data.writeUTF(s);
+                            ServerGUI.socket_output_data.flush();
+                        }
+                        database.tripsAdminData.clear();
+                    }
+                    case "deleteTrip" -> {
+                        ServerGUI.tripIDToRemove = ServerGUI.socket_input_data.readInt();
+                        database.connect_with_database();
+                    }
+                    case "editTrip" -> {
+                        for (int i = 0; i < 5; i++) {
+                            if (i == 0)
+                                ServerGUI.tripEditList.add(Integer.toString(ServerGUI.socket_input_data.readInt()));
+                            else
+                                ServerGUI.tripEditList.add(ServerGUI.socket_input_data.readUTF());
+                        }
+                        database.connect_with_database();
+                        ServerGUI.tripEditList.clear();
+                    }
+                    case "resUpdate" -> {
+                        System.out.println("server przechodzi");
+                        database.connect_with_database();
+                        ServerGUI.socket_output_data.writeInt(Rezerwacje.listDataLength);
+                        ServerGUI.socket_output_data.flush();
+                        for (String s : database.resAdminData) {
+                            ServerGUI.socket_output_data.writeUTF(s);
+                            ServerGUI.socket_output_data.flush();
+                        }
+                        database.resAdminData.clear();
+                    }
+                    case "deleteRes" -> {
+                        ServerGUI.resIDToRemove = ServerGUI.socket_input_data.readInt();
+                        database.connect_with_database();
+                    }
+                    case "editRes" -> {
+                        for (int i = 0; i < 5; i++) {
+                            if (i == 0)
+                                ServerGUI.resEditList.add(Integer.toString(ServerGUI.socket_input_data.readInt()));
+                            else
+                                ServerGUI.resEditList.add(ServerGUI.socket_input_data.readUTF());
+                        }
+                        database.connect_with_database();
+                        ServerGUI.resEditList.clear();
+                    }
+                    case "addReservation" -> {
+                        ServerGUI.tripIdToRes = ServerGUI.socket_input_data.readInt();
+                        ServerGUI.userIdToRes = ServerGUI.socket_input_data.readInt();
+                        ServerGUI.peopleQuantity = ServerGUI.socket_input_data.readInt();
+                        ServerGUI.insurance = ServerGUI.socket_input_data.readUTF();
+                        database.connect_with_database();
                     }
                 }
             } catch (IOException e) {

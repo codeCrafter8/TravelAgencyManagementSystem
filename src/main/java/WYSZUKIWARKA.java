@@ -565,7 +565,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
             }
         });
 
-        zarzadzanie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moje konto", "Moje rezerwacje", "Wyloguj" }));
+        zarzadzanie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona główna", "Moje rezerwacje", "Wyloguj" }));
         zarzadzanie.setBorder(null);
         zarzadzanie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         zarzadzanie.setFocusable(false);

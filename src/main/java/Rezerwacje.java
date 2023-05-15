@@ -4,26 +4,59 @@
  */
 //package oferty;
 
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author Kamil
  */
 public class Rezerwacje extends javax.swing.JFrame {
-
+    //nowe
+    public static String adminName = "";
+    public static List<String> data = new ArrayList<>();
+    public static int listDataLength = 0;
+    private static TableRowSorter<TableModel> rowSorter;
+    public static int resIDToRemove = 0;
+    public static int id = 0;
+    public static String firstName = "";
+    public static String lastName = "";
+    public static String departure = "";
+    public static String arrival = "";
+    public static String phoneNumber = "";
     /**
      * Creates new form Rezerwacje
      */
     public Rezerwacje() {
         initComponents();
+        //nowe
+        generateData();
+        populateTable();
+        searchRes();
         getContentPane().setBackground(new Color(215,198,151));
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
         for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
                 resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
+        //nowe
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                data.clear();
+                dispose();
+            }
+        });
     }
 
     /**
@@ -111,6 +144,22 @@ public class Rezerwacje extends javax.swing.JFrame {
         panelButton1.setContentAreaFilled(false);
         panelButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        //nowe
+        Color hoverColor = new Color(190, 190, 192);
+        panelButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                panelButton1.setForeground(hoverColor);
+                panelButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                panelButton1.setForeground(null);
+        });
+        panelButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panelButtonActionPerformed(evt);
+            }
+        });
 
         clientsButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         clientsButton1.setText("    Klienci");
@@ -119,6 +168,21 @@ public class Rezerwacje extends javax.swing.JFrame {
         clientsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         clientsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        clientsButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                clientsButton1.setForeground(hoverColor);
+                clientsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                clientsButton1.setForeground(null);
+        });
+        clientsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientsButtonActionPerformed(evt);
+            }
+        });
 
         tripsButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tripsButton1.setText("    Wycieczki");
@@ -128,6 +192,21 @@ public class Rezerwacje extends javax.swing.JFrame {
         tripsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         tripsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        tripsButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                tripsButton1.setForeground(hoverColor);
+                tripsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                tripsButton1.setForeground(null);
+        });
+        tripsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tripsButtonActionPerformed(evt);
+            }
+        });
 
         reservationsButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         reservationsButton1.setText("   Rezerwacje");
@@ -136,6 +215,16 @@ public class Rezerwacje extends javax.swing.JFrame {
         reservationsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         reservationsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        reservationsButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                reservationsButton1.setForeground(hoverColor);
+                reservationsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                reservationsButton1.setForeground(null);
+        });
 
         databaseButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         databaseButton1.setText("Baza danych");
@@ -143,6 +232,21 @@ public class Rezerwacje extends javax.swing.JFrame {
         databaseButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         databaseButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         databaseButton1.setPreferredSize(new java.awt.Dimension(75, 46));
+        //nowe
+        databaseButton1.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                databaseButton1.setForeground(hoverColor);
+                databaseButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                databaseButton1.setForeground(null);
+        });
+        databaseButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                databaseButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel1);
         optionsPanel1.setLayout(optionsPanel1Layout);
@@ -194,6 +298,21 @@ public class Rezerwacje extends javax.swing.JFrame {
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
+        //nowe
+        logOutButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                logOutButton.setForeground(Color.lightGray);
+                logOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                logOutButton.setForeground(Color.white);
+        });
+        logOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -229,7 +348,12 @@ public class Rezerwacje extends javax.swing.JFrame {
             new String [] {
                 "Id", "Imię", "Nazwisko", "Wyjazd", "Przyjazd", "Nr telefonu"
             }
-        ));
+        )//nowe
+        {public boolean isCellEditable(int row, int column){
+            if(column == 0)
+                return false;
+            else
+                return true;}});
         resTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         resTable.setMaximumSize(new java.awt.Dimension(375, 550));
         resTable.setMinimumSize(new java.awt.Dimension(375, 550));
@@ -256,6 +380,12 @@ public class Rezerwacje extends javax.swing.JFrame {
         editResButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         editResButton.setText("Edytuj Rezerwację");
         editResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        //nowe
+        editResButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editResButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -312,13 +442,133 @@ public class Rezerwacje extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void editResButtonActionPerformed(ActionEvent evt) {
+        DefaultTableModel model = (DefaultTableModel) resTable.getModel();
+        int row = resTable.getSelectedRow();
+        if(row == -1)
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else {
+            id = Integer.parseInt(model.getValueAt(row, 0).toString());
+            firstName = model.getValueAt(row, 1).toString();
+            lastName = model.getValueAt(row, 2).toString();
+            departure = model.getValueAt(row, 3).toString();
+            arrival = model.getValueAt(row, 4).toString();
+            phoneNumber = model.getValueAt(row, 5).toString();
+            if (firstName.equals("") || lastName.equals("") || departure.equals("") || arrival.equals("") || phoneNumber.equals("")) {
+                JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Client.operate("editRes");
+            }
+        }
+    }
+
+    //nowe
+    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        data.clear();
+        StartPageFrame.admin_logged = false;
+        Client.operate("logOut");
+        new StartPageFrame().setVisible(true);
+    }
+    //nowe
+    private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        data.clear();
+        new Clients().setVisible(true);
+    }
+    //nowe
+    private void databaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        dispose();
+        data.clear();
+        new DatabasePanel().setVisible(true);
+    }
+    //nowe
+    private void tripsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new Wycieczki().setVisible(true);
+    }
+    //nowe
+    private void panelButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new Dashboard().setVisible(true);
+    }
     private void searchResTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchResTextFieldActionPerformed
 
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteResButtonActionPerformed
         // TODO add your handling code here:
+        //nowe
+        DefaultTableModel model = (DefaultTableModel) resTable.getModel();
+        int row = resTable.getSelectedRow();
+        if(row == -1)
+            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        else {resIDToRemove = Integer.parseInt(model.getValueAt(row, 0).toString());
+            model.removeRow(row);
+            Client.operate("deleteRes");
+        }
     }//GEN-LAST:event_deleteResButtonActionPerformed
+    //nowe
+    private void generateData(){
+        Client.operate("resUpdate");
+        adminNameLabel1.setText(Dashboard.adminName);
+    }
+    //nowe
+    private void populateTable(){
+        int counter = 0;
+        int size = (listDataLength/6);
+        DefaultTableModel model = (DefaultTableModel) resTable.getModel();
+        for(int i=0; i<size; i++){
+            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
+                    data.get(counter+4), data.get(counter+5)});
+            if(size > 1)
+                counter+=6;
+        }
+    }
+    //nowe
+    private void searchRes(){
+        resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        rowSorter = new TableRowSorter<>(resTable.getModel());
+        resTable.setRowSorter(rowSorter);
+        searchResTextField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                checkLastNameValidation();
+                String text = searchResTextField.getText();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text, 2));
+                }
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                checkLastNameValidation();
+                String text = searchResTextField.getText();
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text));
+                }
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkLastNameValidation();
+                throw new UnsupportedOperationException("Unsupported event!");
+            }
+        });
+    }
+
+    private void checkLastNameValidation() {
+        if(!RegistrationPage.compiledLastNamePattern.matcher(searchResTextField.getText()).matches())
+            wrongResLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
+        else
+            wrongResLabel.setText("");
+        if(searchResTextField.getText().isEmpty())
+            wrongResLabel.setText("");
+    }
 
     /**
      * @param args the command line arguments

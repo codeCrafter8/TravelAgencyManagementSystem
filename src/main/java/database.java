@@ -8,6 +8,8 @@ public class database {
     private static String adminName = "";
     static List<String> data = new ArrayList<>();
     static List<String> tripsData = new ArrayList<>();
+    static List<String> tripsAdminData = new ArrayList<>();
+    static List<String> resAdminData = new ArrayList<>();
     public static void connect_with_database() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -32,6 +34,13 @@ public class database {
                 case "tripsListPopulation" -> tripsListPopulate();
                 case "getDestination" -> getDestination();
                 case "getDeparture" -> getDeparture();
+                case "tripsUpdate" -> updateTrips();
+                case "deleteTrip" -> deleteTrip();
+                case "editTrip" -> editTrip();
+                case "addReservation" -> addReservation();
+                case "resUpdate" -> updateRes();
+                case "deleteRes" -> deleteRes();
+                case "editRes" -> editRes();
             }
         }catch(Exception ex){
             System.out.println("Ex: " + ex);
@@ -39,6 +48,127 @@ public class database {
         }
     }
 
+    private static void editRes() {
+        try{
+            String query = "UPDATE reservations " +
+                    "SET arrival = ?, departure = ? FROM reservations " +
+                    "JOIN trips ON trips.id_trip = reservations.id_trip " +
+                    "JOIN users ON users.ID_user = reservations.ID_user " +
+                    "WHERE id_reservation = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setString(1, ServerGUI.tripEditList.get(1));
+            preparedState.setString(2, ServerGUI.tripEditList.get(2));
+            preparedState.setInt(3, Integer.parseInt(ServerGUI.tripEditList.get(3)));
+            preparedState.setInt(4, Integer.parseInt(ServerGUI.tripEditList.get(4)));
+            preparedState.setInt(5, Integer.parseInt(ServerGUI.tripEditList.get(0)));
+            preparedState.executeUpdate();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane wycieczki o ID: " + ServerGUI.tripEditList.get(0) + ".");
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+
+    private static void deleteRes() {
+        try{
+            String query = "DELETE FROM reservations WHERE id_reservation = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setInt(1, ServerGUI.resIDToRemove);
+            preparedState.executeUpdate();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + ServerGUI.tripIDToRemove + ".");
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+
+    private static void updateRes() {
+        String departure;
+        String arrival;
+        int index;
+        try {
+            System.out.println("database przechodzi");
+            String query = "SELECT id_reservation, firstname, lastname, departure, arrival, phonenumber FROM reservations " +
+                    "JOIN trips ON trips.id_trip = reservations.id_trip " +
+                    "JOIN users ON users.ID_user = reservations.ID_user";
+            ResultSet result = statement.executeQuery(query);
+            while(result.next()){
+                resAdminData.add(Integer.toString(result.getInt("id_reservation")));
+                resAdminData.add(result.getString("firstname"));
+                resAdminData.add(result.getString("lastname"));
+                departure = result.getString("departure");
+                index = departure.indexOf("00:");
+                resAdminData.add(departure.substring(0, index - 1));
+                arrival = result.getString("arrival");
+                index = arrival.indexOf("00:");
+                resAdminData.add(arrival.substring(0, index - 1));
+                resAdminData.add(result.getString("phonenumber"));
+            }
+            Rezerwacje.listDataLength = resAdminData.size();
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+
+    private static void addReservation() {
+        try {
+            RegistrationPage.user_exists = "Nie";
+            String query = "INSERT INTO reservations (id_reservation, id_trip, ID_user, people_quantity, insurance) VALUES (reservations_seq.nextval, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, ServerGUI.tripIdToRes);
+            preparedStatement.setInt(2, ServerGUI.userIdToRes);
+            preparedStatement.setInt(3, ServerGUI.peopleQuantity);
+            preparedStatement.setString(4, ServerGUI.insurance);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał rezerwację wycieczki o ID: " + ServerGUI.tripIdToRes + ".");
+        } catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+
+    private static void deleteTrip() {
+        try{
+            String query = "DELETE FROM trips WHERE id_trip = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setInt(1, ServerGUI.tripIDToRemove);
+            preparedState.executeUpdate();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + ServerGUI.tripIDToRemove + ".");
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+    private static void editTrip() {
+        try{
+            String query = "UPDATE trips " +
+                    "SET city = ?, country = ?, price_per_person = ?, people_limit = ? " +
+                    "WHERE id_trip = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setString(1, ServerGUI.tripEditList.get(1));
+            preparedState.setString(2, ServerGUI.tripEditList.get(2));
+            preparedState.setInt(3, Integer.parseInt(ServerGUI.tripEditList.get(3)));
+            preparedState.setInt(4, Integer.parseInt(ServerGUI.tripEditList.get(4)));
+            preparedState.setInt(5, Integer.parseInt(ServerGUI.tripEditList.get(0)));
+            preparedState.executeUpdate();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane wycieczki o ID: " + ServerGUI.tripEditList.get(0) + ".");
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
     private static void getDestination() {
         try{
             String query = "SELECT DISTINCT country FROM trips";
@@ -380,7 +510,24 @@ public class database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
-
+    private static void updateTrips() {
+        try {
+            String query = "SELECT * FROM trips";
+            ResultSet result = statement.executeQuery(query);
+            while(result.next()){
+                // id_trip,country,city,departure_city,price_per_person,departure,arrival,people_limit,description,hotel_name
+                tripsAdminData.add(Integer.toString(result.getInt("id_trip")));
+                tripsAdminData.add(result.getString("country"));
+                tripsAdminData.add(result.getString("city"));
+                tripsAdminData.add(Integer.toString(result.getInt("price_per_person")));
+                tripsAdminData.add(Integer.toString(result.getInt("people_limit")));
+            }
+            Wycieczki.listDataLength = tripsAdminData.size();
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
     public static void send_data(){
         try {
             String emailQuery = "SELECT * FROM users WHERE email = ?";
@@ -425,7 +572,7 @@ public class database {
             ResultSet result = emailPreparedState.executeQuery();
             if(result.next()){
                 StartPageFrame.user_exists = true;
-                System.out.println("Jest");
+                //System.out.println("Jest");
                 String passwordQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
                 PreparedStatement passwordPreparedState = connection.prepareStatement(passwordQuery);
                 passwordPreparedState.setString(1, ServerGUI.password);
@@ -447,6 +594,7 @@ public class database {
                         } else {
                             StartPageFrame.admin_logged = false;
                             StartPageFrame.client_logged = true;
+                            oferty.userID = resultPassword.getInt("ID_user");
                             new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + ServerGUI.email + " zalogował się.");
                         }
                     }

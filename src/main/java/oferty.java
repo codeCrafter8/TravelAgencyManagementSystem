@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +18,10 @@ import java.util.Date;
  * @author Kamil
  */
 public class oferty extends javax.swing.JFrame {
-
+    public static int peopleQuantity = 0;
+    public static int userID = 0;
+    public static int tripID = 0;
+    public static String insurance = "";
     /**
      * Creates new form oferty
      */
@@ -41,6 +49,9 @@ public class oferty extends javax.swing.JFrame {
         int daysBetween = 0;
         for(int i=0; i<size; i++){
             if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
+                tripID = Integer.parseInt(WYSZUKIWARKA.data.get(counter+7));
+                System.out.println("tripID: " + tripID);
+                System.out.println("userID: " + userID);
                 try {
                     date1 = formatter.parse(String.valueOf(WYSZUKIWARKA.data.get(counter+2)));
                     date2 = formatter.parse(String.valueOf(WYSZUKIWARKA.data.get(counter+3)));
@@ -52,7 +63,9 @@ public class oferty extends javax.swing.JFrame {
                 termin_dane.setText("od " + WYSZUKIWARKA.data.get(counter+2) + " do " + WYSZUKIWARKA.data.get(counter+3));
                 miejsce_wylotu_dane.setText(WYSZUKIWARKA.data.get(counter+5));
                 dlugosc_pobytu_dane.setText(daysBetween + " dni");
-                liczba_osob_dane.setText(String.valueOf(WYSZUKIWARKA.howManyAdults + WYSZUKIWARKA.howManyChildren) + " (" +
+                peopleQuantity = WYSZUKIWARKA.howManyAdults + WYSZUKIWARKA.howManyChildren;
+                System.out.println("people quantity: " + peopleQuantity);
+                liczba_osob_dane.setText(String.valueOf(peopleQuantity) + " (" +
                         String.valueOf(WYSZUKIWARKA.howManyAdults) + " dorosly, " + WYSZUKIWARKA.howManyChildren + " dzieci)");
                 zdjecie.setIcon(new javax.swing.ImageIcon("src/img/zdjecie" + (WYSZUKIWARKA.selectedRow + 1) + ".jpg"));
                 miejsce_na_opis.setText("<html>" + WYSZUKIWARKA.data.get(counter+8) + "<html>");
@@ -209,11 +222,17 @@ public class oferty extends javax.swing.JFrame {
 
         ubezpieczenie.setText("Ubezpieczenie: (ubezpieczenie obowiązuje tylko na okres podróży)");
 
-        buttonGroup1.add(ubezpieczenie_wariant1);
+        //buttonGroup1.add(ubezpieczenie_wariant1);
         ubezpieczenie_wariant1.setText("Standard (cena:150zł)");
         ubezpieczenie_wariant1.setBorder(null);
+        //nowe
+        ubezpieczenie_wariant1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ubezpieczenie_wariant1ActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(ubezpieczenie_wariant2);
+        //buttonGroup1.add(ubezpieczenie_wariant2);
         ubezpieczenie_wariant2.setText("Komfort (cena: 300zł)");
         ubezpieczenie_wariant2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,8 +240,14 @@ public class oferty extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(ubezpieczenie_wariant_3);
+        //buttonGroup1.add(ubezpieczenie_wariant_3);
         ubezpieczenie_wariant_3.setText("Premium (cena: 600zł)");
+        //nowe
+        ubezpieczenie_wariant_3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ubezpieczenie_wariant3ActionPerformed(evt);
+            }
+        });
 
         opis_hotelu.setText("Opis hotelu:");
 
@@ -316,14 +341,43 @@ public class oferty extends javax.swing.JFrame {
     private void rezerwujActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rezerwujActionPerformed
         // TODO add your handling code here:
         //nowe
-        //dispose();
         new Payment().setVisible(true);
+        //System.out.println("insurance: " + insurance);
     }//GEN-LAST:event_rezerwujActionPerformed
-
+    //nowe
+    private void ubezpieczenie_wariant1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if(ubezpieczenie_wariant1.isSelected()){
+            System.out.println("1");
+            insurance = ubezpieczenie_wariant1.getText();
+            if(ubezpieczenie_wariant2.isSelected())
+                ubezpieczenie_wariant2.setSelected(false);
+            if(ubezpieczenie_wariant_3.isSelected())
+                ubezpieczenie_wariant_3.setSelected(false);
+        }
+    }
     private void ubezpieczenie_wariant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ubezpieczenie_wariant2ActionPerformed
         // TODO add your handling code here:
+        //nowe
+        if(ubezpieczenie_wariant2.isSelected()){
+            insurance = ubezpieczenie_wariant2.getText();
+            if(ubezpieczenie_wariant1.isSelected())
+                ubezpieczenie_wariant1.setSelected(false);
+            if(ubezpieczenie_wariant_3.isSelected())
+                ubezpieczenie_wariant_3.setSelected(false);
+        }
     }//GEN-LAST:event_ubezpieczenie_wariant2ActionPerformed
-
+    //nowe
+    private void ubezpieczenie_wariant3ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        if(ubezpieczenie_wariant_3.isSelected()){
+            insurance = ubezpieczenie_wariant_3.getText();
+            if(ubezpieczenie_wariant1.isSelected())
+                ubezpieczenie_wariant1.setSelected(false);
+            if(ubezpieczenie_wariant2.isSelected())
+                ubezpieczenie_wariant2.setSelected(false);
+        }
+    }
     private void cofnijActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cofnijActionPerformed
         // TODO add your handling code here:
         //nowe
