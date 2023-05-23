@@ -17,10 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Kamil
- */
 public class Rezerwacje extends javax.swing.JFrame {
     //nowe
     public static String adminName = "";
@@ -57,6 +53,8 @@ public class Rezerwacje extends javax.swing.JFrame {
                 dispose();
             }
         });
+        wrongResLabel.setMinimumSize(new java.awt.Dimension(300, 16));
+        editResButton.setVisible(false);
     }
 
     /**
@@ -365,6 +363,12 @@ public class Rezerwacje extends javax.swing.JFrame {
         addResButton.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         addResButton.setText("+ Dodaj Rezerwację");
         addResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        //nowe
+        addResButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addResButtonActionPerformed(evt);
+            }
+        });
 
         deleteResButton.setBackground(new java.awt.Color(241, 227, 185));
         deleteResButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -409,7 +413,7 @@ public class Rezerwacje extends javax.swing.JFrame {
                                     .addComponent(searchResLabel)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(282, 282, 282)
+                                .addGap(360, 360, 360)
                                 .addComponent(deleteResButton)
                                 .addGap(35, 35, 35)
                                 .addComponent(editResButton)))
@@ -441,6 +445,12 @@ public class Rezerwacje extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addResButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        data.clear();
+        new AddReservation().setVisible(true);
+    }
 
     private void editResButtonActionPerformed(ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();

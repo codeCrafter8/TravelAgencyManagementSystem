@@ -560,6 +560,10 @@ public class Wycieczki extends javax.swing.JFrame {
 
     private void addTripButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTripButtonActionPerformed
         // TODO add your handling code here:
+        //nowe
+        dispose();
+        data.clear();
+        new Dodaj_wycieczke().setVisible(true);
     }//GEN-LAST:event_addTripButtonActionPerformed
     //nowe
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed

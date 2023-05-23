@@ -154,7 +154,6 @@ public class Client {
                     socket_output_data.flush();
                 }
                 case "resUpdate" -> {
-                    System.out.println("klient przechodzi");
                     Rezerwacje.listDataLength = socket_input_data.readInt();
                     for (int i = 0; i < Rezerwacje.listDataLength; i++) {
                         Rezerwacje.data.add(socket_input_data.readUTF());
@@ -187,6 +186,35 @@ public class Client {
                     socket_output_data.flush();
                     socket_output_data.writeUTF(oferty.insurance);
                     socket_output_data.flush();
+                    System.out.println("klient addRes");
+                }
+                case "addTrip" -> {
+                    socket_output_data.writeUTF(Dodaj_wycieczke.country);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.city);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.departureCity);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.price);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.peopleLimit);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.hotelName);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.departure);
+                    socket_output_data.flush();
+                    socket_output_data.writeUTF(Dodaj_wycieczke.arrival);
+                    socket_output_data.flush();
+                }
+                case "myAccountUpdate" -> {
+                    MyAccount.clientDataListLength = socket_input_data.readInt();
+                    for (int i = 0; i < MyAccount.clientDataListLength; i++) {
+                        MyAccount.clientData.add(socket_input_data.readUTF());
+                    }
+                    MyAccount.resDataListLength = socket_input_data.readInt();
+                    for (int i = 0; i < MyAccount.resDataListLength; i++) {
+                        MyAccount.resData.add(socket_input_data.readUTF());
+                    }
                 }
             }
             socket_output_data.close();

@@ -65,6 +65,7 @@ public class oferty extends javax.swing.JFrame {
                 dlugosc_pobytu_dane.setText(daysBetween + " dni");
                 peopleQuantity = WYSZUKIWARKA.howManyAdults + WYSZUKIWARKA.howManyChildren;
                 System.out.println("people quantity: " + peopleQuantity);
+                insurance = "";
                 liczba_osob_dane.setText(String.valueOf(peopleQuantity) + " (" +
                         String.valueOf(WYSZUKIWARKA.howManyAdults) + " dorosly, " + WYSZUKIWARKA.howManyChildren + " dzieci)");
                 zdjecie.setIcon(new javax.swing.ImageIcon("src/img/zdjecie" + (WYSZUKIWARKA.selectedRow + 1) + ".jpg"));
@@ -347,9 +348,11 @@ public class oferty extends javax.swing.JFrame {
     //nowe
     private void ubezpieczenie_wariant1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        int index;
         if(ubezpieczenie_wariant1.isSelected()){
-            System.out.println("1");
             insurance = ubezpieczenie_wariant1.getText();
+            index = insurance.indexOf(" ");
+            insurance = insurance.substring(0, index);
             if(ubezpieczenie_wariant2.isSelected())
                 ubezpieczenie_wariant2.setSelected(false);
             if(ubezpieczenie_wariant_3.isSelected())
@@ -359,8 +362,11 @@ public class oferty extends javax.swing.JFrame {
     private void ubezpieczenie_wariant2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ubezpieczenie_wariant2ActionPerformed
         // TODO add your handling code here:
         //nowe
+        int index;
         if(ubezpieczenie_wariant2.isSelected()){
             insurance = ubezpieczenie_wariant2.getText();
+            index = insurance.indexOf(" ");
+            insurance = insurance.substring(0, index);
             if(ubezpieczenie_wariant1.isSelected())
                 ubezpieczenie_wariant1.setSelected(false);
             if(ubezpieczenie_wariant_3.isSelected())
@@ -370,8 +376,11 @@ public class oferty extends javax.swing.JFrame {
     //nowe
     private void ubezpieczenie_wariant3ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        int index;
         if(ubezpieczenie_wariant_3.isSelected()){
             insurance = ubezpieczenie_wariant_3.getText();
+            index = insurance.indexOf(" ");
+            insurance = insurance.substring(0, index);
             if(ubezpieczenie_wariant1.isSelected())
                 ubezpieczenie_wariant1.setSelected(false);
             if(ubezpieczenie_wariant2.isSelected())

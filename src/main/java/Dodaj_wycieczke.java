@@ -5,15 +5,13 @@
 //package oferty;
 
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author Kamil
- */
 public class Dodaj_wycieczke extends javax.swing.JFrame {
     private static final String countryPattern = "^[A-Za-z\\s]+$";
     private static final Pattern compiledCountryPattern = Pattern.compile(countryPattern);
@@ -25,7 +23,7 @@ public class Dodaj_wycieczke extends javax.swing.JFrame {
     private static final String hotelNamePattern = "^[a-zA-Z0-9\\s]{1,50}$";
     private static final Pattern compiledHotelNamePattern = Pattern.compile(hotelNamePattern);
     public static String country, city, departureCity, price, peopleLimit, hotelName;
-    public static Date departure, arrival;
+    public static String departure, arrival;
     /**
      * Creates new form Dodaj_wycieczke
      */
@@ -37,6 +35,13 @@ public class Dodaj_wycieczke extends javax.swing.JFrame {
         departure_cities.add("Wroclaw");
         departure_cities.add("Katowice");
         departure_cities.add("Gdansk");
+        validCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        validCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        validDepartureCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        validPriceLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        validNameHotelLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        validDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+        validArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
     }
 
     /**
@@ -348,45 +353,135 @@ public class Dodaj_wycieczke extends javax.swing.JFrame {
         boolean priceCorrect = priceIsValid();
         boolean peopleLimitCorrect = peopleLimitIsValid();
         boolean hotelNameCorrect = hotelNameIsValid();
-        if(countryCorrect && cityCorrect && departureCityCorrect && priceCorrect && peopleLimitCorrect && hotelNameCorrect) {
+        boolean departureCorrect = departureIsValid();
+        boolean arrivalCorrect = arrivalIsValid();
+        if(countryCorrect && cityCorrect && departureCityCorrect && priceCorrect && peopleLimitCorrect && hotelNameCorrect && departureCorrect && arrivalCorrect) {
             country = countryTextField.getText();
             city = cityTextField.getText();
             departureCity = departure_cityField.getText();
             price = priceField.getText();
             peopleLimit = LimitTextField.getText();
             hotelName = nameHotelTextField.getText();
-            arrival = arrivalDateChooser.getDate();
-            departure = departureDateChooser.getDate();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date arrivalDate = arrivalDateChooser.getDate();
+            arrival = dateFormat.format(arrivalDate);
+            Date departureDate = departureDateChooser.getDate();
+            departure = dateFormat.format(departureDate);
             Client.operate("addTrip");
             dispose();
+            new Wycieczki().setVisible(true);
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    private boolean departureIsValid() {
+        if(departureDateChooser.getDate() == null) {
+            validDepartureLabel.setText("Pole wymagane.");
+            return false;
+        }
+        validDepartureLabel.setText("");
+        return true;
+    }
+    private boolean arrivalIsValid() {
+        if(arrivalDateChooser.getDate() == null) {
+            validArrivalLabel.setText("Pole wymagane.");
+            return false;
+        }
+        validArrivalLabel.setText("");
+        return true;
+    }
+
     private boolean cityIsValid() {
-        return false;
+        if(cityTextField.getText().isEmpty()) {
+            validCityLabel.setText("Pole wymagane.");
+            return false;
+        }
+        if(compiledCountryPattern.matcher(cityTextField.getText()).matches()) {
+            validCityLabel.setText("");
+            return true;
+        }
+        else {
+            validCityLabel.setText("Sprawdź czy podane miasto jest poprawne.");
+            return false;
+        }
     }
 
     private boolean departureCityIsValid() {
-        return false;
+        if(departure_cityField.getText().isEmpty()) {
+            validDepartureCityLabel.setText("Pole wymagane.");
+            return false;
+        }
+        if(departure_cities.contains(departure_cityField.getText())) {
+            validDepartureCityLabel.setText("");
+            return true;
+        }
+        else {
+            validDepartureCityLabel.setText("Nie mozna leciec z tego miasta.");
+            return false;
+        }
     }
 
     private boolean priceIsValid() {
-        return false;
+        if(priceField.getText().isEmpty()) {
+            validPriceLabel.setText("Pole wymagane.");
+            return false;
+        }
+        if(compiledPricePattern.matcher(priceField.getText()).matches()) {
+            validPriceLabel.setText("");
+            return true;
+        }
+        else {
+            validPriceLabel.setText("Zły format.");
+            return false;
+        }
     }
 
     private boolean peopleLimitIsValid() {
-        return false;
+        if(LimitTextField.getText().isEmpty()) {
+            validLimitLabel.setText("Pole wymagane.");
+            return false;
+        }
+        if(compiledPeopleLimitPattern.matcher(LimitTextField.getText()).matches()) {
+            validLimitLabel.setText("");
+            return true;
+        }
+        else {
+            validLimitLabel.setText("Zły format.");
+            return false;
+        }
     }
     private boolean hotelNameIsValid() {
-        return false;
+        if(nameHotelTextField.getText().isEmpty()) {
+            validNameHotelLabel.setText("Pole wymagane.");
+            return false;
+        }
+        if(compiledHotelNamePattern.matcher(nameHotelTextField.getText()).matches()) {
+            validNameHotelLabel.setText("");
+            return true;
+        }
+        else {
+            validNameHotelLabel.setText("Sprawdź czy podana nazwa hotelu jest poprawna.");
+            return false;
+        }
     }
 
     private boolean countryIsValid() {
-        return false;
+        if(countryTextField.getText().isEmpty()) {
+            validCountryLabel.setText("Pole wymagane.");
+            return false;
+        }
+        if(compiledCountryPattern.matcher(countryTextField.getText()).matches()) {
+            validCountryLabel.setText("");
+            return true;
+        }
+        else {
+            validCountryLabel.setText("Sprawdź czy podany kraj jest poprawny.");
+            return false;
+        }
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        
+        dispose();
+        new Wycieczki().setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void LimitTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimitTextFieldActionPerformed

@@ -17,10 +17,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author Kamil
- */
 public class WYSZUKIWARKA extends javax.swing.JFrame {
     private static final String phoneNumberPattern = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
     private static final Pattern compiledPhoneNumberPattern = Pattern.compile(phoneNumberPattern);
@@ -565,7 +561,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
             }
         });
 
-        zarzadzanie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona główna", "Moje rezerwacje", "Wyloguj" }));
+        zarzadzanie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje Konto", "Wyloguj" }));
         zarzadzanie.setBorder(null);
         zarzadzanie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         zarzadzanie.setFocusable(false);
@@ -709,6 +705,10 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 StartPageFrame.client_logged = false;
                 new StartPageFrame().setVisible(true);
             }
+        }
+        else if(zarzadzanie.getSelectedItem().equals("Moje Konto")){
+            dispose();
+            new MyAccount().setVisible(true);
         }
     }
     //nowe

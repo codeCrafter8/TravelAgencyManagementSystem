@@ -197,7 +197,6 @@ public class BackgroundThreads extends SwingWorker<Void, Void> {
                         ServerGUI.tripEditList.clear();
                     }
                     case "resUpdate" -> {
-                        System.out.println("server przechodzi");
                         database.connect_with_database();
                         ServerGUI.socket_output_data.writeInt(Rezerwacje.listDataLength);
                         ServerGUI.socket_output_data.flush();
@@ -212,7 +211,7 @@ public class BackgroundThreads extends SwingWorker<Void, Void> {
                         database.connect_with_database();
                     }
                     case "editRes" -> {
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 6; i++) {
                             if (i == 0)
                                 ServerGUI.resEditList.add(Integer.toString(ServerGUI.socket_input_data.readInt()));
                             else
@@ -226,7 +225,37 @@ public class BackgroundThreads extends SwingWorker<Void, Void> {
                         ServerGUI.userIdToRes = ServerGUI.socket_input_data.readInt();
                         ServerGUI.peopleQuantity = ServerGUI.socket_input_data.readInt();
                         ServerGUI.insurance = ServerGUI.socket_input_data.readUTF();
+                        //database.connect_with_database();
+                        database.addReservation();
+                        database.resAdminData.clear();
+                    }
+                    case "addTrip" -> {
+                        ServerGUI.countryAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.cityAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.departureCityAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.priceAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.peopleLimitAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.hotelNameAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.departureAddTrip = ServerGUI.socket_input_data.readUTF();
+                        ServerGUI.arrivalAddTrip = ServerGUI.socket_input_data.readUTF();
                         database.connect_with_database();
+                    }
+                    case "myAccountUpdate" -> {
+                        database.connect_with_database();
+                        ServerGUI.socket_output_data.writeInt(MyAccount.clientDataListLength);
+                        ServerGUI.socket_output_data.flush();
+                        for (String s : database.clientData) {
+                            ServerGUI.socket_output_data.writeUTF(s);
+                            ServerGUI.socket_output_data.flush();
+                        }
+                        database.clientData.clear();
+                        ServerGUI.socket_output_data.writeInt(MyAccount.resDataListLength);
+                        ServerGUI.socket_output_data.flush();
+                        for (String s : database.resData) {
+                            ServerGUI.socket_output_data.writeUTF(s);
+                            ServerGUI.socket_output_data.flush();
+                        }
+                        database.resData.clear();
                     }
                 }
             } catch (IOException e) {

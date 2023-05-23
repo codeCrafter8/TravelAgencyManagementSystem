@@ -46,6 +46,7 @@ public class ServerGUI extends javax.swing.JFrame {
     public static int phoneNumbersListLength = 0;
     public static List<String> destination = new ArrayList<>();
     public static List<String> departure = new ArrayList<>();
+    public static String countryAddTrip, cityAddTrip, departureCityAddTrip, priceAddTrip, peopleLimitAddTrip, hotelNameAddTrip, departureAddTrip, arrivalAddTrip;
     /**
      * Creates new form ServerGUI
      */
@@ -420,7 +421,7 @@ public class ServerGUI extends javax.swing.JFrame {
                 ServerGUI.client = ServerGUI.socket.accept();
                 SwingWorker<Void, Void> worker = new BackgroundThreads();
                 worker.execute();
-                System.out.println("operate");
+                //System.out.println("operate");
             }
         }
         catch(IOException ex){
