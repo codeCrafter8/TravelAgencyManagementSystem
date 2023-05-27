@@ -31,6 +31,18 @@ public class oferty extends javax.swing.JFrame {
         miasto_kraj.setFont(new Font("Segoe Print", Font.PLAIN, 15));
         nazwa_hotelu.setFont(new Font("Segoe Print", Font.PLAIN, 20));
         miejsce_na_opis.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
+            }
+        });
         //nazwa_hotelu.setText("Binkowski");
         //typePrice.setText("15 407 zł");
         //miasto_kraj.setText("Francja, Paryż"); 
@@ -48,10 +60,7 @@ public class oferty extends javax.swing.JFrame {
         Date date2;
         int daysBetween = 0;
         for(int i=0; i<size; i++){
-            if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
-                tripID = Integer.parseInt(WYSZUKIWARKA.data.get(counter+7));
-                System.out.println("tripID: " + tripID);
-                System.out.println("userID: " + userID);
+            if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.idTripToShow){
                 try {
                     date1 = formatter.parse(String.valueOf(WYSZUKIWARKA.data.get(counter+2)));
                     date2 = formatter.parse(String.valueOf(WYSZUKIWARKA.data.get(counter+3)));

@@ -37,6 +37,19 @@ public class RegistrationPage extends javax.swing.JFrame {
     public RegistrationPage() {
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    if(StartPageFrame.admin_logged)
+                        Client.operate("logOut");
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
+            }
+        });
     }
 
     /**
@@ -72,7 +85,7 @@ public class RegistrationPage extends javax.swing.JFrame {
         TypeFirstnameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Travel Agency - Registration");
+        setTitle("Rejestracja");
         setPreferredSize(new java.awt.Dimension(1024, 768));
 
         regPanel.setBackground(new java.awt.Color(247, 233, 201));

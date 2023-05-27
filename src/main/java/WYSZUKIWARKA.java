@@ -5,14 +5,14 @@
 //package com.mycompany.front;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -35,6 +35,8 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
     public static int selectedRow;
     public static int howManyAdults;
     public static int howManyChildren;
+    public static Map<Integer, Integer> idRows = new TreeMap<>();
+    public static int idTripToShow = 0;
     /**
      * Creates new form WYSZUKIWARKA
      */
@@ -99,6 +101,18 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         getDestination();
         getDeparture();
         populateTable();
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
+            }
+        });
     }
 
     private void getDestination() {
@@ -126,8 +140,13 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
                     data.get(counter+4) + " zł"});
+            idRows.put(i, Integer.parseInt(data.get(counter+7)));
             if(size > 1)
                 counter+=attributesQuantity;
+        }
+        Iterator<Map.Entry<Integer,Integer>> it = idRows.entrySet().iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
         }
     }
 
@@ -545,18 +564,28 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         tabela.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                /*int counter = 0;
+                int size = (listDataLength/attributesQuantity);
+                for(int i=0; i<size; i++){
+                    if(data.get(counter).equals(country))
+
+                    if(size > 1)
+                        counter+=attributesQuantity;
+                }*/
                 selectedRow = tabela.rowAtPoint(evt.getPoint());
                 if (selectedRow >= 0) {
-                    int counter = 0;
+                    /*int counter = 0;
                     int size = (listDataLength/attributesQuantity);
                     for(int i=0; i<size; i++) {
-                        if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){
+                        if(Integer.parseInt(WYSZUKIWARKA.data.get(counter+7)) == WYSZUKIWARKA.selectedRow + 1){*/
+                                idTripToShow = idRows.get(selectedRow);
+                    System.out.println(idTripToShow);
                                 dispose();
                                 new oferty().setVisible(true);
-                        }
+                        /*}
                         if(size > 1)
                             counter+=attributesQuantity;
-                    }
+                    }*/
                 }
             }
         });
@@ -725,6 +754,7 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         Date date2 = null;
         Date startDate = null;
         Date endDate = null;
+        int rowCounter = 0;
         try{
             startDate = formatter.parse(String.valueOf(start));
             endDate = formatter.parse(String.valueOf(end));
@@ -738,9 +768,12 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
             }catch (ParseException e) {
                 e.printStackTrace();
             }
-            if(date1.compareTo(startDate) >= 0 && date2.compareTo(endDate) <= 0)
-                model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
-                    data.get(counter+4) + " zł"});
+            if(date1.compareTo(startDate) >= 0 && date2.compareTo(endDate) <= 0) {
+                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
+                        data.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                rowCounter++;
+            }
             if(size > 1)
                 counter+=attributesQuantity;
         }
@@ -811,12 +844,21 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
+        idRows.clear();
+        int rowCounter = 0;
         for(int i=0; i<size; i++){
-            if(data.get(counter).equals(country))
-                model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
-                        data.get(counter+4) + " zł"});
+            if(data.get(counter).equals(country)) {
+                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
+                        data.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                rowCounter++;
+            }
             if(size > 1)
                 counter+=attributesQuantity;
+        }
+        Iterator<Map.Entry<Integer,Integer>> it = idRows.entrySet().iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
         }
     }
     //nowe
@@ -825,12 +867,21 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         int size = (listDataLength/attributesQuantity);
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
+        idRows.clear();
+        int rowCounter = 0;
         for(int i=0; i<size; i++){
-            if(data.get(counter).equals(country1) || data.get(counter).equals(country2))
-                model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
-                        data.get(counter+4) + " zł"});
+            if(data.get(counter).equals(country1) || data.get(counter).equals(country2)) {
+                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
+                        data.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                rowCounter++;
+            }
             if(size > 1)
                 counter+=attributesQuantity;
+        }
+        Iterator<Map.Entry<Integer,Integer>> it = idRows.entrySet().iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
         }
     }
     private void egzotykaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_egzotykaActionPerformed
@@ -849,15 +900,20 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = null;
         Date now = new Date();
+        idRows.clear();
+        int rowCounter = 0;
         for(int i=0; i<size; i++){
             try {
                 date1 = formatter.parse(String.valueOf(data.get(counter+2)));
             }catch (ParseException e) {
                 e.printStackTrace();
             }
-            if(getDifferenceDays(now, date1) < 5)
-                model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
-                        data.get(counter+4) + " zł"});
+            if(getDifferenceDays(now, date1) < 5) {
+                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
+                        data.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                rowCounter++;
+            }
             if(size > 1)
                 counter+=attributesQuantity;
         }
@@ -896,6 +952,8 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                 int size = (listDataLength / attributesQuantity);
                 DefaultTableModel model = (DefaultTableModel) tabela.getModel();
                 model.setRowCount(0);
+                idRows.clear();
+                int rowCounter = 0;
                 for (int i = 0; i < size; i++) {
                     try {
                         date1 = formatter.parse(String.valueOf(data.get(counter + 2)));
@@ -906,9 +964,12 @@ public class WYSZUKIWARKA extends javax.swing.JFrame {
                         e.printStackTrace();
                     }
                     if (data.get(counter).equals(country) && data.get(counter + 5).equals(departure_city) && departure.compareTo(date1) == 0
-                            && arrival.compareTo(date2) == 0 && (howManyChildren + howManyAdults) <= Integer.parseInt(data.get(counter + 6)))
+                            && arrival.compareTo(date2) == 0 && (howManyChildren + howManyAdults) <= Integer.parseInt(data.get(counter + 6))) {
                         model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
                                 data.get(counter + 4) + " zł"});
+                        idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                        rowCounter++;
+                    }
                     if (size > 1)
                         counter += attributesQuantity;
                 }

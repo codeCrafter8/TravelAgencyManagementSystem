@@ -72,7 +72,7 @@ public class StartPageFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Travel Agency");
+        setTitle("Logowanie");
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(242, 214, 158));
         setPreferredSize(new java.awt.Dimension(1024, 768));

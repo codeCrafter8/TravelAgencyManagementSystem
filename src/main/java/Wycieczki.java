@@ -51,12 +51,18 @@ public class Wycieczki extends javax.swing.JFrame {
         for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
                 tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-        //nowe
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                data.clear();
-                dispose();
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    data.clear();
+                    Client.operate("logOut");
+                    dispose();
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
             }
         });
     }

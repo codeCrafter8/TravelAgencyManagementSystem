@@ -26,12 +26,18 @@ public class AddReservation extends javax.swing.JFrame {
         generateData();
         populateClientsTable();
         populateTripsTable();
-        //nowe
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                Clients.data.clear();
-                dispose();
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                    Clients.data.clear();
+                    dispose();
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
             }
         });
     }

@@ -109,6 +109,7 @@ public class database {
                 clientData.add(result.getString("lastname"));
                 clientData.add(result.getString("email"));
                 clientData.add(result.getString("phonenumber"));
+                clientData.add(String.valueOf(result.getInt("ID_user")));
             }
             MyAccount.clientDataListLength = clientData.size();
         }catch (SQLException ex) {

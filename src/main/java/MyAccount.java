@@ -14,7 +14,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 public class MyAccount extends javax.swing.JFrame {
     public static List<String> clientData = new ArrayList<>();
     public static int clientDataListLength = 0;
@@ -37,6 +36,18 @@ public class MyAccount extends javax.swing.JFrame {
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         generateData();
         populateTable();
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
+            }
+        });
     }
 
     /**
@@ -67,6 +78,7 @@ public class MyAccount extends javax.swing.JFrame {
         typeEmailLabel = new javax.swing.JLabel();
         typePhoneNumberLabel = new javax.swing.JLabel();
         editButton = new javax.swing.JButton();
+        editButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Moje konto");
@@ -93,7 +105,7 @@ public class MyAccount extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Kraj", "Miasto", "Cena łączna", "Wyjazd", "Przyjazd"
+                "Id", "Kraj", "Miasto", "Cena", "Wyjazd", "Przyjazd"
             }
         ));
         resTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -151,16 +163,16 @@ public class MyAccount extends javax.swing.JFrame {
         phoneNumberLabel.setText("Numer telefonu:");
 
         typeNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        //typeNameLabel.setText("Anna");
+        typeNameLabel.setText("Anna");
 
         typrLastNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        //typrLastNameLabel.setText("Kowalska");
+        typrLastNameLabel.setText("Kowalska");
 
         typeEmailLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        //typeEmailLabel.setText("anna@wp.pl");
+        typeEmailLabel.setText("anna@wp.pl");
 
         typePhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        //typePhoneNumberLabel.setText("123456778");
+        typePhoneNumberLabel.setText("123456778");
 
         editButton.setBackground(new java.awt.Color(151, 123, 92));
         editButton.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
@@ -172,6 +184,20 @@ public class MyAccount extends javax.swing.JFrame {
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
+            }
+        });
+
+        editButton1.setBackground(new java.awt.Color(151, 123, 92));
+        editButton1.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
+        editButton1.setForeground(new java.awt.Color(255, 255, 255));
+        editButton1.setText("Zmień hasło");
+        editButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editButton1.setFocusable(false);
+        editButton1.setPreferredSize(new java.awt.Dimension(150, 43));
+        //nowe
+        editButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButton1ActionPerformed(evt);
             }
         });
 
@@ -198,6 +224,8 @@ public class MyAccount extends javax.swing.JFrame {
                             .addComponent(typePhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -225,8 +253,10 @@ public class MyAccount extends javax.swing.JFrame {
                     .addGroup(userPanelLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(iconUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(userPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -273,7 +303,7 @@ public class MyAccount extends javax.swing.JFrame {
                 .addComponent(zarzadzanie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addGap(60, 60, 60)
                 .addComponent(myReservationsLabel)
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -291,6 +321,11 @@ public class MyAccount extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    //nowe
+    private void editButton1ActionPerformed(ActionEvent evt) {
+        new ChangePassword().setVisible(true);
+    }
+
     //nowe
     private void cancelReservationButtonActionPerformed(ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
@@ -364,6 +399,7 @@ public class MyAccount extends javax.swing.JFrame {
     }
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         // TODO add your handling code here:
+        new Edit().setVisible(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void downloadInsuranceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadInsuranceButtonActionPerformed
@@ -417,6 +453,7 @@ public class MyAccount extends javax.swing.JFrame {
     private javax.swing.JButton cancelReservationButton;
     private javax.swing.JButton downloadInsuranceButton;
     private javax.swing.JButton editButton;
+    private javax.swing.JButton editButton1;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JLabel iconUser;
     private javax.swing.JLabel infoConfirmLabel;

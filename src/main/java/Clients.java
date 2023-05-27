@@ -49,12 +49,18 @@ public class Clients extends javax.swing.JFrame {
         for (int i = 0; i < clientsTable.getModel().getColumnCount(); i++) {
                 clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-        //nowe
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                data.clear();
-                dispose();
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                    data.clear();
+                    dispose();
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    new LogsAdmins("Clients", "info", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
+                }
             }
         });
     }

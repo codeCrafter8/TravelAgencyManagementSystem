@@ -4,6 +4,7 @@
  */
 //package oferty;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,18 @@ public class Dodaj_wycieczke extends javax.swing.JFrame {
         validNameHotelLabel.setMinimumSize(new java.awt.Dimension(200, 16));
         validDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
         validArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
+            }
+        });
     }
 
     /**

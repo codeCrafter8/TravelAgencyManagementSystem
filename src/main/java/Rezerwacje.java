@@ -45,12 +45,18 @@ public class Rezerwacje extends javax.swing.JFrame {
         for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
                 resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-        //nowe
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                data.clear();
-                dispose();
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    Client.operate("logOut");
+                    data.clear();
+                    dispose();
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
             }
         });
         wrongResLabel.setMinimumSize(new java.awt.Dimension(300, 16));
