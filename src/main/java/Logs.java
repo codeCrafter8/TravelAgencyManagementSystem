@@ -23,7 +23,6 @@ public class Logs {
             File folder = new File("Logs");
             if (!folder.exists())
                 folder.mkdir();
-
             File file = new File("Logs/Logs.log");
             FileWriter fileWriter = new FileWriter(file, true);
             switch (messageType) {

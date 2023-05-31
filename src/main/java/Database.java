@@ -1,38 +1,26 @@
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class database {
+public class Database {
     static Statement statement;
     static Connection connection;
-    private static String adminName = "";
-    static List<String> data = new ArrayList<>();
-    static List<String> tripsData = new ArrayList<>();
-    static List<String> tripsAdminData = new ArrayList<>();
-    static List<String> resAdminData = new ArrayList<>();
-    static List<String> clientData = new ArrayList<>();
-    static List<String> resData = new ArrayList<>();
-    public static void connect_with_database() {
+    private static ServerGUI serverGUII;
+    Database(){
+        //serverGUI = new ServerGUI();
+    }
+    public static void connect_with_database(ServerGUI serverGUI) {
+        serverGUII = serverGUI;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
             statement = connection.createStatement();
-            System.out.println("hello d");
-            System.out.println("OPERATION:" + ServerGUI.operation);
             switch (ServerGUI.operation) {
-                case "Register" -> send_data();
-                case "Login" -> login();
+                case "register" -> sendData();
+                case "login" -> login();
                 case "dashboardUpdate" -> updateDashboard();
                 case "clientsUpdate" -> updateClients();
                 case "deleteClient" -> deleteClient();
                 case "editClient" -> editClient();
                 case "changeClientPassword" -> changeClientPassword();
-                case "deleteTable" -> deleteTable();
-                case "checkTables" -> checkTables();
-                case "checkSequences" -> checkSequences();
-                case "deleteSequence" -> deleteSequence();
-                case "addSequence" -> addSequence();
-                case "addTable" -> addTable();
                 case "logOutEveryone" -> logOutEveryone();
                 case "logOut" -> logOut();
                 case "tripsListPopulation" -> tripsListPopulate();
@@ -47,10 +35,32 @@ public class database {
                 case "editRes" -> editRes();
                 case "addTrip" -> addTrip();
                 case "myAccountUpdate" -> updateMyAccount();
+                case "dataEdition" -> editData();
             }
         }catch(Exception ex){
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+
+    private static void editData() {
+        try{
+            String query = "UPDATE users " +
+                    "SET firstName = ?, lastName = ?, email = ?, phoneNumber = ? " +
+                    "WHERE id_user = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setString(1, serverGUII.dataFromDataEdition.get(0));
+            preparedState.setString(2, serverGUII.dataFromDataEdition.get(1));
+            preparedState.setString(3, serverGUII.dataFromDataEdition.get(2));
+            preparedState.setInt(4, Integer.parseInt(serverGUII.dataFromDataEdition.get(3)));
+            preparedState.setInt(5, Integer.parseInt(serverGUII.dataFromDataEdition.get(4)));
+            preparedState.executeUpdate();
+            String commit = "COMMIT";
+            statement.executeUpdate(commit);
+            new LogsAdmins("Database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane klienta o ID: " + serverGUII.clientID + ".");
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("Database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -68,29 +78,26 @@ public class database {
             preparedState.setString(1, ServerGUI.email);
             ResultSet result = preparedState.executeQuery();
             while(result.next()){
-                resData.add(Integer.toString(result.getInt("id_reservation")));
-                resData.add(result.getString("country"));
-                resData.add(result.getString("city"));
-                resData.add(Integer.toString(result.getInt("price_per_person")));
-                resData.add(Integer.toString(result.getInt("people_quantity")));
+                ServerGUI.resData.add(Integer.toString(result.getInt("id_reservation")));
+                ServerGUI.resData.add(result.getString("country"));
+                ServerGUI.resData.add(result.getString("city"));
+                ServerGUI.resData.add(Integer.toString(result.getInt("price_per_person")));
+                ServerGUI.resData.add(Integer.toString(result.getInt("people_quantity")));
                 departure = result.getString("departure");
                 index = departure.indexOf("00:");
-                resData.add(departure.substring(0, index - 1));
+                ServerGUI.resData.add(departure.substring(0, index - 1));
                 arrival = result.getString("arrival");
                 index = arrival.indexOf("00:");
-                resData.add(arrival.substring(0, index - 1));
+                ServerGUI.resData.add(arrival.substring(0, index - 1));
                 if(result.getString("insurance") != null)
-                    resData.add(result.getString("insurance"));
+                    ServerGUI.resData.add(result.getString("insurance"));
                 else
-                    resData.add("Brak");
-                resData.add(result.getString("departure_city"));
-                resData.add(result.getString("hotel_name"));
-                resData.add(result.getString("description"));
+                    ServerGUI.resData.add("Brak");
+                ServerGUI.resData.add(result.getString("departure_city"));
+                ServerGUI.resData.add(result.getString("hotel_name"));
+                ServerGUI.resData.add(result.getString("description"));
             }
-            MyAccount.resDataListLength = resData.size();
-            for (String s : database.resData) {
-                System.out.println(s);
-            }
+            MyAccount.resDataListLength = ServerGUI.resData.size();
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -105,38 +112,38 @@ public class database {
             adminPreparedState.setString(2, ServerGUI.email);
             ResultSet result = adminPreparedState.executeQuery();
             if(result.next()){
-                clientData.add(result.getString("firstname"));
-                clientData.add(result.getString("lastname"));
-                clientData.add(result.getString("email"));
-                clientData.add(result.getString("phonenumber"));
-                clientData.add(String.valueOf(result.getInt("ID_user")));
+                ServerGUI.clientData.add(result.getString("firstname"));
+                ServerGUI.clientData.add(result.getString("lastname"));
+                ServerGUI.clientData.add(result.getString("email"));
+                ServerGUI.clientData.add(result.getString("phonenumber"));
+                ServerGUI.clientData.add(String.valueOf(result.getInt("ID_user")));
             }
-            MyAccount.clientDataListLength = clientData.size();
+            MyAccount.clientDataListLength = ServerGUI.clientData.size();
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
-    private static void addTrip() {
+    public static void addTrip() {
         try {
             String query = "INSERT INTO trips VALUES (trips_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'Hotel to miejsce, w ktorym jedzenie to kwestia przygody i odkrywania nowych smakow. " +
                     "W naszej ofercie znajda Panstwo pokoje o roznym standardzie oraz opcje wyzywienia, w tym sniadania, obiady i kolacje, ktore są przygotowywane przez naszych szefow kuchni z pasja i zaangazowaniem. " +
-                    "Nasza restauracja oferuje dania kuchni fusion, a nasza karta drinkow to prawdziwe arcydziela mixologii.', ?)";
+                    "Nasza restauracja oferuje dania kuchni fusion, a nasza karta drinkow to prawdziwe arcydziela mixologii.', ?, 0)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, ServerGUI.countryAddTrip);
-            preparedStatement.setString(2, ServerGUI.cityAddTrip);
-            preparedStatement.setString(3, ServerGUI.departureCityAddTrip);
-            preparedStatement.setInt(4, Integer.parseInt(ServerGUI.priceAddTrip));
-            preparedStatement.setDate(5, Date.valueOf(ServerGUI.departureAddTrip));
-            preparedStatement.setDate(6, Date.valueOf(ServerGUI.arrivalAddTrip));
-            preparedStatement.setInt(7, Integer.parseInt(ServerGUI.peopleLimitAddTrip));
-            preparedStatement.setString(8, ServerGUI.hotelNameAddTrip);
+            preparedStatement.setString(1, ServerGUI.addTripData.get(0));
+            preparedStatement.setString(2, ServerGUI.addTripData.get(1));
+            preparedStatement.setString(3, ServerGUI.addTripData.get(2));
+            preparedStatement.setInt(4, Integer.parseInt(ServerGUI.addTripData.get(3)));
+            preparedStatement.setDate(5, Date.valueOf(ServerGUI.addTripData.get(6)));
+            preparedStatement.setDate(6, Date.valueOf(ServerGUI.addTripData.get(7)));
+            preparedStatement.setInt(7, Integer.parseInt(ServerGUI.addTripData.get(4)));
+            preparedStatement.setString(8, ServerGUI.addTripData.get(5));
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+            //preparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał wycieczkę do : " + ServerGUI.cityAddTrip + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał wycieczkę do : " + ServerGUI.addTripData.get(1) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -175,7 +182,6 @@ public class database {
             int id_trip = 0;
             while(result.next()) {
                 id_trip = result.getInt("id_trip");
-                System.out.println(id_trip);
             }
             String query = "DELETE FROM reservations WHERE id_reservation = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
@@ -200,24 +206,23 @@ public class database {
         String arrival;
         int index;
         try {
-            System.out.println("database przechodzi");
             String query = "SELECT id_reservation, firstname, lastname, departure, arrival, phonenumber, reserved FROM reservations " +
                     "JOIN trips ON trips.id_trip = reservations.id_trip " +
                     "JOIN users ON users.ID_user = reservations.ID_user";
             ResultSet result = statement.executeQuery(query);
             while(result.next()){
-                resAdminData.add(Integer.toString(result.getInt("id_reservation")));
-                resAdminData.add(result.getString("firstname"));
-                resAdminData.add(result.getString("lastname"));
+                ServerGUI.resAdminData.add(Integer.toString(result.getInt("id_reservation")));
+                ServerGUI.resAdminData.add(result.getString("firstname"));
+                ServerGUI.resAdminData.add(result.getString("lastname"));
                 departure = result.getString("departure");
                 index = departure.indexOf("00:");
-                resAdminData.add(departure.substring(0, index - 1));
+                ServerGUI.resAdminData.add(departure.substring(0, index - 1));
                 arrival = result.getString("arrival");
                 index = arrival.indexOf("00:");
-                resAdminData.add(arrival.substring(0, index - 1));
-                resAdminData.add(result.getString("phonenumber"));
+                ServerGUI.resAdminData.add(arrival.substring(0, index - 1));
+                ServerGUI.resAdminData.add(result.getString("phonenumber"));
             }
-            Rezerwacje.listDataLength = resAdminData.size();
+            Reservations.listDataLength = ServerGUI.resAdminData.size();
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -225,9 +230,7 @@ public class database {
     }
 
     public static void addReservation() {
-        System.out.println("przed try");
         try {
-            System.out.println("hej");
             String query = "INSERT INTO reservations (id_reservation, id_trip, ID_user, people_quantity, insurance) VALUES (reservations_seq.nextval, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, ServerGUI.tripIdToRes);
@@ -236,7 +239,6 @@ public class database {
             preparedStatement.setString(4, ServerGUI.insurance);
             preparedStatement.executeUpdate();
             preparedStatement.close();
-            System.out.println("dodano rezerwacje");
             String tripsUpdateQuery = "UPDATE trips SET reserved = 1 WHERE id_trip = ?";
             PreparedStatement updateTripsPreparedStatement = connection.prepareStatement(tripsUpdateQuery);
             updateTripsPreparedStatement.setInt(1, ServerGUI.tripIdToRes);
@@ -292,7 +294,7 @@ public class database {
             while(result.next()){
                 ServerGUI.destination.add(result.getString("country"));
             }
-            WYSZUKIWARKA.destinationListLength = ServerGUI.destination.size();
+            SearchEngine.destinationListLength = ServerGUI.destination.size();
         }catch(Exception ex){
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -306,7 +308,7 @@ public class database {
             while(result.next()){
                 ServerGUI.departure.add(result.getString("departure_city"));
             }
-            WYSZUKIWARKA.departureListLength = ServerGUI.departure.size();
+            SearchEngine.departureListLength = ServerGUI.departure.size();
         }catch(Exception ex){
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -320,24 +322,22 @@ public class database {
             String departure;
             String arrival;
             while(result.next()){
-                // (id_trip NUMBER(3),country VARCHAR2(50),city VARCHAR2(50),departure_city VARCHAR2(50),price_per_person NUMBER(6),
-                // departure DATE,arrival DATE,people_limit NUMBER(2),description VARCHAR2(500))
-                tripsData.add(result.getString("country"));
-                tripsData.add(result.getString("city"));
+                ServerGUI.tripsData.add(result.getString("country"));
+                ServerGUI.tripsData.add(result.getString("city"));
                 departure = result.getString("departure");
                 index = departure.indexOf("00:");
-                tripsData.add(departure.substring(0, index - 1));
+                ServerGUI.tripsData.add(departure.substring(0, index - 1));
                 arrival = result.getString("arrival");
                 index = arrival.indexOf("00:");
-                tripsData.add(arrival.substring(0, index - 1));
-                tripsData.add(Integer.toString((result.getInt("price_per_person"))));
-                tripsData.add(result.getString("departure_city"));
-                tripsData.add(Integer.toString(result.getInt("people_limit")));
-                tripsData.add(Integer.toString(result.getInt("id_trip")));
-                tripsData.add(result.getString("description"));
-                tripsData.add(result.getString("hotel_name"));
+                ServerGUI.tripsData.add(arrival.substring(0, index - 1));
+                ServerGUI.tripsData.add(Integer.toString((result.getInt("price_per_person"))));
+                ServerGUI.tripsData.add(result.getString("departure_city"));
+                ServerGUI.tripsData.add(Integer.toString(result.getInt("people_limit")));
+                ServerGUI.tripsData.add(Integer.toString(result.getInt("id_trip")));
+                ServerGUI.tripsData.add(result.getString("description"));
+                ServerGUI.tripsData.add(result.getString("hotel_name"));
             }
-            WYSZUKIWARKA.listDataLength = tripsData.size();
+            SearchEngine.listDataLength = ServerGUI.tripsData.size();
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -360,7 +360,7 @@ public class database {
                 if(resultSet.getString("userRank").equals("admin"))
                     new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + ServerGUI.email + " wylogował się.");
                 else
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + ServerGUI.email + " wylogował się.");
+                    new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + ServerGUI.email + " wylogował się.");
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
@@ -376,147 +376,6 @@ public class database {
             statement.executeUpdate(commit);
             ServerGUI.usersCounter = 0;
             new LogsServer("database", "info", "[ " + new java.util.Date() + " ] " + "Wylogowano wszystkich z serwera.");
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-
-    private static void addTable() {
-        try{
-            String query = "";
-            int index = ServerGUI.tableName.indexOf("(usunięta)");
-            switch(ServerGUI.tableName.substring(0, index - 1)){
-                case "users" -> {
-                    query = "CREATE TABLE " + ServerGUI.tableName + " (ID_user NUMBER(6) PRIMARY KEY, email VARCHAR(70), password VARCHAR(70), " +
-                            "firstName VARCHAR(70), lastName VARCHAR(70), phoneNumber VARCHAR(25), userLogged NUMBER(6))";
-                }
-                case "trips" -> {
-                    query = "CREATE TABLE " + ServerGUI.tableName.substring(0, index - 1) + "(id_trip NUMBER(3), country VARCHAR2(50), " +
-                            "city VARCHAR2(50), departure_city VARCHAR2(50), price_per_person NUMBER(6), departure DATE, arrival DATE, " +
-                            "people_limit NUMBER(2), description VARCHAR2(800), hotel_name VARCHAR2(50), reserved NUMBER(1), " +
-                            "CONSTRAINT id_trip_pk PRIMARY KEY (id_trip))";
-                }
-                case "reservations" -> {
-                    query = "CREATE TABLE " + ServerGUI.tableName.substring(0, index - 1) + "(id_reservation NUMBER(3), id_trip NUMBER, " +
-                            "ID_user NUMBER, people_quantity NUMBER(3), insurance VARCHAR2(50), CONSTRAINT fk_id_trip FOREIGN KEY (id_trip) REFERENCES trips(id_trip), " +
-                            "CONSTRAINT fk_id_user FOREIGN KEY (ID_user) REFERENCES users(ID_user))";
-                }
-            }
-            statement.executeQuery(query);
-            String commit = "COMMIT";
-            statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał tabelę " + ServerGUI.tableName + ".");
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-
-    private static void addSequence() {
-        try{
-            int index = ServerGUI.seqName.indexOf("(usunięta)");
-            String query = "CREATE SEQUENCE " + ServerGUI.seqName.substring(0, index);
-            statement.executeQuery(query);
-            String commit = "COMMIT";
-            statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał sekwencję " + ServerGUI.seqName + ".");
-        }catch (SQLException ex) {
-            System.out.println("Ex add: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-
-    private static void deleteSequence() {
-        try{
-            String query = "DROP SEQUENCE " + ServerGUI.seqName;
-            statement.executeQuery(query);
-            String commit = "COMMIT";
-            statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął sekwencję " + ServerGUI.seqName + ".");
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-
-    private static void checkTables() {
-        checkTable("users");
-        checkTable("trips");
-        checkTable("reservations");
-    }
-    private static void checkTable(String tableName){
-        try{
-            String query = "SELECT * FROM user_tables WHERE table_name = '" + tableName.toUpperCase() + "'";
-            System.out.println(query);
-            ResultSet resultSet = statement.executeQuery(query);
-            switch(tableName) {
-                case "users" -> {
-                    if (resultSet.next())
-                        DatabasePanel.usersTableName = tableName;
-                    else
-                        DatabasePanel.usersTableName = tableName + " (usunięta)";
-                }
-                case "trips" -> {
-                    if (resultSet.next())
-                        DatabasePanel.tripsTableName = tableName;
-                    else
-                        DatabasePanel.tripsTableName = tableName + " (usunięta)";
-                }
-                case "reservations" -> {
-                    if (resultSet.next())
-                        DatabasePanel.reservationsTableName = tableName;
-                    else
-                        DatabasePanel.reservationsTableName = tableName + " (usunięta)";
-                }
-            }
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-    private static void checkSequences() {
-        checkSequence("users_seq");
-        checkSequence("trips_seq");
-        checkSequence("reservations_seq");
-    }
-    private static void checkSequence(String seqName){
-        try{
-            String query = "SELECT * FROM user_sequences WHERE sequence_name = '" + seqName.toUpperCase() + "'";
-            System.out.println(query);
-            ResultSet resultSet = statement.executeQuery(query);
-            switch(seqName){
-                case "users_seq" -> {
-                    if(resultSet.next())
-                        DatabasePanel.usersSeqName = seqName;
-                    else
-                        DatabasePanel.usersSeqName = seqName + " (usunięta)";
-                }
-                case "trips_seq" -> {
-                    if(resultSet.next())
-                        DatabasePanel.tripsSeqName = seqName;
-                    else
-                        DatabasePanel.tripsSeqName = seqName + " (usunięta)";
-                }
-                case "reservations_seq" -> {
-                    if(resultSet.next())
-                        DatabasePanel.reservationsSeqName = seqName;
-                    else
-                        DatabasePanel.reservationsSeqName = seqName + " (usunięta)";
-                }
-            }
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-    private static void deleteTable() {
-        try{
-            String query = "DROP table " + ServerGUI.tableName + " CASCADE CONSTRAINTS";
-            statement.executeQuery(query);
-            String commit = "COMMIT";
-            statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął tabelę " + ServerGUI.tableName + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -583,7 +442,7 @@ public class database {
             adminPreparedState.setString(2, ServerGUI.email);
             ResultSet resultAdmin = adminPreparedState.executeQuery();
             if(resultAdmin.next()){
-                adminName = resultAdmin.getString("FirstName");
+                ServerGUI.adminName = resultAdmin.getString("FirstName");
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
@@ -593,16 +452,29 @@ public class database {
     private static void updateDashboard() {
         try {
             findAdminName();
-            Dashboard.adminName = adminName;
+            Dashboard.adminName = ServerGUI.adminName;
             String howManyClientsQuery = "SELECT COUNT(*) as clientsCount FROM users WHERE userRank = 'client'";
             ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
             if(resultHowManyClients.next()) {
-                Dashboard.howManyClients = resultHowManyClients.getInt("clientsCount");
+                Dashboard.clientsQuantity = resultHowManyClients.getInt("clientsCount");
             }
             String howManyTripsQuery = "SELECT COUNT(*) as tripsCount FROM trips";
             ResultSet resultHowManyTrips = statement.executeQuery(howManyTripsQuery);
             if(resultHowManyTrips.next()) {
-                Dashboard.howManyTrips = resultHowManyTrips.getInt("tripsCount");
+                Dashboard.tripsQuantity = resultHowManyTrips.getInt("tripsCount");
+            }
+            String howManyReservationsQuery = "SELECT COUNT(*) as resCount FROM reservations";
+            ResultSet resultHowManyReservations = statement.executeQuery(howManyReservationsQuery);
+            if(resultHowManyReservations.next()) {
+                Dashboard.reservationsQuantity = resultHowManyReservations.getInt("resCount");
+            }
+            String howMuchIncomeQuery = "SELECT people_quantity, price_per_person FROM reservations " +
+                    "JOIN trips ON trips.id_trip = reservations.id_trip";
+            ResultSet resultHowMuchIncome = statement.executeQuery(howMuchIncomeQuery);
+            while(resultHowMuchIncome.next()) {
+                int peopleQuantity = resultHowMuchIncome.getInt("people_quantity");
+                int price = resultHowMuchIncome.getInt("price_per_person");
+                Dashboard.incomeQuantity += peopleQuantity * price;
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
@@ -612,19 +484,18 @@ public class database {
 
     private static void updateClients() {
         findAdminName();
-        Clients.adminName = adminName;
+        Clients.adminName = ServerGUI.adminName;
         try {
             String query = "SELECT * FROM users WHERE userRank = 'client'";
             ResultSet result = statement.executeQuery(query);
             while(result.next()){
-               // (ID_user, email, password, firstName, lastName, phoneNumber, userLogged)
-                data.add(Integer.toString(result.getInt("ID_user")));
-                data.add(result.getString("firstName"));
-                data.add(result.getString("lastName"));
-                data.add(result.getString("email"));
-                data.add(result.getString("phoneNumber"));
+                ServerGUI.data.add(Integer.toString(result.getInt("ID_user")));
+                ServerGUI.data.add(result.getString("firstName"));
+                ServerGUI.data.add(result.getString("lastName"));
+                ServerGUI.data.add(result.getString("email"));
+                ServerGUI.data.add(result.getString("phoneNumber"));
             }
-            Clients.listDataLength = data.size();
+            Clients.listDataLength = ServerGUI.data.size();
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -635,45 +506,43 @@ public class database {
             String query = "SELECT * FROM trips";
             ResultSet result = statement.executeQuery(query);
             while(result.next()){
-                // id_trip,country,city,departure_city,price_per_person,departure,arrival,people_limit,description,hotel_name
-                tripsAdminData.add(Integer.toString(result.getInt("id_trip")));
-                tripsAdminData.add(result.getString("country"));
-                tripsAdminData.add(result.getString("city"));
-                tripsAdminData.add(Integer.toString(result.getInt("price_per_person")));
-                tripsAdminData.add(Integer.toString(result.getInt("people_limit")));
+                ServerGUI.tripsAdminData.add(Integer.toString(result.getInt("id_trip")));
+                ServerGUI.tripsAdminData.add(result.getString("country"));
+                ServerGUI.tripsAdminData.add(result.getString("city"));
+                ServerGUI.tripsAdminData.add(Integer.toString(result.getInt("price_per_person")));
+                ServerGUI.tripsAdminData.add(Integer.toString(result.getInt("people_limit")));
             }
-            Wycieczki.listDataLength = tripsAdminData.size();
+            Trips.listDataLength = ServerGUI.tripsAdminData.size();
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
-    public static void send_data(){
+    public static void sendData(){
         try {
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
-            emailPreparedState.setString(1, ServerGUI.emailReg);
+            emailPreparedState.setString(1, ServerGUI.registrationList.get(3));
             ResultSet result = emailPreparedState.executeQuery();
             if (result.next()) {
-                RegistrationPage.user_exists = "Tak";
+                Registration.userExists = "Tak";
             }
             else {
-                RegistrationPage.user_exists = "Nie";
+                Registration.userExists = "Nie";
                 String query = "INSERT INTO users (ID_user, email, password, firstName, lastName, phoneNumber, userLogged) VALUES (users_seq.nextval, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, ServerGUI.emailReg);
-                preparedStatement.setString(2, ServerGUI.passwordReg);
-                preparedStatement.setString(3, ServerGUI.firstName);
-                preparedStatement.setString(4, ServerGUI.lastName);
-                preparedStatement.setString(5, ServerGUI.phoneNumber);
+                preparedStatement.setString(1, ServerGUI.registrationList.get(3));
+                preparedStatement.setString(2, ServerGUI.registrationList.get(4));
+                preparedStatement.setString(3, ServerGUI.registrationList.get(0));
+                preparedStatement.setString(4, ServerGUI.registrationList.get(1));
+                preparedStatement.setString(5, ServerGUI.registrationList.get(2));
                 preparedStatement.setInt(6, 0);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
                 String commit = "COMMIT";
                 statement.executeUpdate(commit);
-                System.out.println("Zarejestrowano");
-                if(StartPageFrame.admin_logged){
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał użytkownika o e-mailu: " + ServerGUI.emailReg + ".");
+                if(StartPage.adminLogged){
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał użytkownika o e-mailu: " + ServerGUI.registrationList.get(3) + ".");
                 }
             }
             emailPreparedState.close();
@@ -685,14 +554,13 @@ public class database {
 
     public static void login(){
         try{
-            StartPageFrame.message = "";
+            StartPage.message = "";
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
             emailPreparedState.setString(1, ServerGUI.email);
             ResultSet result = emailPreparedState.executeQuery();
             if(result.next()){
-                StartPageFrame.user_exists = true;
-                //System.out.println("Jest");
+                StartPage.userExists = true;
                 String passwordQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
                 PreparedStatement passwordPreparedState = connection.prepareStatement(passwordQuery);
                 passwordPreparedState.setString(1, ServerGUI.password);
@@ -700,7 +568,7 @@ public class database {
                 ResultSet resultPassword = passwordPreparedState.executeQuery();
                 if(resultPassword.next()){
                     if(resultPassword.getInt("userLogged") == 0) {
-                        StartPageFrame.password_valid = true;
+                        StartPage.passwordValid = true;
                         String loggingQuery = "UPDATE users SET userLogged = 1 WHERE email = ?";
                         PreparedStatement loggingPreparedState = connection.prepareStatement(loggingQuery);
                         loggingPreparedState.setString(1, ServerGUI.email);
@@ -708,27 +576,25 @@ public class database {
                         statement.executeUpdate(commit);
                         ServerGUI.usersCounter++;
                         if (resultPassword.getString("userRank").equals("admin")) {
-                            StartPageFrame.admin_logged = true;
-                            StartPageFrame.client_logged = false;
+                            StartPage.adminLogged = true;
+                            StartPage.clientLogged = false;
                             new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + ServerGUI.email + " zalogował się.");
                         } else {
-                            StartPageFrame.admin_logged = false;
-                            StartPageFrame.client_logged = true;
-                            oferty.userID = resultPassword.getInt("ID_user");
+                            StartPage.adminLogged = false;
+                            StartPage.clientLogged = true;
+                            Offer.userID = resultPassword.getInt("ID_user");
                             new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + ServerGUI.email + " zalogował się.");
                         }
                     }
                     else
-                        StartPageFrame.message = "Klient jest już zalogowany.";
+                        StartPage.message = "Klient jest już zalogowany.";
                 }
                 else{
-                    StartPageFrame.password_valid = false;
+                    StartPage.passwordValid = false;
                 }
             }
             else{
-                StartPageFrame.user_exists = false;
-                //StartPageFrame.password_valid = false;
-                System.out.println("nie ma");
+                StartPage.userExists = false;
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);

@@ -1,227 +1,261 @@
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Client {
-    public static void operate(String operation){
+    StartPage startPage;
+    Offer offer;
+    Registration registration;
+    Dashboard dashboard;
+    Clients clients;
+    ClientPasswordChange clientPasswordChange;
+    LogsServer logsServer;
+    SearchEngine searchEngine;
+    Trips trips;
+    Reservations reservations;
+    TripAddition tripAddition;
+    MyAccount myAccount;
+    DataEdition dataEdition;
+    String operation;
+    Client(String operation){
+        this.operation = operation;
+        switch(operation){
+            case "login" -> {
+                startPage = new StartPage();
+                offer = new Offer();
+            }
+            case "register" -> {
+                registration = new Registration();
+                startPage = new StartPage();
+            }
+            case "dashboardUpdate", "getNumbers" -> dashboard = new Dashboard();
+            case "clientsUpdate", "deleteClient", "editClient" -> clients = new Clients();
+            case "changeClientPassword" -> {
+                clients = new Clients();
+                clientPasswordChange = new ClientPasswordChange();
+            }
+            case "logOut" -> startPage = new StartPage();
+            case "setServerLogs" -> logsServer = new LogsServer(null, null, null);
+            case "tripsListPopulation", "sendNumbers", "getDestination", "getDeparture" -> searchEngine = new SearchEngine();
+            case "tripsUpdate", "deleteTrip", "editTrip" -> trips = new Trips();
+            case "resUpdate", "deleteRes", "editRes" -> reservations = new Reservations();
+            case "addReservation" -> offer = new Offer();
+            case "addTrip" -> tripAddition = new TripAddition();
+            case "myAccountUpdate" -> myAccount = new MyAccount();
+            case "dataEdition" -> dataEdition = new DataEdition();
+        }
+    }
+    public void operate(){
         try {
             Socket socket = new Socket("localhost", 1522);
-            InputStream socket_input = socket.getInputStream();
-            DataInputStream socket_input_data = new DataInputStream(socket_input);
-            OutputStream socket_output = socket.getOutputStream();
-            DataOutputStream socket_output_data = new DataOutputStream(socket_output);
-            socket_output_data.writeUTF(operation);
+            InputStream inputStream = socket.getInputStream();
+            DataInputStream dataInputStream = new DataInputStream(inputStream);
+            OutputStream outputStream = socket.getOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeUTF(operation);
             switch(operation) {
-                case "Login" -> {
-                    socket_output_data.writeUTF(StartPageFrame.email);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(StartPageFrame.password);
-                    socket_output_data.flush();
-                    StartPageFrame.user_exists = socket_input_data.readBoolean();
-                    StartPageFrame.password_valid = socket_input_data.readBoolean();
-                    StartPageFrame.admin_logged = socket_input_data.readBoolean();
-                    StartPageFrame.client_logged = socket_input_data.readBoolean();
-                    StartPageFrame.message = socket_input_data.readUTF();
-                    oferty.userID = socket_input_data.readInt();
+                case "login" -> {
+                    dataOutputStream.writeUTF(startPage.email);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(startPage.password);
+                    dataOutputStream.flush();
+                    StartPage.userExists = dataInputStream.readBoolean();
+                    StartPage.passwordValid = dataInputStream.readBoolean();
+                    StartPage.adminLogged = dataInputStream.readBoolean();
+                    StartPage.clientLogged = dataInputStream.readBoolean();
+                    StartPage.message = dataInputStream.readUTF();
+                    Offer.userID = dataInputStream.readInt();
                 }
-                case "Register" -> {
-                    socket_output_data.writeUTF(RegistrationPage.firstName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(RegistrationPage.lastName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(RegistrationPage.phoneNumber);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(RegistrationPage.email);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(RegistrationPage.password);
-                    socket_output_data.flush();
-                    socket_output_data.writeBoolean(StartPageFrame.admin_logged);
-                    socket_output_data.flush();
-                    RegistrationPage.user_exists = socket_input_data.readUTF();
+                case "register" -> {
+                    dataOutputStream.writeUTF(Registration.firstName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Registration.lastName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Registration.phoneNumber);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Registration.email);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Registration.password);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeBoolean(StartPage.adminLogged);
+                    dataOutputStream.flush();
+                    Registration.userExists = dataInputStream.readUTF();
                 }
                 case "dashboardUpdate"-> {
-                    Dashboard.adminName = socket_input_data.readUTF();
-                    Dashboard.howManyClients = socket_input_data.readInt();
-                    Dashboard.howManyTrips = socket_input_data.readInt();
+                    Dashboard.adminName = dataInputStream.readUTF();
+                    Dashboard.clientsQuantity = dataInputStream.readInt();
+                    Dashboard.tripsQuantity = dataInputStream.readInt();
+                    Dashboard.reservationsQuantity = dataInputStream.readInt();
+                    Dashboard.incomeQuantity = dataInputStream.readInt();
                 }
                 case "clientsUpdate" -> {
-                    Clients.adminName = socket_input_data.readUTF();
-                    Clients.listDataLength = socket_input_data.readInt();
+                    Clients.adminName = dataInputStream.readUTF();
+                    Clients.listDataLength = dataInputStream.readInt();
                     for (int i = 0; i < Clients.listDataLength; i++) {
-                        Clients.data.add(socket_input_data.readUTF());
+                        Clients.data.add(dataInputStream.readUTF());
                     }
                 }
                 case "deleteClient" -> {
-                    socket_output_data.writeInt(Clients.clientIDToRemove);
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(Clients.clientIDToRemove);
+                    dataOutputStream.flush();
                 }
                 case "editClient" -> {
-                    socket_output_data.writeInt(Clients.id);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Clients.firstName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Clients.lastName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Clients.email);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Clients.phoneNumber);
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(Clients.id);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Clients.firstName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Clients.lastName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Clients.email);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Clients.phoneNumber);
+                    dataOutputStream.flush();
                 }
                 case "changeClientPassword" -> {
-                    socket_output_data.writeUTF(ChangeClientPassword.password);
-                    socket_output_data.flush();
-                    socket_output_data.writeInt(Clients.clientIDToChangePassword);
-                    socket_output_data.flush();
-                }
-                case "checkTables" -> {
-                    DatabasePanel.usersTableName = socket_input_data.readUTF();
-                    DatabasePanel.tripsTableName = socket_input_data.readUTF();
-                    DatabasePanel.reservationsTableName = socket_input_data.readUTF();
-                }
-                case "checkSequences" -> {
-                    DatabasePanel.usersSeqName = socket_input_data.readUTF();
-                    DatabasePanel.tripsSeqName = socket_input_data.readUTF();
-                    DatabasePanel.reservationsSeqName = socket_input_data.readUTF();
-                }
-                case "addSequence", "deleteSequence" -> {
-                    socket_output_data.writeUTF(DatabasePanel.seqName);
-                    socket_output_data.flush();
-                }
-                case "addTable", "deleteTable" -> {
-                    socket_output_data.writeUTF(DatabasePanel.tableName);
-                    socket_output_data.flush();
+                    dataOutputStream.writeUTF(ClientPasswordChange.password);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeInt(Clients.clientIDToChangePassword);
+                    dataOutputStream.flush();
                 }
                 case "logOut" -> {
-                    socket_output_data.writeUTF(StartPageFrame.email);
-                    socket_output_data.flush();
+                    dataOutputStream.writeUTF(StartPage.email);
+                    dataOutputStream.flush();
                 }
                 case "setServerLogs" -> {
-                    socket_output_data.writeInt(LogsServer.logs.size());
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(LogsServer.logs.size());
+                    dataOutputStream.flush();
                     for(String log : LogsServer.logs){
-                        socket_output_data.writeUTF(log);
-                        socket_output_data.flush();
+                        dataOutputStream.writeUTF(log);
+                        dataOutputStream.flush();
                     }
                 }
                 case "tripsListPopulation" -> {
-                    WYSZUKIWARKA.listDataLength = socket_input_data.readInt();
-                    for (int i = 0; i < WYSZUKIWARKA.listDataLength; i++) {
-                        WYSZUKIWARKA.data.add(socket_input_data.readUTF());
+                    SearchEngine.listDataLength = dataInputStream.readInt();
+                    for (int i = 0; i < SearchEngine.listDataLength; i++) {
+                        SearchEngine.data.add(dataInputStream.readUTF());
                     }
                 }
                 case "sendNumbers" -> {
-                    socket_output_data.writeUTF(WYSZUKIWARKA.number);
-                    socket_output_data.flush();
+                    dataOutputStream.writeUTF(SearchEngine.number);
+                    dataOutputStream.flush();
                 }
                 case "getNumbers" -> {
-                    Dashboard.phoneNumbersListLength = socket_input_data.readInt();
+                    Dashboard.phoneNumbersListLength = dataInputStream.readInt();
                     for (int i = 0; i < Dashboard.phoneNumbersListLength; i++) {
-                        Dashboard.phoneNumbers.add(socket_input_data.readUTF());
+                        Dashboard.phoneNumbers.add(dataInputStream.readUTF());
                     }
                 }
                 case "getDestination" -> {
-                    WYSZUKIWARKA.destinationListLength = socket_input_data.readInt();
-                    for (int i = 0; i < WYSZUKIWARKA.destinationListLength; i++) {
-                        WYSZUKIWARKA.destination.add(socket_input_data.readUTF());
+                    SearchEngine.destinationListLength = dataInputStream.readInt();
+                    for (int i = 0; i < SearchEngine.destinationListLength; i++) {
+                        SearchEngine.destination.add(dataInputStream.readUTF());
                     }
                 }
                 case "getDeparture" -> {
-                    WYSZUKIWARKA.departureListLength = socket_input_data.readInt();
-                    for (int i = 0; i < WYSZUKIWARKA.departureListLength; i++) {
-                        WYSZUKIWARKA.departure.add(socket_input_data.readUTF());
+                    SearchEngine.departureListLength = dataInputStream.readInt();
+                    for (int i = 0; i < SearchEngine.departureListLength; i++) {
+                        SearchEngine.departure.add(dataInputStream.readUTF());
                     }
                 }
                 case "tripsUpdate" -> {
-                    Wycieczki.listDataLength = socket_input_data.readInt();
-                    for (int i = 0; i < Wycieczki.listDataLength; i++) {
-                        Wycieczki.data.add(socket_input_data.readUTF());
+                    Trips.listDataLength = dataInputStream.readInt();
+                    for (int i = 0; i < Trips.listDataLength; i++) {
+                        Trips.data.add(dataInputStream.readUTF());
                     }
                 }
                 case "deleteTrip" -> {
-                    socket_output_data.writeInt(Wycieczki.tripIDToRemove);
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(Trips.tripIDToRemove);
+                    dataOutputStream.flush();
                 }
                 case "editTrip" -> {
-                    socket_output_data.writeInt(Wycieczki.id);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Wycieczki.country);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Wycieczki.city);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Wycieczki.price);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Wycieczki.peopleLimit);
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(Trips.id);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Trips.country);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Trips.city);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Trips.price);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Trips.peopleLimit);
+                    dataOutputStream.flush();
                 }
                 case "resUpdate" -> {
-                    Rezerwacje.listDataLength = socket_input_data.readInt();
-                    for (int i = 0; i < Rezerwacje.listDataLength; i++) {
-                        Rezerwacje.data.add(socket_input_data.readUTF());
+                    Reservations.listDataLength = dataInputStream.readInt();
+                    for (int i = 0; i < Reservations.listDataLength; i++) {
+                        Reservations.data.add(dataInputStream.readUTF());
                     }
                 }
                 case "deleteRes" -> {
-                    socket_output_data.writeInt(Rezerwacje.resIDToRemove);
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(Reservations.resIDToRemove);
+                    dataOutputStream.flush();
                 }
                 case "editRes" -> {
-                    socket_output_data.writeInt(Rezerwacje.id);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Rezerwacje.firstName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Rezerwacje.lastName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Rezerwacje.departure);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Rezerwacje.arrival);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Rezerwacje.phoneNumber);
-                    socket_output_data.flush();
+                    dataOutputStream.writeInt(Reservations.id);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Reservations.firstName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Reservations.lastName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Reservations.departure);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Reservations.arrival);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Reservations.phoneNumber);
+                    dataOutputStream.flush();
                 }
                 case "addReservation" -> {
-                    socket_output_data.writeInt(oferty.tripID);
-                    socket_output_data.flush();
-                    socket_output_data.writeInt(oferty.userID);
-                    socket_output_data.flush();
-                    socket_output_data.writeInt(oferty.peopleQuantity);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(oferty.insurance);
-                    socket_output_data.flush();
-                    System.out.println("klient addRes");
+                    dataOutputStream.writeInt(Offer.tripID);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeInt(Offer.userID);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeInt(Offer.peopleQuantity);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(Offer.insurance);
+                    dataOutputStream.flush();
                 }
                 case "addTrip" -> {
-                    socket_output_data.writeUTF(Dodaj_wycieczke.country);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.city);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.departureCity);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.price);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.peopleLimit);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.hotelName);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.departure);
-                    socket_output_data.flush();
-                    socket_output_data.writeUTF(Dodaj_wycieczke.arrival);
-                    socket_output_data.flush();
+                    dataOutputStream.writeUTF(TripAddition.country);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.city);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.departureCity);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.price);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.peopleLimit);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.hotelName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.departure);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(TripAddition.arrival);
+                    dataOutputStream.flush();
                 }
                 case "myAccountUpdate" -> {
-                    MyAccount.clientDataListLength = socket_input_data.readInt();
+                    MyAccount.clientDataListLength = dataInputStream.readInt();
                     for (int i = 0; i < MyAccount.clientDataListLength; i++) {
-                        MyAccount.clientData.add(socket_input_data.readUTF());
+                        MyAccount.clientData.add(dataInputStream.readUTF());
                     }
-                    MyAccount.resDataListLength = socket_input_data.readInt();
+                    MyAccount.resDataListLength = dataInputStream.readInt();
                     for (int i = 0; i < MyAccount.resDataListLength; i++) {
-                        MyAccount.resData.add(socket_input_data.readUTF());
+                        MyAccount.resData.add(dataInputStream.readUTF());
                     }
                 }
+                case "dataEdition" -> {
+                    dataOutputStream.writeUTF(DataEdition.firstName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(DataEdition.lastName);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(DataEdition.email);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(DataEdition.phoneNumber);
+                    dataOutputStream.flush();
+                    dataOutputStream.writeUTF(DataEdition.id);
+                    dataOutputStream.flush();
+                }
             }
-            socket_output_data.close();
-            socket_input_data.close();
+            dataOutputStream.close();
+            dataInputStream.close();
             socket.close();
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

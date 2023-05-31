@@ -155,21 +155,21 @@
         <Component class="javax.swing.JButton" name="mastercard">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\oferty\mastercard.png"/>
+              <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\Offer\mastercard.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="visa">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\oferty\visa.png"/>
+              <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\Offer\visa.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="discover">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\oferty\discover-logo.png"/>
+              <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\Offer\discover-logo.png"/>
             </Property>
           </Properties>
         </Component>
@@ -427,7 +427,7 @@
     <Component class="javax.swing.JButton" name="zaplac">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\oferty\pay.png"/>
+          <Image iconType="2" name="C:\Users\Kamil\Desktop\JAVA\JAVA\src\Offer\pay.png"/>
         </Property>
       </Properties>
     </Component>
