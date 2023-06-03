@@ -1,22 +1,26 @@
+package com.client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Registration extends javax.swing.JFrame {
-    public static String userExists;
-    public static String firstName;
-    public static String lastName;
-    public static String phoneNumber;
-    public static String email;
-    public static String password;
+    public String userExists;
+    public String firstName;
+    public String lastName;
+    public String phoneNumber;
+    public String email;
+    public String password;
     private boolean firstNameCorrect;
     private boolean lastNameCorrect;
     private boolean phoneNumberCorrect;
     private boolean emailCorrect;
     private boolean passwordCorrect;
     private boolean confirmPasswordCorrect;
-    private final Validation validation;
+    private Validation validation;
     private String passwordFromPasswordField;
     private javax.swing.JLabel typeConfirmPasswordLabel;
     private javax.swing.JLabel typeEmailLabel;
@@ -32,7 +36,13 @@ public class Registration extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField phoneNumberTextField;
     private javax.swing.JButton submitButton;
-    public Registration() {
+    private final List<String> data = new ArrayList<>();
+    private boolean adminLogged;
+    private Client client;
+    private String adminName;
+    public Registration(boolean adminLogged, Client client) {
+        this.client = client;
+        this.adminLogged = adminLogged;
         validation = new Validation();
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
@@ -40,17 +50,40 @@ public class Registration extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    if(StartPage.adminLogged)
-                        Client.operate("logOut");
+                    if(adminLogged)
+                       new Client("logOut",new ArrayList<>());
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
     }
+    public Registration(boolean adminLogged, Client client, String adminName){
+        this.client = client;
+        this.adminLogged = adminLogged;
+        this.adminName = adminName;
+        validation = new Validation();
+        initComponents();
+        getContentPane().setBackground(new Color(215,198,151));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    if(adminLogged)
+                        new Client("logOut",new ArrayList<>());
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                }
+            }
+        });
+    }
+    public Registration(){
 
+    }
     private void initComponents() {
         JPanel regPanel = new JPanel();
         JLabel createLabel = new JLabel();
@@ -308,8 +341,8 @@ public class Registration extends javax.swing.JFrame {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        if(StartPage.adminLogged)
-            new Clients().setVisible(true);
+        if(adminLogged)
+            new Clients(client, adminName).setVisible(true);
         else
             new StartPage().setVisible(true);
     }
@@ -406,14 +439,22 @@ public class Registration extends javax.swing.JFrame {
             lastName = lastNameTextField.getText();
             phoneNumber = phoneNumberTextField.getText();
             email = emailTextField.getText();
+            data.add(firstName);
+            data.add(lastName);
+            data.add(phoneNumber);
+            data.add(email);
             password = new String(passwordField.getPassword());
-            Client.operate("register");
-            if (userExists.equals("Tak"))
+            data.add(password);
+            Client client = new Client("addClient",data);
+            userExists = client.getRegistrationUserExists();
+            if (userExists.equals("Tak")) {
                 typeEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
+                data.clear();
+            }
             else{
                 dispose();
-                if(StartPage.adminLogged)
-                    new Clients().setVisible(true);
+                if(adminLogged)
+                    new Clients(this.client, adminName).setVisible(true);
                 else
                     new StartPage().setVisible(true);
             }
@@ -432,6 +473,6 @@ public class Registration extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Registration().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Registration(false, null).setVisible(true));
     }
 }

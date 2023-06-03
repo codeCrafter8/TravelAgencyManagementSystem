@@ -1,6 +1,10 @@
+package com.client;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ReservationAddition extends javax.swing.JFrame {
@@ -8,7 +12,13 @@ public class ReservationAddition extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable tripsTable;
-    public ReservationAddition() {
+    private List<String> data = new ArrayList<>();
+    private List<String> tripsData = new ArrayList<>();
+    private Client client;
+    private String adminName;
+    public ReservationAddition(Client client, String adminName) {
+        this.client = client;
+        this.adminName = adminName;
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
         generateData();
@@ -18,13 +28,14 @@ public class ReservationAddition extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
-                    Clients.data.clear();
+                    data.add(client.getUserEmail());
+                    new Client("logOut",data);
+                    data.clear();
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
@@ -163,29 +174,31 @@ public class ReservationAddition extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     private void generateData(){
-        Client.operate("clientsUpdate");
-        Client.operate("tripsListPopulation");
+        Client client1 = new Client("clientsUpdate",new ArrayList<>());
+        data.addAll(client1.getClientsList());
+        Client client2 = new Client("tripsListPopulation",new ArrayList<>());
+        tripsData.addAll(client2.getTripsList());
     }
     private void populateClientsTable(){
         int counter = 0;
-        int size = (Clients.listDataLength/5);
+        int size = (data.size()/5);
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{Clients.data.get(counter), Clients.data.get(counter+1), Clients.data.get(counter+2), Clients.data.get(counter+3),
-                    Clients.data.get(counter+4)});
+            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
+                    data.get(counter+4)});
             if(size > 1)
                 counter+=5;
         }
     }
     private void populateTripsTable(){
         int counter = 0;
-        int size = (SearchEngine.listDataLength/ SearchEngine.attributesQuantity);
+        int size = (tripsData.size()/10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{SearchEngine.data.get(counter+7), SearchEngine.data.get(counter) + '/' + SearchEngine.data.get(counter+1), SearchEngine.data.get(counter+4) + " zł", SearchEngine.data.get(counter+6),(SearchEngine.data.get(counter+2) + " - " + SearchEngine.data.get(counter+3)),});
+            model.addRow(new Object[]{tripsData.get(counter+7), tripsData.get(counter) + '/' + tripsData.get(counter+1), tripsData.get(counter+4) + " zł", tripsData.get(counter+6),(tripsData.get(counter+2) + " - " + tripsData.get(counter+3)),});
             if(size > 1)
-                counter+= SearchEngine.attributesQuantity;
+                counter+=10;
         }
     }
     private void submitButtonActionPerformed() {
@@ -197,27 +210,25 @@ public class ReservationAddition extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Zbyt duża liczba osób.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            Offer.userID = Integer.parseInt(clientsModel.getValueAt(clientsRow, 0).toString());
-            Offer.tripID = Integer.parseInt(tripsModel.getValueAt(tripsRow, 0).toString());
-            Offer.peopleQuantity = Integer.parseInt(jSpinner1.getValue().toString());
+            data.clear();
+            data.add(tripsModel.getValueAt(tripsRow, 0).toString());
+            data.add(clientsModel.getValueAt(clientsRow, 0).toString());
+            data.add(jSpinner1.getValue().toString());
             String item = (String) jComboBox1.getSelectedItem();
             if(Objects.equals(item, "Brak"))
-                Offer.insurance = "";
+                data.add("");
             else
-                Offer.insurance = item;
-            Client.operate("addReservation");
+                data.add(item);
+            new Client("addReservation",data);
+            data.clear();
             dispose();
-            Clients.data.clear();
-            Trips.data.clear();
-            Reservations.data.clear();
-            new Reservations().setVisible(true);
+            new Reservations(client,adminName).setVisible(true);
         }
     }
 
     private void cancelButtonActionPerformed() {
-        Clients.data.clear();
         dispose();
-        new Reservations().setVisible(true);
+        new Reservations(client,adminName).setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -232,6 +243,6 @@ public class ReservationAddition extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ReservationAddition.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new ReservationAddition().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ReservationAddition(null,null).setVisible(true));
     }
 }

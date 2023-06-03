@@ -1,6 +1,10 @@
+package com.client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PasswordChange extends javax.swing.JFrame {
     private boolean passwordCorrect;
@@ -14,7 +18,12 @@ public class PasswordChange extends javax.swing.JFrame {
     private javax.swing.JPasswordField newPasswordField;
     private javax.swing.JLabel newPasswordLabel;
     private javax.swing.JLabel wrongPasswordLabel;
-    public PasswordChange() {
+    public List<String> data = new ArrayList<>();
+    private String clientID;
+    private Client client;
+    public PasswordChange(String clientID, Client client) {
+        this.client = client;
+        this.clientID = clientID;
         validation = new Validation();
         initComponents();
         wrongPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
@@ -124,7 +133,7 @@ public class PasswordChange extends javax.swing.JFrame {
             passwordCorrect = false;
             wrongPasswordLabel.setText("Pole jest wymagane.");
         }
-        else if(!StartPage.password.equals(passwordFromPasswordField)){
+        else if(!(client.getUserPassword()).equals(passwordFromPasswordField)){
             wrongPasswordLabel.setText("Błędne hasło.");
             passwordCorrect = false;
         }
@@ -165,9 +174,10 @@ public class PasswordChange extends javax.swing.JFrame {
         performConfirmPasswordValidation();
         if(passwordCorrect){
             if(newPasswordCorrect && confirmPasswordCorrect){
-                ClientPasswordChange.password = new String(newPasswordField.getPassword());
-                Clients.clientIDToChangePassword = Integer.parseInt(MyAccount.clientData.get(4));
-                Client.operate("changeClientPassword");
+                data.add(new String(newPasswordField.getPassword()));
+                data.add(clientID);
+                new Client("changeClientPassword",data);
+                data.clear();
                 dispose();
                 JOptionPane.showMessageDialog(null, "Pomyślnie zmieniono hasło.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -187,6 +197,6 @@ public class PasswordChange extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PasswordChange.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new PasswordChange().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new PasswordChange(null,null).setVisible(true));
     }
 }

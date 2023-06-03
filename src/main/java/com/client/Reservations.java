@@ -1,3 +1,5 @@
+package com.client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -12,18 +14,20 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class Reservations extends javax.swing.JFrame {
-    public static List<String> data = new ArrayList<>();
-    public static int listDataLength = 0;
-    private static TableRowSorter<TableModel> rowSorter;
-    public static int resIDToRemove = 0;
-    public static int id = 0;
-    public static String firstName = "";
-    public static String lastName = "";
-    public static String departure = "";
-    public static String arrival = "";
-    public static String phoneNumber = "";
+    public List<String> data = new ArrayList<>();
+    public int listDataLength = 0;
+    private TableRowSorter<TableModel> rowSorter;
+    public int resIDToRemove = 0;
+    public int id = 0;
+    public String firstName = "";
+    public String lastName = "";
+    public String departure = "";
+    public String arrival = "";
+    public String phoneNumber = "";
+    public Client client;
+    public String email;
     private String lastNameToSearch;
-    private final Validation validation;
+    private Validation validation;
     private javax.swing.JLabel adminNameLabel;
     private javax.swing.JButton clientsButton;
     private javax.swing.JButton editResButton;
@@ -34,7 +38,19 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JTextField searchResTextField;
     private javax.swing.JButton tripsButton;
     private javax.swing.JLabel wrongResLabel;
+    private String adminName;
     public Reservations() {
+        initApp();
+    }
+    public Reservations(boolean overrided){}
+    public Reservations(Client client, String adminName){
+        this.adminName = adminName;
+        this.client = client;
+        this.email = client.getUserEmail();
+        initApp();
+        adminNameLabel.setText(adminName);
+    }
+    private void initApp(){
         validation = new Validation();
         initComponents();
         generateData();
@@ -44,19 +60,20 @@ public class Reservations extends javax.swing.JFrame {
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
         for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
-                resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    data.add(email);
+                    new Client("logOut",data);
                     data.clear();
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
@@ -94,8 +111,8 @@ public class Reservations extends javax.swing.JFrame {
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
 
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
-
-        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png"))));
+        //TODO STARE->adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png"))));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull("img\\adminLOGO.png")));
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -318,7 +335,6 @@ public class Reservations extends javax.swing.JFrame {
         editResButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         editResButton.setText("Edytuj Rezerwację");
         editResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        editResButton.addActionListener(this::editResButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -378,74 +394,57 @@ public class Reservations extends javax.swing.JFrame {
     private void addResButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new ReservationAddition().setVisible(true);
-    }
-
-    private void editResButtonActionPerformed(ActionEvent evt) {
-        DefaultTableModel model = (DefaultTableModel) resTable.getModel();
-        int row = resTable.getSelectedRow();
-        if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {
-            id = Integer.parseInt(model.getValueAt(row, 0).toString());
-            firstName = model.getValueAt(row, 1).toString();
-            lastName = model.getValueAt(row, 2).toString();
-            departure = model.getValueAt(row, 3).toString();
-            arrival = model.getValueAt(row, 4).toString();
-            phoneNumber = model.getValueAt(row, 5).toString();
-            if (firstName.equals("") || lastName.equals("") || departure.equals("") || arrival.equals("") || phoneNumber.equals("")) {
-                JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
-            } else {
-                Client.operate("editRes");
-            }
-        }
+        new ReservationAddition(client,adminNameLabel.getText()).setVisible(true);
     }
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        dispose();
         data.clear();
-        StartPage.adminLogged = false;
-        Client.operate("logOut");
+        data.add(email);
+        new Client("logOut",data);
+        data.clear();
+        dispose();
         new StartPage().setVisible(true);
     }
 
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new Clients().setVisible(true);
+        new Clients(client,adminNameLabel.getText()).setVisible(true);
     }
 
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Trips().setVisible(true);
+        new Trips(client,adminNameLabel.getText()).setVisible(true);
     }
 
     private void panelButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Dashboard().setVisible(true);
+        new Dashboard(client,adminNameLabel.getText()).setVisible(true);
     }
 
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
-        int row = resTable.getSelectedRow();
-        if(row == -1)
+        if(resTable.getSelectedRow() == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {resIDToRemove = Integer.parseInt(model.getValueAt(row, 0).toString());
-            model.removeRow(row);
-            Client.operate("deleteRes");
+        else {
+            data.clear();
+            data.add(model.getValueAt(resTable.getSelectedRow(), 0).toString());
+            new Client("deleteRes",data);
+            data.clear();
+            model.removeRow(resTable.getSelectedRow());
         }
     }
 
     private void generateData(){
-        Client.operate("resUpdate");
-        adminNameLabel.setText(Dashboard.adminName);
+        Client client1 = new Client("resUpdate",new ArrayList<>());
+        data.addAll(client1.getReservationsList());
     }
 
     private void populateTable(){
         int counter = 0;
-        int size = (listDataLength/6);
+        int size = (data.size()/6);
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),

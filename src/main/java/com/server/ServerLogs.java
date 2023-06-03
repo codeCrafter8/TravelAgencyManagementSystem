@@ -1,24 +1,46 @@
+package com.server;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Objects;
-import javax.swing.*;
-
-public class ClientsLogs extends javax.swing.JFrame {
+/**
+ * Klasa zawierająca pola i metody obsługujące komponenty GUI dotyczącego logów serwera
+ */
+public class ServerLogs extends javax.swing.JFrame {
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton adminsLogsButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton clientsLogsButton;
-    private javax.swing.JList<String> clientsLogsList;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton manageServerButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton serverLogsButton;
-
-    public ClientsLogs() {
+    /**
+     * Atrybut będący listą elementów tekstowych
+     */
+    private static javax.swing.JList<String> serverLogsList;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI
+     */
+    public ServerLogs() {
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
-        for(String log : LogsClients.logs){
+        for(String log : LogsServer.logs){
             defaultListModel.addElement(log);
         }
-        clientsLogsList.setModel(defaultListModel);
+        serverLogsList.setModel(defaultListModel);
     }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel menuPanel = new JPanel();
         JPanel serverPanel = new JPanel();
@@ -29,24 +51,22 @@ public class ClientsLogs extends javax.swing.JFrame {
         clientsLogsButton = new javax.swing.JButton();
         adminsLogsButton = new javax.swing.JButton();
         serverLogsButton = new javax.swing.JButton();
-        JScrollPane jScrollPane1 = new JScrollPane();
-        clientsLogsList = new javax.swing.JList<>();
-        JLabel clientsLogsLabel = new JLabel();
+        JLabel serverLogsLabel = new JLabel();
+        serverLogsList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Logi Klientów");
+        setTitle("Logi Serwera");
         setPreferredSize(new java.awt.Dimension(1024, 768));
 
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
 
         serverPanel.setBackground(new java.awt.Color(118, 98, 75));
-
-        serverIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/serverICON.png")))); // NOI18N
+        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
         serverIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setPreferredSize(new java.awt.Dimension(70, 70));
 
-        serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20)); // NOI18N
+        serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
         serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         serverLabel.setText("Serwer");
 
@@ -75,7 +95,7 @@ public class ClientsLogs extends javax.swing.JFrame {
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
 
-        manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         manageServerButton.setText("    Zarządzaj pracą serwera");
         manageServerButton.setBorder(null);
         manageServerButton.setContentAreaFilled(false);
@@ -93,9 +113,9 @@ public class ClientsLogs extends javax.swing.JFrame {
         });
         manageServerButton.addActionListener(this::manageServerButtonActionPerformed);
 
-        clientsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16)); // NOI18N
-        clientsLogsButton.setText("   Logi klientów");
-        clientsLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        clientsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
+        clientsLogsButton.setText("    Logi klientów");
+        clientsLogsButton.setBorder(null);
         clientsLogsButton.setContentAreaFilled(false);
         clientsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -109,9 +129,11 @@ public class ClientsLogs extends javax.swing.JFrame {
             else
                 clientsLogsButton.setForeground(null);
         });
+        clientsLogsButton.addActionListener(this::clientsLogsButtonActionPerformed);
 
-        adminsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
-        adminsLogsButton.setText("Logi administratorów");
+        adminsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
+        adminsLogsButton.setText("    Logi administratorów");
+        adminsLogsButton.setBorder(null);
         adminsLogsButton.setContentAreaFilled(false);
         adminsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         adminsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -127,12 +149,15 @@ public class ClientsLogs extends javax.swing.JFrame {
         });
         adminsLogsButton.addActionListener(this::adminsLogsButtonActionPerformed);
 
-        serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
-        serverLogsButton.setText("Logi serwera");
+        serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
+        serverLogsButton.setText("   Logi serwera");
+        serverLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         serverLogsButton.setContentAreaFilled(false);
         serverLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         serverLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        serverLogsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        serverLogsButton.setMaximumSize(new java.awt.Dimension(166, 24));
+        serverLogsButton.setMinimumSize(new java.awt.Dimension(166, 25));
+        serverLogsButton.setPreferredSize(new java.awt.Dimension(166, 25));
         serverLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -142,7 +167,6 @@ public class ClientsLogs extends javax.swing.JFrame {
             else
                 serverLogsButton.setForeground(null);
         });
-        serverLogsButton.addActionListener(this::serverLogsButtonActionPerformed);
 
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
@@ -162,7 +186,7 @@ public class ClientsLogs extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(adminsLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(serverLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(serverLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -178,14 +202,12 @@ public class ClientsLogs extends javax.swing.JFrame {
             .addGroup(menuPanelLayout.createSequentialGroup()
                 .addComponent(serverPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setViewportView(clientsLogsList);
-
-        clientsLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22)); // NOI18N
-        clientsLogsLabel.setText("Logi Klientów");
+        serverLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
+        serverLogsLabel.setText("Logi Serwera");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,42 +217,55 @@ public class ClientsLogs extends javax.swing.JFrame {
                 .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(320, 320, 320)
-                        .addComponent(clientsLogsLabel))
+                        .addGap(328, 328, 328)
+                        .addComponent(serverLogsLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(415, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)
+                        .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(clientsLogsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(serverLogsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }
-
-    private void serverLogsButtonActionPerformed(ActionEvent evt) {
-        dispose();
-        new ServerLogs().setVisible(true);
-    }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku manageServer
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ServerGUI().setVisible(true);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku adminsLogs
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void adminsLogsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new AdminsLogs().setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku clientsLogs
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void clientsLogsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        new ClientsLogs().setVisible(true);
+    }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -241,9 +276,9 @@ public class ClientsLogs extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientsLogs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            new LogsServer("ClientsLogs", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            java.util.logging.Logger.getLogger(ServerLogs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            new LogsServer("ServerLogs", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
-        java.awt.EventQueue.invokeLater(() -> new ClientsLogs().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ServerLogs().setVisible(true));
     }
 }

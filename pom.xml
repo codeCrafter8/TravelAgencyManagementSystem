@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>groupId</groupId>
-    <artifactId>gitTest</artifactId>
+    <artifactId>TravelAgency</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -24,7 +24,14 @@
             <artifactId>ojdbc</artifactId>
             <version>14</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/java/ojdbc11.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/ojdbc11.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>jcalendar</groupId>
+            <artifactId>jcalendar</artifactId>
+            <version>1.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/jcalendar-1.4.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

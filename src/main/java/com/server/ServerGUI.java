@@ -1,3 +1,4 @@
+package com.server;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,71 +7,88 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
+/**
+ * Klasa zawierająca pola i metody obsługujące konstrukcję GUI i stronę techniczną serwera
+ */
 public class ServerGUI extends javax.swing.JFrame {
-    static List<Thread> threads = new ArrayList<>();
-    static InputStream inputStream;
-    static DataInputStream dataInputStream;
-    static OutputStream outputStream;
-    static DataOutputStream dataOutputStream;
-    static Socket client;
-    private static boolean running = true;
-    public static String email, password, passwordChanged;
-    public static List<String> registrationList = new ArrayList<>();
-    public static int userIdToRes, tripIdToRes, peopleQuantity;
-    public static String insurance;
-    public static int clientIDToRemove;
-    public static int tripIDToRemove;
-    public static int resIDToRemove;
-    public static int clientIDToChangePassword;
-    public static String operation;
-    public static List<String> clientEditList = new ArrayList<>();
-    public static List<String> tripEditList = new ArrayList<>();
-    public static List<String> resEditList = new ArrayList<>();
-    private static ServerSocket socket;
-    public static int usersCounter;
-    public static List<String> phoneNumbers = new ArrayList<>();
-    public static int phoneNumbersListLength = 0;
-    public static List<String> destination = new ArrayList<>();
-    public static List<String> departure = new ArrayList<>();
-    public static List<String> addTripData = new ArrayList<>();
-    public List<String> dataFromDataEdition = new ArrayList<>();
-    static String adminName = "";
-    static List<String> data = new ArrayList<>();
-    static List<String> tripsData = new ArrayList<>();
-    static List<String> tripsAdminData = new ArrayList<>();
-    static List<String> resAdminData = new ArrayList<>();
-    static List<String> clientData = new ArrayList<>();
-    static List<String> resData = new ArrayList<>();
-    public String clientID;
+    /**
+     * Atrybut będący listą wszystkich wątków serwera
+     */
+    private final List<Thread> threads = new ArrayList<>();
+    /**
+     * Atrybut określający ilość zalogowanych użytkowników
+     */
+    public int connectedUsersNumber;
+    /**
+     * Atrybut określający czy serwer jest uruchomiony
+     */
+    private boolean running = true;
+    /**
+     * Atrybut będący gniazdem, z którego podłącza się klient
+     */
+    public Socket socket;
+    /**
+     * Atrybut będący gniazdem serwera
+     */
+    public ServerSocket serverSocket;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton adminsLogsButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton clientsLogsButton;
-    private javax.swing.JLabel connectedUsersNumber;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton manageServerButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton restartServerButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton serverLogsButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton startServerButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton stopServerButton;
-
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
+    private javax.swing.JLabel connectedUsersNumberLabel;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI aplikacji serwera
+     */
     public ServerGUI() {
         initComponents();
         getContentPane().setBackground(new Color(215, 198, 151));
         startServerButton.setText("<html><center>Uruchom<br><center>Serwer</html>");
         restartServerButton.setText("<html><center>Zrestartuj<br><center>Serwer</html>");
         stopServerButton.setText("<html><center>Zatrzymaj<br><center>Serwer</html>");
-        connectedUsersNumber.setText(String.valueOf(usersCounter));
+        try (BufferedReader reader = new BufferedReader(new FileReader("connectedUsersNumber.dat"))) {
+            connectedUsersNumber = Integer.parseInt(reader.readLine());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        connectedUsersNumberLabel.setText(String.valueOf(connectedUsersNumber));
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 try {
+                    new Database("logOutEveryone", new ArrayList<>()).connectWithDatabase();
+                    connectedUsersNumberLabel.setText("0");
+                    saveConnectedUsersNumber();
                     running = false;
-                    Client.operate("logOutEveryone");
                     for (Thread thread : threads) {
-                        //new Logs("[ " + new java.util.Date() + " ] " + "Thread called " + thread.getName() + " was deleted ", "EkranSerwer", "info");
                         thread.interrupt();
                     }
-                    //new Logs("[ " + new java.util.Date() + " ] " + "Server shutdown", "EkranSerwer", "info");
                     dispose();
                 } catch (Exception ex) {
                     new LogsServer("ServerGUI", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -78,12 +96,32 @@ public class ServerGUI extends javax.swing.JFrame {
                 }
             }
         });
-
     }
-    public static void setRunning(boolean running){
-        ServerGUI.running = running;
+    /**
+     * Metoda zapisująca do pliku liczbę zalogowanych użytkowników
+     */
+    public void saveConnectedUsersNumber(){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("connectedUsersNumber.dat"))) {
+            writer.write(connectedUsersNumberLabel.getText());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
+    /**
+     * Metoda ustawiająca zawartość komponentu wyświetlającego liczbę zalogowanych użytkowników
+     */
+    public void setConnectedUsersNumberLabel(int usersCounter){
+        connectedUsersNumberLabel.setText(String.valueOf(usersCounter));
+    }
+    /**
+     * Metoda ustawiająca zmienną, która określa czy serwer jest uruchomiony
+     */
+    public void setRunning(boolean running){
+        this.running = running;
+    }
+    /**
+     * Metoda inicjalizująca komponenty graficzne aplikacji serwera
+     */
     private void initComponents() {
         JPanel menuPanel = new JPanel();
         JPanel serverPanel = new JPanel();
@@ -95,7 +133,7 @@ public class ServerGUI extends javax.swing.JFrame {
         adminsLogsButton = new javax.swing.JButton();
         serverLogsButton = new javax.swing.JButton();
         JPanel connectedUsersPanel = new JPanel();
-        connectedUsersNumber = new javax.swing.JLabel();
+        connectedUsersNumberLabel = new javax.swing.JLabel();
         JLabel connectedUsersLabel = new JLabel();
         startServerButton = new javax.swing.JButton();
         restartServerButton = new javax.swing.JButton();
@@ -108,8 +146,7 @@ public class ServerGUI extends javax.swing.JFrame {
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
 
         serverPanel.setBackground(new java.awt.Color(118, 98, 75));
-
-        serverIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/serverICON.png"))));
+        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
         serverIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setPreferredSize(new java.awt.Dimension(70, 70));
@@ -253,9 +290,9 @@ public class ServerGUI extends javax.swing.JFrame {
         connectedUsersPanel.setBackground(new java.awt.Color(175, 157, 121));
         connectedUsersPanel.setPreferredSize(new java.awt.Dimension(280, 130));
 
-        connectedUsersNumber.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 42));
-        connectedUsersNumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        connectedUsersNumber.setPreferredSize(new java.awt.Dimension(178, 57));
+        connectedUsersNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 42));
+        connectedUsersNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        connectedUsersNumberLabel.setPreferredSize(new java.awt.Dimension(178, 57));
 
         connectedUsersLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
         connectedUsersLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -265,14 +302,14 @@ public class ServerGUI extends javax.swing.JFrame {
         connectedUsersPanel.setLayout(connectedUsersPanelLayout);
         connectedUsersPanelLayout.setHorizontalGroup(
             connectedUsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(connectedUsersNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(connectedUsersNumberLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(connectedUsersLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
         connectedUsersPanelLayout.setVerticalGroup(
             connectedUsersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(connectedUsersPanelLayout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(connectedUsersNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(connectedUsersNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(connectedUsersLabel)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -332,22 +369,37 @@ public class ServerGUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca sytuację wciśnięcia przycisku "Logi serwera"
+     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     */
     private void serverLogsButtonActionPerformed(ActionEvent evt) {
+        saveConnectedUsersNumber();
         dispose();
         new ServerLogs().setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca sytuację wciśnięcia przycisku "Logi administratorów"
+     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     */
     private void adminsLogsButtonActionPerformed(ActionEvent evt) {
+        saveConnectedUsersNumber();
         dispose();
         new AdminsLogs().setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca sytuację wciśnięcia przycisku "Logi klientów"
+     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     */
     private void clientsLogsButtonActionPerformed(ActionEvent evt) {
+        saveConnectedUsersNumber();
         dispose();
         new ClientsLogs().setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca sytuację wciśnięcia przycisku "Zrestartuj serwer"
+     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     */
     private void restartServerButtonActionPerformed(ActionEvent evt) {
         if(running){
             setRunning(false);
@@ -357,7 +409,10 @@ public class ServerGUI extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "Serwer nie jest uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
-
+    /**
+     * Metoda obsługująca sytuację wciśnięcia przycisku "Zatrzymaj serwer"
+     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     */
     private void stopServerButtonActionPerformed(ActionEvent evt) {
         if(running) {
             setRunning(false);
@@ -366,7 +421,10 @@ public class ServerGUI extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "Serwer nie jest uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
-
+    /**
+     * Metoda obsługująca sytuację wciśnięcia przycisku "Uruchom serwer"
+     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     */
     private void startServerButtonActionPerformed(ActionEvent evt) {
         if(!running) {
             setRunning(true);
@@ -375,13 +433,15 @@ public class ServerGUI extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "Serwer jest już uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
-
-    private static void operate(){
+    /**
+     * Metoda, której zadaniem jest akceptowanie połączeń nowych klientów do serwera
+     */
+    private void operate(){
         try {
-            ServerGUI.socket = new ServerSocket(1522);
-            ServerGUI.socket.setReuseAddress(true);
-            while (ServerGUI.running) {
-                ServerGUI.client = ServerGUI.socket.accept();
+            serverSocket = new ServerSocket(1522);
+            serverSocket.setReuseAddress(true);
+            while (running) {
+                socket = serverSocket.accept();
                 SwingWorker<Void, Void> worker = new BackgroundHandler();
                 worker.execute();
             }
@@ -391,6 +451,10 @@ public class ServerGUI extends javax.swing.JFrame {
             new LogsServer("ServerGUI", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna aplikacji serwera
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -404,7 +468,135 @@ public class ServerGUI extends javax.swing.JFrame {
             new LogsServer("ServerGUI", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Serwer został uruchomiony.");
-        java.awt.EventQueue.invokeLater(() -> new ServerGUI().setVisible(true));
-        operate();
+        ServerGUI serverGUI = new ServerGUI();
+        java.awt.EventQueue.invokeLater(() -> serverGUI.setVisible(true));
+        serverGUI.operate();
+    }
+    /**
+     * Klasa pozwalająca na działanie wątków niezależnie od GUI serwera
+     */
+    class BackgroundHandler extends SwingWorker<Void, Void> {
+        /**
+         * Klasa implementująca interfejs Runnable tak, aby można było tworzyć nowe wątki na serwerze
+         */
+        private class ClientThread implements Runnable{
+            /**
+             * Atrybut będący listą zawierającą dane przekazywane z serwera do bazy danych
+             */
+            private final List<String> data = new ArrayList<>();
+            /**
+             * Atrybut będący listą zawierającą dane zwracane z bazy danych do serwera, które są następnie przekazywane do klienta
+             */
+            public List<String> returningData = new ArrayList<>();
+            /**
+             * Przesłonięcie metody run, obsługującej uruchomiony wątek
+             */
+            @Override
+            public void run(){
+                try {
+                    InputStream inputStream = socket.getInputStream();
+                    DataInputStream dataInputStream = new DataInputStream(inputStream);
+                    OutputStream outputStream = socket.getOutputStream();
+                    DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+                    String operation = dataInputStream.readUTF();
+                    Database database;
+                    int listSize;
+                    switch(operation) {
+                        case "login" -> {
+                            listSize = dataInputStream.readInt();
+                            for(int i = 0; i< listSize; i++){
+                                data.add(dataInputStream.readUTF());
+                            }
+                            database = new Database(operation,data);
+                            database.connectWithDatabase();
+                            returningData.addAll(database.getReturningData());
+                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(0)));
+                            dataOutputStream.flush();
+                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(1)));
+                            dataOutputStream.flush();
+                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(2)));
+                            dataOutputStream.flush();
+                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(3)));
+                            if(returningData.get(2).equals("true")||returningData.get(3).equals("true"))
+                                setConnectedUsersNumberLabel(Integer.parseInt(connectedUsersNumberLabel.getText())+1);
+                            dataOutputStream.flush();
+                            dataOutputStream.writeUTF(returningData.get(5));
+                            dataOutputStream.flush();
+                            dataOutputStream.writeInt(Integer.parseInt(returningData.get(4)));
+                            dataOutputStream.flush();
+                        }
+                        case "addClient" -> {
+                            listSize = dataInputStream.readInt();
+                            for (int i = 0; i < listSize; i++) {
+                                data.add(dataInputStream.readUTF());
+                            }
+                            data.add(String.valueOf(dataInputStream.readBoolean()));
+                            database = new Database(operation,data);
+                            database.connectWithDatabase();
+                            returningData.addAll(database.getReturningData());
+                            dataOutputStream.writeUTF(returningData.get(0));
+                            dataOutputStream.flush();
+                        }
+                        case "myAccountUpdate", "dashboardUpdate" -> {
+                            listSize = dataInputStream.readInt();
+                            for (int i = 0; i < listSize; i++) {
+                                data.add(dataInputStream.readUTF());
+                            }
+                            database = new Database(operation, data);
+                            database.connectWithDatabase();
+                            returningData.addAll(database.getReturningData());
+                            dataOutputStream.writeInt(returningData.size());
+                            dataOutputStream.flush();
+                            for(String s : returningData){
+                                dataOutputStream.writeUTF(s);
+                                dataOutputStream.flush();
+                            }
+                        }
+                        case "deleteRes", "dataEdition", "deleteTrip", "editTrip", "addTrip", "sendNumbers", "addReservation", "changeClientPassword", "deleteClient", "editClient" -> {
+                            listSize = dataInputStream.readInt();
+                            for(int i=0; i<listSize;i++){
+                                data.add(dataInputStream.readUTF());
+                            }
+                            database = new Database(operation,data);
+                            database.connectWithDatabase();
+                        }
+                        case "tripsListPopulation", "tripsUpdate", "getDestination", "getDeparture", "getNumbers", "resUpdate", "clientsUpdate" -> {
+                            database = new Database(operation,new ArrayList<>());
+                            database.connectWithDatabase();
+                            returningData.addAll(database.getReturningData());
+                            dataOutputStream.writeInt(returningData.size());
+                            dataOutputStream.flush();
+                            for (String s : returningData) {
+                                dataOutputStream.writeUTF(s);
+                                dataOutputStream.flush();
+                            }
+                        }
+                        case "logOut" -> {
+                            setConnectedUsersNumberLabel(Integer.parseInt(connectedUsersNumberLabel.getText())-1);
+                            String email = dataInputStream.readUTF();
+                            data.add(email);
+                            database = new Database(operation,data);
+                            database.connectWithDatabase();
+                        }
+                    }
+                    returningData.clear();
+                    data.clear();
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        /**
+         * Przesłonięcie metody doInBackground, dzięki czemu wątki mogą działać w tle nie wpływając na GUI serwera
+         * @return Nie zwraca nic
+         */
+        @Override
+        protected Void doInBackground() {
+            Thread thread = new Thread(new ClientThread());
+            threads.add(thread);
+            thread.start();
+            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Nowy wątek o nazwie " + thread.getName() + " został utworzony.");
+            return null;
+        }
     }
 }

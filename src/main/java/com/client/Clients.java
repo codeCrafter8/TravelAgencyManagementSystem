@@ -1,39 +1,113 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+package com.client;
+
+import com.server.LogsAdmins;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import java.util.List;
-import java.util.Objects;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego możliwość wykonywania operacji dotyczących klientów
+ */
 public class Clients extends javax.swing.JFrame {
-    public static String adminName = "";
-    public static List<String> data = new ArrayList<>();
-    public static int listDataLength = 0;
-    private static TableRowSorter<TableModel> rowSorter;
-    public static int clientIDToRemove = 0;
-    public static int clientIDToChangePassword = 0;
-    public static int id = 0;
-    public static String firstName = "";
-    public static String lastName = "";
-    public static String email = "";
-    public static String phoneNumber = "";
-    private final Validation validation;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
     private javax.swing.JLabel adminNameLabel;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton clientsButton;
-    private javax.swing.JTable clientsTable;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton logOutButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton panelButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton reservationsButton;
-    private javax.swing.JTextField searchClientTextField;
+    /**
+     * Atrybut będący tabelą
+     */
+    private javax.swing.JTable clientsTable;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton tripsButton;
+    /**
+     * Atrybut będący komponentem tekstowym umożliwiającym edycję tekstu jednowierszowego
+     */
+    private javax.swing.JTextField searchClientTextField;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
     private javax.swing.JLabel wrongEmailLabel;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane zwracane z klasy Client
+     */
+    List<String> returningData = new ArrayList<>();
+    /**
+     * Atrybut określający rozmiar listy przechowującej dane zwracane z klasy Client
+     */
+    int listDataLength;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private Validation validation;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private Client client;
+    /**
+     * Atrybut przechowujący email użytkownika
+     */
+    private String email;
+    /**
+     * Atrybut przechowujący imię administratora
+     */
+    private String adminName;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI
+     */
     public Clients() {
+        initApp();
+    }
+    /**
+     * Pomocniczy konstruktor
+     * @param overrided określa czy wykorzystywany jest pomocniczy konstruktor
+     */
+    public Clients(boolean overrided){}
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
+     * @param client parametr przechowujący obiekt klasy Klient
+     * @param adminName parametr przechowujący imię administratora
+     */
+    public Clients(Client client, String adminName){
+        this.client = client;
+        this.email = client.getUserEmail();
+        this.adminName = adminName;
+        initApp();
+        adminNameLabel.setText(adminName);
+    }
+    /**
+     * Metoda odpowiadająca za inicjalizację GUI oraz odpowiednich elementów
+     */
+    private void initApp(){
         validation = new Validation();
         initComponents();
         generateData();
@@ -43,13 +117,14 @@ public class Clients extends javax.swing.JFrame {
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
         for (int i = 0; i < clientsTable.getModel().getColumnCount(); i++) {
-                clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    data.add(email);
+                    new Client("logOut",data);
                     data.clear();
                     dispose();
                 }
@@ -60,7 +135,9 @@ public class Clients extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel topPanel = new JPanel();
         logOutButton = new javax.swing.JButton();
@@ -91,7 +168,7 @@ public class Clients extends javax.swing.JFrame {
         topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
 
         logOutButton.setBackground(new java.awt.Color(242, 242, 242));
-        logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         logOutButton.setForeground(new java.awt.Color(255, 255, 255));
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
@@ -127,15 +204,14 @@ public class Clients extends javax.swing.JFrame {
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
 
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
-        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png")))); // NOI18N
-
-        adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18)); // NOI18N
+        adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         adminNameLabel.setPreferredSize(new java.awt.Dimension(73, 25));
 
-        adminLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14)); // NOI18N
+        adminLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminLabel.setText("Admin");
 
@@ -165,7 +241,7 @@ public class Clients extends javax.swing.JFrame {
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
         optionsPanel.setBackground(new Color(118,98,75));
 
-        panelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        panelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         panelButton.setText("    Panel");
         panelButton.setBorder(null);
         panelButton.setContentAreaFilled(false);
@@ -183,7 +259,7 @@ public class Clients extends javax.swing.JFrame {
         });
         panelButton.addActionListener(this::panelButtonActionPerformed);
 
-        clientsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16)); // NOI18N
+        clientsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         clientsButton.setText("   Klienci");
         clientsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         clientsButton.setContentAreaFilled(false);
@@ -200,7 +276,7 @@ public class Clients extends javax.swing.JFrame {
                 clientsButton.setForeground(null);
         });
 
-        tripsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        tripsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         tripsButton.setText("Wycieczki");
         tripsButton.setContentAreaFilled(false);
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -217,7 +293,7 @@ public class Clients extends javax.swing.JFrame {
         });
         tripsButton.addActionListener(this::tripsButtonActionPerformed);
 
-        reservationsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        reservationsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         reservationsButton.setText("Rezerwacje");
         reservationsButton.setContentAreaFilled(false);
         reservationsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -315,7 +391,7 @@ public class Clients extends javax.swing.JFrame {
 
         editPasswordButton.setBackground(new java.awt.Color(241, 227, 185));
         editPasswordButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13)); // NOI18N
-        editPasswordButton.setText("Zmień hasło Klienta");
+        editPasswordButton.setText("Zmień hasło klienta");
         editPasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editPasswordButton.addActionListener(this::editPasswordButtonActionPerformed);
 
@@ -381,55 +457,83 @@ public class Clients extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wycieczki"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Trips().setVisible(true);
+        new Trips(client,adminNameLabel.getText()).setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Rezerwacje"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Reservations().setVisible(true);
+        new Reservations(client,adminNameLabel.getText()).setVisible(true);
     }
-    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        dispose();
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
-        StartPage.adminLogged = false;
-        Client.operate("logOut");
+        data.add(email);
+        new Client("logOut",data);
+        data.clear();
+        dispose();
         new StartPage().setVisible(true);
     }
-    private void panelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Panel"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void panelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new Dashboard().setVisible(true);
+        new Dashboard(client,adminName).setVisible(true);
     }
-    private void editPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Zmień hasło klienta"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void editPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
         int row = clientsTable.getSelectedRow();
         if(row == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
-            new ClientPasswordChange().setVisible(true);
-            clientIDToChangePassword = Integer.parseInt(model.getValueAt(row, 0).toString());
+            int clientIDToChangePassword = Integer.parseInt(model.getValueAt(row, 0).toString());
+            new ClientPasswordChange(clientIDToChangePassword).setVisible(true);
         }
     }
+    /**
+     * Metoda pobierająca odpowiednie dane z klasy Client
+     */
     private void generateData(){
-        Client.operate("clientsUpdate");
-        adminNameLabel.setText(adminName);
+        Client client1 =  new Client("clientsUpdate",new ArrayList<>());
+        returningData.addAll(client1.getClientsList());
     }
+    /**
+     * Metoda wypełniająca tabelę przechowującą klientów
+     */
     private void populateTable(){
         int counter = 0;
-        int size = (listDataLength/5);
+        int size = (returningData.size()/5);
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
-                    data.get(counter+4)});
+            model.addRow(new Object[]{returningData.get(counter), returningData.get(counter+1), returningData.get(counter+2), returningData.get(counter+3),
+                    returningData.get(counter+4)});
             if(size > 1)
                 counter+=5;
         }
     }
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji emailu wyszukiwanego klienta
+     */
     private void performEmailValidation(){
         String emailFromTextField = searchClientTextField.getText();
         if(validation.emailIsValid(emailFromTextField))
@@ -439,9 +543,12 @@ public class Clients extends javax.swing.JFrame {
         if(searchClientTextField.getText().isEmpty())
             wrongEmailLabel.setText("");
     }
+    /**
+     * Metoda pozwalająca na wyszukiwanie klienta po emailu
+     */
     private void searchClients(){
         clientsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        rowSorter = new TableRowSorter<>(clientsTable.getModel());
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(clientsTable.getModel());
         clientsTable.setRowSorter(rowSorter);
         searchClientTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -471,39 +578,62 @@ public class Clients extends javax.swing.JFrame {
             }
         });
     }
-    private void deleteClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Usuń klienta"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void deleteClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        int row = clientsTable.getSelectedRow();
-        if(row == -1)
+        if(clientsTable.getSelectedRow() == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
-            clientIDToRemove = Integer.parseInt(model.getValueAt(row, 0).toString());
-            model.removeRow(row);
-            Client.operate("deleteClient");
+            data.clear();
+            data.add(model.getValueAt(clientsTable.getSelectedRow(), 0).toString());
+            new Client("deleteClient",data);
+            data.clear();
+            model.removeRow(clientsTable.getSelectedRow());
         }
     }
-    private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Dodaj klienta"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        new Registration().setVisible(true);
+        new Registration(true, client, adminNameLabel.getText()).setVisible(true);
     }
-    private void editClientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Edytuj klienta"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void editClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        int row = clientsTable.getSelectedRow();
-        if(row == -1)
+        if(clientsTable.getSelectedRow() == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
-            id = Integer.parseInt(model.getValueAt(row, 0).toString());
-            firstName = model.getValueAt(row, 1).toString();
-            lastName = model.getValueAt(row, 2).toString();
-            email = model.getValueAt(row, 3).toString();
-            phoneNumber = model.getValueAt(row, 4).toString();
+            int id = Integer.parseInt(model.getValueAt(clientsTable.getSelectedRow(), 0).toString());
+            String firstName = model.getValueAt(clientsTable.getSelectedRow(), 1).toString();
+            String lastName = model.getValueAt(clientsTable.getSelectedRow(), 2).toString();
+            email = model.getValueAt(clientsTable.getSelectedRow(), 3).toString();
+            String phoneNumber = model.getValueAt(clientsTable.getSelectedRow(), 4).toString();
             if (firstName.equals("") || lastName.equals("") || email.equals("") || phoneNumber.equals("")) {
                 JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
-                new Client("editClient");
+                data.clear();
+                data.add(firstName);
+                data.add(lastName);
+                data.add(email);
+                data.add(phoneNumber);
+                data.add(Integer.toString(id));
+                new Client("editClient",data);
+                data.clear();
             }
         }
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

@@ -1,3 +1,5 @@
+package com.client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
@@ -10,11 +12,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 public class MyAccount extends javax.swing.JFrame {
-    public static List<String> clientData = new ArrayList<>();
-    public static int clientDataListLength = 0;
-    public static List<String> resData = new ArrayList<>();
-    public static int resDataListLength = 0;
+    public List<String> clientData = new ArrayList<>();
+    public int dataListLength = 0;
     static int row = 0;
+    private Client client;
+    public List<String> data = new ArrayList<>();
+    private final List<String> resData = new ArrayList<>();
+    public List<String> returningData = new ArrayList<>();
     private javax.swing.JButton cancelReservationButton;
     private javax.swing.JButton downloadInsuranceButton;
     private javax.swing.JTable resTable;
@@ -24,31 +28,39 @@ public class MyAccount extends javax.swing.JFrame {
     private javax.swing.JLabel typeLastNameLabel;
     private javax.swing.JComboBox<String> managing;
     public MyAccount() {
+        initApp();
+    }
+    public MyAccount(boolean overrided){}
+    public MyAccount(Client client){
+        this.client = client;
+        initApp();
+    }
+    private void initApp(){
         initComponents();
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
         for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
-                resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
         downloadInsuranceButton.setText("<html><center>"+"Szczegóły"+"<br>"+"rezerwacji"+"</center></html>");
         cancelReservationButton.setText("<html><center>"+"Anuluj"+"<br>"+"rezerwację"+"</center></html>");
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         generateData();
-        populateTable();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    data.add(client.getUserEmail());
+                    new Client("logOut",data);
+                    data.clear();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
     }
-
     private void initComponents() {
         managing = new javax.swing.JComboBox<>();
         JScrollPane jScrollPane1 = new JScrollPane();
@@ -101,14 +113,14 @@ public class MyAccount extends javax.swing.JFrame {
         resTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
         jScrollPane1.setViewportView(resTable);
 
-        myReservationsLabel.setFont(new java.awt.Font("Arial", Font.ITALIC, 18)); // NOI18N
+        myReservationsLabel.setFont(new java.awt.Font("Arial", Font.ITALIC, 18));
         myReservationsLabel.setText("Moje rezerwacje");
 
         infoConfirmLabel.setForeground(new java.awt.Color(255, 0, 0));
         infoConfirmLabel.setText("   ");
 
         cancelReservationButton.setBackground(new java.awt.Color(151, 123, 92));
-        cancelReservationButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16)); // NOI18N
+        cancelReservationButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
         cancelReservationButton.setForeground(new java.awt.Color(255, 255, 255));
         cancelReservationButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelReservationButton.setFocusable(false);
@@ -116,7 +128,7 @@ public class MyAccount extends javax.swing.JFrame {
         cancelReservationButton.addActionListener(this::cancelReservationButtonActionPerformed);
 
         downloadInsuranceButton.setBackground(new java.awt.Color(151, 123, 92));
-        downloadInsuranceButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16)); // NOI18N
+        downloadInsuranceButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
         downloadInsuranceButton.setForeground(new java.awt.Color(255, 255, 255));
         downloadInsuranceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         downloadInsuranceButton.setFocusable(false);
@@ -124,35 +136,34 @@ public class MyAccount extends javax.swing.JFrame {
         downloadInsuranceButton.addActionListener(this::downloadInsuranceButtonActionPerformed);
 
         userPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        iconUser.setIcon(new javax.swing.ImageIcon("img\\345564670_3623767247845558_3120332870085421246_n.png"));
 
-        iconUser.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/345564670_3623767247845558_3120332870085421246_n.png")))); // NOI18N
-
-        nameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        nameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         nameLabel.setText("Imię:");
 
-        lastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        lastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         lastNameLabel.setText("Nazwisko:");
 
-        emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         emailLabel.setText("E-mail:");
 
-        phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         phoneNumberLabel.setText("Numer telefonu:");
 
-        typeNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        typeNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         typeNameLabel.setText("Anna");
 
-        typeLastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        typeLastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         typeLastNameLabel.setText("Kowalska");
 
-        typeEmailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        typeEmailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         typeEmailLabel.setText("anna@wp.pl");
 
-        typePhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        typePhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         typePhoneNumberLabel.setText("123456778");
 
         editButton.setBackground(new java.awt.Color(151, 123, 92));
-        editButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14)); // NOI18N
+        editButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
         editButton.setForeground(new java.awt.Color(255, 255, 255));
         editButton.setText("Edytuj dane");
         editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -161,7 +172,7 @@ public class MyAccount extends javax.swing.JFrame {
         editButton.addActionListener(this::editButtonActionPerformed);
 
         editButton1.setBackground(new java.awt.Color(151, 123, 92));
-        editButton1.setFont(new java.awt.Font("Arial", Font.ITALIC, 14)); // NOI18N
+        editButton1.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
         editButton1.setForeground(new java.awt.Color(255, 255, 255));
         editButton1.setText("Zmień hasło");
         editButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -290,7 +301,8 @@ public class MyAccount extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     private void editButton1ActionPerformed(ActionEvent evt) {
-        new PasswordChange().setVisible(true);
+        //new PasswordChange(this.clientData.get(4),client).setVisible(true);
+        new PasswordChange(this.returningData.get(4),client).setVisible(true);
     }
 
     private void cancelReservationButtonActionPerformed(ActionEvent evt) {
@@ -315,15 +327,15 @@ public class MyAccount extends javax.swing.JFrame {
                 Object[] options = {"Tak", "Nie"};
                 if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz anulować rezerwację?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
-                    Reservations.resIDToRemove = Integer.parseInt((String) model.getValueAt(row, 0));
                     JOptionPane.showMessageDialog(null, "Pomyślnie anulowano rezerwację. Pieniądze zostaną zwrócone na kartę kredytową, z której dokonano płatności w ciągu 14 dni roboczych.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    Client.operate("deleteRes");
+                    data.add(resTable.getValueAt(resTable.getSelectedRow(),0).toString());
+                    new Client("deleteRes",data);
+                    data.clear();
                     model.removeRow(row);
                 }
             }
         }
     }
-
     private void managingActionPerformed(ActionEvent evt) {
         if(Objects.equals(managing.getSelectedItem(), "Wyloguj")) {
             Object[] options = {"Tak", "Nie"};
@@ -331,20 +343,21 @@ public class MyAccount extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
                 dispose();
                 resData.clear();
-                Client.operate("logOut");
-                StartPage.clientLogged = false;
+                data.add(client.getUserEmail());
+                new Client("logOut",data);
+                data.clear();
                 new StartPage().setVisible(true);
             }
         }
         else if(Objects.equals(managing.getSelectedItem(), "Strona Główna")){
             dispose();
             resData.clear();
-            new SearchEngine().setVisible(true);
+            new SearchEngine(client).setVisible(true);
         }
     }
     private void populateTable(){
         int counter = 0;
-        int size = (resDataListLength/11);
+        int size = (resData.size())/11;
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{resData.get(counter), resData.get(counter+1), resData.get(counter+2), Integer.parseInt(resData.get(counter+3)) * Integer.parseInt(resData.get(counter+4)) + " zł",
@@ -353,16 +366,35 @@ public class MyAccount extends javax.swing.JFrame {
                 counter+=11;
         }
     }
-
-    private void generateData(){
-        Client.operate("myAccountUpdate");
-        typeNameLabel.setText(clientData.get(0));
-        typeLastNameLabel.setText(clientData.get(1));
-        typeEmailLabel.setText(clientData.get(2));
-        typePhoneNumberLabel.setText(clientData.get(3));
+    public void setLabels(){
+        typeNameLabel.setText("");
+        typeLastNameLabel.setText("");
+        typeEmailLabel.setText("");
+        typePhoneNumberLabel.setText("");
+        typeNameLabel.setText(returningData.get(0));
+        typeLastNameLabel.setText(returningData.get(1));
+        typeEmailLabel.setText(returningData.get(2));
+        typePhoneNumberLabel.setText(returningData.get(3));
+    }
+    public void generateData(){
+        data.add(client.getUserEmail());
+        Client client2 = new Client("myAccountUpdate",data);
+        data.clear();
+        returningData.addAll(client2.getMyAccountData());
+        for(int i = 0; i < returningData.size(); i++) {
+            if(i >= 5)
+                resData.add(returningData.get(i));
+        }
+        for(int i = 0; i < returningData.size(); i++) {
+            if(i < 5)
+                clientData.add(returningData.get(i));
+        }
+        setLabels();
+        populateTable();
     }
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        new DataEdition().setVisible(true);
+        dispose();
+        new DataEdition(clientData, client).setVisible(true);
     }
 
     private void downloadInsuranceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadInsuranceButtonActionPerformed
@@ -370,7 +402,7 @@ public class MyAccount extends javax.swing.JFrame {
         if(row == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
-            new TripDescription().setVisible(true);
+            new TripDescription(this.resData).setVisible(true);
         }
     }
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package com.client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.DateFormat;
@@ -7,21 +9,22 @@ import java.util.Date;
 import java.util.List;
 
 public class TripAddition extends javax.swing.JFrame {
+    public List<String> data = new ArrayList<>();
     List<String> departureCities = new ArrayList<>();
-    public static String departure, arrival;
+    public String departure, arrival;
     private boolean countryCorrect;
     private boolean cityCorrect;
     private boolean departureCityCorrect;
     private boolean priceCorrect;
     private boolean hotelNameCorrect;
     private boolean peopleLimitCorrect;
-    private final Validation validation;
-    public static String country;
-    public static String city;
-    public static String departureCity;
-    public static String price;
-    public static String peopleLimit;
-    public static String hotelName;
+    private Validation validation;
+    public String country;
+    public String city;
+    public String departureCity;
+    public String price;
+    public String peopleLimit;
+    public String hotelName;
     private Date arrivalDate;
     private Date departureDate;
     private javax.swing.JTextField limitTextField;
@@ -40,7 +43,11 @@ public class TripAddition extends javax.swing.JFrame {
     private javax.swing.JLabel validLimitLabel;
     private javax.swing.JLabel validNameHotelLabel;
     private javax.swing.JLabel validPriceLabel;
-    public TripAddition() {
+    private Client client;
+    private String adminName;
+    public TripAddition(Client client, String adminName) {
+        this.client = client;
+        this.adminName = adminName;
         validation = new Validation();
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
@@ -60,15 +67,16 @@ public class TripAddition extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    new Client("logOut",new ArrayList<>());
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
     }
+    public TripAddition(boolean overrided){}
     private void initComponents() {
         JPanel regPanel = new JPanel();
         JLabel createLabel = new JLabel();
@@ -333,9 +341,19 @@ public class TripAddition extends javax.swing.JFrame {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             arrival = dateFormat.format(arrivalDate);
             departure = dateFormat.format(departureDate);
-            Client.operate("addTrip");
+            data.clear();
+            data.add(country);
+            data.add(city);
+            data.add(departureCity);
+            data.add(price);
+            data.add(peopleLimit);
+            data.add(hotelName);
+            data.add(arrival);
+            data.add(departure);
+            new Client("addTrip",data);
+            data.clear();
             dispose();
-            new Trips().setVisible(true);
+            new Trips(client,adminName).setVisible(true);
         }
     }
 
@@ -465,6 +483,6 @@ public class TripAddition extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TripAddition.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new TripAddition().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TripAddition(null,null).setVisible(true));
     }
 }

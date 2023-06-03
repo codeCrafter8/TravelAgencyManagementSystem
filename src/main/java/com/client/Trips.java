@@ -1,3 +1,5 @@
+package com.client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -12,17 +14,19 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class Trips extends javax.swing.JFrame {
-    public static List<String> data = new ArrayList<>();
-    public static int listDataLength = 0;
-    private static TableRowSorter<TableModel> rowSorter;
-    public static int tripIDToRemove = 0;
-    public static int id = 0;
-    public static String country = "";
-    public static String city = "";
-    public static String price = "";
-    public static String peopleLimit = "";
+    public List<String> data = new ArrayList<>();
+    public int listDataLength = 0;
+    private TableRowSorter<TableModel> rowSorter;
+    public int tripIDToRemove = 0;
+    public int id = 0;
+    public String country = "";
+    public String city = "";
+    public String price = "";
+    public String peopleLimit = "";
     private String cityToSearch;
-    private final Validation validation;
+    private Validation validation;
+    public Client client;
+    public String email;
     private javax.swing.JLabel adminNameLabel;
     private javax.swing.JButton clientsButton;
     private javax.swing.JButton logOutButton;
@@ -32,7 +36,19 @@ public class Trips extends javax.swing.JFrame {
     private javax.swing.JButton tripsButton;
     private javax.swing.JTable tripsTable;
     private javax.swing.JLabel wrongTripLabel;
+    private String adminName;
     public Trips() {
+        initApp();
+    }
+    public Trips(boolean overrided){}
+    public Trips(Client client, String adminName){
+        this.adminName = adminName;
+        this.client = client;
+        this.email = client.getUserEmail();
+        initApp();
+        adminNameLabel.setText(adminName);
+    }
+    private void initApp(){
         validation = new Validation();
         initComponents();
         generateData();
@@ -42,19 +58,19 @@ public class Trips extends javax.swing.JFrame {
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(151,123,92));
         for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
-                tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
                     data.clear();
-                    Client.operate("logOut");
+                    new Client("logOut",new ArrayList<>());
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
@@ -90,8 +106,8 @@ public class Trips extends javax.swing.JFrame {
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
 
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
-
-        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png")))); // NOI18N
+        //TODO STARE->adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png")))); // NOI18N
+        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull("img\\adminLOGO.png"))); // NOI18N
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -377,39 +393,46 @@ public class Trips extends javax.swing.JFrame {
 
     private void editTripButtonActionPerformed(ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
-        int row = tripsTable.getSelectedRow();
-        if(row == -1)
+        if(tripsTable.getSelectedRow() == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
-            id = Integer.parseInt(model.getValueAt(row, 0).toString());
-            country = model.getValueAt(row, 1).toString();
-            city = model.getValueAt(row, 2).toString();
-            price = model.getValueAt(row, 3).toString();
-            peopleLimit = model.getValueAt(row, 4).toString();
+            id = Integer.parseInt(model.getValueAt(tripsTable.getSelectedRow(), 0).toString());
+            country = model.getValueAt(tripsTable.getSelectedRow(), 1).toString();
+            city = model.getValueAt(tripsTable.getSelectedRow(), 2).toString();
+            price = model.getValueAt(tripsTable.getSelectedRow(), 3).toString();
+            peopleLimit = model.getValueAt(tripsTable.getSelectedRow(), 4).toString();
             if (country.equals("") || city.equals("") || price.equals("") || peopleLimit.equals("")) {
                 JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
-                Client.operate("editTrip");
+                data.clear();
+                data.add(Integer.toString(id));
+                data.add(city);
+                data.add(country);
+                data.add(price);
+                data.add(peopleLimit);
+                new Client("editTrip",data);
+                data.clear();
             }
         }
     }
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        dispose();
         data.clear();
-        StartPage.adminLogged = false;
-        Client.operate("logOut");
+        data.add(email);
+        new Client("logOut",data);
+        data.clear();
+        dispose();
         new StartPage().setVisible(true);
     }
 
     private void generateData(){
-        Client.operate("tripsUpdate");
-        adminNameLabel.setText(Dashboard.adminName);
+        Client client1 = new Client("tripsUpdate",new ArrayList<>());
+        data.addAll(client1.getTripsList());
     }
 
     private void populateTable(){
         int counter = 0;
-        int size = (listDataLength/5);
+        int size = (data.size()/5);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
@@ -462,34 +485,36 @@ public class Trips extends javax.swing.JFrame {
 
     private void deleteTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
-        int row = tripsTable.getSelectedRow();
-        if(row == -1)
+        if(tripsTable.getSelectedRow() == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {tripIDToRemove = Integer.parseInt(model.getValueAt(row, 0).toString());
-            model.removeRow(row);
-            Client.operate("deleteTrip");
+        else {
+            data.clear();
+            data.add(model.getValueAt(tripsTable.getSelectedRow(), 0).toString());
+            new Client("deleteTrip",data);
+            data.clear();
+            model.removeRow(tripsTable.getSelectedRow());
         }
     }
 
     private void addTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new TripAddition().setVisible(true);
+        new TripAddition(client,adminNameLabel.getText()).setVisible(true);
     }
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new Clients().setVisible(true);
+        new Clients(client,adminNameLabel.getText()).setVisible(true);
     }
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Reservations().setVisible(true);
+        new Reservations(client,adminNameLabel.getText()).setVisible(true);
     }
     private void panelButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Dashboard().setVisible(true);
+        new Dashboard(client,adminNameLabel.getText()).setVisible(true);
     }
     public static void main(String[] args) {
         try {

@@ -1,17 +1,21 @@
-import java.awt.*;
+package com.client;
+
 import java.awt.event.FocusEvent;
+import java.awt.*;
 import java.awt.event.FocusListener;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 public class StartPage extends javax.swing.JFrame {
-    public static boolean userExists;
-    public static boolean passwordValid;
-    public static boolean adminLogged = false;
-    public static boolean clientLogged = false;
-    public static String email;
-    public static String password;
-    public static String message;
+    private final List<String> data = new ArrayList<>();
+    public boolean userExists;
+    public boolean passwordValid;
+    public boolean adminLogged = false;
+    public boolean clientLogged = false;
+    public String email;
+    public String password;
+    public String message;
     private final Validation validation;
     private boolean emailCorrect;
     private boolean passwordCorrect;
@@ -21,6 +25,7 @@ public class StartPage extends javax.swing.JFrame {
     private javax.swing.JButton signInButton;
     private javax.swing.JLabel typeEmailLabel;
     private javax.swing.JLabel typePasswordLabel;
+    private Client client;
     public StartPage() {
         validation = new Validation();
         initComponents();
@@ -34,6 +39,14 @@ public class StartPage extends javax.swing.JFrame {
         agencyLabel.setBounds(247, 85, 250, 100);
         add(agencyLabel);
     }
+    public void setLoginFields(boolean userExists, boolean passwordValid, boolean adminLogged, boolean clientLogged, String message){
+        this.userExists = userExists;
+        this.passwordValid = passwordValid;
+        this.adminLogged = adminLogged;
+        this.clientLogged = clientLogged;
+        this.message = message;
+    }
+
     private void initComponents() {
         JPanel loginPanel = new JPanel();
         JLabel emailLabel = new JLabel();
@@ -173,8 +186,7 @@ public class StartPage extends javax.swing.JFrame {
                     .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("img/tets.jpg"))));
+        jLabel2.setIcon(new javax.swing.ImageIcon("img\\paris.jpg"));
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,10 +215,9 @@ public class StartPage extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        new Registration().setVisible(true);
+        new Registration(false,client).setVisible(true);
     }
 
     private void performEmailValidation(){
@@ -246,24 +257,38 @@ public class StartPage extends javax.swing.JFrame {
         if(emailCorrect && passwordCorrect) {
             email = emailTextField.getText();
             password = new String(passwordField.getPassword());
+            data.add(email);
+            data.add(password);
             typeEmailLabel.setText("");
-            Client.operate("login");
-
-            if (!userExists)
+            Client client = new Client("login", data);
+            this.client = client;
+            userExists = client.getStartPageUserExists();
+            passwordValid = client.getStartPagePasswordValid();
+            message = client.getStartPageMessage();
+            adminLogged = client.getStartPageAdminLogged();
+            clientLogged = client.getStartPageClientLogged();
+            if (!userExists) {
                 typeEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
+                data.clear();
+            }
             else {
-                if (!passwordValid)
+                if (!passwordValid){
                     typePasswordLabel.setText("Błędne hasło.");
+                    data.clear();
+                }
                 else {
-                    if(!message.equals(""))
-                        JOptionPane.showMessageDialog(null, message, "Informacja", JOptionPane.ERROR_MESSAGE);
-                    if (adminLogged) {
-                        dispose();
-                        new Dashboard().setVisible(true);
+                    if(!message.equals("")) {
+                        JOptionPane.showMessageDialog(this, message, "Informacja", JOptionPane.ERROR_MESSAGE);
+                        data.clear();
                     }
-                    if (clientLogged) {
-                        dispose();
-                        new SearchEngine().setVisible(true);
+                    else {
+                        if (adminLogged) {
+                            this.dispose();
+                            new Dashboard(client,"").setVisible(true);
+                        } else if (clientLogged) {
+                            this.dispose();
+                            new SearchEngine(client).setVisible(true);
+                        }
                     }
                 }
             }

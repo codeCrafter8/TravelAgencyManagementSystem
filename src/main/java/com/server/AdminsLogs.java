@@ -1,15 +1,35 @@
+package com.server;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Objects;
-
+/**
+ * Klasa zawierająca pola i metody obsługujące komponenty GUI dotyczącego logów administratorów
+ */
 public class AdminsLogs extends javax.swing.JFrame {
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton adminsLogsButton;
-    private javax.swing.JList<String> adminsLogsList;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton clientsLogsButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton manageServerButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton serverLogsButton;
-
+    /**
+     * Atrybut będący listą elementów tekstowych
+     */
+    private javax.swing.JList<String> adminsLogsList;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI
+     */
     public AdminsLogs() {
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
@@ -19,6 +39,9 @@ public class AdminsLogs extends javax.swing.JFrame {
         }
         adminsLogsList.setModel(defaultListModel);
     }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel menuPanel = new JPanel();
         JPanel serverPanel = new JPanel();
@@ -39,13 +62,12 @@ public class AdminsLogs extends javax.swing.JFrame {
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
 
         serverPanel.setBackground(new java.awt.Color(118, 98, 75));
-
-        serverIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/serverICON.png")))); // NOI18N
+        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
         serverIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setPreferredSize(new java.awt.Dimension(70, 70));
 
-        serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20)); // NOI18N
+        serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
         serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         serverLabel.setText("Serwer");
 
@@ -74,7 +96,7 @@ public class AdminsLogs extends javax.swing.JFrame {
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
 
-        manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         manageServerButton.setText("    Zarządzaj pracą serwera");
         manageServerButton.setBorder(null);
         manageServerButton.setContentAreaFilled(false);
@@ -92,7 +114,7 @@ public class AdminsLogs extends javax.swing.JFrame {
         });
         manageServerButton.addActionListener(this::manageServerButtonActionPerformed);
 
-        clientsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        clientsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         clientsLogsButton.setText("    Logi klientów");
         clientsLogsButton.setBorder(null);
         clientsLogsButton.setContentAreaFilled(false);
@@ -110,7 +132,7 @@ public class AdminsLogs extends javax.swing.JFrame {
         });
         clientsLogsButton.addActionListener(this::clientsLogsButtonActionPerformed);
 
-        adminsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16)); // NOI18N
+        adminsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         adminsLogsButton.setText("   Logi administratorów");
         adminsLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         adminsLogsButton.setContentAreaFilled(false);
@@ -127,7 +149,7 @@ public class AdminsLogs extends javax.swing.JFrame {
                 adminsLogsButton.setForeground(null);
         });
 
-        serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         serverLogsButton.setText("Logi serwera");
         serverLogsButton.setContentAreaFilled(false);
         serverLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -182,7 +204,7 @@ public class AdminsLogs extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        adminsLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22)); // NOI18N
+        adminsLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
         adminsLogsLabel.setText("Logi Administratorów");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,23 +233,37 @@ public class AdminsLogs extends javax.swing.JFrame {
                 .addComponent(adminsLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(86, Short.MAX_VALUE))
         );
-
         pack();
         setLocationRelativeTo(null);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku serverLogs
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void serverLogsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ServerLogs().setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku manageServer
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ServerGUI().setVisible(true);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku clientsLogs
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void clientsLogsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ClientsLogs().setVisible(true);
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

@@ -1,5 +1,8 @@
+package com.client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -15,8 +18,19 @@ public class Payment extends javax.swing.JFrame {
     private javax.swing.JTextField cardNumberData;
     private javax.swing.JTextField yearData;
     private javax.swing.JButton visa;
+    private Client client;
+    private int idTrip;
+    private String insurance;
+    private int peopleQuantity;
+    private int idUser;
+    private java.util.List<String> data = new ArrayList<>();
 
-    public Payment() {
+    public Payment(Client client, int idTripToShow, String insurance, int peopleQuantity) {
+        this.idTrip = idTripToShow;
+        this.insurance = insurance;
+        this.peopleQuantity = peopleQuantity;
+        this.idUser = client.getUserOfferID();
+        this.client = client;
         validation = new Validation();
         initComponents();
         setTitle("Płatność kartą kredytową");
@@ -307,7 +321,13 @@ public class Payment extends javax.swing.JFrame {
             mistakeSpace.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {
-            Client.operate("addReservation");
+            //id_trip, ID_user, people_quantity, insurance
+            data.add(Integer.toString(idTrip));
+            data.add(Integer.toString(idUser));
+            data.add(Integer.toString(peopleQuantity));
+            data.add(insurance);
+            new Client("addReservation",data);
+            data.clear();
             dispose();
         }
     }
@@ -347,6 +367,6 @@ public class Payment extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Payment().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Payment(null,-1,null,-1).setVisible(true));
     }
 }

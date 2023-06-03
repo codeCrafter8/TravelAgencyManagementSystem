@@ -1,14 +1,17 @@
+package com.client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Offer extends javax.swing.JFrame {
-    public static int peopleQuantity = 0;
-    public static int userID = 0;
-    public static int tripID = 0;
-    public static String insurance = "";
+    public int peopleQuantity = 0;
+    public int userID = 0;
+    public int tripID = 0;
+    public String insurance = "";
     private javax.swing.JLabel tripLengthData;
     private javax.swing.JLabel peopleNumberData;
     private javax.swing.JLabel cityCountry;
@@ -21,7 +24,21 @@ public class Offer extends javax.swing.JFrame {
     private javax.swing.JCheckBox insurance2;
     private javax.swing.JCheckBox insurance3;
     private javax.swing.JLabel photo;
-    public Offer() {
+    private Client client;
+    private java.util.List<String> data = new ArrayList<>();
+    private int attributeQuantity;
+    private int adultsQuantity;
+    private int childrenQuantity;
+    private int idTripToShow;
+    private int selectedRow;
+    public Offer(Client client, java.util.List<String> data, int attributeQuantity, int adultsQuantity, int childrenQuantity, int idTripToShow, int selectedRow) {
+        this.client = client;
+        this.data.addAll(data);
+        this.attributeQuantity = attributeQuantity;
+        this.adultsQuantity = adultsQuantity;
+        this.childrenQuantity = childrenQuantity;
+        this.idTripToShow = idTripToShow;
+        this.selectedRow = selectedRow;
         initComponents();
         generate_data();
         cityCountry.setFont(new Font("Segoe Print", Font.PLAIN, 15));
@@ -31,49 +48,50 @@ public class Offer extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    new Client("logOut", new ArrayList<>());
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
     }
+    public Offer(boolean overrided){}
     private void generate_data() {
         int counter = 0;
-        int size = (SearchEngine.listDataLength/ SearchEngine.attributesQuantity);
+        int size = (data.size()/ attributeQuantity);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date1;
         Date date2;
         int daysBetween = 0;
         for(int i=0; i<size; i++){
-            if(Integer.parseInt(SearchEngine.data.get(counter+7)) == SearchEngine.idTripToShow){
+            if(Integer.parseInt(data.get(counter+7)) == idTripToShow){
                 try {
-                    date1 = formatter.parse(String.valueOf(SearchEngine.data.get(counter+2)));
-                    date2 = formatter.parse(String.valueOf(SearchEngine.data.get(counter+3)));
+                    date1 = formatter.parse(String.valueOf(data.get(counter+2)));
+                    date2 = formatter.parse(String.valueOf(data.get(counter+3)));
                     daysBetween = (int) SearchEngine.getDifferenceDays(date1, date2);
                 }catch (ParseException e) {
                     e.printStackTrace();
                 }
-                cityCountry.setText(SearchEngine.data.get(counter) + ", " + SearchEngine.data.get(counter+1));
-                dateData.setText("od " + SearchEngine.data.get(counter+2) + " do " + SearchEngine.data.get(counter+3));
-                departureCityData.setText(SearchEngine.data.get(counter+5));
+                cityCountry.setText(data.get(counter) + ", " + data.get(counter+1));
+                dateData.setText("od " + data.get(counter+2) + " do " + data.get(counter+3));
+                departureCityData.setText(data.get(counter+5));
                 tripLengthData.setText(daysBetween + " dni");
-                peopleQuantity = SearchEngine.adultsQuantity + SearchEngine.childrenQuantity;
+                peopleQuantity = adultsQuantity + childrenQuantity;
                 insurance = "";
                 peopleNumberData.setText(peopleQuantity + " (" +
-                        SearchEngine.adultsQuantity + " dorosly, " + SearchEngine.childrenQuantity + " dzieci)");
-                photo.setIcon(new javax.swing.ImageIcon("src/img/zdjecie" + (SearchEngine.selectedRow + 1) + ".jpg"));
-                descriptionSpace.setText("<html>" + SearchEngine.data.get(counter+8) + "<html>");
-                hotelName.setText(SearchEngine.data.get(counter+9));
-                if(SearchEngine.adultsQuantity == 0 && SearchEngine.childrenQuantity == 0)
-                    typePrice.setText(SearchEngine.data.get(counter+4) + " zł");
+                        adultsQuantity + " dorosly, " + childrenQuantity + " dzieci)");
+                photo.setIcon(new javax.swing.ImageIcon("src/img/zdjecie" + (selectedRow + 1) + ".jpg"));
+                descriptionSpace.setText("<html>" + data.get(counter+8) + "<html>");
+                hotelName.setText(data.get(counter+9));
+                if(adultsQuantity == 0 && childrenQuantity == 0)
+                    typePrice.setText(data.get(counter+4) + " zł");
                 else
-                    typePrice.setText(Integer.parseInt(SearchEngine.data.get(counter+4)) * (SearchEngine.adultsQuantity + SearchEngine.childrenQuantity) + " zł");
+                    typePrice.setText(Integer.parseInt(data.get(counter+4)) * (adultsQuantity + childrenQuantity) + " zł");
             }
             if(size > 1)
-                counter+= SearchEngine.attributesQuantity;
+               counter+= attributeQuantity;
         }
     }
     private void initComponents() {
@@ -302,7 +320,8 @@ public class Offer extends javax.swing.JFrame {
     }
 
     private void reservationButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        new Payment().setVisible(true);
+        System.out.println(insurance);
+        new Payment(client,idTripToShow,insurance,peopleQuantity).setVisible(true);
     }
 
     private void insurance1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -343,7 +362,7 @@ public class Offer extends javax.swing.JFrame {
     }
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        new SearchEngine().setVisible(true);
+        new SearchEngine(client).setVisible(true);
     }
     public static void main(String[] args) {
         try {
@@ -357,6 +376,6 @@ public class Offer extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Offer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Offer().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Offer(true).setVisible(true));
     }
 }

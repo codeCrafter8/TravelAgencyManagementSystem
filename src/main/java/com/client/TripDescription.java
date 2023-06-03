@@ -1,8 +1,12 @@
+package com.client;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TripDescription extends javax.swing.JFrame {
     public String insurance = "";
@@ -16,7 +20,9 @@ public class TripDescription extends javax.swing.JFrame {
     private javax.swing.JLabel typeInsuranceLabel;
     private javax.swing.JLabel typePeopleLabel;
     private javax.swing.JLabel typePriceLabel;
-    public TripDescription() {
+    private List<String> resData = new ArrayList<>();
+    public TripDescription(List<String> resData) {
+        this.resData = resData;
         initComponents();
         generateData();
     }
@@ -27,27 +33,27 @@ public class TripDescription extends javax.swing.JFrame {
         Date date2;
         int daysBetween = 0;
         int counter = 0;
-        int size = (MyAccount.resDataListLength/11);
+        int size = (resData.size())/11;
         for(int i=0; i<size; i++){
             if(i == MyAccount.row) {
                 try {
-                    date1 = formatter.parse(String.valueOf(MyAccount.resData.get(counter+5)));
-                    date2 = formatter.parse(String.valueOf(MyAccount.resData.get(counter+6)));
+                    date1 = formatter.parse(String.valueOf(resData.get(counter+5)));
+                    date2 = formatter.parse(String.valueOf(resData.get(counter+6)));
                     daysBetween = (int) SearchEngine.getDifferenceDays(date1, date2);
                 }catch (ParseException e) {
                     e.printStackTrace();
                 }
-                typeCountryLabel.setText(MyAccount.resData.get(counter+1));
-                typeCityLabel.setText(MyAccount.resData.get(counter+2));
-                typeDepartureCityLabel.setText(MyAccount.resData.get(counter+8));
-                typeDateLabel.setText("od " + MyAccount.resData.get(counter+5) + " do " + MyAccount.resData.get(counter+6));
+                typeCountryLabel.setText(resData.get(counter+1));
+                typeCityLabel.setText(resData.get(counter+2));
+                typeDepartureCityLabel.setText(resData.get(counter+8));
+                typeDateLabel.setText("od " + resData.get(counter+5) + " do " + resData.get(counter+6));
                 typeDaysLabel.setText(String.valueOf(daysBetween));
-                typePeopleLabel.setText(MyAccount.resData.get(counter+4));
-                typePriceLabel.setText(MyAccount.resData.get(counter+3) + " zł");
-                insurance = MyAccount.resData.get(counter+7);
+                typePeopleLabel.setText(resData.get(counter+4));
+                typePriceLabel.setText(resData.get(counter+3) + " zł");
+                insurance = resData.get(counter+7);
                 typeInsuranceLabel.setText(insurance);
-                typeHotelNameLabel.setText(MyAccount.resData.get(counter+9));
-                typeHotelDescriptionLabel.setText("<html>" + MyAccount.resData.get(counter+10)+ "<html>");
+                typeHotelNameLabel.setText(resData.get(counter+9));
+                typeHotelDescriptionLabel.setText("<html>" + resData.get(counter+10)+ "<html>");
             }
             if(size > 1)
                 counter+=11;
@@ -248,6 +254,6 @@ public class TripDescription extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TripDescription.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new TripDescription().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TripDescription(new ArrayList<>()).setVisible(true));
     }
 }

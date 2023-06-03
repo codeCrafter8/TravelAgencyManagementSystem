@@ -1,3 +1,5 @@
+package com.client;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -11,20 +13,23 @@ import java.util.concurrent.TimeUnit;
 
 public class SearchEngine extends javax.swing.JFrame {
     private int counter = 1;
-    public static int attributesQuantity = 10;
-    public static List<String> data = new ArrayList<>();
-    public static List<String> destination = new ArrayList<>();
-    public static int destinationListLength;
-    public static List<String> departure = new ArrayList<>();
-    public static int departureListLength;
-    public static int listDataLength = 0;
-    public static String number;
-    public static int selectedRow;
-    public static int adultsQuantity;
-    public static int childrenQuantity;
-    public static Map<Integer, Integer> idRows = new TreeMap<>();
-    public static int idTripToShow = 0;
-    private final Validation validation;
+    public int attributesQuantity = 10;
+    public List<String> data = new ArrayList<>();
+    public List<String> phoneNumberData = new ArrayList<>();
+    public List<String> destination = new ArrayList<>();
+    public int destinationListLength;
+    public List<String> departure = new ArrayList<>();
+    public int departureListLength;
+    public int listDataLength = 0;
+    public String number;
+    public int selectedRow;
+    public int adultsQuantity;
+    public int childrenQuantity;
+    public Map<Integer, Integer> idRows = new TreeMap<>();
+    public int idTripToShow = 0;
+    public Client client;
+    private Validation validation;
+    private String email;
     private javax.swing.JComboBox<String> destinationChoice;
     private javax.swing.JSpinner adultsQuantitySpinner;
     private javax.swing.JSpinner childrenQuantitySpinner;
@@ -36,60 +41,71 @@ public class SearchEngine extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> managing;
     private javax.swing.JTextField leaveNumber;
     public SearchEngine() {
+        initApp();
+    }
+    public SearchEngine(boolean overrided){
+
+    }
+    public SearchEngine(Client client){
+        this.client = client;
+        this.email = client.getUserEmail();
+        initApp();
+    }
+    private void initApp(){
         validation = new Validation();
         initComponents();
         childrenQuantity = 0;
         adultsQuantity = 1;
         leaveNumber.addFocusListener(new FocusListener() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (leaveNumber.getText().equals("Zostaw nr tel. - oddzwonimy do ciebie")) {
-                leaveNumber.setText("");
-                leaveNumber.setForeground(Color.BLACK);
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (leaveNumber.getText().equals("Zostaw nr tel. - oddzwonimy do ciebie")) {
+                    leaveNumber.setText("");
+                    leaveNumber.setForeground(Color.BLACK);
+                }
             }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (leaveNumber.getText().isEmpty()) {
-                leaveNumber.setForeground(Color.GRAY);
-                leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (leaveNumber.getText().isEmpty()) {
+                    leaveNumber.setForeground(Color.GRAY);
+                    leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
+                }
             }
-        }
         });
         departureTextField.addFocusListener(new FocusListener() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (departureTextField.getText().equals("04/07/2023")) {
-                departureTextField.setText("");
-                departureTextField.setForeground(Color.BLACK);
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (departureTextField.getText().equals("04/07/2023")) {
+                    departureTextField.setText("");
+                    departureTextField.setForeground(Color.BLACK);
+                }
             }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (departureTextField.getText().isEmpty()) {
-                departureTextField.setForeground(Color.GRAY);
-                departureTextField.setText("04/07/2023");
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (departureTextField.getText().isEmpty()) {
+                    departureTextField.setForeground(Color.GRAY);
+                    departureTextField.setText("04/07/2023");
+                }
             }
-        }
         });
         arrivalTextField.addFocusListener(new FocusListener() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (arrivalTextField.getText().equals("11/07/2023")) {
-                arrivalTextField.setText("");
-                arrivalTextField.setForeground(Color.BLACK);
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (arrivalTextField.getText().equals("11/07/2023")) {
+                    arrivalTextField.setText("");
+                    arrivalTextField.setForeground(Color.BLACK);
+                }
             }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (arrivalTextField.getText().isEmpty()) {
-                arrivalTextField.setForeground(Color.GRAY);
-                arrivalTextField.setText("11/07/2023");
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (arrivalTextField.getText().isEmpty()) {
+                    arrivalTextField.setForeground(Color.GRAY);
+                    arrivalTextField.setText("11/07/2023");
+                }
             }
-        }
         });
         showPhotos();
-        generate_data();
+        generateData();
         destination.clear();
         departure.clear();
         getDestination();
@@ -99,36 +115,41 @@ public class SearchEngine extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    data.add(client.getUserEmail());
+                    new Client("logOut",data);
+                    data.clear();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
                 }
             }
         });
     }
 
     private void getDestination() {
-        Client.operate("getDestination");
+        Client client1 = new Client("getDestination",new ArrayList<>());
+        destination.addAll(client1.getSearchEngineDestination());
         destinationChoice.removeAllItems();
         for(String s : destination)
             destinationChoice.addItem(s);
     }
     private void getDeparture() {
-        Client.operate("getDeparture");
+        Client client1 = new Client("getDeparture",new ArrayList<>());
+        departure.addAll(client1.getSearchEngineDeparture());
         departureCityChoice.removeAllItems();
         for(String s : departure)
             departureCityChoice.addItem(s);
     }
 
-    private void generate_data() {
-        Client.operate("tripsListPopulation");
+    private void generateData() {
+        Client client2 = new Client("tripsListPopulation",new ArrayList<>());
+        data.addAll(client2.getTripsList());
     }
 
     private void populateTable(){
         int counter = 0;
-        int size = (listDataLength/attributesQuantity);
+        int size = (data.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
@@ -136,7 +157,7 @@ public class SearchEngine extends javax.swing.JFrame {
                     data.get(counter+4) + " zł"});
             idRows.put(i, Integer.parseInt(data.get(counter+7)));
             if(size > 1)
-                counter+=attributesQuantity;
+                counter+=10;
         }
     }
 
@@ -168,7 +189,7 @@ public class SearchEngine extends javax.swing.JFrame {
         JLabel officeName = new JLabel();
         JPanel searchPanel = new JPanel();
         JLabel tripDirection = new JLabel();
-        JLabel departueCity = new JLabel();
+        JLabel departureCity = new JLabel();
         JLabel departureArrival = new JLabel();
         JLabel peopleQuantity = new JLabel();
         JPanel searchPanelIntroduction = new JPanel();
@@ -210,7 +231,7 @@ public class SearchEngine extends javax.swing.JFrame {
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton.setFocusPainted(false);
         tripsButton.setFocusable(false);
-        tripsButton.addActionListener(this::wczasyActionPerformed);
+        tripsButton.addActionListener(this::tripsButtonActionPerformed);
 
         summer2023Button.setBackground(new java.awt.Color(151, 123, 92));
         summer2023Button.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -218,7 +239,7 @@ public class SearchEngine extends javax.swing.JFrame {
         summer2023Button.setText("Lato 2023");
         summer2023Button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         summer2023Button.setFocusable(false);
-        summer2023Button.addActionListener(this::lato2023ActionPerformed);
+        summer2023Button.addActionListener(this::summer2023ButtonActionPerformed);
 
         lastMinuteButton.setBackground(new java.awt.Color(151, 123, 92));
         lastMinuteButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -226,7 +247,7 @@ public class SearchEngine extends javax.swing.JFrame {
         lastMinuteButton.setText("Last Minute");
         lastMinuteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lastMinuteButton.setFocusable(false);
-        lastMinuteButton.addActionListener(this::lastminuteActionPerformed);
+        lastMinuteButton.addActionListener(this::lastMinuteButtonActionPerformed);
 
         exoticButton.setBackground(new java.awt.Color(151, 123, 92));
         exoticButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -234,7 +255,7 @@ public class SearchEngine extends javax.swing.JFrame {
         exoticButton.setText("Egzotyka");
         exoticButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         exoticButton.setFocusable(false);
-        exoticButton.addActionListener(this::egzotykaActionPerformed);
+        exoticButton.addActionListener(this::exoticButtonActionPerformed);
 
         greeceButton.setBackground(new java.awt.Color(151, 123, 92));
         greeceButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -242,7 +263,7 @@ public class SearchEngine extends javax.swing.JFrame {
         greeceButton.setText("Grecja");
         greeceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         greeceButton.setFocusable(false);
-        greeceButton.addActionListener(this::grecjaActionPerformed);
+        greeceButton.addActionListener(this::greeceButtonActionPerformed);
 
         spainButton.setBackground(new java.awt.Color(151, 123, 92));
         spainButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -250,7 +271,7 @@ public class SearchEngine extends javax.swing.JFrame {
         spainButton.setText("Hiszpania");
         spainButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         spainButton.setFocusable(false);
-        spainButton.addActionListener(this::hiszpaniaActionPerformed);
+        spainButton.addActionListener(this::spainButtonActionPerformed);
 
         turkeyButton.setBackground(new java.awt.Color(151, 123, 92));
         turkeyButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -258,7 +279,7 @@ public class SearchEngine extends javax.swing.JFrame {
         turkeyButton.setText("Turcja");
         turkeyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         turkeyButton.setFocusable(false);
-        turkeyButton.addActionListener(this::TurcjaActionPerformed);
+        turkeyButton.addActionListener(this::turkeyButtonActionPerformed);
 
         egyptButton.setBackground(new java.awt.Color(151, 123, 92));
         egyptButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -266,7 +287,7 @@ public class SearchEngine extends javax.swing.JFrame {
         egyptButton.setText("Egipt");
         egyptButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         egyptButton.setFocusable(false);
-        egyptButton.addActionListener(this::EgiptActionPerformed);
+        egyptButton.addActionListener(this::egyptButtonActionPerformed);
 
         italyButton.setBackground(new java.awt.Color(151, 123, 92));
         italyButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -274,7 +295,7 @@ public class SearchEngine extends javax.swing.JFrame {
         italyButton.setText("Włochy");
         italyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         italyButton.setFocusable(false);
-        italyButton.addActionListener(this::wlochyActionPerformed);
+        italyButton.addActionListener(this::italyButtonActionPerformed);
 
         bulgariaButton.setBackground(new java.awt.Color(151, 123, 92));
         bulgariaButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -282,7 +303,7 @@ public class SearchEngine extends javax.swing.JFrame {
         bulgariaButton.setText("Bułgaria");
         bulgariaButton.setFocusable(false);
         bulgariaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        bulgariaButton.addActionListener(this::bulgariaActionPerformed);
+        bulgariaButton.addActionListener(this::bulgariaButtonActionPerformed);
 
         javax.swing.GroupLayout panel_KrajeLayout = new javax.swing.GroupLayout(countriesPanel);
         countriesPanel.setLayout(panel_KrajeLayout);
@@ -336,9 +357,9 @@ public class SearchEngine extends javax.swing.JFrame {
         tripDirection.setForeground(new java.awt.Color(255, 255, 255));
         tripDirection.setText("Kierunek podróży");
 
-        departueCity.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        departueCity.setForeground(new java.awt.Color(255, 255, 255));
-        departueCity.setText("Miejsce wylotu");
+        departureCity.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        departureCity.setForeground(new java.awt.Color(255, 255, 255));
+        departureCity.setText("Miejsce wylotu");
 
         departureArrival.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         departureArrival.setForeground(new java.awt.Color(255, 255, 255));
@@ -369,80 +390,79 @@ public class SearchEngine extends javax.swing.JFrame {
 
         childrenQuantitySpinner.setFocusable(false);
 
-        javax.swing.GroupLayout panel_wyszukiwarka_wprowadzanieLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
-        searchPanelIntroduction.setLayout(panel_wyszukiwarka_wprowadzanieLayout);
-        panel_wyszukiwarka_wprowadzanieLayout.setHorizontalGroup(
-            panel_wyszukiwarka_wprowadzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createSequentialGroup()
+        javax.swing.GroupLayout searchPanelIntroductionLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
+        searchPanelIntroduction.setLayout(searchPanelIntroductionLayout);
+        searchPanelIntroductionLayout.setHorizontalGroup(
+            searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createSequentialGroup()
+                    .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
                         .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createSequentialGroup()
+                    .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
                         .addComponent(adultsQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
-        panel_wyszukiwarka_wprowadzanieLayout.setVerticalGroup(
-            panel_wyszukiwarka_wprowadzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createSequentialGroup()
+        searchPanelIntroductionLayout.setVerticalGroup(
+            searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
                 .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(panel_wyszukiwarka_wprowadzanieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adultsQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-
-        searchButton.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("img/search-icon-png-0.png"))));
+        searchButton.setIcon(new javax.swing.ImageIcon("img\\search-icon-png-0.png"));
         searchButton.setContentAreaFilled(false);
         searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        searchButton.addActionListener(this::lupaActionPerformed);
+        searchButton.addActionListener(this::searchButtonActionPerformed);
 
-        javax.swing.GroupLayout panel_wyszukiwarkaLayout = new javax.swing.GroupLayout(searchPanel);
-        searchPanel.setLayout(panel_wyszukiwarkaLayout);
-        panel_wyszukiwarkaLayout.setHorizontalGroup(
-            panel_wyszukiwarkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_wyszukiwarkaLayout.createSequentialGroup()
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addGroup(panel_wyszukiwarkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tripDirection)
                     .addComponent(departureArrival)
-                    .addComponent(departueCity)
+                    .addComponent(departureCity)
                     .addComponent(peopleQuantity))
-                .addGroup(panel_wyszukiwarkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_wyszukiwarkaLayout.createSequentialGroup()
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(searchPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchPanelIntroduction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(15, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_wyszukiwarkaLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(searchButton)
                         .addGap(29, 29, 29))))
         );
-        panel_wyszukiwarkaLayout.setVerticalGroup(
-            panel_wyszukiwarkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_wyszukiwarkaLayout.createSequentialGroup()
+        searchPanelLayout.setVerticalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(panel_wyszukiwarkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_wyszukiwarkaLayout.createSequentialGroup()
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(searchPanelLayout.createSequentialGroup()
                         .addComponent(searchPanelIntroduction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchButton))
-                    .addGroup(panel_wyszukiwarkaLayout.createSequentialGroup()
+                    .addGroup(searchPanelLayout.createSequentialGroup()
                         .addComponent(tripDirection, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(departueCity, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(departureCity, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addComponent(departureArrival)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -480,7 +500,7 @@ public class SearchEngine extends javax.swing.JFrame {
                 if (selectedRow >= 0) {
                     idTripToShow = idRows.get(selectedRow);
                     dispose();
-                    new Offer().setVisible(true);
+                    new Offer(client,data,attributesQuantity, adultsQuantity, childrenQuantity, idTripToShow, selectedRow).setVisible(true);
                 }
             }
         });
@@ -490,7 +510,7 @@ public class SearchEngine extends javax.swing.JFrame {
         managing.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         managing.setFocusable(false);
         managing.setLightWeightPopupEnabled(false);
-        managing.addActionListener(this::zarzadzanieActionPerformed);
+        managing.addActionListener(this::managingActionPerformed);
 
         javax.swing.GroupLayout glowneLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(glowneLayout);
@@ -525,17 +545,17 @@ public class SearchEngine extends javax.swing.JFrame {
                 .addComponent(tableScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout glowne_oknoLayout = new javax.swing.GroupLayout(mainWindow);
-        mainWindow.setLayout(glowne_oknoLayout);
-        glowne_oknoLayout.setHorizontalGroup(
-            glowne_oknoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(glowne_oknoLayout.createSequentialGroup()
+        javax.swing.GroupLayout mainWindowLayout = new javax.swing.GroupLayout(mainWindow);
+        mainWindow.setLayout(mainWindowLayout);
+        mainWindowLayout.setHorizontalGroup(
+            mainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainWindowLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
-        glowne_oknoLayout.setVerticalGroup(
-            glowne_oknoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        mainWindowLayout.setVerticalGroup(
+            mainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
         );
 
@@ -552,15 +572,14 @@ public class SearchEngine extends javax.swing.JFrame {
         sendButton.setText("Wyślij");
         sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sendButton.setFocusable(false);
-        sendButton.addActionListener(this::wyslij_stopkaActionPerformed);
+        sendButton.addActionListener(this::sendButtonActionPerformed);
+        headphonesImage.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
 
-        headphonesImage.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("img/slucahwki.png"))));
-
-        javax.swing.GroupLayout stopkaLayout = new javax.swing.GroupLayout(footer);
-        footer.setLayout(stopkaLayout);
-        stopkaLayout.setHorizontalGroup(
-            stopkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stopkaLayout.createSequentialGroup()
+        javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
+        footer.setLayout(footerLayout);
+        footerLayout.setHorizontalGroup(
+            footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(footerLayout.createSequentialGroup()
                 .addGap(349, 349, 349)
                 .addComponent(headphonesImage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -569,14 +588,14 @@ public class SearchEngine extends javax.swing.JFrame {
                 .addComponent(sendButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        stopkaLayout.setVerticalGroup(
-            stopkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stopkaLayout.createSequentialGroup()
+        footerLayout.setVerticalGroup(
+            footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(stopkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(leaveNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(stopkaLayout.createSequentialGroup()
-                        .addGroup(stopkaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(footerLayout.createSequentialGroup()
+                        .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sendButton)
                             .addComponent(headphonesImage))
                         .addGap(0, 2, Short.MAX_VALUE)))
@@ -603,26 +622,28 @@ public class SearchEngine extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-    private void zarzadzanieActionPerformed(ActionEvent evt) {
+    private void managingActionPerformed(ActionEvent evt) {
         if(Objects.equals(managing.getSelectedItem(), "Wyloguj")) {
             Object[] options = {"Tak", "Nie"};
             if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
                     JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
                 dispose();
-                Client.operate("logOut");
-                StartPage.clientLogged = false;
+                data.clear();
+                data.add(client.getUserEmail());
+                new Client("logOut",data);
+                data.clear();
                 new StartPage().setVisible(true);
             }
         }
         else if(Objects.equals(managing.getSelectedItem(), "Moje Konto")){
             dispose();
-            new MyAccount().setVisible(true);
+            new MyAccount(client).setVisible(true);
         }
     }
 
-    private void lato2023ActionPerformed(ActionEvent evt) {
+    private void summer2023ButtonActionPerformed(ActionEvent evt) {
         int counter = 0;
-        int size = (listDataLength/attributesQuantity);
+        int size = (data.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -657,48 +678,49 @@ public class SearchEngine extends javax.swing.JFrame {
                 }
             }
             if(size > 1)
-                counter+=attributesQuantity;
+                counter+=10;
         }
     }
-    private void wyslij_stopkaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
         number = leaveNumber.getText();
         if(validation.phoneNumberIsValid(number)){
             leaveNumber.setText("");
-            Client.operate("sendNumbers");
+            phoneNumberData.add(number);
+            new Client("sendNumbers",phoneNumberData);
+            phoneNumberData.clear();
         }
         else {
             JOptionPane.showMessageDialog(null, "Niepoprawnie wpisany numer telefonu.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void bulgariaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void bulgariaButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Bulgaria");
     }
 
-    private void wlochyActionPerformed(java.awt.event.ActionEvent evt) {
+    private void italyButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Wlochy");
     }
 
-    private void EgiptActionPerformed(java.awt.event.ActionEvent evt) {
+    private void egyptButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Egipt");
     }
 
-    private void TurcjaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void turkeyButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Turcja");
     }
 
-    private void hiszpaniaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void spainButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Hiszpania");
     }
 
-    private void grecjaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void greeceButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Grecja");
-
     }
 
     private void filterTable(String country){
         int counter = 0;
-        int size = (listDataLength/attributesQuantity);
+        int size = (data.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         idRows.clear();
@@ -711,13 +733,13 @@ public class SearchEngine extends javax.swing.JFrame {
                 rowCounter++;
             }
             if(size > 1)
-                counter+=attributesQuantity;
+                counter+=10;
         }
     }
 
     private void filterTable(String country1, String country2){
         int counter = 0;
-        int size = (listDataLength/attributesQuantity);
+        int size = (data.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         idRows.clear();
@@ -730,16 +752,16 @@ public class SearchEngine extends javax.swing.JFrame {
                 rowCounter++;
             }
             if(size > 1)
-                counter+=attributesQuantity;
+                counter+=10;
         }
     }
-    private void egzotykaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void exoticButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Kuba", "Emiraty Arabskie");
     }
 
-    private void lastminuteActionPerformed(java.awt.event.ActionEvent evt) {
+    private void lastMinuteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         int counter = 0;
-        int size = (listDataLength/attributesQuantity);
+        int size = (data.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -761,7 +783,7 @@ public class SearchEngine extends javax.swing.JFrame {
                 rowCounter++;
             }
             if(size > 1)
-                counter+=attributesQuantity;
+                counter+=10;
         }
     }
 
@@ -769,11 +791,11 @@ public class SearchEngine extends javax.swing.JFrame {
         long diff = d2.getTime() - d1.getTime();
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
-    private void wczasyActionPerformed(java.awt.event.ActionEvent evt) {
+    private void tripsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         populateTable();
     }
 
-    private void lupaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
         boolean isDateValid = checkDate();
         if(isDateValid) {
             adultsQuantity = (int) adultsQuantitySpinner.getValue();
@@ -788,7 +810,7 @@ public class SearchEngine extends javax.swing.JFrame {
             Date date2 = null;
 
             int counter = 0;
-            int size = (listDataLength / attributesQuantity);
+            int size = (data.size()/10);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0);
             idRows.clear();
@@ -815,7 +837,7 @@ public class SearchEngine extends javax.swing.JFrame {
                     }
                 }
                 if (size > 1)
-                    counter += attributesQuantity;
+                    counter += 10;
             }
         }
     }

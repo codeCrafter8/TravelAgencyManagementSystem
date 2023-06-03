@@ -1,49 +1,143 @@
+package com.client;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import javax.swing.*;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność panelu administratora
+ */
 public class Dashboard extends javax.swing.JFrame {
-    public static String adminName = "";
-    public static int clientsQuantity;
-    public static int tripsQuantity;
-    public static int reservationsQuantity;
-    public static int incomeQuantity;
-    public static List<String> phoneNumbers = new ArrayList<>();
-    public static int phoneNumbersListLength;
-    private javax.swing.JLabel adminNameLabel;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
+    public javax.swing.JLabel adminNameLabel;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton clientsButton;
-    private javax.swing.JLabel clientsNumberLabel;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JLabel incomeNumberLabel;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
+    public javax.swing.JLabel clientsNumberLabel;
+    /**
+     * Atrybut będący listą elementów tekstowych
+     */
+    public javax.swing.JList<String> jList1;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
+    public javax.swing.JLabel incomeNumberLabel;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton logOutButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton panelButton;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton reservationsButton;
-    private javax.swing.JLabel reservationsNumberLabel;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
+    public javax.swing.JLabel reservationsNumberLabel;
+    /**
+     * Atrybut będący przyciskiem
+     */
     private javax.swing.JButton tripsButton;
-    private javax.swing.JLabel tripsNumberLabel;
-
-    public Dashboard() {
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
+    public javax.swing.JLabel tripsNumberLabel;
+    /**
+     * Atrybut przechowujący imię administratora
+     */
+    public String adminName;
+    /**
+     * Atrybut przechowujący liczbę klientów
+     */
+    public int clientsQuantity;
+    /**
+     * Atrybut przechowujący liczbę wycieczek
+     */
+    public int tripsQuantity;
+    /**
+     * Atrybut przechowujący liczbę rezerwacji
+     */
+    public int reservationsQuantity;
+    /**
+     * Atrybut przechowujący liczbę wpływów
+     */
+    public int incomeQuantity;
+    /**
+     * Atrybut będący listą przechowującą numery telefonów klientów do kontaktu
+     */
+    List<String> phoneNumbers = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane zwracane z klasy Client
+     */
+    List<String> returningData = new ArrayList<>();
+    /**
+     * Atrybut określający rozmiar listy przechowującej numery telefonów klientów do kontaktu
+     */
+    int phoneNumbersListLength;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private Client client;
+    /**
+     * Atrybut przechowujący email użytkownika
+     */
+    private String email;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
+     * @param client parametr przechowujący obiekt klasy Klient
+     * @param adminName parametr przechowujący imię administratora
+     */
+    public Dashboard(Client client, String adminName) {
+        this.client = client;
+        this.email = client.getUserEmail();
+        this.adminName = adminName;
+        initApp();
+    }
+    /**
+     * Pomocniczy konstruktor
+     * @param overrided określa czy wykorzystywany jest pomocniczy konstruktor
+     */
+    public Dashboard(boolean overrided){}
+    /**
+     * Metoda odpowiadająca za inicjalizację GUI oraz odpowiednich elementów
+     */
+    private void initApp(){
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
-        phoneNumbers.clear();
         generateData();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    Client.operate("logOut");
+                    data.add(email);
+                    new Client("logOut",data);
+                    data.clear();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "Dashboard", "error");
                 }
             }
         });
     }
-
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel menuPanel = new JPanel();
         JPanel adminPanel = new JPanel();
@@ -79,8 +173,7 @@ public class Dashboard extends javax.swing.JFrame {
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
 
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
-
-        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png")))); // NOI18N
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
         adminIconLabel.setText("jLabel1");
         adminIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
         adminIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
@@ -162,7 +255,6 @@ public class Dashboard extends javax.swing.JFrame {
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         tripsButton.setPreferredSize(new java.awt.Dimension(75, 46));
-        //nowe
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -455,18 +547,36 @@ public class Dashboard extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wycieczki"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
-        new Trips().setVisible(true);
+        new Trips(client, adminName).setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Rezerwacje"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
-        new Reservations().setVisible(true);
+        new Reservations(client, adminName).setVisible(true);
     }
+    /**
+     * Metoda pobierająca odpowiednie dane z klasy Client
+     */
+    public void generateData(){
+        data.add(email);
+        Client client1 = new Client("dashboardUpdate", data);
+        data.clear();
 
-    private void generateData(){
-        Client.operate("dashboardUpdate");
+        adminName = client1.getDashboardAdminName();
+        clientsQuantity = client1.getDashboardClientsQuantity();
+        tripsQuantity = client1.getDashboardTripsQuantity();
+        reservationsQuantity = client1.getDashboardReservationsQuantity();
+        incomeQuantity = client1.getDashboardIncomeQuantity();
+
         adminNameLabel.setText(adminName);
         String clientsQuantityString = String.valueOf(clientsQuantity);
         clientsNumberLabel.setText(clientsQuantityString);
@@ -476,23 +586,38 @@ public class Dashboard extends javax.swing.JFrame {
         reservationsNumberLabel.setText(reservationsQuantityString);
         String incomeQuantityString = incomeQuantity + " zł";
         incomeNumberLabel.setText(incomeQuantityString);
-        Client.operate("getNumbers");
+
+        Client client2 = new Client("getNumbers", new ArrayList<>());
+        phoneNumbers.clear();
+        phoneNumbers.addAll(client2.getDashboardPhoneNumbers());
         DefaultListModel<String> model = new DefaultListModel<>();
         for(String number : phoneNumbers)
             model.addElement(number);
         jList1.setModel(model);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        data.add(email);
+        new Client("logOut",data);
+        data.clear();
         dispose();
-        Client.operate("logOut");
-        StartPage.adminLogged = false;
         new StartPage().setVisible(true);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Klienci"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        new Clients().setVisible(true);
+        new Clients(client, adminName).setVisible(true);
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -505,6 +630,6 @@ public class Dashboard extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Dashboard(new Client(), "").setVisible(true));
     }
 }

@@ -1,25 +1,67 @@
+package com.client;
+
 import javax.swing.*;
 import java.awt.Color;
-
+import java.util.ArrayList;
+import java.util.List;
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zmiany hasła użytkownika przez administratora
+ */
 public class ClientPasswordChange extends javax.swing.JFrame {
-    public static String password = "";
-    private boolean passwordCorrect;
-    private boolean confirmPasswordCorrect;
-    private final Validation validation;
-    private String passwordFromPasswordField;
+    /**
+     * Atrybut będący komponentem tekstowym wyspecjalizowanym do wprowadzania hasła
+     */
     private javax.swing.JPasswordField confirmPasswordField;
+    /**
+     * Atrybut będący komponentem tekstowym wyspecjalizowanym do wprowadzania hasła
+     */
     private javax.swing.JPasswordField newPasswordField;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
     private javax.swing.JLabel wrongConfirmNewPasswordLabel;
+    /**
+     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     */
     private javax.swing.JLabel wrongNewPasswordLabel;
-
-    public ClientPasswordChange() {
+    /**
+     * Atrybut przechowujący id użytkownika, którego hasło jest zmieniane
+     */
+    private final int idClient;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    public List<String> data = new ArrayList<>();
+    /**
+     * Atrybut przechowujący nowe hasło użytkownika, którego hasło jest zmieniane
+     */
+    private String newPassword;
+    /**
+     * Atrybut określający, czy nowe hasło użytkownika jest poprawne
+     */
+    private boolean newPasswordCorrect;
+    /**
+     * Atrybut określający, czy potwierdzone hasło użytkownika jest poprawne
+     */
+    private boolean confirmPasswordCorrect;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private final Validation validation;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
+     * @param idClient parametr przechowujący id użytkownika, którego hasło jest zmieniane
+     */
+    public ClientPasswordChange(int idClient) {
+        this.idClient = idClient;
         validation = new Validation();
         initComponents();
         getContentPane().setBackground(new Color(247,233,201));
     }
-
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
-
         javax.swing.JLabel newPasswordLabel = new javax.swing.JLabel();
         javax.swing.JLabel confirmNewPasswordLabel = new javax.swing.JLabel();
         javax.swing.JButton changePasswordButton = new javax.swing.JButton();
@@ -29,7 +71,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         confirmPasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Zmień hasło Klienta");
+        setTitle("Zmień hasło klienta");
         setBackground(new java.awt.Color(247, 233, 201));
         setPreferredSize(new java.awt.Dimension(330, 300));
 
@@ -91,24 +133,29 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji nowego hasła użytkownika
+     */
     private void performPasswordValidation(){
-        passwordFromPasswordField = new String(newPasswordField.getPassword());
-        if(passwordFromPasswordField.equals("")) {
-            passwordCorrect = false;
+        newPassword = new String(newPasswordField.getPassword());
+        if(newPassword.equals("")) {
+            newPasswordCorrect = false;
             wrongNewPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            passwordCorrect = validation.passwordIsValid(passwordFromPasswordField);
-            if (passwordCorrect)
+            newPasswordCorrect = validation.passwordIsValid(newPassword);
+            if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else
                 wrongNewPasswordLabel.setText("Hasło nie spełnia wymagań.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji potwierdzonego hasła użytkownika
+     */
     private void performConfirmPasswordValidation(){
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
-        if(!confirmPasswordFromPasswordField.equals(passwordFromPasswordField)){
+        if(!confirmPasswordFromPasswordField.equals(newPassword)){
             wrongConfirmNewPasswordLabel.setText("Hasła się nie zgadzają.");
             confirmPasswordCorrect = false;
         }
@@ -117,17 +164,27 @@ public class ClientPasswordChange extends javax.swing.JFrame {
             confirmPasswordCorrect = true;
         }
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Zmień hasło klienta"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         performPasswordValidation();
         performConfirmPasswordValidation();
-        if(passwordCorrect){
+        if(newPasswordCorrect){
             if(confirmPasswordCorrect){
-                password = new String(newPasswordField.getPassword());
-                new Client("changeClientPassword");
+                data.add(newPassword);
+                data.add(Integer.toString(idClient));
+                new Client("changeClientPassword",data);
+                data.clear();
                 dispose();
             }
         }
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -140,6 +197,6 @@ public class ClientPasswordChange extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ClientPasswordChange.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new ClientPasswordChange().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ClientPasswordChange(-1).setVisible(true));
     }
 }
