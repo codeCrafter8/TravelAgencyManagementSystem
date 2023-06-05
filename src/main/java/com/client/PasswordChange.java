@@ -5,43 +5,88 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zmiany hasła przez klienta
+ */
 public class PasswordChange extends javax.swing.JFrame {
-    private boolean passwordCorrect;
-    private boolean newPasswordCorrect;
-    private boolean confirmPasswordCorrect;
-    private final Validation validation;
-    private String newPasswordFromPasswordField;
+    /**
+     * Pole do wprowadzenia potwierdzonego hasła klienta
+     */
     private javax.swing.JPasswordField confirmPasswordField;
-    private javax.swing.JLabel confirmPasswordLabel;
+    /**
+     * Etykieta informująca, że potwierdzone hasło klienta jest niepoprawne
+     */
+    private javax.swing.JLabel wrongConfirmPasswordLabel;
+    /**
+     * Pole do wprowadzenia obecnego hasła klienta
+     */
     private javax.swing.JPasswordField currentPasswordField;
+    /**
+     * Pole do wprowadzenia nowego hasła klienta
+     */
     private javax.swing.JPasswordField newPasswordField;
-    private javax.swing.JLabel newPasswordLabel;
-    private javax.swing.JLabel wrongPasswordLabel;
+    /**
+     * Etykieta informująca, że nowe hasło klienta jest niepoprawne
+     */
+    private javax.swing.JLabel wrongNewPasswordLabel;
+    /**
+     * Etykieta informująca, że obecne hasło klienta jest niepoprawne
+     */
+    private javax.swing.JLabel wrongCurrentPasswordLabel;
+    /**
+     * Atrybut określający, czy obecne hasło klienta jest poprawne
+     */
+    private boolean currentPasswordCorrect;
+    /**
+     * Atrybut określający, czy nowe hasło klienta jest poprawne
+     */
+    private boolean newPasswordCorrect;
+    /**
+     * Atrybut określający, czy potwierdzone hasło klienta jest poprawne
+     */
+    private boolean confirmPasswordCorrect;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private final Validation validation;
+    /**
+     * Atrybut będący nowym hasłem klienta
+     */
+    private String newPassword;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
     public List<String> data = new ArrayList<>();
-    private String clientID;
-    private Client client;
-    public PasswordChange(String clientID, Client client) {
+    /**
+     * Atrybut będący id klienta
+     */
+    private final String clientId;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private final Client client;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
+     * @param clientId parametr przechowujący id klienta, którego hasło jest zmieniane
+     * @param client parametr przechowujący obiekt klasy Client
+     */
+    public PasswordChange(String clientId, Client client) {
         this.client = client;
-        this.clientID = clientID;
+        this.clientId = clientId;
         validation = new Validation();
         initComponents();
-        wrongPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
-        newPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
-        confirmPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
-        wrongPasswordLabel.setText("");
-        newPasswordLabel.setText("");
-        confirmPasswordLabel.setText("");
     }
-
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JLabel currentPassword = new JLabel();
         JLabel newPassword = new JLabel();
         JLabel confirmPassword = new JLabel();
         JButton changeButton = new JButton();
-        wrongPasswordLabel = new javax.swing.JLabel();
-        newPasswordLabel = new javax.swing.JLabel();
-        confirmPasswordLabel = new javax.swing.JLabel();
+        wrongCurrentPasswordLabel = new javax.swing.JLabel();
+        wrongNewPasswordLabel = new javax.swing.JLabel();
+        wrongConfirmPasswordLabel = new javax.swing.JLabel();
         currentPasswordField = new javax.swing.JPasswordField();
         newPasswordField = new javax.swing.JPasswordField();
         confirmPasswordField = new javax.swing.JPasswordField();
@@ -64,14 +109,21 @@ public class PasswordChange extends javax.swing.JFrame {
         changeButton.setText("Zmień hasło");
         changeButton.addActionListener(this::changeButtonActionPerformed);
 
-        wrongPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongPasswordLabel.setText("cos");
+        wrongCurrentPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCurrentPasswordLabel.setText("cos");
 
-        newPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        newPasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
+        wrongNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongNewPasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
 
-        confirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        confirmPasswordLabel.setText("cos");
+        wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongConfirmPasswordLabel.setText("cos");
+
+        wrongCurrentPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongNewPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongConfirmPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongCurrentPasswordLabel.setText("");
+        wrongNewPasswordLabel.setText("");
+        wrongConfirmPasswordLabel.setText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,9 +139,9 @@ public class PasswordChange extends javax.swing.JFrame {
                             .addComponent(currentPassword))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(newPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(confirmPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(wrongCurrentPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(wrongNewPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(currentPasswordField)
                             .addComponent(newPasswordField)
                             .addComponent(confirmPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)))
@@ -106,19 +158,19 @@ public class PasswordChange extends javax.swing.JFrame {
                     .addComponent(currentPassword)
                     .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
-                .addComponent(wrongPasswordLabel)
+                .addComponent(wrongCurrentPasswordLabel)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newPassword)
                     .addComponent(newPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
-                .addComponent(newPasswordLabel)
+                .addComponent(wrongNewPasswordLabel)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmPassword)
                     .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
-                .addComponent(confirmPasswordLabel)
+                .addComponent(wrongConfirmPasswordLabel)
                 .addGap(18, 18, 18)
                 .addComponent(changeButton)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -127,55 +179,67 @@ public class PasswordChange extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-    private void performPasswordValidation(){
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji obecnego hasła klienta
+     */
+    private void performCurrentPasswordValidation(){
         String passwordFromPasswordField = new String(currentPasswordField.getPassword());
         if(passwordFromPasswordField.equals("")) {
-            passwordCorrect = false;
-            wrongPasswordLabel.setText("Pole jest wymagane.");
+            currentPasswordCorrect = false;
+            wrongCurrentPasswordLabel.setText("Pole jest wymagane.");
         }
         else if(!(client.getUserPassword()).equals(passwordFromPasswordField)){
-            wrongPasswordLabel.setText("Błędne hasło.");
-            passwordCorrect = false;
+            wrongCurrentPasswordLabel.setText("Błędne hasło.");
+            currentPasswordCorrect = false;
         }
         else{
-            wrongPasswordLabel.setText("");
-            passwordCorrect = true;
+            wrongCurrentPasswordLabel.setText("");
+            currentPasswordCorrect = true;
         }
     }
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji nowego hasła klienta
+     */
     private void performNewPasswordValidation(){
-        newPasswordFromPasswordField = new String(newPasswordField.getPassword());
-        if(newPasswordFromPasswordField.equals("")) {
+        newPassword = new String(newPasswordField.getPassword());
+        if(newPassword.equals("")) {
             newPasswordCorrect = false;
-            newPasswordLabel.setText("Pole jest wymagane.");
+            wrongNewPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            newPasswordCorrect = validation.passwordIsValid(newPasswordFromPasswordField);
+            newPasswordCorrect = validation.passwordIsValid(newPassword);
             if (newPasswordCorrect)
-                newPasswordLabel.setText("");
+                wrongNewPasswordLabel.setText("");
             else
-                newPasswordLabel.setText("Hasło nie spełnia wymagań.");
+                wrongNewPasswordLabel.setText("Hasło nie spełnia wymagań.");
         }
     }
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji potwierdzonego hasła klienta
+     */
     private void performConfirmPasswordValidation(){
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
-        if(!confirmPasswordFromPasswordField.equals(newPasswordFromPasswordField)){
-            confirmPasswordLabel.setText("Hasła się nie zgadzają.");
+        if(!confirmPasswordFromPasswordField.equals(newPassword)){
+            wrongConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
             confirmPasswordCorrect = false;
         }
         else {
-            confirmPasswordLabel.setText("");
+            wrongConfirmPasswordLabel.setText("");
             confirmPasswordCorrect = true;
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Zmień hasło"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void changeButtonActionPerformed(ActionEvent evt) {
-        performPasswordValidation();
+        performCurrentPasswordValidation();
         performNewPasswordValidation();
         performConfirmPasswordValidation();
-        if(passwordCorrect){
+        if(currentPasswordCorrect){
             if(newPasswordCorrect && confirmPasswordCorrect){
-                data.add(new String(newPasswordField.getPassword()));
-                data.add(clientID);
+                data.add(newPassword);
+                data.add(clientId);
                 new Client("changeClientPassword",data);
                 data.clear();
                 dispose();
@@ -183,7 +247,10 @@ public class PasswordChange extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

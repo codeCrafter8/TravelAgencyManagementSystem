@@ -6,46 +6,144 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność rejestracji
+ */
 public class Registration extends javax.swing.JFrame {
-    public String userExists;
-    public String firstName;
-    public String lastName;
-    public String phoneNumber;
-    public String email;
-    public String password;
-    private boolean firstNameCorrect;
-    private boolean lastNameCorrect;
-    private boolean phoneNumberCorrect;
-    private boolean emailCorrect;
-    private boolean passwordCorrect;
-    private boolean confirmPasswordCorrect;
-    private Validation validation;
-    private String passwordFromPasswordField;
-    private javax.swing.JLabel typeConfirmPasswordLabel;
-    private javax.swing.JLabel typeEmailLabel;
-    private javax.swing.JLabel typeFirstnameLabel;
-    private javax.swing.JLabel typeLastNameLabel;
-    private javax.swing.JLabel typePasswordLabel;
-    private javax.swing.JLabel typePhoneNumberLabel;
+    /**
+     * Etykieta informująca, że potwierdzone hasło jest niepoprawne
+     */
+    private javax.swing.JLabel wrongConfirmPasswordLabel;
+    /**
+     * Etykieta informująca, że email jest niepoprawny
+     */
+    private javax.swing.JLabel wrongEmailLabel;
+    /**
+     * Etykieta informująca, że imię jest niepoprawne
+     */
+    private javax.swing.JLabel wrongFirstNameLabel;
+    /**
+     * Etykieta informująca, że nazwisko jest niepoprawne
+     */
+    private javax.swing.JLabel wrongLastNameLabel;
+    /**
+     * Etykieta informująca, że hasło jest niepoprawne
+     */
+    private javax.swing.JLabel wrongPasswordLabel;
+    /**
+     * Etykieta informująca, że numer telefonu jest niepoprawny
+     */
+    private javax.swing.JLabel wrongPhoneNumberLabel;
+    /**
+     * Przycisk umożliwiający cofnięcie do strony logowania
+     */
     private javax.swing.JButton cancelButton;
+    /**
+     * Pole do wprowadzenia potwierdzonego hasła
+     */
     private javax.swing.JPasswordField confirmPasswordField;
+    /**
+     * Pole do wprowadzenia emailu
+     */
     private javax.swing.JTextField emailTextField;
+    /**
+     * Pole do wprowadzenia imienia
+     */
     private javax.swing.JTextField firstNameTextField;
+    /**
+     * Pole do wprowadzenia nazwiska
+     */
     private javax.swing.JTextField lastNameTextField;
+    /**
+     * Pole do wprowadzenia hasła
+     */
     private javax.swing.JPasswordField passwordField;
+    /**
+     * Pole do wprowadzenia numeru telefonu
+     */
     private javax.swing.JTextField phoneNumberTextField;
+    /**
+     * Przycisk umożliwiający utworzenie konta
+     */
     private javax.swing.JButton submitButton;
+    /**
+     * Atrybut określający, czy klient istnieje w bazie
+     */
+    public String clientExists;
+    /**
+     * Atrybut będący imieniem
+     */
+    public String firstName;
+    /**
+     * Atrybut będący nazwiskiem
+     */
+    public String lastName;
+    /**
+     * Atrybut będący numerem telefonu
+     */
+    public String phoneNumber;
+    /**
+     * Atrybut będący emailem
+     */
+    public String email;
+    /**
+     * Atrybut będący hasłem
+     */
+    public String password;
+    /**
+     * Atrybut określający, czy imię jest poprawne
+     */
+    private boolean firstNameCorrect;
+    /**
+     * Atrybut określający, czy nazwisko jest poprawne
+     */
+    private boolean lastNameCorrect;
+    /**
+     * Atrybut określający, czy numer telefonu jest poprawny
+     */
+    private boolean phoneNumberCorrect;
+    /**
+     * Atrybut określający, czy email jest poprawny
+     */
+    private boolean emailCorrect;
+    /**
+     * Atrybut określający, czy hasło jest poprawne
+     */
+    private boolean passwordCorrect;
+    /**
+     * Atrybut określający, czy potwierdzone hasło jest poprawne
+     */
+    private boolean confirmPasswordCorrect;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private Validation validation;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
     private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut określający, czy adminstrator jest zalogowany
+     */
     private boolean adminLogged;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
     private Client client;
+    /**
+     * Atrybut będący imieniem administatora
+     */
     private String adminName;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param adminLogged parametr określający, czy administrator jest zalogowany
+     * @param client parametr przechowujący obiekt klasy Client
+     */
     public Registration(boolean adminLogged, Client client) {
         this.client = client;
         this.adminLogged = adminLogged;
         validation = new Validation();
         initComponents();
-        getContentPane().setBackground(new Color(215,198,151));
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -60,6 +158,12 @@ public class Registration extends javax.swing.JFrame {
             }
         });
     }
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param adminLogged parametr określający, czy administrator jest zalogowany
+     * @param client parametr przechowujący obiekt klasy Client
+     * @param adminName parametr będący imieniem administratora
+     */
     public Registration(boolean adminLogged, Client client, String adminName){
         this.client = client;
         this.adminLogged = adminLogged;
@@ -81,9 +185,13 @@ public class Registration extends javax.swing.JFrame {
             }
         });
     }
-    public Registration(){
-
-    }
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
+    public Registration(){initComponents();}
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel regPanel = new JPanel();
         JLabel createLabel = new JLabel();
@@ -101,12 +209,12 @@ public class Registration extends javax.swing.JFrame {
         confirmPasswordField = new javax.swing.JPasswordField();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        typeConfirmPasswordLabel = new javax.swing.JLabel();
-        typePasswordLabel = new javax.swing.JLabel();
-        typeEmailLabel = new javax.swing.JLabel();
-        typePhoneNumberLabel = new javax.swing.JLabel();
-        typeLastNameLabel = new javax.swing.JLabel();
-        typeFirstnameLabel = new javax.swing.JLabel();
+        wrongConfirmPasswordLabel = new javax.swing.JLabel();
+        wrongPasswordLabel = new javax.swing.JLabel();
+        wrongEmailLabel = new javax.swing.JLabel();
+        wrongPhoneNumberLabel = new javax.swing.JLabel();
+        wrongLastNameLabel = new javax.swing.JLabel();
+        wrongFirstNameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Rejestracja");
@@ -208,29 +316,31 @@ public class Registration extends javax.swing.JFrame {
                 cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
 
-        typeConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typeConfirmPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        typeConfirmPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+        wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongConfirmPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        wrongConfirmPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        typePasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typePasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        typePasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+        wrongPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        wrongPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        typeEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typeEmailLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        typeEmailLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+        wrongEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongEmailLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        wrongEmailLabel.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        typePhoneNumberLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typePhoneNumberLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        typePhoneNumberLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+        wrongPhoneNumberLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPhoneNumberLabel.setMaximumSize(new java.awt.Dimension(400, 16));
+        wrongPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(350, 16));
 
-        typeLastNameLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typeLastNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
-        typeLastNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+        wrongLastNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongLastNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
+        wrongLastNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
 
-        typeFirstnameLabel.setForeground(new java.awt.Color(255, 0, 0));
-        typeFirstnameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
-        typeFirstnameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+        wrongFirstNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongFirstNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
+        wrongFirstNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+
+        getContentPane().setBackground(new Color(215,198,151));
 
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
@@ -245,7 +355,7 @@ public class Registration extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(typeConfirmPasswordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(emailTextField)
                     .addComponent(confirmPasswordField)
@@ -259,11 +369,11 @@ public class Registration extends javax.swing.JFrame {
                         .addComponent(lastNameTextField)
                         .addComponent(phoneNumberLabel)
                         .addComponent(phoneNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                        .addComponent(typePhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(typeLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(typeFirstnameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(typeEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(typePasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(wrongPhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(wrongLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(wrongFirstNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(wrongEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addGap(44, 44, 44))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
                 .addContainerGap(153, Short.MAX_VALUE)
@@ -280,37 +390,37 @@ public class Registration extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(typeFirstnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wrongFirstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(typeLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wrongLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(typePhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wrongPhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(typeEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wrongEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(typePasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(confirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(typeConfirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,7 +448,10 @@ public class Registration extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Cofnij"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         if(adminLogged)
@@ -346,87 +459,103 @@ public class Registration extends javax.swing.JFrame {
         else
             new StartPage().setVisible(true);
     }
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji imienia
+     */
     private void performFirstNameValidation(){
-        String firstNameFromTextField = firstNameTextField.getText();
-        if(firstNameFromTextField.equals("")) {
+        firstName = firstNameTextField.getText();
+        if(firstName.equals("")) {
             firstNameCorrect = false;
-            typeFirstnameLabel.setText("Pole jest wymagane.");
+            wrongFirstNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            firstNameCorrect = validation.firstNameIsValid(firstNameFromTextField);
+            firstNameCorrect = validation.firstNameIsValid(firstName);
             if (firstNameCorrect)
-                typeFirstnameLabel.setText("");
+                wrongFirstNameLabel.setText("");
             else
-                typeFirstnameLabel.setText("Sprawdź czy podane imię jest poprawne.");
+                wrongFirstNameLabel.setText("Sprawdź czy podane imię jest poprawne.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji nazwiska
+     */
     private void performLastNameValidation(){
-        String lastNameFromTextField = lastNameTextField.getText();
-        if(lastNameFromTextField.equals("")) {
+        lastName = lastNameTextField.getText();
+        if(lastName.equals("")) {
             lastNameCorrect = false;
-            typeLastNameLabel.setText("Pole jest wymagane.");
+            wrongLastNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            lastNameCorrect = validation.lastNameIsValid(lastNameFromTextField);
+            lastNameCorrect = validation.lastNameIsValid(lastName);
             if (lastNameCorrect)
-                typeLastNameLabel.setText("");
+                wrongLastNameLabel.setText("");
             else
-                typeLastNameLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
+                wrongLastNameLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji numeru telefonu
+     */
     private void performPhoneNumberValidation(){
-        String phoneNumberFromTextField = phoneNumberTextField.getText();
-        phoneNumberCorrect = validation.phoneNumberIsValid(phoneNumberFromTextField);
-        if (phoneNumberCorrect || phoneNumberFromTextField.equals(""))
-            typePhoneNumberLabel.setText("");
+        phoneNumber = phoneNumberTextField.getText();
+        phoneNumberCorrect = validation.phoneNumberIsValid(phoneNumber);
+        if (phoneNumberCorrect || phoneNumber.equals(""))
+            wrongPhoneNumberLabel.setText("");
         else
-            typePhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
+            wrongPhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji emailu
+     */
     private void performEmailValidation(){
-        String emailFromTextField = emailTextField.getText();
-        if(emailTextField.getText().isEmpty()) {
+        email = emailTextField.getText();
+        if(email.equals("")) {
             emailCorrect = false;
-            typeEmailLabel.setText("Pole jest wymagane.");
+            wrongEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = validation.emailIsValid(emailFromTextField);
+            emailCorrect = validation.emailIsValid(email);
             if (emailCorrect)
-                typeEmailLabel.setText("");
+                wrongEmailLabel.setText("");
             else
-                typeEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+                wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji hasła
+     */
     private void performPasswordValidation(){
-        passwordFromPasswordField = new String(passwordField.getPassword());
-        if(passwordFromPasswordField.equals("")) {
+        password = new String(passwordField.getPassword());
+        if(password.equals("")) {
             passwordCorrect = false;
-            typePasswordLabel.setText("Pole jest wymagane.");
+            wrongPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            passwordCorrect = validation.passwordIsValid(passwordFromPasswordField);
+            passwordCorrect = validation.passwordIsValid(password);
             if (passwordCorrect)
-                typePasswordLabel.setText("");
+                wrongPasswordLabel.setText("");
             else
-                typePasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
+                wrongPasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji potwierdzonego hasła
+     */
     private void performConfirmPasswordValidation(){
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
-        if(!confirmPasswordFromPasswordField.equals(passwordFromPasswordField)){
-            typeConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
+        if(!confirmPasswordFromPasswordField.equals(password)){
+            wrongConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
             confirmPasswordCorrect = false;
         }
         else {
-            typeConfirmPasswordLabel.setText("");
+            wrongConfirmPasswordLabel.setText("");
             confirmPasswordCorrect = true;
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Utwórz"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performFirstNameValidation();
         performLastNameValidation();
@@ -435,20 +564,15 @@ public class Registration extends javax.swing.JFrame {
         performPasswordValidation();
         performConfirmPasswordValidation();
         if(firstNameCorrect && lastNameCorrect && phoneNumberCorrect && emailCorrect && passwordCorrect && confirmPasswordCorrect) {
-            firstName = firstNameTextField.getText();
-            lastName = lastNameTextField.getText();
-            phoneNumber = phoneNumberTextField.getText();
-            email = emailTextField.getText();
             data.add(firstName);
             data.add(lastName);
             data.add(phoneNumber);
             data.add(email);
-            password = new String(passwordField.getPassword());
             data.add(password);
             Client client = new Client("addClient",data);
-            userExists = client.getRegistrationUserExists();
-            if (userExists.equals("Tak")) {
-                typeEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
+            clientExists = client.getRegistrationUserExists();
+            if (clientExists.equals("Tak")) {
+                wrongEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
                 data.clear();
             }
             else{
@@ -460,7 +584,10 @@ public class Registration extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -473,6 +600,6 @@ public class Registration extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Registration(false, null).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Registration().setVisible(true));
     }
 }

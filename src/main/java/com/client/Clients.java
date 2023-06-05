@@ -14,43 +14,43 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego możliwość wykonywania operacji dotyczących klientów
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących klientów
  */
 public class Clients extends javax.swing.JFrame {
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z imieniem administratora
      */
     private javax.swing.JLabel adminNameLabel;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Klienci
      */
     private javax.swing.JButton clientsButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający wylogowanie się
      */
     private javax.swing.JButton logOutButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Panel
      */
     private javax.swing.JButton panelButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Rezerwacje
      */
     private javax.swing.JButton reservationsButton;
     /**
-     * Atrybut będący tabelą
+     * Tabela z danymi wszystkich klientów
      */
     private javax.swing.JTable clientsTable;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Wycieczki
      */
     private javax.swing.JButton tripsButton;
     /**
-     * Atrybut będący komponentem tekstowym umożliwiającym edycję tekstu jednowierszowego
+     * Pole do wprowadzenia emailu klienta przy wyszukiwaniu
      */
     private javax.swing.JTextField searchClientTextField;
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta informująca, że email klienta przy wyszukiwaniu jest niepoprawny
      */
     private javax.swing.JLabel wrongEmailLabel;
     /**
@@ -60,11 +60,11 @@ public class Clients extends javax.swing.JFrame {
     /**
      * Atrybut będący listą przechowującą dane zwracane z klasy Client
      */
-    List<String> returningData = new ArrayList<>();
+    List<String> clientsData = new ArrayList<>();
     /**
      * Atrybut określający rozmiar listy przechowującej dane zwracane z klasy Client
      */
-    int listDataLength;
+    int clientsDataListLength;
     /**
      * Atrybut będący obiektem klasy Validation
      */
@@ -85,15 +85,10 @@ public class Clients extends javax.swing.JFrame {
      * Konstruktor odpowiadający za inicjalizację GUI
      */
     public Clients() {
-        initApp();
+        initComponents();
     }
     /**
-     * Pomocniczy konstruktor
-     * @param overrided określa czy wykorzystywany jest pomocniczy konstruktor
-     */
-    public Clients(boolean overrided){}
-    /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
      * @param client parametr przechowujący obiekt klasy Klient
      * @param adminName parametr przechowujący imię administratora
      */
@@ -101,24 +96,11 @@ public class Clients extends javax.swing.JFrame {
         this.client = client;
         this.email = client.getUserEmail();
         this.adminName = adminName;
-        initApp();
-        adminNameLabel.setText(adminName);
-    }
-    /**
-     * Metoda odpowiadająca za inicjalizację GUI oraz odpowiednich elementów
-     */
-    private void initApp(){
         validation = new Validation();
         initComponents();
         generateData();
         populateTable();
         searchClients();
-        getContentPane().setBackground(new Color(215,198,151));
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
-        for (int i = 0; i < clientsTable.getModel().getColumnCount(); i++) {
-            clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -134,6 +116,7 @@ public class Clients extends javax.swing.JFrame {
                 }
             }
         });
+        adminNameLabel.setText(adminName);
     }
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
@@ -395,6 +378,13 @@ public class Clients extends javax.swing.JFrame {
         editPasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editPasswordButton.addActionListener(this::editPasswordButtonActionPerformed);
 
+        getContentPane().setBackground(new Color(215,198,151));
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(151,123,92));
+        for (int i = 0; i < clientsTable.getModel().getColumnCount(); i++) {
+            clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -515,18 +505,18 @@ public class Clients extends javax.swing.JFrame {
      */
     private void generateData(){
         Client client1 =  new Client("clientsUpdate",new ArrayList<>());
-        returningData.addAll(client1.getClientsList());
+        clientsData.addAll(client1.getClientsList());
     }
     /**
      * Metoda wypełniająca tabelę przechowującą klientów
      */
     private void populateTable(){
         int counter = 0;
-        int size = (returningData.size()/5);
+        int size = (clientsData.size()/5);
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{returningData.get(counter), returningData.get(counter+1), returningData.get(counter+2), returningData.get(counter+3),
-                    returningData.get(counter+4)});
+            model.addRow(new Object[]{clientsData.get(counter), clientsData.get(counter+1), clientsData.get(counter+2), clientsData.get(counter+3),
+                    clientsData.get(counter+4)});
             if(size > 1)
                 counter+=5;
         }

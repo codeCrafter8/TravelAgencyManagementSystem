@@ -8,51 +8,51 @@ import java.util.List;
 /**
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność panelu administratora
  */
-public class Dashboard extends javax.swing.JFrame {
+class Dashboard extends javax.swing.JFrame {
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z imieniem administratora
      */
-    public javax.swing.JLabel adminNameLabel;
+    private javax.swing.JLabel adminNameLabel;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Klienci
      */
     private javax.swing.JButton clientsButton;
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z liczbą klientów
      */
-    public javax.swing.JLabel clientsNumberLabel;
+    private javax.swing.JLabel clientsNumberLabel;
     /**
-     * Atrybut będący listą elementów tekstowych
+     * Lista z numerami telefonów klientów do kontaktu
      */
-    public javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList1;
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z liczbą wpływów
      */
-    public javax.swing.JLabel incomeNumberLabel;
+    private javax.swing.JLabel incomeNumberLabel;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający wylogowanie się
      */
     private javax.swing.JButton logOutButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Panel
      */
     private javax.swing.JButton panelButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Rezerwacje
      */
     private javax.swing.JButton reservationsButton;
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z liczbą rezerwacji
      */
-    public javax.swing.JLabel reservationsNumberLabel;
+    private javax.swing.JLabel reservationsNumberLabel;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Wycieczki
      */
     private javax.swing.JButton tripsButton;
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z liczbą wycieczek
      */
-    public javax.swing.JLabel tripsNumberLabel;
+    private javax.swing.JLabel tripsNumberLabel;
     /**
      * Atrybut przechowujący imię administratora
      */
@@ -96,29 +96,17 @@ public class Dashboard extends javax.swing.JFrame {
     /**
      * Atrybut przechowujący email użytkownika
      */
-    private String email;
+    public String email;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
-     * @param client parametr przechowujący obiekt klasy Klient
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Client
      * @param adminName parametr przechowujący imię administratora
      */
     public Dashboard(Client client, String adminName) {
         this.client = client;
         this.email = client.getUserEmail();
         this.adminName = adminName;
-        initApp();
-    }
-    /**
-     * Pomocniczy konstruktor
-     * @param overrided określa czy wykorzystywany jest pomocniczy konstruktor
-     */
-    public Dashboard(boolean overrided){}
-    /**
-     * Metoda odpowiadająca za inicjalizację GUI oraz odpowiednich elementów
-     */
-    private void initApp(){
         initComponents();
-        getContentPane().setBackground(new Color(215,198,151));
         generateData();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -135,6 +123,10 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
     }
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
+    public Dashboard(){initComponents();}
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
@@ -187,6 +179,8 @@ public class Dashboard extends javax.swing.JFrame {
         adminLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminLabel.setText("Admin");
+
+        getContentPane().setBackground(new Color(215,198,151));
 
         javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanelLayout);
@@ -630,6 +624,6 @@ public class Dashboard extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Dashboard(new Client(), "").setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
     }
 }

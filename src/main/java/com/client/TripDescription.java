@@ -7,27 +7,81 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wyświetlenia szczegółów rezerwacji
+ */
 public class TripDescription extends javax.swing.JFrame {
-    public String insurance = "";
+    /**
+     * Etykieta z miastem wycieczki
+     */
     private javax.swing.JLabel typeCityLabel;
+    /**
+     * Etykieta z krajem wycieczki
+     */
     private javax.swing.JLabel typeCountryLabel;
+    /**
+     * Etykieta z datą wycieczki
+     */
     private javax.swing.JLabel typeDateLabel;
+    /**
+     * Etykieta z ilością dni wycieczki
+     */
     private javax.swing.JLabel typeDaysLabel;
+    /**
+     * Etykieta z miastem wylotu/przylotu wycieczki
+     */
     private javax.swing.JLabel typeDepartureCityLabel;
+    /**
+     * Etykieta z opisem hotelu wycieczki
+     */
     private javax.swing.JLabel typeHotelDescriptionLabel;
+    /**
+     * Etykieta z nazwą hotelu wycieczki
+     */
     private javax.swing.JLabel typeHotelNameLabel;
+    /**
+     * Etykieta z ubezpieczeniem wycieczki
+     */
     private javax.swing.JLabel typeInsuranceLabel;
+    /**
+     * Etykieta z ilością osób wycieczki
+     */
     private javax.swing.JLabel typePeopleLabel;
+    /**
+     * Etykieta z ceną wycieczki
+     */
     private javax.swing.JLabel typePriceLabel;
+    /**
+     * Atrybut przechowujący ubezpieczenie wycieczki
+     */
+    private String insurance;
+    /**
+     * Atrybut będący listą z danymi wycieczki
+     */
     private List<String> resData = new ArrayList<>();
-    public TripDescription(List<String> resData) {
+    /**
+     * Atrybut przechowujący numerem zaznaczonego wiersza w tabeli z rezerwacjami w klasie MyAccount
+     */
+    private int selectedRow;
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
+    public TripDescription(){initComponents();}
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param resData parametr będący listą przechowującą dane wycieczki
+     * @param selectedRow parametr będący numerem zaznaczonego wiersza w tabeli z rezerwacjami w klasie MyAccount
+     */
+    public TripDescription(List<String> resData, int selectedRow) {
         this.resData = resData;
+        this.selectedRow = selectedRow;
         initComponents();
-        generateData();
+        fillLabels();
     }
-
-    private void generateData() {
+    /**
+     * Metoda wypełniająca odpowiednie etykiety danymi wycieczki
+     */
+    private void fillLabels() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date1;
         Date date2;
@@ -35,7 +89,7 @@ public class TripDescription extends javax.swing.JFrame {
         int counter = 0;
         int size = (resData.size())/11;
         for(int i=0; i<size; i++){
-            if(i == MyAccount.row) {
+            if(i == selectedRow) {
                 try {
                     date1 = formatter.parse(String.valueOf(resData.get(counter+5)));
                     date2 = formatter.parse(String.valueOf(resData.get(counter+6)));
@@ -59,7 +113,9 @@ public class TripDescription extends javax.swing.JFrame {
                 counter+=11;
         }
     }
-
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JLabel countryLabel = new JLabel();
         JLabel cityLabel = new JLabel();
@@ -204,6 +260,10 @@ public class TripDescription extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku pytajnika
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void jButtonActionPerformed(ActionEvent evt) {
         if(insurance.equals("Standard"))
             JOptionPane.showMessageDialog(null, """
@@ -241,7 +301,10 @@ public class TripDescription extends javax.swing.JFrame {
         if(insurance.equals("Brak"))
             JOptionPane.showMessageDialog(null, "Ubezpieczenie nie zostało wykupione.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -254,6 +317,6 @@ public class TripDescription extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TripDescription.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new TripDescription(new ArrayList<>()).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TripDescription().setVisible(true));
     }
 }

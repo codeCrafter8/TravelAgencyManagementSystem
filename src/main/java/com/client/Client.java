@@ -5,86 +5,212 @@ import java.net.Socket;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Klasa zawierająca pola i metody obsługujące pracę klienta w komunikacji klient-serwer
+ */
 public class Client implements Serializable{
+    /**
+     * Atrybut określający rodzaj wykonywanej operacji
+     */
     String operation;
+    /**
+     * Instancja klasy StartPage
+     */
     private final StartPage startPage = new StartPage();
-    private final Offer offer = new Offer(true);
+    /**
+     * Instancja klasy Offer
+     */
+    private final Offer offer = new Offer();
+    /**
+     * Instancja klasy Registration
+     */
     private final Registration registration = new Registration();
-    private final Dashboard dashboard = new Dashboard(true);
-    private final Clients clients = new Clients(true);
-    private final SearchEngine searchEngine = new SearchEngine(true);
-    private final Trips trips = new Trips(true);
-    private final Reservations reservations = new Reservations(true);
-    private final MyAccount myAccount = new MyAccount(true);
+    /**
+     * Instancja klasy Dashboard
+     */
+    private final Dashboard dashboard = new Dashboard();
+    /**
+     * Instancja klasy Clients
+     */
+    private final Clients clients = new Clients();
+    /**
+     * Instancja klasy SearchEngine
+     */
+    private final SearchEngine searchEngine = new SearchEngine();
+    /**
+     * Instancja klasy Trips
+     */
+    private final Trips trips = new Trips();
+    /**
+     * Instancja klasy Reservations
+     */
+    private final Reservations reservations = new Reservations();
+    /**
+     * Instancja klasy MyAccount
+     */
+    private final MyAccount myAccount = new MyAccount();
+    /**
+     * Atrybut będący listą zawierającą dane przekazywane z klienta do serwera
+     */
     private final List<String> data = new ArrayList<>();
-    public Client() {}
-    public boolean getStartPageUserExists(){
+    /**
+     * Pobiera informację, czy użytkownik jest istnieje w bazie danych.
+     * @return true, jeśli użytkownik istnieje, false w przeciwnym razie
+     */
+    boolean getStartPageUserExists(){
         return startPage.userExists;
     }
-    public boolean getStartPageAdminLogged(){
+    /**
+     * Pobiera informację, czy administrator jest zalogowany.
+     * @return true, jeśli administrator jest zalogowany, false w przeciwnym razie
+     */
+    boolean getStartPageAdminLogged(){
         return startPage.adminLogged;
     }
-    public boolean getStartPageClientLogged(){
+    /**
+     * Pobiera informację, czy klient jest zalogowany.
+     * @return true, jeśli klient jest zalogowany, false w przeciwnym razie
+     */
+    boolean getStartPageClientLogged(){
         return startPage.clientLogged;
     }
-    public boolean getStartPagePasswordValid(){
+    /**
+     * Pobiera informację, czy podane hasło hasło dla danego emailu zgadza się z tym w bazie danych.
+     * @return true, jeśli hasło się zgadza, false w przeciwnym razie
+     */
+    boolean getStartPagePasswordValid(){
         return startPage.passwordValid;
     }
-    public String getStartPageMessage(){
+    /**
+     * Pobiera wiadomość dla strony startowej.
+     * @return wiadomość dla strony startowej
+     */
+    String getStartPageMessage(){
         return startPage.message;
     }
-    public String getRegistrationUserExists(){
-        return registration.userExists;
+    /**
+     * Pobiera informację, czy istnieje już użytkownik o podanym adresie email w procesie rejestracji.
+     * @return informacja o istnieniu użytkownika o podanym adresie email
+     */
+    String getRegistrationUserExists(){
+        return registration.clientExists;
     }
-    public String getUserEmail(){ return startPage.email; }
-    public String getUserPassword(){ return startPage.password; }
-    public int getUserOfferID(){ return offer.userID; }
-    public List<String> getMyAccountData(){
+    /**
+     * Pobiera adres email ze strony startowej.
+     * @return adres email
+     */
+    String getUserEmail(){ return startPage.email; }
+    /**
+     * Pobiera hasło ze strony startowej.
+     * @return hasło
+     */
+    String getUserPassword(){ return startPage.password; }
+    /**
+     * Pobiera identyfikator użytkownika w ofercie wycieczki.
+     * @return identyfikator użytkownika w ofercie wycieczki
+     */
+    int getOfferClientID(){ return offer.userID; }
+    /**
+     * Pobiera dane konta użytkownika.
+     * @return lista danych konta użytkownika
+     */
+    List<String> getMyAccountData(){
         return myAccount.returningData;
     }
-    public void setUserEmail(String userEmail) {startPage.email = userEmail;}
-    public List<String> getSearchEngineDeparture(){
+    /**
+     * Ustawia adres email użytkownika dla strony startowej.
+     * @param userEmail adres email użytkownika
+     */
+    void setUserEmail(String userEmail) {startPage.email = userEmail;}
+    /**
+     * Pobiera listę miejsc wylotu z wyszukiwarki.
+     * @return lista miejsc wylotu
+     */
+    List<String> getSearchEngineDeparture(){
         return searchEngine.departure;
     }
-    public List<String> getSearchEngineDestination(){
+    /**
+     * Pobiera listę kierunków podróży z wyszukiwarki.
+     * @return lista kierunków podróży
+     */
+    List<String> getSearchEngineDestination(){
         return searchEngine.destination;
     }
-    public String getDashboardAdminName() {
+    /**
+     * Pobiera nazwę administratora z panelu administratora.
+     * @return nazwa administratora
+     */
+    String getDashboardAdminName() {
         return dashboard.adminName;
     }
-
-    public int getDashboardClientsQuantity() {
+    /**
+     * Pobiera ilość klientów z panelu administratora.
+     * @return ilość klientów
+     */
+    int getDashboardClientsQuantity() {
         return dashboard.clientsQuantity;
     }
-
-    public int getDashboardTripsQuantity() {
+    /**
+     * Pobiera ilość wycieczek z panelu administratora.
+     * @return ilość wycieczek
+     */
+    int getDashboardTripsQuantity() {
         return dashboard.tripsQuantity;
     }
-
-    public int getDashboardReservationsQuantity() {
+    /**
+     * Pobiera ilość rezerwacji z panelu administratora.
+     * @return ilość rezerwacji
+     */
+    int getDashboardReservationsQuantity() {
         return dashboard.reservationsQuantity;
     }
-
-    public int getDashboardIncomeQuantity() {
+    /**
+     * Pobiera ilość wpływów z panelu administratora.
+     * @return ilość wpływów
+     */
+    int getDashboardIncomeQuantity() {
         return dashboard.incomeQuantity;
     }
-    public List<String> getDashboardPhoneNumbers(){
+    /**
+     * Pobiera listę numerów telefonów z panelu administratora.
+     * @return lista numerów telefonów
+     */
+    List<String> getDashboardPhoneNumbers(){
         return dashboard.phoneNumbers;
     }
-    public List<String> getClientsList(){return clients.returningData;}
-    public List<String> getTripsList() {
-        return trips.data;
+    /**
+     * Pobiera listę danych klientów.
+     * @return lista danych klientów
+     */
+    List<String> getClientsList(){return clients.clientsData;}
+    /**
+     * Pobiera listę danych wycieczek.
+     * @return lista danych wycieczek
+     */
+    List<String> getTripsList() {
+        return trips.tripsData;
     }
-    public List<String> getReservationsList() {
-        return reservations.data;
+    /**
+     * Pobiera listę danych rezerwacji.
+     * @return lista danych rezerwacji
+     */
+    List<String> getReservationsList() {
+        return reservations.resData;
     }
+    /**
+     * Konstruktor klasy Client.
+     * @param operation operacja
+     * @param data lista danych
+     */
     Client(String operation, List<String> data){
         this.operation = operation;
         this.data.addAll(data);
         operate();
     }
-    public void operate() {
+    /**
+     * Wykonuje odpowiednią operację łącząc się z serwerem.
+     */
+    private void operate() {
         try {
             Socket socket = new Socket("localhost", 1522);
             InputStream inputStream = socket.getInputStream();
@@ -119,7 +245,7 @@ public class Client implements Serializable{
                         dataOutputStream.flush();
                     }
                     dataOutputStream.writeBoolean(getStartPageAdminLogged());
-                    registration.userExists = dataInputStream.readUTF();
+                    registration.clientExists = dataInputStream.readUTF();
                 }
                 case "myAccountUpdate" -> {
                     dataOutputStream.writeInt(data.size());
@@ -128,8 +254,8 @@ public class Client implements Serializable{
                         dataOutputStream.writeUTF(s);
                         dataOutputStream.flush();
                     }
-                    myAccount.dataListLength = dataInputStream.readInt();
-                    for (int i = 0; i < myAccount.dataListLength; i++) {
+                    myAccount.returningDataListLength = dataInputStream.readInt();
+                    for (int i = 0; i < myAccount.returningDataListLength; i++) {
                         myAccount.returningData.add(dataInputStream.readUTF());
                     }
                 }
@@ -142,9 +268,9 @@ public class Client implements Serializable{
                     }
                 }
                 case "tripsListPopulation", "tripsUpdate" -> {
-                    trips.listDataLength = dataInputStream.readInt();
-                    for (int i = 0; i < trips.listDataLength; i++) {
-                        trips.data.add(dataInputStream.readUTF());
+                    trips.tripsDataListLength = dataInputStream.readInt();
+                    for (int i = 0; i < trips.tripsDataListLength; i++) {
+                        trips.tripsData.add(dataInputStream.readUTF());
                     }
                 }
                 case "getDestination" -> {
@@ -178,9 +304,9 @@ public class Client implements Serializable{
                     dashboard.returningData.clear();
                 }
                 case "clientsUpdate" -> {
-                    clients.listDataLength = dataInputStream.readInt();
-                    for (int i = 0; i < clients.listDataLength; i++) {
-                        clients.returningData.add(dataInputStream.readUTF());
+                    clients.clientsDataListLength = dataInputStream.readInt();
+                    for (int i = 0; i < clients.clientsDataListLength; i++) {
+                        clients.clientsData.add(dataInputStream.readUTF());
                     }
                 }
                 case "logOut" -> {
@@ -195,9 +321,9 @@ public class Client implements Serializable{
                     }
                 }
                 case "resUpdate" -> {
-                    reservations.listDataLength = dataInputStream.readInt();
-                    for (int i = 0; i < reservations.listDataLength; i++) {
-                        reservations.data.add(dataInputStream.readUTF());
+                    reservations.resDataListLength = dataInputStream.readInt();
+                    for (int i = 0; i < reservations.resDataListLength; i++) {
+                        reservations.resData.add(dataInputStream.readUTF());
                     }
                 }
             }

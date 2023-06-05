@@ -7,23 +7,23 @@ import java.awt.event.ActionEvent;
  */
 public class ServerLogs extends javax.swing.JFrame {
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Logi administratorów
      */
     private javax.swing.JButton adminsLogsButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Logi klientów
      */
     private javax.swing.JButton clientsLogsButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Zarządzaj pracą serwera
      */
     private javax.swing.JButton manageServerButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Logi serwera
      */
     private javax.swing.JButton serverLogsButton;
     /**
-     * Atrybut będący listą elementów tekstowych
+     * Lista z logami serwera
      */
     private static javax.swing.JList<String> serverLogsList;
     /**

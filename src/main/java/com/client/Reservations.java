@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,54 +13,94 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class Reservations extends javax.swing.JFrame {
-    public List<String> data = new ArrayList<>();
-    public int listDataLength = 0;
-    private TableRowSorter<TableModel> rowSorter;
-    public int resIDToRemove = 0;
-    public int id = 0;
-    public String firstName = "";
-    public String lastName = "";
-    public String departure = "";
-    public String arrival = "";
-    public String phoneNumber = "";
-    public Client client;
-    public String email;
-    private String lastNameToSearch;
-    private Validation validation;
+    /**
+     * Etykieta z imieniem administratora
+     */
     private javax.swing.JLabel adminNameLabel;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Klienci
+     */
     private javax.swing.JButton clientsButton;
-    private javax.swing.JButton editResButton;
+    /**
+     * Przycisk umożliwiający wylogowanie się
+     */
     private javax.swing.JButton logOutButton;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Panel
+     */
     private javax.swing.JButton panelButton;
+    /**
+     * Tabela z rezerwacjami
+     */
     private javax.swing.JTable resTable;
-    private javax.swing.JButton reservationsButton1;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     */
+    private javax.swing.JButton reservationsButton;
+    /**
+     * Pole do wprowadzenia nazwiska klienta przy wyszukiwaniu rezerwacji
+     */
     private javax.swing.JTextField searchResTextField;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     */
     private javax.swing.JButton tripsButton;
+    /**
+     * Etykieta informująca, że nazwisko klienta przy wyszukiwaniu rezerwacji jest niepoprawny
+     */
     private javax.swing.JLabel wrongResLabel;
-    private String adminName;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane rezerwacji zwracane z klasy Client
+     */
+    List<String> resData = new ArrayList<>();
+    /**
+     * Atrybut określający rozmiar listy przechowującej dane rezerwacji zwracane z klasy Client
+     */
+    int resDataListLength;
+    /**
+     * Element do sortowania tabeli z rezerwacjami
+     */
+    private TableRowSorter<TableModel> rowSorter;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private Client client;
+    /**
+     * Atrybut przechowujący email administratora
+     */
+    private String email;
+    /**
+     * Atrybut przechowujący nazwisko klienta przy wyszukiwaniu rezerwacji
+     */
+    private String lastNameToSearch;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private Validation validation;
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
     public Reservations() {
-        initApp();
+        initComponents();
     }
-    public Reservations(boolean overrided){}
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Klient
+     * @param adminName parametr przechowujący imię administratora
+     */
     public Reservations(Client client, String adminName){
-        this.adminName = adminName;
         this.client = client;
         this.email = client.getUserEmail();
-        initApp();
-        adminNameLabel.setText(adminName);
-    }
-    private void initApp(){
         validation = new Validation();
         initComponents();
+        adminNameLabel.setText(adminName);
         generateData();
         populateTable();
         searchRes();
-        getContentPane().setBackground(new Color(215,198,151));
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
-        for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
-            resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -77,9 +116,10 @@ public class Reservations extends javax.swing.JFrame {
                 }
             }
         });
-        wrongResLabel.setMinimumSize(new java.awt.Dimension(300, 16));
-        editResButton.setVisible(false);
     }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel menuPanel = new JPanel();
         JPanel adminPanel = new JPanel();
@@ -90,7 +130,7 @@ public class Reservations extends javax.swing.JFrame {
         panelButton = new javax.swing.JButton();
         clientsButton = new javax.swing.JButton();
         tripsButton = new javax.swing.JButton();
-        reservationsButton1 = new javax.swing.JButton();
+        reservationsButton = new javax.swing.JButton();
         JPanel topPanel = new JPanel();
         logOutButton = new javax.swing.JButton();
         JLabel searchResLabel = new JLabel();
@@ -100,7 +140,7 @@ public class Reservations extends javax.swing.JFrame {
         resTable = new javax.swing.JTable();
         JButton addResButton = new JButton();
         JButton deleteResButton = new JButton();
-        editResButton = new javax.swing.JButton();
+        JButton editResButton = new JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rezerwacje");
@@ -111,8 +151,7 @@ public class Reservations extends javax.swing.JFrame {
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
 
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
-        //TODO STARE->adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png"))));
-        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull("img\\adminLOGO.png")));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -204,21 +243,21 @@ public class Reservations extends javax.swing.JFrame {
         });
         tripsButton.addActionListener(this::tripsButtonActionPerformed);
 
-        reservationsButton1.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
-        reservationsButton1.setText("   Rezerwacje");
-        reservationsButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        reservationsButton1.setContentAreaFilled(false);
-        reservationsButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        reservationsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        reservationsButton1.setPreferredSize(new java.awt.Dimension(75, 46));
-        reservationsButton1.getModel().addChangeListener(e -> {
+        reservationsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
+        reservationsButton.setText("   Rezerwacje");
+        reservationsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        reservationsButton.setContentAreaFilled(false);
+        reservationsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        reservationsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        reservationsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                reservationsButton1.setForeground(hoverColor);
-                reservationsButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                reservationsButton.setForeground(hoverColor);
+                reservationsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
-                reservationsButton1.setForeground(null);
+                reservationsButton.setForeground(null);
         });
 
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
@@ -228,7 +267,7 @@ public class Reservations extends javax.swing.JFrame {
             .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(clientsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
             .addComponent(tripsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(reservationsButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(reservationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         optionsPanel1Layout.setVerticalGroup(
             optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +278,7 @@ public class Reservations extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(reservationsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(reservationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -300,6 +339,9 @@ public class Reservations extends javax.swing.JFrame {
         searchResLabel.setText("Wyszukaj rezerwację po nazwisku");
 
         wrongResLabel.setForeground(new java.awt.Color(255, 0, 0));
+        getContentPane().setBackground(new Color(215,198,151));
+        wrongResLabel.setMinimumSize(new java.awt.Dimension(300, 16));
+        editResButton.setVisible(false);
 
         resTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -318,6 +360,11 @@ public class Reservations extends javax.swing.JFrame {
         resTable.setPreferredSize(new java.awt.Dimension(375, 550));
         resTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
         jScrollPane1.setViewportView(resTable);
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(151,123,92));
+        for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
+            resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
 
         addResButton.setBackground(new java.awt.Color(241, 227, 185));
         addResButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
@@ -390,13 +437,19 @@ public class Reservations extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Dodaj rezerwację"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void addResButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
         new ReservationAddition(client,adminNameLabel.getText()).setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
         data.add(email);
@@ -405,25 +458,37 @@ public class Reservations extends javax.swing.JFrame {
         dispose();
         new StartPage().setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Klienci"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
         new Clients(client,adminNameLabel.getText()).setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wycieczki"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
         new Trips(client,adminNameLabel.getText()).setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Panel"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void panelButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
         new Dashboard(client,adminNameLabel.getText()).setVisible(true);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Usuń rezerwację"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
         if(resTable.getSelectedRow() == -1)
@@ -436,24 +501,30 @@ public class Reservations extends javax.swing.JFrame {
             model.removeRow(resTable.getSelectedRow());
         }
     }
-
+    /**
+     * Metoda pobierająca odpowiednie dane z klasy Client
+     */
     private void generateData(){
         Client client1 = new Client("resUpdate",new ArrayList<>());
-        data.addAll(client1.getReservationsList());
+        resData.addAll(client1.getReservationsList());
     }
-
+    /**
+     * Metoda wypełniająca tabelę z rezerwacjami
+     */
     private void populateTable(){
         int counter = 0;
-        int size = (data.size()/6);
+        int size = (resData.size()/6);
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
-                    data.get(counter+4), data.get(counter+5)});
+            model.addRow(new Object[]{resData.get(counter), resData.get(counter+1), resData.get(counter+2), resData.get(counter+3),
+                    resData.get(counter+4), resData.get(counter+5)});
             if(size > 1)
                 counter+=6;
         }
     }
-
+    /**
+     * Metoda pozwalająca na wyszukiwanie rezerwacji po nazwisku
+     */
     private void searchRes(){
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         rowSorter = new TableRowSorter<>(resTable.getModel());
@@ -484,7 +555,9 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji nazwiska wyszukiwanej rezerwacji
+     */
     private void performLastNameValidation() {
         lastNameToSearch = searchResTextField.getText();
         if(validation.lastNameIsValid(lastNameToSearch))
@@ -494,7 +567,10 @@ public class Reservations extends javax.swing.JFrame {
         if(lastNameToSearch.equals(""))
             wrongResLabel.setText("");
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

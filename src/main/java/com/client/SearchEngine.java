@@ -10,112 +10,143 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność strony głównej klienta wraz z wyszukiwarką
+ */
 public class SearchEngine extends javax.swing.JFrame {
-    private int counter = 1;
-    public int attributesQuantity = 10;
-    public List<String> data = new ArrayList<>();
-    public List<String> phoneNumberData = new ArrayList<>();
-    public List<String> destination = new ArrayList<>();
-    public int destinationListLength;
-    public List<String> departure = new ArrayList<>();
-    public int departureListLength;
-    public int listDataLength = 0;
-    public String number;
-    public int selectedRow;
-    public int adultsQuantity;
-    public int childrenQuantity;
-    public Map<Integer, Integer> idRows = new TreeMap<>();
-    public int idTripToShow = 0;
-    public Client client;
-    private Validation validation;
-    private String email;
+    /**
+     * Menu podręczne z opcjami kierunku podróży
+     */
     private javax.swing.JComboBox<String> destinationChoice;
+    /**
+     * Element umożliwiający wybór ilości dorosłych
+     */
     private javax.swing.JSpinner adultsQuantitySpinner;
+    /**
+     * Element umożliwiający wybór ilości dzieci
+     */
     private javax.swing.JSpinner childrenQuantitySpinner;
+    /**
+     * Etykieta ze zdjęciem
+     */
     private javax.swing.JLabel imagesPanel;
+    /**
+     * Pole do wprowadzenia daty zakończenia wycieczki
+     */
     private javax.swing.JTextField arrivalTextField;
+    /**
+     * Menu podręczne z opcjami miejsca wylotu
+     */
     private javax.swing.JComboBox<String> departureCityChoice;
+    /**
+     * Tabela z dostępnymi wycieczkami
+     */
     private javax.swing.JTable table;
+    /**
+     * Pole do wprowadzenia daty rozpoczęcia wycieczki
+     */
     private javax.swing.JTextField departureTextField;
+    /**
+     * Menu podręczne z opcjami Strona Główna, Moje Konto, Wyloguj się
+     */
     private javax.swing.JComboBox<String> managing;
+    /**
+     * Pole do wprowadzenia numeru telefonu
+     */
     private javax.swing.JTextField leaveNumber;
-    public SearchEngine() {
-        initApp();
+    /**
+     * Atrybut będący licznikiem wykorzystywanym przy pokazie slajdow
+     */
+    private int counter = 1;
+    /**
+     * Atrybut będący ilością danych w liście z dostępnymi wycieczkami
+     */
+    private final int attributesQuantity = 10;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą z danymi wycieczek
+     */
+    List<String> tripsData = new ArrayList<>();
+    /**
+     * Atrybut będący listą z numerami telefonów klientów do kontaktu
+     */
+    List<String> phoneNumberData = new ArrayList<>();
+    /**
+     * Atrybut będący listą z kierunkami podróży
+     */
+    List<String> destination = new ArrayList<>();
+    /**
+     * Atrybut określający rozmiar listy przechowującej kierunki podróży
+     */
+    int destinationListLength;
+    /**
+     * Atrybut będący listą z miejscami wylotu
+     */
+    List<String> departure = new ArrayList<>();
+    /**
+     * Atrybut określający rozmiar listy przechowującej miejsca wylotu
+     */
+    int departureListLength;
+    /**
+     * Atrybut będący numerem zaznaczonego wiersza w tabeli z wycieczkami
+     */
+    private int selectedRow;
+    /**
+     * Atrybut określający ilość dorosłych
+     */
+    private int adultsQuantity;
+    /**
+     * Atrybut określający ilość dzieci
+     */
+    private int childrenQuantity;
+    /**
+     * Mapa przechowująca numer wiersza jako klucz i id wycieczki jako wartość
+     */
+    private final Map<Integer, Integer> idRows = new TreeMap<>();
+    /**
+     * Atrybut określający id zaznaczonej wycieczki
+     */
+    private int idSelectedTrip;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private Client client;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private Validation validation;
+    /**
+     * Atrybut określający email klienta
+     */
+    private String email;
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
+    SearchEngine() {
+        initComponents();
     }
-    public SearchEngine(boolean overrided){
-
-    }
-    public SearchEngine(Client client){
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Klient
+     */
+    SearchEngine(Client client){
         this.client = client;
-        this.email = client.getUserEmail();
-        initApp();
-    }
-    private void initApp(){
+        email = client.getUserEmail();
         validation = new Validation();
         initComponents();
         childrenQuantity = 0;
         adultsQuantity = 1;
-        leaveNumber.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (leaveNumber.getText().equals("Zostaw nr tel. - oddzwonimy do ciebie")) {
-                    leaveNumber.setText("");
-                    leaveNumber.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (leaveNumber.getText().isEmpty()) {
-                    leaveNumber.setForeground(Color.GRAY);
-                    leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
-                }
-            }
-        });
-        departureTextField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (departureTextField.getText().equals("04/07/2023")) {
-                    departureTextField.setText("");
-                    departureTextField.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (departureTextField.getText().isEmpty()) {
-                    departureTextField.setForeground(Color.GRAY);
-                    departureTextField.setText("04/07/2023");
-                }
-            }
-        });
-        arrivalTextField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (arrivalTextField.getText().equals("11/07/2023")) {
-                    arrivalTextField.setText("");
-                    arrivalTextField.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (arrivalTextField.getText().isEmpty()) {
-                    arrivalTextField.setForeground(Color.GRAY);
-                    arrivalTextField.setText("11/07/2023");
-                }
-            }
-        });
         showPhotos();
         generateData();
-        destination.clear();
-        departure.clear();
-        getDestination();
-        getDeparture();
         populateTable();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    data.add(client.getUserEmail());
+                    data.add(email);
                     new Client("logOut",data);
                     data.clear();
                 }
@@ -126,15 +157,22 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * Metoda pobierająca kierunki podróży z klasy Client a następnie dodająca je do GUI
+     */
     private void getDestination() {
+        destination.clear();
         Client client1 = new Client("getDestination",new ArrayList<>());
         destination.addAll(client1.getSearchEngineDestination());
         destinationChoice.removeAllItems();
         for(String s : destination)
             destinationChoice.addItem(s);
     }
+    /**
+     * Metoda pobierająca miejsca wylotu z klasy Client a następnie dodająca je do GUI
+     */
     private void getDeparture() {
+        departure.clear();
         Client client1 = new Client("getDeparture",new ArrayList<>());
         departure.addAll(client1.getSearchEngineDeparture());
         departureCityChoice.removeAllItems();
@@ -144,23 +182,29 @@ public class SearchEngine extends javax.swing.JFrame {
 
     private void generateData() {
         Client client2 = new Client("tripsListPopulation",new ArrayList<>());
-        data.addAll(client2.getTripsList());
+        tripsData.addAll(client2.getTripsList());
+        getDestination();
+        getDeparture();
     }
-
+    /**
+     * Metoda wypełniająca tabelę z dostępnymi wycieczkami
+     */
     private void populateTable(){
         int counter = 0;
-        int size = (data.size()/10);
+        int size = (tripsData.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{data.get(counter), data.get(counter+1), (data.get(counter+2) + " - " + data.get(counter+3)),
-                    data.get(counter+4) + " zł"});
-            idRows.put(i, Integer.parseInt(data.get(counter+7)));
+            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter+1), (tripsData.get(counter+2) + " - " + tripsData.get(counter+3)),
+                    tripsData.get(counter+4) + " zł"});
+            idRows.put(i, Integer.parseInt(tripsData.get(counter+7)));
             if(size > 1)
                 counter+=10;
         }
     }
-
+    /**
+     * Metoda wyświetlająca pokaz slajdów
+     */
     private void showPhotos()
     {
         imagesPanel.setIcon(new javax.swing.ImageIcon("src/img/photo1.jpg"));
@@ -171,6 +215,9 @@ public class SearchEngine extends javax.swing.JFrame {
         });
         time.start();
     }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JScrollPane mainScroll = new JScrollPane();
         JPanel mainWindow = new JPanel();
@@ -498,9 +545,9 @@ public class SearchEngine extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectedRow = table.rowAtPoint(evt.getPoint());
                 if (selectedRow >= 0) {
-                    idTripToShow = idRows.get(selectedRow);
+                    idSelectedTrip = idRows.get(selectedRow);
                     dispose();
-                    new Offer(client,data,attributesQuantity, adultsQuantity, childrenQuantity, idTripToShow, selectedRow).setVisible(true);
+                    new Offer(client, tripsData,attributesQuantity, adultsQuantity, childrenQuantity, idSelectedTrip, selectedRow).setVisible(true);
                 }
             }
         });
@@ -574,6 +621,54 @@ public class SearchEngine extends javax.swing.JFrame {
         sendButton.setFocusable(false);
         sendButton.addActionListener(this::sendButtonActionPerformed);
         headphonesImage.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
+        leaveNumber.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (leaveNumber.getText().equals("Zostaw nr tel. - oddzwonimy do ciebie")) {
+                    leaveNumber.setText("");
+                    leaveNumber.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (leaveNumber.getText().isEmpty()) {
+                    leaveNumber.setForeground(Color.GRAY);
+                    leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
+                }
+            }
+        });
+        departureTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (departureTextField.getText().equals("04/07/2023")) {
+                    departureTextField.setText("");
+                    departureTextField.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (departureTextField.getText().isEmpty()) {
+                    departureTextField.setForeground(Color.GRAY);
+                    departureTextField.setText("04/07/2023");
+                }
+            }
+        });
+        arrivalTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (arrivalTextField.getText().equals("11/07/2023")) {
+                    arrivalTextField.setText("");
+                    arrivalTextField.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (arrivalTextField.getText().isEmpty()) {
+                    arrivalTextField.setForeground(Color.GRAY);
+                    arrivalTextField.setText("11/07/2023");
+                }
+            }
+        });
 
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
@@ -622,28 +717,36 @@ public class SearchEngine extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    /**
+     * Metoda obsługująca menu podręczne
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void managingActionPerformed(ActionEvent evt) {
-        if(Objects.equals(managing.getSelectedItem(), "Wyloguj")) {
-            Object[] options = {"Tak", "Nie"};
-            if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
-                    JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
+        switch(String.valueOf(managing.getSelectedItem())){
+            case "Wyloguj" -> {
+                Object[] options = {"Tak", "Nie"};
+                if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
+                        JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
+                    dispose();
+                    data.add(client.getUserEmail());
+                    new Client("logOut",data);
+                    data.clear();
+                    new StartPage().setVisible(true);
+                }
+            }
+            case "Moje Konto" -> {
                 dispose();
-                data.clear();
-                data.add(client.getUserEmail());
-                new Client("logOut",data);
-                data.clear();
-                new StartPage().setVisible(true);
+                new MyAccount(client).setVisible(true);
             }
         }
-        else if(Objects.equals(managing.getSelectedItem(), "Moje Konto")){
-            dispose();
-            new MyAccount(client).setVisible(true);
-        }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Lato 2023"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void summer2023ButtonActionPerformed(ActionEvent evt) {
         int counter = 0;
-        int size = (data.size()/10);
+        int size = (tripsData.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -662,8 +765,8 @@ public class SearchEngine extends javax.swing.JFrame {
         }
         for(int i=0; i<size; i++){
             try {
-                date1 = formatter.parse(String.valueOf(data.get(counter+2)));
-                date2 = formatter.parse(String.valueOf(data.get(counter+3)));
+                date1 = formatter.parse(String.valueOf(tripsData.get(counter+2)));
+                date2 = formatter.parse(String.valueOf(tripsData.get(counter+3)));
             }catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -671,9 +774,8 @@ public class SearchEngine extends javax.swing.JFrame {
             if(date1.compareTo(startDate) >= 0) {
                 assert date2 != null;
                 if (date2.compareTo(endDate) <= 0) {
-                    model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
-                            data.get(counter + 4) + " zł"});
-                    idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                    model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)), tripsData.get(counter + 4) + " zł"});
+                    idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                     rowCounter++;
                 }
             }
@@ -681,8 +783,12 @@ public class SearchEngine extends javax.swing.JFrame {
                 counter+=10;
         }
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wyślij"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        number = leaveNumber.getText();
+        String number = leaveNumber.getText();
         if(validation.phoneNumberIsValid(number)){
             leaveNumber.setText("");
             phoneNumberData.add(number);
@@ -693,75 +799,107 @@ public class SearchEngine extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Niepoprawnie wpisany numer telefonu.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Bułgaria"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void bulgariaButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Bulgaria");
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Włochy"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void italyButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Wlochy");
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Egipt"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void egyptButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Egipt");
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Turcja"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void turkeyButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Turcja");
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Hiszpania"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void spainButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Hiszpania");
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Grecja"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void greeceButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Grecja");
     }
-
+    /**
+     * Metoda filtrująca tabelę z dostępnymi wycieczkami pod kątem wybranego kraju
+     * @param country wybrany kraj
+     */
     private void filterTable(String country){
         int counter = 0;
-        int size = (data.size()/10);
+        int size = (tripsData.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         idRows.clear();
         int rowCounter = 0;
         for(int i=0; i<size; i++){
-            if(data.get(counter).equals(country)) {
-                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
-                        data.get(counter + 4) + " zł"});
-                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+            if(tripsData.get(counter).equals(country)) {
+                model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
+                        tripsData.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                 rowCounter++;
             }
             if(size > 1)
                 counter+=10;
         }
     }
-
+    /**
+     * Metoda filtrująca tabelę z dostępnymi wycieczkami pod kątem wybranej opcji
+     * @param country1 pierwszy kraj
+     * @param country2 drugi kraj
+     */
     private void filterTable(String country1, String country2){
         int counter = 0;
-        int size = (data.size()/10);
+        int size = (tripsData.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         idRows.clear();
         int rowCounter = 0;
         for(int i=0; i<size; i++){
-            if(data.get(counter).equals(country1) || data.get(counter).equals(country2)) {
-                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
-                        data.get(counter + 4) + " zł"});
-                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+            if(tripsData.get(counter).equals(country1) || tripsData.get(counter).equals(country2)) {
+                model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
+                        tripsData.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                 rowCounter++;
             }
             if(size > 1)
                 counter+=10;
         }
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Egzotyka"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void exoticButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Kuba", "Emiraty Arabskie");
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Last Minute"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void lastMinuteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         int counter = 0;
-        int size = (data.size()/10);
+        int size = (tripsData.size()/10);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -771,32 +909,43 @@ public class SearchEngine extends javax.swing.JFrame {
         int rowCounter = 0;
         for(int i=0; i<size; i++){
             try {
-                date1 = formatter.parse(String.valueOf(data.get(counter+2)));
+                date1 = formatter.parse(String.valueOf(tripsData.get(counter+2)));
             }catch (ParseException e) {
                 e.printStackTrace();
             }
             assert date1 != null;
             if(getDifferenceDays(now, date1) < 5) {
-                model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
-                        data.get(counter + 4) + " zł"});
-                idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
+                        tripsData.get(counter + 4) + " zł"});
+                idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                 rowCounter++;
             }
             if(size > 1)
                 counter+=10;
         }
     }
-
+    /**
+     * Metoda odpowiadająca za obliczenie różnicy dni pomiędzy datami
+     * @param d1 pierwsza data
+     * @param d2 druga data
+     */
     public static long getDifferenceDays(Date d1, Date d2) {
         long diff = d2.getTime() - d1.getTime();
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wczasy"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void tripsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         populateTable();
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku lupy
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        boolean isDateValid = checkDate();
+        boolean isDateValid = performDateValidation();
         if(isDateValid) {
             adultsQuantity = (int) adultsQuantitySpinner.getValue();
             childrenQuantity = (int) childrenQuantitySpinner.getValue();
@@ -810,28 +959,28 @@ public class SearchEngine extends javax.swing.JFrame {
             Date date2 = null;
 
             int counter = 0;
-            int size = (data.size()/10);
+            int size = (tripsData.size()/10);
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.setRowCount(0);
             idRows.clear();
             int rowCounter = 0;
             for (int i = 0; i < size; i++) {
                 try {
-                    date1 = formatter.parse(String.valueOf(data.get(counter + 2)));
-                    date2 = formatter.parse(String.valueOf(data.get(counter + 3)));
+                    date1 = formatter.parse(String.valueOf(tripsData.get(counter + 2)));
+                    date2 = formatter.parse(String.valueOf(tripsData.get(counter + 3)));
                     departure = formatterSearch.parse(departureTextField.getText());
                     arrival = formatterSearch.parse(this.arrivalTextField.getText());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                if (data.get(counter).equals(country) && data.get(counter + 5).equals(departure_city)) {
+                if (tripsData.get(counter).equals(country) && tripsData.get(counter + 5).equals(departure_city)) {
                     assert departure != null;
                     if (departure.compareTo(date1) == 0) {
                         assert arrival != null;
-                        if (arrival.compareTo(date2) == 0 && (childrenQuantity + adultsQuantity) <= Integer.parseInt(data.get(counter + 6))) {
-                            model.addRow(new Object[]{data.get(counter), data.get(counter + 1), (data.get(counter + 2) + " - " + data.get(counter + 3)),
-                                    data.get(counter + 4) + " zł"});
-                            idRows.put(rowCounter, Integer.parseInt(data.get(counter + 7)));
+                        if (arrival.compareTo(date2) == 0 && (childrenQuantity + adultsQuantity) <= Integer.parseInt(tripsData.get(counter + 6))) {
+                            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
+                                    tripsData.get(counter + 4) + " zł"});
+                            idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                             rowCounter++;
                         }
                     }
@@ -841,15 +990,20 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         }
     }
-
-    private boolean checkDate() {
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu i przyjazdu
+     */
+    private boolean performDateValidation() {
         if(!validation.dateIsValid(departureTextField.getText()) || !validation.dateIsValid(arrivalTextField.getText())) {
             JOptionPane.showMessageDialog(null, "Niepoprawnie wpisana data.", "Informacja", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

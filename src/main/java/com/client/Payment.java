@@ -5,41 +5,96 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność opłacenia rezerwacji
+ */
 public class Payment extends javax.swing.JFrame {
-    private boolean methodChoosed = false;
-    Validation validation;
+    /**
+     * Pole do wprowadzenia numeru cvv
+     */
     private javax.swing.JTextField cvvData;
+    /**
+     * Przycisk umożliwiający wybór discover
+     */
     private javax.swing.JButton discover;
+    /**
+     * Pole do wprowadzenia imienia i nazwiska
+     */
     private javax.swing.JTextField firstNameLastNameData;
+    /**
+     * Przycisk umożliwiający wybór mastercard
+     */
     private javax.swing.JButton mastercard;
+    /**
+     * Etykieta z błędem operacji opłaty
+     */
     private javax.swing.JLabel mistakeSpace;
+    /**
+     * Pole do wprowadzenia miesiąca ważności karty kredytowej
+     */
     private javax.swing.JTextField monthData;
+    /**
+     * Pole do wprowadzenia numeru karty kredytowej
+     */
     private javax.swing.JTextField cardNumberData;
+    /**
+     * Pole do wprowadzenia roku ważności karty kredytowej
+     */
     private javax.swing.JTextField yearData;
+    /**
+     * Przycisk umożliwiający wybór visa
+     */
     private javax.swing.JButton visa;
-    private Client client;
+    /**
+     * Atrybut informujący, czy została wybrana metoda opłaty
+     */
+    private boolean methodChoosed = false;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    Validation validation;
+    /**
+     * Atrybut będący id wycieczki
+     */
     private int idTrip;
+    /**
+     * Atrybut będący wybranym ubezpieczeniem
+     */
     private String insurance;
+    /**
+     * Atrybut będący ilością osób
+     */
     private int peopleQuantity;
-    private int idUser;
-    private java.util.List<String> data = new ArrayList<>();
-
-    public Payment(Client client, int idTripToShow, String insurance, int peopleQuantity) {
-        this.idTrip = idTripToShow;
+    /**
+     * Atrybut będący id klienta
+     */
+    private int clientId;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final java.util.List<String> data = new ArrayList<>();
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Client
+     * @param idTrip parametr będący id wycieczki
+     * @param insurance parametr będący wybrnaym ubezpieczeniem
+     * @param peopleQuantity parametr będący ilością osób
+     */
+    public Payment(Client client, int idTrip, String insurance, int peopleQuantity) {
+        this.idTrip = idTrip;
         this.insurance = insurance;
         this.peopleQuantity = peopleQuantity;
-        this.idUser = client.getUserOfferID();
-        this.client = client;
+        this.clientId = client.getOfferClientID();
         validation = new Validation();
         initComponents();
-        setTitle("Płatność kartą kredytową");
-        mastercard.setFocusable(false);
-        visa.setFocusable(false);
-        discover.setFocusable(false);
-        mistakeSpace.setForeground(Color.RED);
-        mistakeSpace.setText("");
     }
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
+    Payment(){initComponents();}
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         mistakeSpace = new javax.swing.JLabel();
         JLabel paymentMethod = new JLabel();
@@ -93,6 +148,13 @@ public class Payment extends javax.swing.JFrame {
         discover.setIcon(new javax.swing.ImageIcon("src/img/discover-logo.png"));
         discover.addActionListener(this::discoverActionPerformed);
         discover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        setTitle("Płatność kartą kredytową");
+        mastercard.setFocusable(false);
+        visa.setFocusable(false);
+        discover.setFocusable(false);
+        mistakeSpace.setForeground(Color.RED);
+        mistakeSpace.setText("");
 
         javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
         choicePanel.setLayout(choicePanelLayout);
@@ -301,7 +363,10 @@ public class Payment extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku Zapłać
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void payButtonActionPerformed(ActionEvent evt) {
         if(!methodChoosed)
             mistakeSpace.setText("Nie wybrano metody płatności.");
@@ -321,9 +386,8 @@ public class Payment extends javax.swing.JFrame {
             mistakeSpace.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {
-            //id_trip, ID_user, people_quantity, insurance
             data.add(Integer.toString(idTrip));
-            data.add(Integer.toString(idUser));
+            data.add(Integer.toString(clientId));
             data.add(Integer.toString(peopleQuantity));
             data.add(insurance);
             new Client("addReservation",data);
@@ -331,7 +395,10 @@ public class Payment extends javax.swing.JFrame {
             dispose();
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku discover
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void discoverActionPerformed(ActionEvent evt) {
         methodChoosed = true;
         mistakeSpace.setText("");
@@ -339,7 +406,10 @@ public class Payment extends javax.swing.JFrame {
         visa.setBorder(null);
         mastercard.setBorder(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku visa
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void visaActionPerformed(ActionEvent evt) {
         methodChoosed = true;
         mistakeSpace.setText("");
@@ -347,7 +417,10 @@ public class Payment extends javax.swing.JFrame {
         mastercard.setBorder(null);
         discover.setBorder(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku mastercard
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void mastercardActionPerformed(ActionEvent evt) {
         methodChoosed = true;
         mistakeSpace.setText("");
@@ -355,6 +428,10 @@ public class Payment extends javax.swing.JFrame {
         visa.setBorder(null);
         discover.setBorder(null);
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -367,6 +444,6 @@ public class Payment extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new Payment(null,-1,null,-1).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new Payment().setVisible(true));
     }
 }

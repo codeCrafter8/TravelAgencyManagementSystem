@@ -7,44 +7,155 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania wycieczki
+ */
 public class TripAddition extends javax.swing.JFrame {
-    public List<String> data = new ArrayList<>();
-    List<String> departureCities = new ArrayList<>();
-    public String departure, arrival;
-    private boolean countryCorrect;
-    private boolean cityCorrect;
-    private boolean departureCityCorrect;
-    private boolean priceCorrect;
-    private boolean hotelNameCorrect;
-    private boolean peopleLimitCorrect;
-    private Validation validation;
-    public String country;
-    public String city;
-    public String departureCity;
-    public String price;
-    public String peopleLimit;
-    public String hotelName;
-    private Date arrivalDate;
-    private Date departureDate;
+    /**
+     * Pole do wprowadzenia limitu osób
+     */
     private javax.swing.JTextField limitTextField;
+    /**
+     * Element do wyboru daty przyjazdu
+     */
     private com.toedter.calendar.JDateChooser arrivalDateChooser;
+    /**
+     * Pole do wprowadzenia miasta
+     */
     private javax.swing.JTextField cityTextField;
+    /**
+     * Pole do wprowadzenia kraju
+     */
     private javax.swing.JTextField countryTextField;
+    /**
+     * Element do wyboru daty wyjazdu
+     */
     private com.toedter.calendar.JDateChooser departureDateChooser;
+    /**
+     * Pole do wprowadzenia miasta wylotu/przylotu
+     */
     private javax.swing.JTextField departureCityField;
+    /**
+     * Pole do wprowadzenia nazwy hotelu
+     */
     private javax.swing.JTextField nameHotelTextField;
+    /**
+     * Pole do wprowadzenia ceny
+     */
     private javax.swing.JTextField priceField;
-    private javax.swing.JLabel validArrivalLabel;
-    private javax.swing.JLabel validCityLabel;
-    private javax.swing.JLabel validCountryLabel;
-    private javax.swing.JLabel validDepartureCityLabel;
-    private javax.swing.JLabel validDepartureLabel;
-    private javax.swing.JLabel validLimitLabel;
-    private javax.swing.JLabel validNameHotelLabel;
-    private javax.swing.JLabel validPriceLabel;
-    private Client client;
-    private String adminName;
+    /**
+     * Etykieta informująca, że data przyjazu jest niepoprawna
+     */
+    private javax.swing.JLabel wrongArrivalLabel;
+    /**
+     * Etykieta informująca, że miasto jest niepoprawne
+     */
+    private javax.swing.JLabel wrongCityLabel;
+    /**
+     * Etykieta informująca, że kraj jest niepoprawny
+     */
+    private javax.swing.JLabel wrongCountryLabel;
+    /**
+     * Etykieta informująca, że miasto wylotu/przylotu jest niepoprawne
+     */
+    private javax.swing.JLabel wrongDepartureCityLabel;
+    /**
+     * Etykieta informująca, że data wyjazdu jest niepoprawna
+     */
+    private javax.swing.JLabel wrongDepartureLabel;
+    /**
+     * Etykieta informująca, że limit osób jest niepoprawny
+     */
+    private javax.swing.JLabel wrongLimitLabel;
+    /**
+     * Etykieta informująca, że nazwa hotelu jest niepoprawna
+     */
+    private javax.swing.JLabel wrongHotelNameLabel;
+    /**
+     * Etykieta informująca, że cena jest niepoprawna
+     */
+    private javax.swing.JLabel wrongPriceLabel;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą możliwe miasta wylotu/przylotu
+     */
+    private final List<String> departureCities = new ArrayList<>();
+    /**
+     * Atrybut określający, czy kraj jest poprawny
+     */
+    private boolean countryCorrect;
+    /**
+     * Atrybut określający, czy miasto jest poprawne
+     */
+    private boolean cityCorrect;
+    /**
+     * Atrybut określający, czy miasto wylotu/przylotu jest poprawne
+     */
+    private boolean departureCityCorrect;
+    /**
+     * Atrybut określający, czy cena jest poprawna
+     */
+    private boolean priceCorrect;
+    /**
+     * Atrybut określający, czy nazwa hotelu jest poprawna
+     */
+    private boolean hotelNameCorrect;
+    /**
+     * Atrybut określający, czy limit osób jest poprawny
+     */
+    private boolean peopleLimitCorrect;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private final Validation validation;
+    /**
+     * Atrybut przechowujący kraj
+     */
+    private String country;
+    /**
+     * Atrybut przechowujący miasto
+     */
+    private String city;
+    /**
+     * Atrybut przechowujący miasto wylotu/przylotu
+     */
+    private String departureCity;
+    /**
+     * Atrybut przechowujący cenę
+     */
+    private String price;
+    /**
+     * Atrybut przechowujący limit osób
+     */
+    private String peopleLimit;
+    /**
+     * Atrybut przechowujący nazwę hotelu
+     */
+    private String hotelName;
+    /**
+     * Atrybut przechowujący datę przyjazdu
+     */
+    private Date arrivalDate;
+    /**
+     * Atrybut przechowujący datę wyjazdu
+     */
+    private Date departureDate;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private final Client client;
+    /**
+     * Atrybut przechowujący imię administratora
+     */
+    private final String adminName;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Klient
+     * @param adminName parametr przechowujący imię administratora
+     */
     public TripAddition(Client client, String adminName) {
         this.client = client;
         this.adminName = adminName;
@@ -56,13 +167,6 @@ public class TripAddition extends javax.swing.JFrame {
         departureCities.add("Wroclaw");
         departureCities.add("Katowice");
         departureCities.add("Gdansk");
-        validCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        validCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        validDepartureCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        validPriceLabel.setMinimumSize(new java.awt.Dimension(200, 16));
-        validNameHotelLabel.setMinimumSize(new java.awt.Dimension(200, 16));
-        validDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
-        validArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -76,7 +180,9 @@ public class TripAddition extends javax.swing.JFrame {
             }
         });
     }
-    public TripAddition(boolean overrided){}
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel regPanel = new JPanel();
         JLabel createLabel = new JLabel();
@@ -98,15 +204,15 @@ public class TripAddition extends javax.swing.JFrame {
         JButton cancelButton = new JButton();
         departureDateChooser = new com.toedter.calendar.JDateChooser();
         arrivalDateChooser = new com.toedter.calendar.JDateChooser();
-        validCountryLabel = new javax.swing.JLabel();
-        validCityLabel = new javax.swing.JLabel();
-        validDepartureCityLabel = new javax.swing.JLabel();
-        validPriceLabel = new javax.swing.JLabel();
-        validLimitLabel = new javax.swing.JLabel();
-        validDepartureLabel = new javax.swing.JLabel();
+        wrongCountryLabel = new javax.swing.JLabel();
+        wrongCityLabel = new javax.swing.JLabel();
+        wrongDepartureCityLabel = new javax.swing.JLabel();
+        wrongPriceLabel = new javax.swing.JLabel();
+        wrongLimitLabel = new javax.swing.JLabel();
+        wrongDepartureLabel = new javax.swing.JLabel();
         JLabel validCountryLabel6 = new JLabel();
-        validArrivalLabel = new javax.swing.JLabel();
-        validNameHotelLabel = new javax.swing.JLabel();
+        wrongArrivalLabel = new javax.swing.JLabel();
+        wrongHotelNameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dodaj wycieczkę");
@@ -158,32 +264,40 @@ public class TripAddition extends javax.swing.JFrame {
 
         departureDateChooser.setMinSelectableDate(new java.util.Date(-62135769509000L));
 
-        validCountryLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validCountryLabel.setText(" ");
+        wrongCountryLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCountryLabel.setText(" ");
 
-        validCityLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validCityLabel.setText(" ");
+        wrongCityLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCityLabel.setText(" ");
 
-        validDepartureCityLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validDepartureCityLabel.setText(" ");
+        wrongDepartureCityLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongDepartureCityLabel.setText(" ");
 
-        validPriceLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validPriceLabel.setText(" ");
+        wrongPriceLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPriceLabel.setText(" ");
 
-        validLimitLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validLimitLabel.setText(" ");
+        wrongLimitLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongLimitLabel.setText(" ");
 
-        validDepartureLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validDepartureLabel.setText(" ");
+        wrongDepartureLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongDepartureLabel.setText(" ");
 
         validCountryLabel6.setForeground(new java.awt.Color(255, 0, 0));
         validCountryLabel6.setText(" ");
 
-        validArrivalLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validArrivalLabel.setText(" ");
+        wrongArrivalLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongArrivalLabel.setText(" ");
 
-        validNameHotelLabel.setForeground(new java.awt.Color(255, 0, 0));
-        validNameHotelLabel.setText(" ");
+        wrongHotelNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongHotelNameLabel.setText(" ");
+
+        wrongCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        wrongCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        wrongDepartureCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        wrongPriceLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        wrongHotelNameLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        wrongDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+        wrongArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
 
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
@@ -195,9 +309,9 @@ public class TripAddition extends javax.swing.JFrame {
                     .addGroup(regPanelLayout.createSequentialGroup()
                         .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(hotelNameLabel)
-                            .addComponent(validPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(wrongPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(validDepartureCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(wrongDepartureCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(nameHotelTextField)
                                 .addComponent(countryTextField)
                                 .addComponent(cityTextField)
@@ -205,13 +319,13 @@ public class TripAddition extends javax.swing.JFrame {
                                 .addComponent(countryLabel)
                                 .addComponent(cityLabel)
                                 .addComponent(departureCityLabel)
-                                .addComponent(validCountryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(validCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(validNameHotelLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(wrongCountryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(wrongCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(wrongHotelNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(regPanelLayout.createSequentialGroup()
                         .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(validDepartureLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(wrongDepartureLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(departureLabel, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(priceField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(departureDateChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -223,8 +337,8 @@ public class TripAddition extends javax.swing.JFrame {
                                 .addComponent(arrivalDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(arrivalLabel))
                             .addComponent(limitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(validLimitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(validArrivalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(wrongLimitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(wrongArrivalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(regPanelLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
@@ -252,19 +366,19 @@ public class TripAddition extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(countryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(validCountryLabel)
+                .addComponent(wrongCountryLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(validCityLabel)
+                .addComponent(wrongCityLabel)
                 .addGap(2, 2, 2)
                 .addComponent(departureCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(departureCityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(validDepartureCityLabel)
+                .addComponent(wrongDepartureCityLabel)
                 .addGap(2, 2, 2)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(limitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,8 +389,8 @@ public class TripAddition extends javax.swing.JFrame {
                     .addComponent(limitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(validPriceLabel)
-                    .addComponent(validLimitLabel))
+                    .addComponent(wrongPriceLabel)
+                    .addComponent(wrongLimitLabel))
                 .addGap(2, 2, 2)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(departureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,14 +401,14 @@ public class TripAddition extends javax.swing.JFrame {
                     .addComponent(departureDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(validDepartureLabel)
-                    .addComponent(validArrivalLabel))
+                    .addComponent(wrongDepartureLabel)
+                    .addComponent(wrongArrivalLabel))
                 .addGap(2, 2, 2)
                 .addComponent(hotelNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameHotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(validNameHotelLabel)
+                .addComponent(wrongHotelNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,20 +441,22 @@ public class TripAddition extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Dodaj wycieczkę"
+     */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performCountryValidation();
         performCityValidation();
         performDepartureCityValidation();
         performPriceValidation();
         performPeopleLimitValidation();
-        performHotelNameValidtion();
+        performHotelNameValidation();
         boolean departureCorrect = departureIsValid();
         boolean arrivalCorrect = arrivalIsValid();
         if(countryCorrect && cityCorrect && departureCityCorrect && priceCorrect && peopleLimitCorrect && hotelNameCorrect && departureCorrect && arrivalCorrect) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            arrival = dateFormat.format(arrivalDate);
-            departure = dateFormat.format(departureDate);
+            String arrival = dateFormat.format(arrivalDate);
+            String departure = dateFormat.format(departureDate);
             data.clear();
             data.add(country);
             data.add(city);
@@ -356,121 +472,147 @@ public class TripAddition extends javax.swing.JFrame {
             new Trips(client,adminName).setVisible(true);
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu
+     * @return zwraca true jeśli data wyjazdu jest poprawna, w przeciwnym wypadku zwraca false
+     */
     private boolean departureIsValid() {
         departureDate = departureDateChooser.getDate();
         if(departureDate == null) {
-            validDepartureLabel.setText("Pole wymagane.");
+            wrongDepartureLabel.setText("Pole wymagane.");
             return false;
         }
-        validDepartureLabel.setText("");
+        wrongDepartureLabel.setText("");
         return true;
     }
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji daty przyjazdu
+     * @return zwraca true jeśli data przyjazdu jest poprawna, w przeciwnym wypadku zwraca false
+     */
     private boolean arrivalIsValid() {
         arrivalDate = arrivalDateChooser.getDate();
         if(arrivalDate == null) {
-            validArrivalLabel.setText("Pole wymagane.");
+            wrongArrivalLabel.setText("Pole wymagane.");
             return false;
         }
-        validArrivalLabel.setText("");
+        wrongArrivalLabel.setText("");
         return true;
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji miasta
+     */
     private void performCityValidation() {
         city = cityTextField.getText();
         if(city.equals("")) {
-            validCityLabel.setText("Pole wymagane.");
+            wrongCityLabel.setText("Pole wymagane.");
             cityCorrect = false;
         }
         else {
             cityCorrect = validation.countryOrCityIsValid(city);
             if (cityCorrect)
-                validCityLabel.setText("");
+                wrongCityLabel.setText("");
             else
-                validCityLabel.setText("Sprawdź czy podane miasto jest poprawne.");
+                wrongCityLabel.setText("Sprawdź czy podane miasto jest poprawne.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji miasta wylotu/przylotu
+     */
     private void performDepartureCityValidation() {
         departureCity = departureCityField.getText();
         if(departureCity.equals("")) {
-            validDepartureCityLabel.setText("Pole wymagane.");
+            wrongDepartureCityLabel.setText("Pole wymagane.");
             departureCityCorrect = false;
         }
         else {
             if (departureCities.contains(departureCity)) {
-                validDepartureCityLabel.setText("");
+                wrongDepartureCityLabel.setText("");
                 departureCityCorrect = true;
             } else {
-                validDepartureCityLabel.setText("Nie mozna leciec z tego miasta.");
+                wrongDepartureCityLabel.setText("Nie mozna leciec z tego miasta.");
                 departureCityCorrect = false;
             }
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji ceny
+     */
     private void performPriceValidation() {
         price = priceField.getText();
         if(price.equals("")) {
-            validPriceLabel.setText("Pole wymagane.");
+            wrongPriceLabel.setText("Pole wymagane.");
             priceCorrect = false;
         }
         else {
             priceCorrect = validation.priceIsValid(price);
             if (priceCorrect)
-                validPriceLabel.setText("");
+                wrongPriceLabel.setText("");
             else
-                validPriceLabel.setText("Zły format.");
+                wrongPriceLabel.setText("Zły format.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji limitu osób
+     */
     private void performPeopleLimitValidation() {
         peopleLimit = limitTextField.getText();
         if(peopleLimit.equals("")) {
-            validLimitLabel.setText("Pole wymagane.");
+            wrongLimitLabel.setText("Pole wymagane.");
             peopleLimitCorrect = false;
         }
         else {
             peopleLimitCorrect = validation.peopleLimitIsValid(peopleLimit);
             if (peopleLimitCorrect)
-                validLimitLabel.setText("");
+                wrongLimitLabel.setText("");
             else
-                validLimitLabel.setText("Zły format.");
+                wrongLimitLabel.setText("Zły format.");
         }
     }
-    private void performHotelNameValidtion() {
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji nazwy hotelu
+     */
+    private void performHotelNameValidation() {
         hotelName = nameHotelTextField.getText();
         if(hotelName.equals("")) {
-            validNameHotelLabel.setText("Pole wymagane.");
+            wrongHotelNameLabel.setText("Pole wymagane.");
             hotelNameCorrect = false;
         }
         else {
             hotelNameCorrect = validation.hotelNameIsValid(hotelName);
             if (hotelNameCorrect)
-                validNameHotelLabel.setText("");
+                wrongHotelNameLabel.setText("");
             else
-                validNameHotelLabel.setText("Sprawdź czy podana nazwa hotelu jest poprawna.");
+                wrongHotelNameLabel.setText("Sprawdź czy podana nazwa hotelu jest poprawna.");
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji kraju
+     */
     private void performCountryValidation() {
         country = countryTextField.getText();
         if(country.equals("")) {
-            validCountryLabel.setText("Pole wymagane.");
+            wrongCountryLabel.setText("Pole wymagane.");
             countryCorrect = false;
         }
         else {
             countryCorrect = validation.countryOrCityIsValid(country);
             if (countryCorrect)
-                validCountryLabel.setText("");
+                wrongCountryLabel.setText("");
             else
-                validCountryLabel.setText("Sprawdź czy podany kraj jest poprawny.");
+                wrongCountryLabel.setText("Sprawdź czy podany kraj jest poprawny.");
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Anuluj"
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new Trips().setVisible(true);
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

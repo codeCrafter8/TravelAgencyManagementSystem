@@ -6,21 +6,55 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania rezerwacji
+ */
 public class ReservationAddition extends javax.swing.JFrame {
+    /**
+     * Tabela z klientami
+     */
     private javax.swing.JTable clientsTable;
+    /**
+     * Menu podręczne z opcjami ubezpieczenia
+     */
     private javax.swing.JComboBox<String> jComboBox1;
+    /**
+     * Element umożliwiający wybór ilości osób
+     */
     private javax.swing.JSpinner jSpinner1;
+    /**
+     * Tabela z wycieczkami
+     */
     private javax.swing.JTable tripsTable;
-    private List<String> data = new ArrayList<>();
-    private List<String> tripsData = new ArrayList<>();
-    private Client client;
-    private String adminName;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane wycieczek zwracane z klasy Client
+     */
+    private final List<String> tripsData = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane klientów zwracane z klasy Client
+     */
+    private final List<String> clientsData = new ArrayList<>();
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private final Client client;
+    /**
+     * Atrybut będący imieniem administratora
+     */
+    private final String adminName;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Klient
+     * @param adminName parametr przechowujący imię administratora
+     */
     public ReservationAddition(Client client, String adminName) {
         this.client = client;
         this.adminName = adminName;
         initComponents();
-        getContentPane().setBackground(new Color(215,198,151));
         generateData();
         populateClientsTable();
         populateTripsTable();
@@ -40,6 +74,9 @@ public class ReservationAddition extends javax.swing.JFrame {
             }
         });
     }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JScrollPane jScrollPane1 = new JScrollPane();
         tripsTable = new javax.swing.JTable();
@@ -122,6 +159,8 @@ public class ReservationAddition extends javax.swing.JFrame {
 
         jLabel2.setText("Ubezpieczenie:");
 
+        getContentPane().setBackground(new Color(215,198,151));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,23 +212,32 @@ public class ReservationAddition extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    /**
+     * Metoda pobierająca odpowiednie dane z klasy Client
+     */
     private void generateData(){
         Client client1 = new Client("clientsUpdate",new ArrayList<>());
-        data.addAll(client1.getClientsList());
+        clientsData.addAll(client1.getClientsList());
         Client client2 = new Client("tripsListPopulation",new ArrayList<>());
         tripsData.addAll(client2.getTripsList());
     }
+    /**
+     * Metoda wypełniająca tabelę z klientami
+     */
     private void populateClientsTable(){
         int counter = 0;
-        int size = (data.size()/5);
+        int size = (clientsData.size()/5);
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
-                    data.get(counter+4)});
+            model.addRow(new Object[]{clientsData.get(counter), clientsData.get(counter+1), clientsData.get(counter+2), clientsData.get(counter+3),
+                    clientsData.get(counter+4)});
             if(size > 1)
                 counter+=5;
         }
     }
+    /**
+     * Metoda wypełniająca tabelę z wycieczkami
+     */
     private void populateTripsTable(){
         int counter = 0;
         int size = (tripsData.size()/10);
@@ -201,6 +249,9 @@ public class ReservationAddition extends javax.swing.JFrame {
                 counter+=10;
         }
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Dodaj rezerwację"
+     */
     private void submitButtonActionPerformed() {
         DefaultTableModel clientsModel = (DefaultTableModel) clientsTable.getModel();
         int clientsRow = clientsTable.getSelectedRow();
@@ -210,7 +261,6 @@ public class ReservationAddition extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Zbyt duża liczba osób.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            data.clear();
             data.add(tripsModel.getValueAt(tripsRow, 0).toString());
             data.add(clientsModel.getValueAt(clientsRow, 0).toString());
             data.add(jSpinner1.getValue().toString());
@@ -225,12 +275,17 @@ public class ReservationAddition extends javax.swing.JFrame {
             new Reservations(client,adminName).setVisible(true);
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Anuluj rezerwację"
+     */
     private void cancelButtonActionPerformed() {
         dispose();
         new Reservations(client,adminName).setVisible(true);
     }
-
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

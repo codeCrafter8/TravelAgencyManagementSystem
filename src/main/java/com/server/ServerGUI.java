@@ -32,35 +32,35 @@ public class ServerGUI extends javax.swing.JFrame {
      */
     public ServerSocket serverSocket;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Logi administratorów
      */
     private javax.swing.JButton adminsLogsButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Logi klientów
      */
     private javax.swing.JButton clientsLogsButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Zarządzaj pracą serwera
      */
     private javax.swing.JButton manageServerButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający zrestartowanie serwera
      */
     private javax.swing.JButton restartServerButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający przejście do zakładki Logi serwera
      */
     private javax.swing.JButton serverLogsButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający uruchomienie serwera
      */
     private javax.swing.JButton startServerButton;
     /**
-     * Atrybut będący przyciskiem
+     * Przycisk umożliwiający zatrzymanie serwera
      */
     private javax.swing.JButton stopServerButton;
     /**
-     * Atrybut będący komponentem do umieszczania tekstu w kontenerze
+     * Etykieta z liczbą połączonych użytkowników
      */
     private javax.swing.JLabel connectedUsersNumberLabel;
     /**

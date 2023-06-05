@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -12,54 +11,98 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących wycieczek
+ */
 public class Trips extends javax.swing.JFrame {
-    public List<String> data = new ArrayList<>();
-    public int listDataLength = 0;
-    private TableRowSorter<TableModel> rowSorter;
-    public int tripIDToRemove = 0;
-    public int id = 0;
-    public String country = "";
-    public String city = "";
-    public String price = "";
-    public String peopleLimit = "";
-    private String cityToSearch;
-    private Validation validation;
-    public Client client;
-    public String email;
+    /**
+     * Etykieta z imieniem administratora
+     */
     private javax.swing.JLabel adminNameLabel;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Klienci
+     */
     private javax.swing.JButton clientsButton;
+    /**
+     * Przycisk umożliwiający wylogowanie się
+     */
     private javax.swing.JButton logOutButton;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Panel
+     */
     private javax.swing.JButton panelButton;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     */
     private javax.swing.JButton reservationsButton;
+    /**
+     * Pole do wprowadzenia miasta przy wyszukiwaniu
+     */
     private javax.swing.JTextField searchClientTextField;
+    /**
+     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     */
     private javax.swing.JButton tripsButton;
+    /**
+     * Tabela z wycieczkami
+     */
     private javax.swing.JTable tripsTable;
+    /**
+     * Etykieta informująca, że miasto przy wyszukiwaniu jest niepoprawne
+     */
     private javax.swing.JLabel wrongTripLabel;
-    private String adminName;
+    /**
+     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     */
+    private final List<String> data = new ArrayList<>();
+    /**
+     * Atrybut będący listą przechowującą dane zwracane z klasy Client
+     */
+    List<String> tripsData = new ArrayList<>();
+    /**
+     * Atrybut określający rozmiar listy przechowującej dane zwracane z klasy Client
+     */
+    int tripsDataListLength;
+    /**
+     * Element do sortowania tabeli z wycieczkami
+     */
+    private TableRowSorter<TableModel> rowSorter;
+    /**
+     * Atrybut przechowujący miasto przy wyszukiwaniu wycieczki
+     */
+    private String cityToSearch;
+    /**
+     * Atrybut będący obiektem klasy Validation
+     */
+    private Validation validation;
+    /**
+     * Atrybut będący obiektem klasy Client
+     */
+    private Client client;
+    /**
+     * Atrybut przechowujący email użytkownika
+     */
+    private String email;
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI
+     */
     public Trips() {
-        initApp();
+        initComponents();
     }
-    public Trips(boolean overrided){}
+    /**
+     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * @param client parametr przechowujący obiekt klasy Klient
+     * @param adminName parametr przechowujący imię administratora
+     */
     public Trips(Client client, String adminName){
-        this.adminName = adminName;
         this.client = client;
         this.email = client.getUserEmail();
-        initApp();
-        adminNameLabel.setText(adminName);
-    }
-    private void initApp(){
         validation = new Validation();
         initComponents();
+        adminNameLabel.setText(adminName);
         generateData();
         populateTable();
         searchTrips();
-        getContentPane().setBackground(new Color(215,198,151));
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
-        for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
-            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -75,6 +118,9 @@ public class Trips extends javax.swing.JFrame {
             }
         });
     }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
     private void initComponents() {
         JPanel menuPanel = new JPanel();
         JPanel adminPanel = new JPanel();
@@ -106,8 +152,7 @@ public class Trips extends javax.swing.JFrame {
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
 
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
-        //TODO STARE->adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/img/adminLOGO.png")))); // NOI18N
-        adminIconLabel.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull("img\\adminLOGO.png"))); // NOI18N
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -332,6 +377,13 @@ public class Trips extends javax.swing.JFrame {
         editTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editTripButton.addActionListener(this::editTripButtonActionPerformed);
 
+        getContentPane().setBackground(new Color(215,198,151));
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(151,123,92));
+        for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
+            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -390,17 +442,20 @@ public class Trips extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Edytuj wycieczkę"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void editTripButtonActionPerformed(ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         if(tripsTable.getSelectedRow() == -1)
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
-            id = Integer.parseInt(model.getValueAt(tripsTable.getSelectedRow(), 0).toString());
-            country = model.getValueAt(tripsTable.getSelectedRow(), 1).toString();
-            city = model.getValueAt(tripsTable.getSelectedRow(), 2).toString();
-            price = model.getValueAt(tripsTable.getSelectedRow(), 3).toString();
-            peopleLimit = model.getValueAt(tripsTable.getSelectedRow(), 4).toString();
+            int id = Integer.parseInt(model.getValueAt(tripsTable.getSelectedRow(), 0).toString());
+            String country = model.getValueAt(tripsTable.getSelectedRow(), 1).toString();
+            String city = model.getValueAt(tripsTable.getSelectedRow(), 2).toString();
+            String price = model.getValueAt(tripsTable.getSelectedRow(), 3).toString();
+            String peopleLimit = model.getValueAt(tripsTable.getSelectedRow(), 4).toString();
             if (country.equals("") || city.equals("") || price.equals("") || peopleLimit.equals("")) {
                 JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -415,7 +470,10 @@ public class Trips extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
         data.add(email);
@@ -424,24 +482,30 @@ public class Trips extends javax.swing.JFrame {
         dispose();
         new StartPage().setVisible(true);
     }
-
+    /**
+     * Metoda pobierająca odpowiednie dane z klasy Client
+     */
     private void generateData(){
         Client client1 = new Client("tripsUpdate",new ArrayList<>());
-        data.addAll(client1.getTripsList());
+        tripsData.addAll(client1.getTripsList());
     }
-
+    /**
+     * Metoda wypełniająca tabelę przechowującą wycieczki
+     */
     private void populateTable(){
         int counter = 0;
-        int size = (data.size()/5);
+        int size = (tripsData.size()/5);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         for(int i=0; i<size; i++){
-            model.addRow(new Object[]{data.get(counter), data.get(counter+1), data.get(counter+2), data.get(counter+3),
-                    data.get(counter+4)});
+            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter+1), tripsData.get(counter+2), tripsData.get(counter+3),
+                    tripsData.get(counter+4)});
             if(size > 1)
                 counter+=5;
         }
     }
-
+    /**
+     * Metoda odpowiadająca za przeprowadzenie walidacji miasta wyszukiwanej wycieczki
+     */
     private void performCityValidation(){
         cityToSearch = searchClientTextField.getText();
         if(validation.countryOrCityIsValid(cityToSearch))
@@ -451,7 +515,9 @@ public class Trips extends javax.swing.JFrame {
         if(cityToSearch.equals(""))
             wrongTripLabel.setText("");
     }
-
+    /**
+     * Metoda pozwalająca na wyszukiwanie wycieczki po mieście
+     */
     private void searchTrips(){
         tripsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         rowSorter = new TableRowSorter<>(tripsTable.getModel());
@@ -482,7 +548,10 @@ public class Trips extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Usuń wycieczkę"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void deleteTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         if(tripsTable.getSelectedRow() == -1)
@@ -495,27 +564,46 @@ public class Trips extends javax.swing.JFrame {
             model.removeRow(tripsTable.getSelectedRow());
         }
     }
-
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Dodaj wycieczkę"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void addTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
         new TripAddition(client,adminNameLabel.getText()).setVisible(true);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Klienci"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
         new Clients(client,adminNameLabel.getText()).setVisible(true);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Rezerwacje"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
         new Reservations(client,adminNameLabel.getText()).setVisible(true);
     }
+    /**
+     * Metoda obsługująca kliknięcie przycisku "Panel"
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
     private void panelButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
         new Dashboard(client,adminNameLabel.getText()).setVisible(true);
     }
+    /**
+     * Metoda pozwalająca na uruchomienie okna
+     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
