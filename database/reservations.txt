@@ -1,0 +1,17 @@
+CREATE TABLE reservations(
+id_reservation NUMBER(3),
+id_trip NUMBER,
+ID_user NUMBER,
+people_quantity NUMBER(3),
+insurance VARCHAR2(50),
+CONSTRAINT fk_id_trip
+    FOREIGN KEY (id_trip)
+    REFERENCES trips(id_trip),
+CONSTRAINT fk_id_user
+    FOREIGN KEY (ID_user)
+    REFERENCES users(ID_user)
+);
+
+CREATE SEQUENCE reservations_seq;
+
+INSERT INTO reservations VALUES(reservations_seq.nextval, 2, 65, 2, 'Komfort');

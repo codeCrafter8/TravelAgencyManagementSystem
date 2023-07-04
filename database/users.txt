@@ -1,0 +1,12 @@
+CREATE TABLE users(
+ID_user NUMBER(6) PRIMARY KEY, 
+email VARCHAR(70), 
+password VARCHAR(70),
+firstName VARCHAR(70), 
+lastName VARCHAR(70), 
+phoneNumber VARCHAR(25), 
+userLogged NUMBER(6))
+
+CREATE SEQUENCE users_seq;
+
+INSERT INTO users VALUES(users_seq.nextval, 'julia@interia.pl', 'Julia1234', 'Julia', 'Janik', '123456789', 0);
