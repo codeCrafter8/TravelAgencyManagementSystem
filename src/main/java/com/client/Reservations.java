@@ -1,5 +1,7 @@
 package com.client;
 
+import com.server.LogsAdmins;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -11,7 +13,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+/**
+ * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących rezerwacji
+ */
 public class Reservations extends javax.swing.JFrame {
     /**
      * Etykieta z imieniem administratora
@@ -58,10 +62,6 @@ public class Reservations extends javax.swing.JFrame {
      */
     List<String> resData = new ArrayList<>();
     /**
-     * Atrybut określający rozmiar listy przechowującej dane rezerwacji zwracane z klasy Client
-     */
-    int resDataListLength;
-    /**
      * Element do sortowania tabeli z rezerwacjami
      */
     private TableRowSorter<TableModel> rowSorter;
@@ -78,10 +78,6 @@ public class Reservations extends javax.swing.JFrame {
      */
     private String lastNameToSearch;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private Validation validation;
-    /**
      * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
      */
     public Reservations() {
@@ -95,7 +91,6 @@ public class Reservations extends javax.swing.JFrame {
     public Reservations(Client client, String adminName){
         this.client = client;
         this.email = client.getUserEmail();
-        validation = new Validation();
         initComponents();
         adminNameLabel.setText(adminName);
         generateData();
@@ -105,14 +100,16 @@ public class Reservations extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
+                    data.clear();
+                    data.add("logOut");
                     data.add(email);
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsAdmins("Reservations", "info", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -452,8 +449,9 @@ public class Reservations extends javax.swing.JFrame {
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
+        data.add("logOut");
         data.add(email);
-        new Client("logOut",data);
+        new Client(data);
         data.clear();
         dispose();
         new StartPage().setVisible(true);
@@ -495,8 +493,9 @@ public class Reservations extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
             data.clear();
+            data.add("deleteRes");
             data.add(model.getValueAt(resTable.getSelectedRow(), 0).toString());
-            new Client("deleteRes",data);
+            new Client(data);
             data.clear();
             model.removeRow(resTable.getSelectedRow());
         }
@@ -505,8 +504,10 @@ public class Reservations extends javax.swing.JFrame {
      * Metoda pobierająca odpowiednie dane z klasy Client
      */
     private void generateData(){
-        Client client1 = new Client("resUpdate",new ArrayList<>());
-        resData.addAll(client1.getReservationsList());
+        data.clear();
+        data.add("resUpdate");
+        Client client1 = new Client(data);
+        resData.addAll(client1.getReturningData());
     }
     /**
      * Metoda wypełniająca tabelę z rezerwacjami
@@ -560,7 +561,7 @@ public class Reservations extends javax.swing.JFrame {
      */
     private void performLastNameValidation() {
         lastNameToSearch = searchResTextField.getText();
-        if(validation.lastNameIsValid(lastNameToSearch))
+        if(Validation.lastNameIsValid(lastNameToSearch))
             wrongResLabel.setText("");
         else
             wrongResLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");

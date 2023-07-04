@@ -46,10 +46,6 @@ public class PasswordChange extends javax.swing.JFrame {
      */
     private boolean confirmPasswordCorrect;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private final Validation validation;
-    /**
      * Atrybut będący nowym hasłem klienta
      */
     private String newPassword;
@@ -73,7 +69,6 @@ public class PasswordChange extends javax.swing.JFrame {
     public PasswordChange(String clientId, Client client) {
         this.client = client;
         this.clientId = clientId;
-        validation = new Validation();
         initComponents();
     }
     /**
@@ -207,7 +202,7 @@ public class PasswordChange extends javax.swing.JFrame {
             wrongNewPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            newPasswordCorrect = validation.passwordIsValid(newPassword);
+            newPasswordCorrect = Validation.passwordIsValid(newPassword);
             if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else
@@ -238,9 +233,11 @@ public class PasswordChange extends javax.swing.JFrame {
         performConfirmPasswordValidation();
         if(currentPasswordCorrect){
             if(newPasswordCorrect && confirmPasswordCorrect){
+                data.clear();
+                data.add("changeClientPassword");
                 data.add(newPassword);
                 data.add(clientId);
-                new Client("changeClientPassword",data);
+                new Client(data);
                 data.clear();
                 dispose();
                 JOptionPane.showMessageDialog(null, "Pomyślnie zmieniono hasło.", "Informacja", JOptionPane.INFORMATION_MESSAGE);

@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.LogsAdmins;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -60,10 +61,6 @@ public class Trips extends javax.swing.JFrame {
      */
     List<String> tripsData = new ArrayList<>();
     /**
-     * Atrybut określający rozmiar listy przechowującej dane zwracane z klasy Client
-     */
-    int tripsDataListLength;
-    /**
      * Element do sortowania tabeli z wycieczkami
      */
     private TableRowSorter<TableModel> rowSorter;
@@ -71,10 +68,6 @@ public class Trips extends javax.swing.JFrame {
      * Atrybut przechowujący miasto przy wyszukiwaniu wycieczki
      */
     private String cityToSearch;
-    /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private Validation validation;
     /**
      * Atrybut będący obiektem klasy Client
      */
@@ -97,7 +90,6 @@ public class Trips extends javax.swing.JFrame {
     public Trips(Client client, String adminName){
         this.client = client;
         this.email = client.getUserEmail();
-        validation = new Validation();
         initComponents();
         adminNameLabel.setText(adminName);
         generateData();
@@ -108,12 +100,13 @@ public class Trips extends javax.swing.JFrame {
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
                     data.clear();
-                    new Client("logOut",new ArrayList<>());
+                    data.add("logOut");
+                    new Client(data);
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsAdmins("Trips", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -460,12 +453,13 @@ public class Trips extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
                 data.clear();
+                data.add("editTrip");
                 data.add(Integer.toString(id));
                 data.add(city);
                 data.add(country);
                 data.add(price);
                 data.add(peopleLimit);
-                new Client("editTrip",data);
+                new Client(data);
                 data.clear();
             }
         }
@@ -476,8 +470,9 @@ public class Trips extends javax.swing.JFrame {
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
+        data.add("logOut");
         data.add(email);
-        new Client("logOut",data);
+        new Client(data);
         data.clear();
         dispose();
         new StartPage().setVisible(true);
@@ -486,8 +481,10 @@ public class Trips extends javax.swing.JFrame {
      * Metoda pobierająca odpowiednie dane z klasy Client
      */
     private void generateData(){
-        Client client1 = new Client("tripsUpdate",new ArrayList<>());
-        tripsData.addAll(client1.getTripsList());
+        data.clear();
+        data.add("tripsUpdate");
+        Client client1 = new Client(data);
+        tripsData.addAll(client1.getReturningData());
     }
     /**
      * Metoda wypełniająca tabelę przechowującą wycieczki
@@ -508,7 +505,7 @@ public class Trips extends javax.swing.JFrame {
      */
     private void performCityValidation(){
         cityToSearch = searchClientTextField.getText();
-        if(validation.countryOrCityIsValid(cityToSearch))
+        if(Validation.countryOrCityIsValid(cityToSearch))
             wrongTripLabel.setText("");
         else
             wrongTripLabel.setText("Sprawdź czy podane miasto jest poprawne.");
@@ -558,8 +555,9 @@ public class Trips extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
             data.clear();
+            data.add("deleteTrip");
             data.add(model.getValueAt(tripsTable.getSelectedRow(), 0).toString());
-            new Client("deleteTrip",data);
+            new Client(data);
             data.clear();
             model.removeRow(tripsTable.getSelectedRow());
         }

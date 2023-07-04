@@ -1,5 +1,7 @@
 package com.client;
 
+import com.server.LogsClients;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
@@ -63,10 +65,6 @@ public class MyAccount extends javax.swing.JFrame {
      */
     List<String> returningData = new ArrayList<>();
     /**
-     * Atrybut będący rozmiarem listy przechowującej dane zwracane z klasy Client
-     */
-    int returningDataListLength;
-    /**
      * Pomocniczy konstruktor
      */
     public MyAccount() {}
@@ -82,13 +80,15 @@ public class MyAccount extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
+                    data.clear();
+                    data.add("logOut");
                     data.add(client.getUserEmail());
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsClients("MyAccount", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -378,8 +378,10 @@ public class MyAccount extends javax.swing.JFrame {
                 if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz anulować rezerwację?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Pomyślnie anulowano rezerwację. Pieniądze zostaną zwrócone na kartę kredytową, z której dokonano płatności w ciągu 14 dni roboczych.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    data.clear();
+                    data.add("deleteRes");
                     data.add(resTable.getValueAt(resTable.getSelectedRow(),0).toString());
-                    new Client("deleteRes",data);
+                    new Client(data);
                     data.clear();
                     model.removeRow(row);
                 }
@@ -398,8 +400,10 @@ public class MyAccount extends javax.swing.JFrame {
                         JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
                     dispose();
                     resData.clear();
+                    data.clear();
+                    data.add("logOut");
                     data.add(client.getUserEmail());
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                     new StartPage().setVisible(true);
                 }
@@ -438,10 +442,12 @@ public class MyAccount extends javax.swing.JFrame {
      * Metoda pobierająca odpowiednie dane z klasy Client
      */
     public void generateData(){
-        data.add(client.getUserEmail());
-        Client client2 = new Client("myAccountUpdate",data);
         data.clear();
-        returningData.addAll(client2.getMyAccountData());
+        data.add("myAccountUpdate");
+        data.add(client.getUserEmail());
+        Client client2 = new Client(data);
+        data.clear();
+        returningData.addAll(client2.getReturningData());
         for(int i = 0; i < returningData.size(); i++) {
             if(i >= 5)
                 resData.add(returningData.get(i));

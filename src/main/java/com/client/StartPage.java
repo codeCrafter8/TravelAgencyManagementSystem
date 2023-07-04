@@ -67,10 +67,6 @@ public class StartPage extends javax.swing.JFrame {
      */
     String message;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private final Validation validation;
-    /**
      * Atrybut określający, czy email jest poprawny
      */
     private boolean emailCorrect;
@@ -86,18 +82,7 @@ public class StartPage extends javax.swing.JFrame {
      * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
      */
     StartPage() {
-        validation = new Validation();
         initComponents();
-    }
-    /**
-     * Metoda odpowiadający za inicjalizację odpowiednich atrybutów
-     */
-    void setLoginFields(boolean userExists, boolean passwordValid, boolean adminLogged, boolean clientLogged, String message){
-        this.userExists = userExists;
-        this.passwordValid = passwordValid;
-        this.adminLogged = adminLogged;
-        this.clientLogged = clientLogged;
-        this.message = message;
     }
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
@@ -297,7 +282,7 @@ public class StartPage extends javax.swing.JFrame {
             wrongEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = validation.emailIsValid(emailFromTextField);
+            emailCorrect = Validation.emailIsValid(emailFromTextField);
             if (emailCorrect)
                 wrongEmailLabel.setText("");
             else
@@ -314,7 +299,7 @@ public class StartPage extends javax.swing.JFrame {
             wrongPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            passwordCorrect = validation.passwordIsValid(passwordFromPasswordField);
+            passwordCorrect = Validation.passwordIsValid(passwordFromPasswordField);
             if (passwordCorrect)
                 wrongPasswordLabel.setText("");
             else
@@ -332,16 +317,19 @@ public class StartPage extends javax.swing.JFrame {
         if(emailCorrect && passwordCorrect) {
             email = emailTextField.getText();
             password = new String(passwordField.getPassword());
+            data.clear();
+            data.add("login");
             data.add(email);
             data.add(password);
             wrongEmailLabel.setText("");
-            Client client = new Client("login", data);
+            Client client = new Client(data);
             this.client = client;
-            userExists = client.getStartPageUserExists();
-            passwordValid = client.getStartPagePasswordValid();
-            message = client.getStartPageMessage();
-            adminLogged = client.getStartPageAdminLogged();
-            clientLogged = client.getStartPageClientLogged();
+            List<String> returningData = client.getReturningData();
+            userExists = Boolean.parseBoolean(returningData.get(0));
+            passwordValid = Boolean.parseBoolean(returningData.get(1));
+            adminLogged = Boolean.parseBoolean(returningData.get(2));
+            clientLogged = Boolean.parseBoolean(returningData.get(3));
+            message = returningData.get(5);
             if (!userExists) {
                 wrongEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
                 data.clear();

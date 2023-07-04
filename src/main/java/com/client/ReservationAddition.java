@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.LogsAdmins;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -62,14 +63,16 @@ public class ReservationAddition extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
+                    data.clear();
+                    data.add("logOut");
                     data.add(client.getUserEmail());
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsAdmins("ReservationAddition", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -139,13 +142,13 @@ public class ReservationAddition extends javax.swing.JFrame {
         jScrollPane2.setViewportView(clientsTable);
 
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
-        submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14)); // NOI18N
+        submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setText("Dodaj rezerwację");
         submitButton.addActionListener(evt -> submitButtonActionPerformed());
         submitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         cancelButton.setBackground(new java.awt.Color(189, 165, 111));
-        cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14)); // NOI18N
+        cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
         cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
         cancelButton.addActionListener(evt -> cancelButtonActionPerformed());
@@ -216,10 +219,14 @@ public class ReservationAddition extends javax.swing.JFrame {
      * Metoda pobierająca odpowiednie dane z klasy Client
      */
     private void generateData(){
-        Client client1 = new Client("clientsUpdate",new ArrayList<>());
-        clientsData.addAll(client1.getClientsList());
-        Client client2 = new Client("tripsListPopulation",new ArrayList<>());
-        tripsData.addAll(client2.getTripsList());
+        data.clear();
+        data.add("clientsUpdate");
+        Client client1 = new Client(data);
+        data.clear();
+        data.add("tripsListPopulation");
+        clientsData.addAll(client1.getReturningData());
+        Client client2 = new Client(data);
+        tripsData.addAll(client2.getReturningData());
     }
     /**
      * Metoda wypełniająca tabelę z klientami
@@ -261,6 +268,8 @@ public class ReservationAddition extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Zbyt duża liczba osób.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
         else{
+            data.clear();
+            data.add("addReservation");
             data.add(tripsModel.getValueAt(tripsRow, 0).toString());
             data.add(clientsModel.getValueAt(clientsRow, 0).toString());
             data.add(jSpinner1.getValue().toString());
@@ -269,7 +278,7 @@ public class ReservationAddition extends javax.swing.JFrame {
                 data.add("");
             else
                 data.add(item);
-            new Client("addReservation",data);
+            new Client(data);
             data.clear();
             dispose();
             new Reservations(client,adminName).setVisible(true);

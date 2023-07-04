@@ -1,5 +1,7 @@
 package com.client;
 
+import com.server.LogsAdmins;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -82,14 +84,6 @@ class Dashboard extends javax.swing.JFrame {
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane zwracane z klasy Client
-     */
-    List<String> returningData = new ArrayList<>();
-    /**
-     * Atrybut określający rozmiar listy przechowującej numery telefonów klientów do kontaktu
-     */
-    int phoneNumbersListLength;
-    /**
      * Atrybut będący obiektem klasy Client
      */
     private Client client;
@@ -112,13 +106,15 @@ class Dashboard extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
+                    data.clear();
+                    data.add("logOut");
                     data.add(email);
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "Dashboard", "error");
+                    new LogsAdmins("Dashboard", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -561,15 +557,18 @@ class Dashboard extends javax.swing.JFrame {
      * Metoda pobierająca odpowiednie dane z klasy Client
      */
     public void generateData(){
+        data.clear();
+        data.add("dashboardUpdate");
         data.add(email);
-        Client client1 = new Client("dashboardUpdate", data);
+        Client client1 = new Client(data);
         data.clear();
 
-        adminName = client1.getDashboardAdminName();
-        clientsQuantity = client1.getDashboardClientsQuantity();
-        tripsQuantity = client1.getDashboardTripsQuantity();
-        reservationsQuantity = client1.getDashboardReservationsQuantity();
-        incomeQuantity = client1.getDashboardIncomeQuantity();
+        List<String> returningData = client1.getReturningData();
+        adminName = returningData.get(0);
+        clientsQuantity = Integer.parseInt(returningData.get(1));
+        tripsQuantity = Integer.parseInt(returningData.get(2));
+        reservationsQuantity = Integer.parseInt(returningData.get(3));
+        incomeQuantity = Integer.parseInt(returningData.get(4));
 
         adminNameLabel.setText(adminName);
         String clientsQuantityString = String.valueOf(clientsQuantity);
@@ -581,9 +580,11 @@ class Dashboard extends javax.swing.JFrame {
         String incomeQuantityString = incomeQuantity + " zł";
         incomeNumberLabel.setText(incomeQuantityString);
 
-        Client client2 = new Client("getNumbers", new ArrayList<>());
+        data.clear();
+        data.add("getNumbers");
+        Client client2 = new Client(data);
         phoneNumbers.clear();
-        phoneNumbers.addAll(client2.getDashboardPhoneNumbers());
+        phoneNumbers.addAll(client2.getReturningData());
         DefaultListModel<String> model = new DefaultListModel<>();
         for(String number : phoneNumbers)
             model.addElement(number);
@@ -594,8 +595,10 @@ class Dashboard extends javax.swing.JFrame {
      * @param evt Przyjęty event podczas kliknięcia przycisku
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        data.clear();
+        data.add("logOut");
         data.add(email);
-        new Client("logOut",data);
+        new Client(data);
         data.clear();
         dispose();
         new StartPage().setVisible(true);

@@ -1,5 +1,7 @@
 package com.client;
 
+import com.server.LogsClients;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.ParseException;
@@ -75,6 +77,10 @@ public class Offer extends javax.swing.JFrame {
      */
     private final java.util.List<String> offerData = new ArrayList<>();
     /**
+     * Atrybut będący listą z danymi wysyłanymi do klasy Client
+     */
+    private final java.util.List<String> data = new ArrayList<>();
+    /**
      * Atrybut będący ilością danych w liście z danymi oferty
      */
     private int attributeQuantity;
@@ -122,11 +128,13 @@ public class Offer extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    new Client("logOut", new ArrayList<>());
+                    data.clear();
+                    data.add("logOut");
+                    new Client(data);
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsClients("Offer", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -162,7 +170,7 @@ public class Offer extends javax.swing.JFrame {
                 insurance = "";
                 peopleNumberData.setText(peopleQuantity + " (" +
                         adultsQuantity + " dorosly, " + childrenQuantity + " dzieci)");
-                photo.setIcon(new javax.swing.ImageIcon("src/img/zdjecie" + (selectedRow + 1) + ".jpg"));
+                photo.setIcon(new javax.swing.ImageIcon("img\\zdjecie" + (selectedRow + 1) + ".jpg"));
                 descriptionSpace.setText("<html>" + offerData.get(counter+8) + "<html>");
                 hotelName.setText(offerData.get(counter+9));
                 if(adultsQuantity == 0 && childrenQuantity == 0)
@@ -210,7 +218,7 @@ public class Offer extends javax.swing.JFrame {
         mainWindow.setMinimumSize(new java.awt.Dimension(1067, 388));
 
         travelAgencyText.setBackground(new java.awt.Color(151, 123, 92));
-        travelAgencyText.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24)); // NOI18N
+        travelAgencyText.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
         travelAgencyText.setForeground(new java.awt.Color(151, 123, 92));
         travelAgencyText.setText("Travel Agency");
 
@@ -227,7 +235,7 @@ public class Offer extends javax.swing.JFrame {
         departureCity.setText("Miejsce wylotu:");
 
         reservationButton.setBackground(new java.awt.Color(151, 123, 92));
-        reservationButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14)); // NOI18N
+        reservationButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
         reservationButton.setForeground(new java.awt.Color(255, 255, 255));
         reservationButton.setText("Rezerwuj");
         reservationButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

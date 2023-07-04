@@ -165,7 +165,7 @@ public class TripDescription extends javax.swing.JFrame {
         typeHotelDescriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jButton1.setBackground(new java.awt.Color(102, 102, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("src/img/questionMark.png"));
+        jButton1.setIcon(new javax.swing.ImageIcon("img\\questionMark.png"));
         jButton1.setBorderPainted(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setMargin(new java.awt.Insets(0, 14, 0, 14));

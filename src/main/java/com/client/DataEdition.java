@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.LogsClients;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -41,10 +42,6 @@ class DataEdition extends javax.swing.JFrame {
      */
     private javax.swing.JLabel validPhoneNumberLabel;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private final Validation validation;
-    /**
      * Atrybut określający, czy imię klienta jest poprawne
      */
     private boolean firstNameCorrect;
@@ -83,7 +80,7 @@ class DataEdition extends javax.swing.JFrame {
     /**
      * Atrybut przechowujący id klienta, którego dane są edytowane
      */
-    private String clientId;
+    private final String clientId;
     /**
      * Atrybut będący listą przechowującą dane klienta
      */
@@ -91,7 +88,7 @@ class DataEdition extends javax.swing.JFrame {
     /**
      * Atrybut będący obiektem klasy Client
      */
-    private Client client;
+    private final Client client;
     /**
      * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
      * @param clientData parametr będący listą przechowującą dane klienta
@@ -101,7 +98,6 @@ class DataEdition extends javax.swing.JFrame {
         this.client = client;
         this.clientData.addAll(clientData);
         this.clientId = clientData.get(4);
-        validation = new Validation();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -110,7 +106,7 @@ class DataEdition extends javax.swing.JFrame {
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsClients("DataEdition", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -145,23 +141,23 @@ class DataEdition extends javax.swing.JFrame {
 
         regPanel.setPreferredSize(new java.awt.Dimension(450, 550));
 
-        createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24)); // NOI18N
+        createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Edytuj dane");
 
-        firstNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        firstNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         firstNameLabel.setText("Imię");
 
-        lastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        lastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         lastNameLabel.setText("Nazwisko");
 
-        emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         emailLabel.setText("E-mail");
 
-        phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16)); // NOI18N
+        phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         phoneNumberLabel.setText("Numer telefonu");
 
         submitButton.setBackground(new java.awt.Color(151, 123, 92));
-        submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14)); // NOI18N
+        submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
         submitButton.setForeground(new java.awt.Color(255, 255, 255));
         submitButton.setText("Zatwierdź");
         submitButton.addActionListener(this::submitButtonActionPerformed);
@@ -275,7 +271,7 @@ class DataEdition extends javax.swing.JFrame {
             validFirstNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            firstNameCorrect = validation.firstNameIsValid(firstName);
+            firstNameCorrect = Validation.firstNameIsValid(firstName);
             if (firstNameCorrect)
                 validFirstNameLabel.setText("");
             else
@@ -292,7 +288,7 @@ class DataEdition extends javax.swing.JFrame {
             validLastNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            lastNameCorrect = validation.lastNameIsValid(lastName);
+            lastNameCorrect = Validation.lastNameIsValid(lastName);
             if (lastNameCorrect)
                 validLastNameLabel.setText("");
             else
@@ -309,7 +305,7 @@ class DataEdition extends javax.swing.JFrame {
             validEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = validation.emailIsValid(email);
+            emailCorrect = Validation.emailIsValid(email);
             if (emailCorrect)
                 validEmailLabel.setText("");
             else
@@ -321,7 +317,7 @@ class DataEdition extends javax.swing.JFrame {
      */
     public void performPhoneNumberValidation(){
         phoneNumber = phoneNumberField.getText();
-        phoneNumberCorrect = validation.phoneNumberIsValid(phoneNumber);
+        phoneNumberCorrect = Validation.phoneNumberIsValid(phoneNumber);
         if (phoneNumberCorrect || phoneNumber.equals(""))
             validPhoneNumberLabel.setText("");
         else
@@ -346,12 +342,15 @@ class DataEdition extends javax.swing.JFrame {
         performEmailValidation();
         performPhoneNumberValidation();
         if(firstNameCorrect && lastNameCorrect && emailCorrect && phoneNumberCorrect){
+            data.clear();
+            data.add("dataEdition");
             data.add(firstName);
             data.add(lastName);
             data.add(email);
             data.add(phoneNumber);
             data.add(clientId);
-            new Client("dataEdition",data);
+            data.add(String.valueOf(client.getStartPageAdminLogged()));
+            new Client(data);
             data.clear();
             dispose();
             client.setUserEmail(email);

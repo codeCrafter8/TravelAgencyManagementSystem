@@ -45,16 +45,11 @@ public class ClientPasswordChange extends javax.swing.JFrame {
      */
     private boolean confirmPasswordCorrect;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private final Validation validation;
-    /**
      * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
      * @param clientId parametr przechowujący id klienta, którego hasło jest zmieniane
      */
     public ClientPasswordChange(int clientId) {
         this.clientId = clientId;
-        validation = new Validation();
         initComponents();
         getContentPane().setBackground(new Color(247,233,201));
     }
@@ -143,7 +138,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
             wrongNewPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            newPasswordCorrect = validation.passwordIsValid(newPassword);
+            newPasswordCorrect = Validation.passwordIsValid(newPassword);
             if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else
@@ -173,9 +168,11 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         performConfirmPasswordValidation();
         if(newPasswordCorrect){
             if(confirmPasswordCorrect){
+                data.clear();
+                data.add("changeClientPassword");
                 data.add(newPassword);
                 data.add(Integer.toString(clientId));
-                new Client("changeClientPassword",data);
+                new Client(data);
                 data.clear();
                 dispose();
             }

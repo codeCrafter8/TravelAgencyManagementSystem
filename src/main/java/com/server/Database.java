@@ -18,7 +18,7 @@ public class Database {
     /**
      * Atrybut określający rodzaj wykonywanej operacji
      */
-    private String operation;
+    private final String operation;
     /**
      * Atrybut będący listą zawierającą dane przyjmowane od serwera
      */
@@ -35,6 +35,7 @@ public class Database {
     public Database(String operation, List<String> data){
         this.operation = operation;
         this.data.addAll(data);
+        connectWithDatabase();
     }
     /**
      * Metoda zwracająca listę zawierającą dane zwracane do serwera
@@ -57,7 +58,7 @@ public class Database {
                 case "dashboardUpdate" -> updateDashboard();
                 case "clientsUpdate" -> updateClients();
                 case "deleteClient" -> deleteClient();
-                case "editClient" -> editClient();
+                case "editClient", "dataEdition" -> editData();
                 case "changeClientPassword" -> changeClientPassword();
                 case "logOutEveryone" -> logOutEveryone();
                 case "logOut" -> logOut();
@@ -72,11 +73,114 @@ public class Database {
                 case "deleteRes" -> deleteRes();
                 case "addTrip" -> addTrip();
                 case "myAccountUpdate" -> updateMyAccount();
-                case "dataEdition" -> editData();
                 case "sendNumbers" -> sendNumbers();
                 case "getNumbers" -> getNumbers();
             }
         }catch(Exception ex){
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+    /**
+     * Metoda pobierająca z bazy danych dane użytkownika
+     */
+    public void findClientData(){
+        try{
+            String adminQuery = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement adminPreparedState = connection.prepareStatement(adminQuery);
+            adminPreparedState.setString(1, data.get(1));
+            ResultSet result = adminPreparedState.executeQuery();
+            if(result.next()){
+                returningData.add(result.getString("firstname"));
+                returningData.add(result.getString("lastname"));
+                returningData.add(result.getString("email"));
+                returningData.add(result.getString("phonenumber"));
+                returningData.add(String.valueOf(result.getInt("ID_user")));
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+    /**
+     * Metoda pobierająca z bazy danych informację, czy użytkownik jest zalogowany
+     * @return true, jeśli użytkownik jest zalogowany, false jeśli nie
+     */
+    public boolean getUserLogged(){
+        int userLogged = 0;
+        try {
+            String query = "SELECT userLogged FROM users WHERE email = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setString(1, data.get(1));
+            ResultSet result = preparedState.executeQuery();
+            if (result.next()) {
+                userLogged = result.getInt("userLogged");
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+        return userLogged != 0;
+    }
+    /**
+     * Metoda pobierająca z bazy danych dane wycieczki
+     */
+    public void findTrip(){
+        int id = 0;
+        try{
+            if(data.get(1).equals("add")) {
+                String query = "SELECT trips_seq.NEXTVAL FROM DUAL";
+                ResultSet result = statement.executeQuery(query);
+                if (result.next()) {
+                    id = result.getInt("nextval") - 1;
+                }
+            }
+            String findQuery = "SELECT * FROM trips WHERE id_trip = ?";
+            PreparedStatement preparedState = connection.prepareStatement(findQuery);
+            if(data.get(1).equals("add"))
+                preparedState.setInt(1, id);
+            else
+                preparedState.setInt(1, Integer.parseInt(data.get(2)));
+            ResultSet result2 = preparedState.executeQuery();
+            if(result2.next()){
+                returningData.add(result2.getString("country"));
+                returningData.add(result2.getString("city"));
+                returningData.add(result2.getString("departure_city"));
+                returningData.add(result2.getString("price_per_person"));
+                returningData.add(String.valueOf(result2.getInt("people_limit")));
+                returningData.add(result2.getString("hotel_name"));
+                returningData.add(String.valueOf(result2.getDate("departure")));
+                returningData.add(String.valueOf(result2.getDate("arrival")));
+                returningData.add(String.valueOf(id));
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+    }
+    /**
+     * Metoda pobierająca z bazy danych dane rezerwacje
+     */
+    public void findReservation(){
+        try{
+            String query = "SELECT reservations_seq.NEXTVAL FROM DUAL";
+            ResultSet result = statement.executeQuery(query);
+            int id = 0;
+            if(result.next()){
+                id = result.getInt("nextval") - 1;
+            }
+            String findQuery = "SELECT * FROM reservations WHERE id_reservation = ?";
+            PreparedStatement preparedState = connection.prepareStatement(findQuery);
+            preparedState.setInt(1, id);
+            ResultSet result2 = preparedState.executeQuery();
+            if(result2.next()){
+                returningData.add(result2.getString("id_reservation"));
+                returningData.add(result2.getString("id_trip"));
+                returningData.add(result2.getString("id_user"));
+                returningData.add(result2.getString("people_quantity"));
+                returningData.add(result2.getString("insurance"));
+            }
+        }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
@@ -103,7 +207,7 @@ public class Database {
         try{
             String query = "INSERT INTO numbers VALUES(numbers_seq.nextval,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1,data.get(0));
+            preparedStatement.setString(1,data.get(1));
             preparedStatement.execute();
             preparedStatement.close();
             String commit = "COMMIT";
@@ -111,50 +215,6 @@ public class Database {
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
-        }
-    }
-    /**
-     * Metoda zapisująca do bazy nowych danych nowe dane edytowanego użytkownika
-     */
-    public void editData() {
-        try{
-            String query = "UPDATE users " +
-                    "SET firstName = ?, lastName = ?, email = ?, phoneNumber = ? " +
-                    "WHERE id_user = ?";
-            PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setString(1, data.get(0));
-            preparedState.setString(2, data.get(1));
-            preparedState.setString(3, data.get(2));
-            preparedState.setInt(4, Integer.parseInt(data.get(3)));
-            preparedState.setInt(5, Integer.parseInt(data.get(4)));
-            preparedState.executeUpdate();
-            String commit = "COMMIT";
-            statement.executeUpdate(commit);
-            new LogsAdmins("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane klienta o ID: " + data.get(4) + ".");
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("com.server.Database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
-        }
-    }
-    /**
-     * Metoda pobierająca z bazy danych dane użytkownika
-     */
-    private void findClientData(){
-        try{
-            String adminQuery = "SELECT * FROM users WHERE email = ?";
-            PreparedStatement adminPreparedState = connection.prepareStatement(adminQuery);
-            adminPreparedState.setString(1, data.get(0));
-            ResultSet result = adminPreparedState.executeQuery();
-            if(result.next()){
-                returningData.add(result.getString("firstname"));
-                returningData.add(result.getString("lastname"));
-                returningData.add(result.getString("email"));
-                returningData.add(result.getString("phonenumber"));
-                returningData.add(String.valueOf(result.getInt("ID_user")));
-            }
-        }catch (SQLException ex) {
-            System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
     /**
@@ -166,19 +226,19 @@ public class Database {
                     "W naszej ofercie znajda Panstwo pokoje o roznym standardzie oraz opcje wyzywienia, w tym sniadania, obiady i kolacje, ktore są przygotowywane przez naszych szefow kuchni z pasja i zaangazowaniem. " +
                     "Nasza restauracja oferuje dania kuchni fusion, a nasza karta drinkow to prawdziwe arcydziela mixologii.', ?, 0)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, data.get(0));
-            preparedStatement.setString(2, data.get(1));
-            preparedStatement.setString(3, data.get(2));
-            preparedStatement.setInt(4, Integer.parseInt(data.get(3)));
-            preparedStatement.setDate(5, Date.valueOf(data.get(6)));
-            preparedStatement.setDate(6, Date.valueOf(data.get(7)));
-            preparedStatement.setInt(7, Integer.parseInt(data.get(4)));
-            preparedStatement.setString(8, data.get(5));
+            preparedStatement.setString(1, data.get(1));
+            preparedStatement.setString(2, data.get(2));
+            preparedStatement.setString(3, data.get(3));
+            preparedStatement.setInt(4, Integer.parseInt(data.get(4)));
+            preparedStatement.setDate(5, Date.valueOf(data.get(7)));
+            preparedStatement.setDate(6, Date.valueOf(data.get(8)));
+            preparedStatement.setInt(7, Integer.parseInt(data.get(5)));
+            preparedStatement.setString(8, data.get(6));
             preparedStatement.executeUpdate();
             preparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał wycieczkę do : " + data.get(0) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał wycieczkę do : " + data.get(1) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -192,7 +252,7 @@ public class Database {
             String selectIDTripQuery = "SELECT id_trip FROM reservations " +
                     "WHERE id_reservation = ?";
             PreparedStatement idTripPreparedState = connection.prepareStatement(selectIDTripQuery);
-            idTripPreparedState.setInt(1, Integer.parseInt(data.get(0)));
+            idTripPreparedState.setInt(1, Integer.parseInt(data.get(1)));
             ResultSet result = idTripPreparedState.executeQuery();
             int id_trip = 0;
             while(result.next()) {
@@ -200,7 +260,7 @@ public class Database {
             }
             String query = "DELETE FROM reservations WHERE id_reservation = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setInt(1, Integer.parseInt(data.get(0)));
+            preparedState.setInt(1, Integer.parseInt(data.get(1)));
             preparedState.executeUpdate();
             String tripsUpdateQuery = "UPDATE trips SET reserved = 0 WHERE id_trip = ?";
             PreparedStatement updateTripsPreparedStatement = connection.prepareStatement(tripsUpdateQuery);
@@ -209,7 +269,7 @@ public class Database {
             updateTripsPreparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + data.get(0) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął rezerwację o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -251,20 +311,20 @@ public class Database {
         try {
             String query = "INSERT INTO reservations (id_reservation, id_trip, ID_user, people_quantity, insurance) VALUES (reservations_seq.nextval, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, Integer.parseInt(data.get(0)));
-            preparedStatement.setInt(2, Integer.parseInt(data.get(1)));
-            preparedStatement.setInt(3, Integer.parseInt(data.get(2)));
-            preparedStatement.setString(4, data.get(3));
+            preparedStatement.setInt(1, Integer.parseInt(data.get(1)));
+            preparedStatement.setInt(2, Integer.parseInt(data.get(2)));
+            preparedStatement.setInt(3, Integer.parseInt(data.get(3)));
+            preparedStatement.setString(4, data.get(4));
             preparedStatement.executeUpdate();
             preparedStatement.close();
             String tripsUpdateQuery = "UPDATE trips SET reserved = 1 WHERE id_trip = ?";
             PreparedStatement updateTripsPreparedStatement = connection.prepareStatement(tripsUpdateQuery);
-            updateTripsPreparedStatement.setInt(1, Integer.parseInt(data.get(0)));
+            updateTripsPreparedStatement.setInt(1, Integer.parseInt(data.get(1)));
             updateTripsPreparedStatement.executeUpdate();
             updateTripsPreparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał rezerwację wycieczki o ID: " + Integer.parseInt(data.get(0)) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał rezerwację wycieczki o ID: " + Integer.parseInt(data.get(1)) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -277,11 +337,11 @@ public class Database {
         try{
             String query = "DELETE FROM trips WHERE id_trip = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setInt(1, Integer.parseInt(data.get(0)));
+            preparedState.setInt(1, Integer.parseInt(data.get(1)));
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + data.get(0) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -296,15 +356,15 @@ public class Database {
                     "SET city = ?, country = ?, price_per_person = ?, people_limit = ? " +
                     "WHERE id_trip = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setString(1, data.get(1));
-            preparedState.setString(2, data.get(2));
-            preparedState.setInt(3, Integer.parseInt(data.get(3)));
-            preparedState.setInt(4, Integer.parseInt(data.get(4)));
-            preparedState.setInt(5, Integer.parseInt(data.get(0)));
+            preparedState.setString(1, data.get(2));
+            preparedState.setString(2, data.get(3));
+            preparedState.setInt(3, Integer.parseInt(data.get(4)));
+            preparedState.setInt(4, Integer.parseInt(data.get(5)));
+            preparedState.setInt(5, Integer.parseInt(data.get(1)));
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane wycieczki o ID: " + data.get(0) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane wycieczki o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -380,12 +440,12 @@ public class Database {
         try{
             String query = "UPDATE users SET password = ? WHERE id_user = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setString(1, data.get(0));
-            preparedState.setInt(2, Integer.parseInt(data.get(1)));
+            preparedState.setString(1, data.get(1));
+            preparedState.setInt(2, Integer.parseInt(data.get(2)));
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zmienił hasło użytkownika o ID: " + data.get(1) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zmienił hasło użytkownika o ID: " + data.get(2) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -398,37 +458,40 @@ public class Database {
         try{
             String query = "DELETE FROM users WHERE id_user = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setInt(1, Integer.parseInt(data.get(0)));
+            preparedState.setInt(1, Integer.parseInt(data.get(1)));
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął klienta o ID: " + data.get(0) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął klienta o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
     /**
-     * Metoda zapisująca do bazy danych nowe dane edytowanego klienta
+     * Metoda zapisująca do bazy nowych danych nowe dane edytowanego użytkownika
      */
-    public void editClient() {
+    public void editData() {
         try{
             String query = "UPDATE users " +
                     "SET firstName = ?, lastName = ?, email = ?, phoneNumber = ? " +
                     "WHERE id_user = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setString(1, data.get(0));
-            preparedState.setString(2, data.get(1));
-            preparedState.setString(3, data.get(2));
-            preparedState.setString(4, data.get(3));
-            preparedState.setInt(5, Integer.parseInt(data.get(4)));
+            preparedState.setString(1, data.get(1));
+            preparedState.setString(2, data.get(2));
+            preparedState.setString(3, data.get(3));
+            preparedState.setInt(4, Integer.parseInt(data.get(4)));
+            preparedState.setInt(5, Integer.parseInt(data.get(5)));
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane klienta o ID: " + data.get(0) + ".");
+            if(Boolean.parseBoolean(data.get(6)))
+                new LogsAdmins("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane klienta o ID: " + data.get(5) + ".");
+            else
+                new LogsClients("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Klient o ID: " + data.get(5) + " zedytował swoje dane.");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("com.server.Database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
     /**
@@ -438,7 +501,7 @@ public class Database {
         try{
             String adminQuery = "SELECT firstName FROM users WHERE email = ?";
             PreparedStatement adminPreparedState = connection.prepareStatement(adminQuery);
-            adminPreparedState.setString(1, data.get(0));
+            adminPreparedState.setString(1, data.get(1));
             ResultSet resultAdmin = adminPreparedState.executeQuery();
             if(resultAdmin.next()){
                 returningData.add(resultAdmin.getString("firstName"));
@@ -529,7 +592,7 @@ public class Database {
         try {
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
-            emailPreparedState.setString(1, data.get(3));
+            emailPreparedState.setString(1, data.get(4));
             ResultSet result = emailPreparedState.executeQuery();
             if (result.next()) {
                 returningData.add("Tak");
@@ -538,21 +601,22 @@ public class Database {
                 returningData.add("Nie");
                 String query = "INSERT INTO users (ID_user, email, password, firstName, lastName, phoneNumber, userLogged) VALUES (users_seq.nextval, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, data.get(3));
-                preparedStatement.setString(2, data.get(4));
-                preparedStatement.setString(3, data.get(0));
-                preparedStatement.setString(4, data.get(1));
-                preparedStatement.setString(5, data.get(2));
+                preparedStatement.setString(1, data.get(4));
+                preparedStatement.setString(2, data.get(5));
+                preparedStatement.setString(3, data.get(1));
+                preparedStatement.setString(4, data.get(2));
+                preparedStatement.setString(5, data.get(3));
                 preparedStatement.setInt(6, 0);
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
                 String commit = "COMMIT";
                 statement.executeUpdate(commit);
-                if(data.get(5).equals("true")){
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał użytkownika o e-mailu: " + data.get(3) + ".");
+                if(data.get(6).equals("true")){
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał użytkownika o e-mailu: " + data.get(4) + ".");
                 }
             }
             emailPreparedState.close();
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał klienta o emailu: " + data.get(4) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
@@ -560,6 +624,8 @@ public class Database {
     }
     /**
      * Metoda wypełniająca listę zawierającą dane zwracane do serwera
+     * @param startPageMessage wiadomość wysyłana do klasy StartPage
+     * @param isExisting informacja, czy użytkownik już istnieje w bazie danych
      */
     public void fillLoginReturningData(String startPageMessage, boolean isExisting){
         if(!isExisting) {
@@ -579,21 +645,21 @@ public class Database {
             String startPageMessage = "";
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
-            emailPreparedState.setString(1, data.get(0));
+            emailPreparedState.setString(1, data.get(1));
             ResultSet result = emailPreparedState.executeQuery();
             if(result.next()){
                 returningData.add("true");
                 String passwordQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
                 PreparedStatement passwordPreparedState = connection.prepareStatement(passwordQuery);
-                passwordPreparedState.setString(1, data.get(1));
-                passwordPreparedState.setString(2, data.get(0));
+                passwordPreparedState.setString(1, data.get(2));
+                passwordPreparedState.setString(2, data.get(1));
                 ResultSet resultPassword = passwordPreparedState.executeQuery();
                 if(resultPassword.next()){
                     returningData.add("true");
                     if(resultPassword.getInt("userLogged") == 0) {
                         String loggingQuery = "UPDATE users SET userLogged = 1 WHERE email = ?";
                         PreparedStatement loggingPreparedState = connection.prepareStatement(loggingQuery);
-                        loggingPreparedState.setString(1, data.get(0));
+                        loggingPreparedState.setString(1, data.get(1));
                         loggingPreparedState.execute();
                         String commit = "COMMIT";
                         statement.executeUpdate(commit);
@@ -601,31 +667,31 @@ public class Database {
                         if (resultPass.equals("admin")) {
                             returningData.add("true");
                             returningData.add("false");
-                            returningData.add(Integer.toString(resultPassword.getInt("ID_user"))); //offerUserID
-                            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + data.get(0) + " zalogował się.");
+                            returningData.add(Integer.toString(resultPassword.getInt("ID_user")));
+                            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + data.get(1) + " zalogował się.");
                         } else {
                             returningData.add("false");
                             returningData.add("true");
-                            returningData.add(Integer.toString(resultPassword.getInt("ID_user"))); //offerUserID
-                            new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + data.get(0) + " zalogował się.");
+                            returningData.add(Integer.toString(resultPassword.getInt("ID_user")));
+                            new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + data.get(1) + " zalogował się.");
                         }
                         returningData.add(startPageMessage);
                     }
                     else {
                         startPageMessage = "Użytkownik jest już zalogowany.";
                         fillLoginReturningData(startPageMessage, true);
-                        new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(0)+".");
+                        new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(1)+".");
                     }
                 }
                 else{
                     returningData.add("false");
                     fillLoginReturningData(startPageMessage, true);
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(0)+".");
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(1)+".");
                 }
             }
             else{
                 fillLoginReturningData(startPageMessage, false);
-                new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(0)+".");
+                new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(1)+".");
             }
         }catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -646,7 +712,7 @@ public class Database {
                     "JOIN users ON users.ID_user = reservations.ID_user " +
                     "WHERE email = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
-            preparedState.setString(1, data.get(0));
+            preparedState.setString(1, data.get(1));
             ResultSet result = preparedState.executeQuery();
             while(result.next()){
                 returningData.add(Integer.toString(result.getInt("id_reservation")));
@@ -680,20 +746,21 @@ public class Database {
         try {
             String query = "UPDATE users SET userLogged = 0 WHERE email = ?";
             PreparedStatement loggingPreparedState = connection.prepareStatement(query);
-            loggingPreparedState.setString(1, data.get(0));
+            loggingPreparedState.setString(1, data.get(1));
             loggingPreparedState.execute();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
             String query2 = "SELECT userRank FROM users WHERE email = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query2);
-            preparedStatement.setString(1, data.get(0));
+            preparedStatement.setString(1, data.get(1));
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()) {
                 if(resultSet.getString("userRank").equals("admin"))
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + data.get(0) + " wylogował się.");
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + data.get(1) + " wylogował się.");
                 else
-                    new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + data.get(0) + " wylogował się.");
+                    new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + data.get(1) + " wylogował się.");
             }
+
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());

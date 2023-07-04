@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.LogsClients;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -79,17 +80,9 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     List<String> destination = new ArrayList<>();
     /**
-     * Atrybut określający rozmiar listy przechowującej kierunki podróży
-     */
-    int destinationListLength;
-    /**
      * Atrybut będący listą z miejscami wylotu
      */
     List<String> departure = new ArrayList<>();
-    /**
-     * Atrybut określający rozmiar listy przechowującej miejsca wylotu
-     */
-    int departureListLength;
     /**
      * Atrybut będący numerem zaznaczonego wiersza w tabeli z wycieczkami
      */
@@ -115,10 +108,6 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private Client client;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private Validation validation;
-    /**
      * Atrybut określający email klienta
      */
     private String email;
@@ -135,7 +124,6 @@ public class SearchEngine extends javax.swing.JFrame {
     SearchEngine(Client client){
         this.client = client;
         email = client.getUserEmail();
-        validation = new Validation();
         initComponents();
         childrenQuantity = 0;
         adultsQuantity = 1;
@@ -146,13 +134,15 @@ public class SearchEngine extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
+                    data.clear();
+                    data.add("logOut");
                     data.add(email);
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsClients("SearchEngine", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -161,9 +151,11 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda pobierająca kierunki podróży z klasy Client a następnie dodająca je do GUI
      */
     private void getDestination() {
+        data.clear();
+        data.add("getDestination");
         destination.clear();
-        Client client1 = new Client("getDestination",new ArrayList<>());
-        destination.addAll(client1.getSearchEngineDestination());
+        Client client1 = new Client(data);
+        destination.addAll(client1.getReturningData());
         destinationChoice.removeAllItems();
         for(String s : destination)
             destinationChoice.addItem(s);
@@ -172,17 +164,21 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda pobierająca miejsca wylotu z klasy Client a następnie dodająca je do GUI
      */
     private void getDeparture() {
+        data.clear();
+        data.add("getDeparture");
         departure.clear();
-        Client client1 = new Client("getDeparture",new ArrayList<>());
-        departure.addAll(client1.getSearchEngineDeparture());
+        Client client1 = new Client(data);
+        departure.addAll(client1.getReturningData());
         departureCityChoice.removeAllItems();
         for(String s : departure)
             departureCityChoice.addItem(s);
     }
 
     private void generateData() {
-        Client client2 = new Client("tripsListPopulation",new ArrayList<>());
-        tripsData.addAll(client2.getTripsList());
+        data.clear();
+        data.add("tripsListPopulation");
+        Client client2 = new Client(data);
+        tripsData.addAll(client2.getReturningData());
         getDestination();
         getDeparture();
     }
@@ -205,11 +201,10 @@ public class SearchEngine extends javax.swing.JFrame {
     /**
      * Metoda wyświetlająca pokaz slajdów
      */
-    private void showPhotos()
-    {
-        imagesPanel.setIcon(new javax.swing.ImageIcon("src/img/photo1.jpg"));
+    private void showPhotos() {
+        imagesPanel.setIcon(new javax.swing.ImageIcon("img\\photo1.jpg"));
         Timer time = new Timer(3000, e -> {
-            imagesPanel.setIcon(new ImageIcon("src/img/photo" + counter + ".jpg"));
+            imagesPanel.setIcon(new ImageIcon("img\\photo" + counter + ".jpg"));
             if (counter == 5) counter = 0;
             counter++;
         });
@@ -728,8 +723,10 @@ public class SearchEngine extends javax.swing.JFrame {
                 if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
                         JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
                     dispose();
+                    data.clear();
+                    data.add("logOut");
                     data.add(client.getUserEmail());
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                     new StartPage().setVisible(true);
                 }
@@ -789,10 +786,12 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String number = leaveNumber.getText();
-        if(validation.phoneNumberIsValid(number)){
+        if(Validation.phoneNumberIsValid(number)){
             leaveNumber.setText("");
+            phoneNumberData.clear();
+            phoneNumberData.add("sendNumbers");
             phoneNumberData.add(number);
-            new Client("sendNumbers",phoneNumberData);
+            new Client(phoneNumberData);
             phoneNumberData.clear();
         }
         else {
@@ -928,6 +927,7 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda odpowiadająca za obliczenie różnicy dni pomiędzy datami
      * @param d1 pierwsza data
      * @param d2 druga data
+     * @return liczba dni różnicy
      */
     public static long getDifferenceDays(Date d1, Date d2) {
         long diff = d2.getTime() - d1.getTime();
@@ -994,7 +994,7 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu i przyjazdu
      */
     private boolean performDateValidation() {
-        if(!validation.dateIsValid(departureTextField.getText()) || !validation.dateIsValid(arrivalTextField.getText())) {
+        if(!Validation.dateIsValid(departureTextField.getText()) || !Validation.dateIsValid(arrivalTextField.getText())) {
             JOptionPane.showMessageDialog(null, "Niepoprawnie wpisana data.", "Informacja", JOptionPane.ERROR_MESSAGE);
             return false;
         }

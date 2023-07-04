@@ -62,14 +62,6 @@ public class Clients extends javax.swing.JFrame {
      */
     List<String> clientsData = new ArrayList<>();
     /**
-     * Atrybut określający rozmiar listy przechowującej dane zwracane z klasy Client
-     */
-    int clientsDataListLength;
-    /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private Validation validation;
-    /**
      * Atrybut będący obiektem klasy Client
      */
     private Client client;
@@ -96,7 +88,6 @@ public class Clients extends javax.swing.JFrame {
         this.client = client;
         this.email = client.getUserEmail();
         this.adminName = adminName;
-        validation = new Validation();
         initComponents();
         generateData();
         populateTable();
@@ -105,14 +96,16 @@ public class Clients extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
+                    data.clear();
+                    data.add("logOut");
                     data.add(email);
-                    new Client("logOut",data);
+                    new Client(data);
                     data.clear();
                     dispose();
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    new LogsAdmins("Clients", "info", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
+                    new LogsAdmins("Clients", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -347,23 +340,23 @@ public class Clients extends javax.swing.JFrame {
         clientsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
         jScrollPane1.setViewportView(clientsTable);
 
-        searchClientLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13)); // NOI18N
+        searchClientLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         searchClientLabel.setText("Wyszukaj klienta po e-mailu");
 
         addClientButton.setBackground(new java.awt.Color(241, 227, 185));
-        addClientButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13)); // NOI18N
+        addClientButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
         addClientButton.setText("+ Dodaj Klienta");
         addClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addClientButton.addActionListener(this::addClientButtonActionPerformed);
 
         deleteClientButton.setBackground(new java.awt.Color(241, 227, 185));
-        deleteClientButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13)); // NOI18N
+        deleteClientButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         deleteClientButton.setText("Usuń Klienta");
         deleteClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteClientButton.addActionListener(this::deleteClientButtonActionPerformed);
 
         editClientButton.setBackground(new java.awt.Color(241, 227, 185));
-        editClientButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13)); // NOI18N
+        editClientButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         editClientButton.setText("Edytuj Klienta");
         editClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editClientButton.addActionListener(this::editClientButtonActionPerformed);
@@ -373,7 +366,7 @@ public class Clients extends javax.swing.JFrame {
         wrongEmailLabel.setPreferredSize(new java.awt.Dimension(222, 16));
 
         editPasswordButton.setBackground(new java.awt.Color(241, 227, 185));
-        editPasswordButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13)); // NOI18N
+        editPasswordButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         editPasswordButton.setText("Zmień hasło klienta");
         editPasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editPasswordButton.addActionListener(this::editPasswordButtonActionPerformed);
@@ -471,8 +464,9 @@ public class Clients extends javax.swing.JFrame {
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
+        data.add("logOut");
         data.add(email);
-        new Client("logOut",data);
+        new Client(data);
         data.clear();
         dispose();
         new StartPage().setVisible(true);
@@ -504,8 +498,10 @@ public class Clients extends javax.swing.JFrame {
      * Metoda pobierająca odpowiednie dane z klasy Client
      */
     private void generateData(){
-        Client client1 =  new Client("clientsUpdate",new ArrayList<>());
-        clientsData.addAll(client1.getClientsList());
+        data.clear();
+        data.add("clientsUpdate");
+        Client client1 =  new Client(data);
+        clientsData.addAll(client1.getReturningData());
     }
     /**
      * Metoda wypełniająca tabelę przechowującą klientów
@@ -526,7 +522,7 @@ public class Clients extends javax.swing.JFrame {
      */
     private void performEmailValidation(){
         String emailFromTextField = searchClientTextField.getText();
-        if(validation.emailIsValid(emailFromTextField))
+        if(Validation.emailIsValid(emailFromTextField))
             wrongEmailLabel.setText("");
         else
             wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
@@ -578,8 +574,9 @@ public class Clients extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
         else {
             data.clear();
+            data.add("deleteClient");
             data.add(model.getValueAt(clientsTable.getSelectedRow(), 0).toString());
-            new Client("deleteClient",data);
+            new Client(data);
             data.clear();
             model.removeRow(clientsTable.getSelectedRow());
         }
@@ -610,12 +607,14 @@ public class Clients extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
                 data.clear();
+                data.add("editClient");
                 data.add(firstName);
                 data.add(lastName);
                 data.add(email);
                 data.add(phoneNumber);
                 data.add(Integer.toString(id));
-                new Client("editClient",data);
+                data.add(String.valueOf(client.getStartPageAdminLogged()));
+                new Client(data);
                 data.clear();
             }
         }

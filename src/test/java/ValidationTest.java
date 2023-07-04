@@ -2,107 +2,139 @@ import org.junit.jupiter.api.Test;
 import com.client.Validation;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+/**
+ * Klasa zawierająca pola i metody testujące klasę Validation
+ */
 public class ValidationTest {
-    Validation validation = new Validation();
+    /**
+     * Testuje walidację emaila
+     */
     @Test
     public void testEmailIsValid() {
-        assertTrue(validation.emailIsValid("test@example.com"));
-        assertFalse(validation.emailIsValid("invalidemail"));
-        assertFalse(validation.emailIsValid("test@.com"));
+        assertTrue(Validation.emailIsValid("test@example.com"));
+        assertFalse(Validation.emailIsValid("invalidemail"));
+        assertFalse(Validation.emailIsValid("test@.com"));
     }
-
+    /**
+     * Testuje walidację hasła
+     */
     @Test
     public void testPasswordIsValid() {
-        assertTrue(validation.passwordIsValid("P@ssw0rd"));
-        assertFalse(validation.passwordIsValid("weakpassword"));
-        assertFalse(validation.passwordIsValid("123456789"));
+        assertTrue(Validation.passwordIsValid("P@ssw0rd"));
+        assertFalse(Validation.passwordIsValid("weakpassword"));
+        assertFalse(Validation.passwordIsValid("123456789"));
     }
-
+    /**
+     * Testuje walidację numeru telefonu
+     */
     @Test
     public void testPhoneNumberIsValid() {
-        assertTrue(validation.phoneNumberIsValid("1234567890"));
-        assertFalse(validation.phoneNumberIsValid("123"));
-        assertFalse(validation.phoneNumberIsValid("invalidphone"));
+        assertTrue(Validation.phoneNumberIsValid("1234567890"));
+        assertFalse(Validation.phoneNumberIsValid("123"));
+        assertFalse(Validation.phoneNumberIsValid("invalidphone"));
     }
-
+    /**
+     * Testuje walidację imienia
+     */
     @Test
     public void testFirstNameIsValid() {
-        assertTrue(validation.firstNameIsValid("John"));
-        assertFalse(validation.firstNameIsValid("123"));
+        assertTrue(Validation.firstNameIsValid("John"));
+        assertFalse(Validation.firstNameIsValid("123"));
     }
-
+    /**
+     * Testuje walidację nazwiska
+     */
     @Test
     public void testLastNameIsValid() {
-        assertTrue(validation.lastNameIsValid("Doe"));
-        assertFalse(validation.lastNameIsValid("456"));
+        assertTrue(Validation.lastNameIsValid("Doe"));
+        assertFalse(Validation.lastNameIsValid("456"));
     }
-
+    /**
+     * Testuje walidację kraju lub miasta
+     */
     @Test
     public void testCountryOrCityIsValid() {
-        assertTrue(validation.countryOrCityIsValid("USA"));
-        assertFalse(validation.countryOrCityIsValid("123"));
+        assertTrue(Validation.countryOrCityIsValid("USA"));
+        assertFalse(Validation.countryOrCityIsValid("123"));
     }
-
+    /**
+     * Testuje walidację nazwy hotelu
+     */
     @Test
     public void testHotelNameIsValid() {
-        assertTrue(validation.hotelNameIsValid("Hilton"));
-        assertFalse(validation.hotelNameIsValid("_1"));
+        assertTrue(Validation.hotelNameIsValid("Hilton"));
+        assertFalse(Validation.hotelNameIsValid("_1"));
     }
-
+    /**
+     * Testuje walidację limitu osób
+     */
     @Test
     public void testPeopleLimitIsValid() {
-        assertTrue(validation.peopleLimitIsValid("5"));
-        assertFalse(validation.peopleLimitIsValid("invalid"));
-        assertFalse(validation.peopleLimitIsValid("0"));
+        assertTrue(Validation.peopleLimitIsValid("5"));
+        assertFalse(Validation.peopleLimitIsValid("invalid"));
+        assertFalse(Validation.peopleLimitIsValid("0"));
     }
-
+    /**
+     * Testuje walidację ceny
+     */
     @Test
     public void testPriceIsValid() {
-        assertTrue(validation.priceIsValid("99.99"));
-        assertFalse(validation.priceIsValid("invalid"));
-        assertFalse(validation.priceIsValid("-10.50"));
+        assertTrue(Validation.priceIsValid("99.99"));
+        assertFalse(Validation.priceIsValid("invalid"));
+        assertFalse(Validation.priceIsValid("-10.50"));
     }
-
+    /**
+     * Testuje walidację imienia i nazwiska
+     */
     @Test
     public void testFirstNameAndLastNameIsValid() {
-        assertTrue(validation.firstNameAndLastNameIsValid("John Doe"));
-        assertFalse(validation.firstNameAndLastNameIsValid("123"));
-        assertFalse(validation.firstNameAndLastNameIsValid("_invalid name"));
+        assertTrue(Validation.firstNameAndLastNameIsValid("John Doe"));
+        assertFalse(Validation.firstNameAndLastNameIsValid("123"));
+        assertFalse(Validation.firstNameAndLastNameIsValid("_invalid name"));
     }
-
+    /**
+     * Testuje walidację numeru karty
+     */
     @Test
     public void testCreditCardNumberIsValid() {
-        assertTrue(validation.creditCardNumberIsValid("1234567890123456"));
-        assertFalse(validation.creditCardNumberIsValid("invalid"));
-        assertFalse(validation.creditCardNumberIsValid("1234"));
+        assertTrue(Validation.creditCardNumberIsValid("1234567890123456"));
+        assertFalse(Validation.creditCardNumberIsValid("invalid"));
+        assertFalse(Validation.creditCardNumberIsValid("1234"));
     }
-
+    /**
+     * Testuje walidację cvv
+     */
     @Test
     public void testCvvIsValid() {
-        assertTrue(validation.cvvIsValid("123"));
-        assertFalse(validation.cvvIsValid("invalid"));
-        assertFalse(validation.cvvIsValid("12"));
+        assertTrue(Validation.cvvIsValid("123"));
+        assertFalse(Validation.cvvIsValid("invalid"));
+        assertFalse(Validation.cvvIsValid("12"));
     }
-
+    /**
+     * Testuje walidację miesiąca
+     */
     @Test
     public void testMonthIsValid() {
-        assertTrue(validation.monthIsValid("12"));
-        assertFalse(validation.monthIsValid("invalid"));
-        assertFalse(validation.monthIsValid("0"));
+        assertTrue(Validation.monthIsValid("12"));
+        assertFalse(Validation.monthIsValid("invalid"));
+        assertFalse(Validation.monthIsValid("0"));
     }
-
+    /**
+     * Testuje walidację roku
+     */
     @Test
     public void testYearIsValid() {
-        assertTrue(validation.yearIsValid("2023"));
-        assertFalse(validation.yearIsValid("invalid"));
-        assertFalse(validation.yearIsValid("1000"));
+        assertTrue(Validation.yearIsValid("2023"));
+        assertFalse(Validation.yearIsValid("invalid"));
+        assertFalse(Validation.yearIsValid("1000"));
     }
-
+    /**
+     * Testuje walidację daty
+     */
     @Test
     public void testDateIsValid() {
-        assertTrue(validation.dateIsValid("03/06/2023"));
-        assertFalse(validation.dateIsValid("invalid"));
-        assertFalse(validation.dateIsValid("2023/06/03"));
+        assertTrue(Validation.dateIsValid("03/06/2023"));
+        assertFalse(Validation.dateIsValid("invalid"));
+        assertFalse(Validation.dateIsValid("2023/06/03"));
     }
 }

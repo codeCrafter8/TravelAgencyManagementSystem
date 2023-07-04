@@ -50,10 +50,6 @@ public class Payment extends javax.swing.JFrame {
      */
     private boolean methodChoosed = false;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    Validation validation;
-    /**
      * Atrybut będący id wycieczki
      */
     private int idTrip;
@@ -85,7 +81,6 @@ public class Payment extends javax.swing.JFrame {
         this.insurance = insurance;
         this.peopleQuantity = peopleQuantity;
         this.clientId = client.getOfferClientID();
-        validation = new Validation();
         initComponents();
     }
     /**
@@ -137,15 +132,15 @@ public class Payment extends javax.swing.JFrame {
 
         choicePanel.setBackground(new java.awt.Color(151, 123, 92));
 
-        mastercard.setIcon(new javax.swing.ImageIcon("src/img/mastercard.png"));
+        mastercard.setIcon(new javax.swing.ImageIcon("img\\mastercard.png"));
         mastercard.addActionListener(this::mastercardActionPerformed);
         mastercard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        visa.setIcon(new javax.swing.ImageIcon("src/img/visa.png"));
+        visa.setIcon(new javax.swing.ImageIcon("img\\visa.png"));
         visa.addActionListener(this::visaActionPerformed);
         visa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        discover.setIcon(new javax.swing.ImageIcon("src/img/discover-logo.png"));
+        discover.setIcon(new javax.swing.ImageIcon("img\\discover-logo.png"));
         discover.addActionListener(this::discoverActionPerformed);
         discover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -229,7 +224,7 @@ public class Payment extends javax.swing.JFrame {
 
         cardNumberData.setBackground(new java.awt.Color(242, 242, 242));
 
-        cvv.setFont(new java.awt.Font("sansserif", Font.BOLD, 12)); // NOI18N
+        cvv.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
         cvv.setText("CVV:");
 
         javax.swing.GroupLayout numberPanelLayout = new javax.swing.GroupLayout(numberPanel);
@@ -262,19 +257,19 @@ public class Payment extends javax.swing.JFrame {
         );
 
         validityDate.setBackground(new java.awt.Color(210, 180, 140));
-        validityDate.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
+        validityDate.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         validityDate.setText("Termin ważności");
         validityDate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         validityDate.setOpaque(true);
 
         validityDatePanel.setBackground(new java.awt.Color(151, 123, 92));
 
-        month.setFont(new java.awt.Font("sansserif", Font.BOLD, 12)); // NOI18N
+        month.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
         month.setText("Miesiąc:");
 
         monthData.setBackground(new java.awt.Color(242, 242, 242));
 
-        year.setFont(new java.awt.Font("sansserif", Font.BOLD, 12)); // NOI18N
+        year.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
         year.setText("Rok:");
 
         javax.swing.GroupLayout validityDatePanelLayout = new javax.swing.GroupLayout(validityDatePanel);
@@ -306,7 +301,7 @@ public class Payment extends javax.swing.JFrame {
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        payButton.setIcon(new javax.swing.ImageIcon("src/img/pay.png"));
+        payButton.setIcon(new javax.swing.ImageIcon("img\\pay.png"));
         payButton.addActionListener(this::payButtonActionPerformed);
         payButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -370,27 +365,29 @@ public class Payment extends javax.swing.JFrame {
     private void payButtonActionPerformed(ActionEvent evt) {
         if(!methodChoosed)
             mistakeSpace.setText("Nie wybrano metody płatności.");
-        else if(!validation.firstNameAndLastNameIsValid(firstNameLastNameData.getText())) {
+        else if(!Validation.firstNameAndLastNameIsValid(firstNameLastNameData.getText())) {
             mistakeSpace.setText("Nieprawidłowe imię i nazwisko.");
         }
-        else if(!validation.creditCardNumberIsValid(cardNumberData.getText())) {
+        else if(!Validation.creditCardNumberIsValid(cardNumberData.getText())) {
             mistakeSpace.setText("Nieprawidłowy numer karty kredytowej.");
         }
-        else if(!validation.cvvIsValid(cvvData.getText())) {
+        else if(!Validation.cvvIsValid(cvvData.getText())) {
             mistakeSpace.setText("Nieprawidłowy numer cvv.");
         }
-        else if(!validation.monthIsValid(monthData.getText())) {
+        else if(!Validation.monthIsValid(monthData.getText())) {
             mistakeSpace.setText("Nieprawidłowy miesiąc ważności karty kredytowej.");
         }
-        else if(!validation.yearIsValid(yearData.getText())) {
+        else if(!Validation.yearIsValid(yearData.getText())) {
             mistakeSpace.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {
+            data.clear();
+            data.add("addReservation");
             data.add(Integer.toString(idTrip));
             data.add(Integer.toString(clientId));
             data.add(Integer.toString(peopleQuantity));
             data.add(insurance);
-            new Client("addReservation",data);
+            new Client(data);
             data.clear();
             dispose();
         }

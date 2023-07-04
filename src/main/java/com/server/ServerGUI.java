@@ -108,13 +108,8 @@ public class ServerGUI extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda ustawiająca zawartość komponentu wyświetlającego liczbę zalogowanych użytkowników
-     */
-    public void setConnectedUsersNumberLabel(int usersCounter){
-        connectedUsersNumberLabel.setText(String.valueOf(usersCounter));
-    }
-    /**
      * Metoda ustawiająca zmienną, która określa czy serwer jest uruchomiony
+     * @param running określa, czy serwer jest uruchomiony
      */
     public void setRunning(boolean running){
         this.running = running;
@@ -442,7 +437,7 @@ public class ServerGUI extends javax.swing.JFrame {
             serverSocket.setReuseAddress(true);
             while (running) {
                 socket = serverSocket.accept();
-                SwingWorker<Void, Void> worker = new BackgroundHandler();
+                SwingWorker<Void, Void> worker = new GUIHandler();
                 worker.execute();
             }
         }
@@ -475,113 +470,52 @@ public class ServerGUI extends javax.swing.JFrame {
     /**
      * Klasa pozwalająca na działanie wątków niezależnie od GUI serwera
      */
-    class BackgroundHandler extends SwingWorker<Void, Void> {
+    class GUIHandler extends SwingWorker<Void, Void> implements Serializable{
+        /**
+         * Przesłonięcie metody konwertującej dane na typ łańcucha znaków
+         */
+        @Override
+        public String toString(){
+            return super.toString();
+        }
         /**
          * Klasa implementująca interfejs Runnable tak, aby można było tworzyć nowe wątki na serwerze
          */
-        private class ClientThread implements Runnable{
+        private class ClientThread implements Runnable {
             /**
              * Atrybut będący listą zawierającą dane przekazywane z serwera do bazy danych
              */
             private final List<String> data = new ArrayList<>();
             /**
-             * Atrybut będący listą zawierającą dane zwracane z bazy danych do serwera, które są następnie przekazywane do klienta
+             * Metoda wysyłająca dane do klienta
              */
-            public List<String> returningData = new ArrayList<>();
+            private void sendData() {
+                try {
+                    OutputStream outputStream = socket.getOutputStream();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+                    Database database = new Database(data.get(0), data);
+                    objectOutputStream.writeObject(database.getReturningData());
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    outputStream.write(byteArray);
+                    outputStream.flush();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
             /**
              * Przesłonięcie metody run, obsługującej uruchomiony wątek
              */
             @Override
-            public void run(){
+            public void run() {
                 try {
                     InputStream inputStream = socket.getInputStream();
-                    DataInputStream dataInputStream = new DataInputStream(inputStream);
-                    OutputStream outputStream = socket.getOutputStream();
-                    DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-                    String operation = dataInputStream.readUTF();
-                    Database database;
-                    int listSize;
-                    switch(operation) {
-                        case "login" -> {
-                            listSize = dataInputStream.readInt();
-                            for(int i = 0; i< listSize; i++){
-                                data.add(dataInputStream.readUTF());
-                            }
-                            database = new Database(operation,data);
-                            database.connectWithDatabase();
-                            returningData.addAll(database.getReturningData());
-                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(0)));
-                            dataOutputStream.flush();
-                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(1)));
-                            dataOutputStream.flush();
-                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(2)));
-                            dataOutputStream.flush();
-                            dataOutputStream.writeBoolean(Boolean.parseBoolean(returningData.get(3)));
-                            if(returningData.get(2).equals("true")||returningData.get(3).equals("true"))
-                                setConnectedUsersNumberLabel(Integer.parseInt(connectedUsersNumberLabel.getText())+1);
-                            dataOutputStream.flush();
-                            dataOutputStream.writeUTF(returningData.get(5));
-                            dataOutputStream.flush();
-                            dataOutputStream.writeInt(Integer.parseInt(returningData.get(4)));
-                            dataOutputStream.flush();
-                        }
-                        case "addClient" -> {
-                            listSize = dataInputStream.readInt();
-                            for (int i = 0; i < listSize; i++) {
-                                data.add(dataInputStream.readUTF());
-                            }
-                            data.add(String.valueOf(dataInputStream.readBoolean()));
-                            database = new Database(operation,data);
-                            database.connectWithDatabase();
-                            returningData.addAll(database.getReturningData());
-                            dataOutputStream.writeUTF(returningData.get(0));
-                            dataOutputStream.flush();
-                        }
-                        case "myAccountUpdate", "dashboardUpdate" -> {
-                            listSize = dataInputStream.readInt();
-                            for (int i = 0; i < listSize; i++) {
-                                data.add(dataInputStream.readUTF());
-                            }
-                            database = new Database(operation, data);
-                            database.connectWithDatabase();
-                            returningData.addAll(database.getReturningData());
-                            dataOutputStream.writeInt(returningData.size());
-                            dataOutputStream.flush();
-                            for(String s : returningData){
-                                dataOutputStream.writeUTF(s);
-                                dataOutputStream.flush();
-                            }
-                        }
-                        case "deleteRes", "dataEdition", "deleteTrip", "editTrip", "addTrip", "sendNumbers", "addReservation", "changeClientPassword", "deleteClient", "editClient" -> {
-                            listSize = dataInputStream.readInt();
-                            for(int i=0; i<listSize;i++){
-                                data.add(dataInputStream.readUTF());
-                            }
-                            database = new Database(operation,data);
-                            database.connectWithDatabase();
-                        }
-                        case "tripsListPopulation", "tripsUpdate", "getDestination", "getDeparture", "getNumbers", "resUpdate", "clientsUpdate" -> {
-                            database = new Database(operation,new ArrayList<>());
-                            database.connectWithDatabase();
-                            returningData.addAll(database.getReturningData());
-                            dataOutputStream.writeInt(returningData.size());
-                            dataOutputStream.flush();
-                            for (String s : returningData) {
-                                dataOutputStream.writeUTF(s);
-                                dataOutputStream.flush();
-                            }
-                        }
-                        case "logOut" -> {
-                            setConnectedUsersNumberLabel(Integer.parseInt(connectedUsersNumberLabel.getText())-1);
-                            String email = dataInputStream.readUTF();
-                            data.add(email);
-                            database = new Database(operation,data);
-                            database.connectWithDatabase();
-                        }
-                    }
-                    returningData.clear();
+                    byte[] bytes = new byte[2048];
+                    Object object = new ObjectInputStream(new ByteArrayInputStream(bytes, 0, inputStream.read(bytes))).readObject();
                     data.clear();
-                } catch (Exception e){
+                    data.addAll((List<String>) object);
+                    sendData();
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }

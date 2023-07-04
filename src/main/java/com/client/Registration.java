@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.Logs;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -115,10 +116,6 @@ public class Registration extends javax.swing.JFrame {
      */
     private boolean confirmPasswordCorrect;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private Validation validation;
-    /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
     private final List<String> data = new ArrayList<>();
@@ -142,14 +139,16 @@ public class Registration extends javax.swing.JFrame {
     public Registration(boolean adminLogged, Client client) {
         this.client = client;
         this.adminLogged = adminLogged;
-        validation = new Validation();
         initComponents();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    if(adminLogged)
-                       new Client("logOut",new ArrayList<>());
+                    if(adminLogged) {
+                        data.clear();
+                        data.add("logOut");
+                        new Client(data);
+                    }
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
@@ -168,19 +167,21 @@ public class Registration extends javax.swing.JFrame {
         this.client = client;
         this.adminLogged = adminLogged;
         this.adminName = adminName;
-        validation = new Validation();
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    if(adminLogged)
-                        new Client("logOut",new ArrayList<>());
+                    if(adminLogged) {
+                        data.clear();
+                        data.add("logOut");
+                        new Client(data);
+                    }
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new Logs("Registration", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
                 }
             }
         });
@@ -469,7 +470,7 @@ public class Registration extends javax.swing.JFrame {
             wrongFirstNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            firstNameCorrect = validation.firstNameIsValid(firstName);
+            firstNameCorrect = Validation.firstNameIsValid(firstName);
             if (firstNameCorrect)
                 wrongFirstNameLabel.setText("");
             else
@@ -486,7 +487,7 @@ public class Registration extends javax.swing.JFrame {
             wrongLastNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            lastNameCorrect = validation.lastNameIsValid(lastName);
+            lastNameCorrect = Validation.lastNameIsValid(lastName);
             if (lastNameCorrect)
                 wrongLastNameLabel.setText("");
             else
@@ -498,7 +499,7 @@ public class Registration extends javax.swing.JFrame {
      */
     private void performPhoneNumberValidation(){
         phoneNumber = phoneNumberTextField.getText();
-        phoneNumberCorrect = validation.phoneNumberIsValid(phoneNumber);
+        phoneNumberCorrect = Validation.phoneNumberIsValid(phoneNumber);
         if (phoneNumberCorrect || phoneNumber.equals(""))
             wrongPhoneNumberLabel.setText("");
         else
@@ -514,7 +515,7 @@ public class Registration extends javax.swing.JFrame {
             wrongEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = validation.emailIsValid(email);
+            emailCorrect = Validation.emailIsValid(email);
             if (emailCorrect)
                 wrongEmailLabel.setText("");
             else
@@ -531,7 +532,7 @@ public class Registration extends javax.swing.JFrame {
             wrongPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            passwordCorrect = validation.passwordIsValid(password);
+            passwordCorrect = Validation.passwordIsValid(password);
             if (passwordCorrect)
                 wrongPasswordLabel.setText("");
             else
@@ -564,13 +565,15 @@ public class Registration extends javax.swing.JFrame {
         performPasswordValidation();
         performConfirmPasswordValidation();
         if(firstNameCorrect && lastNameCorrect && phoneNumberCorrect && emailCorrect && passwordCorrect && confirmPasswordCorrect) {
+            data.clear();
+            data.add("addClient");
             data.add(firstName);
             data.add(lastName);
             data.add(phoneNumber);
             data.add(email);
             data.add(password);
-            Client client = new Client("addClient",data);
-            clientExists = client.getRegistrationUserExists();
+            Client client = new Client(data);
+            clientExists = client.getReturningData().get(0);
             if (clientExists.equals("Tak")) {
                 wrongEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
                 data.clear();

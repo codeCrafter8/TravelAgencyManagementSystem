@@ -37,10 +37,10 @@ public class Logs {
      */
     protected void writeToFile(String messageType) {
         try {
-            File folder = new File("com.server.Logs");
+            File folder = new File("logs");
             if (!folder.exists())
                 folder.mkdir();
-            File file = new File("com.server.Logs/com.server.Logs.log");
+            File file = new File("logs/logs.log");
             FileWriter fileWriter = new FileWriter(file, true);
             switch (messageType) {
                 case "fatal" -> log.fatal(Logs.message);

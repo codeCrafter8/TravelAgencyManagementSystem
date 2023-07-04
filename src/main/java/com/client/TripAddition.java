@@ -1,5 +1,6 @@
 package com.client;
 
+import com.server.LogsAdmins;
 import javax.swing.*;
 import java.awt.*;
 import java.text.DateFormat;
@@ -108,10 +109,6 @@ public class TripAddition extends javax.swing.JFrame {
      */
     private boolean peopleLimitCorrect;
     /**
-     * Atrybut będący obiektem klasy Validation
-     */
-    private final Validation validation;
-    /**
      * Atrybut przechowujący kraj
      */
     private String country;
@@ -159,7 +156,6 @@ public class TripAddition extends javax.swing.JFrame {
     public TripAddition(Client client, String adminName) {
         this.client = client;
         this.adminName = adminName;
-        validation = new Validation();
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
         departureCities.add("Krakow");
@@ -171,11 +167,13 @@ public class TripAddition extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
-                    new Client("logOut",new ArrayList<>());
+                    data.clear();
+                    data.add("logOut");
+                    new Client(data);
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
+                    new LogsAdmins("TripAdditon", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
@@ -458,6 +456,7 @@ public class TripAddition extends javax.swing.JFrame {
             String arrival = dateFormat.format(arrivalDate);
             String departure = dateFormat.format(departureDate);
             data.clear();
+            data.add("addTrip");
             data.add(country);
             data.add(city);
             data.add(departureCity);
@@ -466,7 +465,7 @@ public class TripAddition extends javax.swing.JFrame {
             data.add(hotelName);
             data.add(arrival);
             data.add(departure);
-            new Client("addTrip",data);
+            new Client(data);
             data.clear();
             dispose();
             new Trips(client,adminName).setVisible(true);
@@ -508,7 +507,7 @@ public class TripAddition extends javax.swing.JFrame {
             cityCorrect = false;
         }
         else {
-            cityCorrect = validation.countryOrCityIsValid(city);
+            cityCorrect = Validation.countryOrCityIsValid(city);
             if (cityCorrect)
                 wrongCityLabel.setText("");
             else
@@ -544,7 +543,7 @@ public class TripAddition extends javax.swing.JFrame {
             priceCorrect = false;
         }
         else {
-            priceCorrect = validation.priceIsValid(price);
+            priceCorrect = Validation.priceIsValid(price);
             if (priceCorrect)
                 wrongPriceLabel.setText("");
             else
@@ -561,7 +560,7 @@ public class TripAddition extends javax.swing.JFrame {
             peopleLimitCorrect = false;
         }
         else {
-            peopleLimitCorrect = validation.peopleLimitIsValid(peopleLimit);
+            peopleLimitCorrect = Validation.peopleLimitIsValid(peopleLimit);
             if (peopleLimitCorrect)
                 wrongLimitLabel.setText("");
             else
@@ -578,7 +577,7 @@ public class TripAddition extends javax.swing.JFrame {
             hotelNameCorrect = false;
         }
         else {
-            hotelNameCorrect = validation.hotelNameIsValid(hotelName);
+            hotelNameCorrect = Validation.hotelNameIsValid(hotelName);
             if (hotelNameCorrect)
                 wrongHotelNameLabel.setText("");
             else
@@ -595,7 +594,7 @@ public class TripAddition extends javax.swing.JFrame {
             countryCorrect = false;
         }
         else {
-            countryCorrect = validation.countryOrCityIsValid(country);
+            countryCorrect = Validation.countryOrCityIsValid(country);
             if (countryCorrect)
                 wrongCountryLabel.setText("");
             else
