@@ -1,0 +1,108 @@
+[INFO] com.server.Database: [ Mon Jun 12 15:45:45 CEST 2023 ] Administrator zedytował dane klienta o ID: 74.
+[INFO] com.server.Database: [ Mon Jun 12 15:45:45 CEST 2023 ] Administrator zedytował dane klienta o ID: 74.
+[INFO] database: [ Mon Jun 12 15:45:45 CEST 2023 ] Administrator zedytował dane wycieczki o ID: 19.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Administrator zedytował dane wycieczki o ID: 19.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Administrator dodał wycieczkę do : Gruzja.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Administrator usunął wycieczkę o ID: 58.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Klient o e-mailu: jan@wp.pl zalogował się.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Klient o e-mailu: jan@wp.pl wylogował się.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Administrator dodał klienta o emailu: jacek@wp.pl.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Administrator usunął klienta o ID: 124.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Klient o e-mailu: jan@wp.pl wylogował się.
+[INFO] database: [ Mon Jun 12 15:45:46 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Mon Jun 12 15:45:47 CEST 2023 ] Administrator dodał rezerwację wycieczki o ID: 19.
+[INFO] database: [ Mon Jun 12 15:45:47 CEST 2023 ] Administrator usunął rezerwację o ID: 76.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:00 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:15 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Mon Jun 12 15:47:16 CEST 2023 ] Administrator o e-mailu: admin@wp.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:16 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:17 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:18 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:19 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:19 CEST 2023 ] Nowy wątek o nazwie Thread-6 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:21 CEST 2023 ] Nowy wątek o nazwie Thread-7 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:21 CEST 2023 ] Nowy wątek o nazwie Thread-8 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:22 CEST 2023 ] Nowy wątek o nazwie Thread-9 został utworzony.
+[INFO] database: [ Mon Jun 12 15:47:22 CEST 2023 ] Administrator o e-mailu: admin@wp.pl wylogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:29 CEST 2023 ] Nowy wątek o nazwie Thread-10 został utworzony.
+[INFO] database: [ Mon Jun 12 15:47:29 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:29 CEST 2023 ] Nowy wątek o nazwie Thread-11 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:29 CEST 2023 ] Nowy wątek o nazwie Thread-12 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:29 CEST 2023 ] Nowy wątek o nazwie Thread-13 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:37 CEST 2023 ] Nowy wątek o nazwie Thread-14 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:38 CEST 2023 ] Nowy wątek o nazwie Thread-15 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:38 CEST 2023 ] Nowy wątek o nazwie Thread-16 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:40 CEST 2023 ] Nowy wątek o nazwie Thread-17 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:44 CEST 2023 ] Nowy wątek o nazwie Thread-18 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:44 CEST 2023 ] Nowy wątek o nazwie Thread-19 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:47:44 CEST 2023 ] Nowy wątek o nazwie Thread-20 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:48:43 CEST 2023 ] Nowy wątek o nazwie Thread-21 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:48:43 CEST 2023 ] Nowy wątek o nazwie Thread-22 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:48:43 CEST 2023 ] Nowy wątek o nazwie Thread-23 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:16 CEST 2023 ] Nowy wątek o nazwie Thread-24 został utworzony.
+[INFO] database: [ Mon Jun 12 15:50:16 CEST 2023 ] Nieudana próba logowania na konto użytkownika o e-mailu: julia@interia.pl.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:40 CEST 2023 ] Nowy wątek o nazwie Thread-25 został utworzony.
+[INFO] database: [ Mon Jun 12 15:50:40 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:40 CEST 2023 ] Nowy wątek o nazwie Thread-26 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:40 CEST 2023 ] Nowy wątek o nazwie Thread-27 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:40 CEST 2023 ] Nowy wątek o nazwie Thread-28 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:50 CEST 2023 ] Nowy wątek o nazwie Thread-29 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:50 CEST 2023 ] Nowy wątek o nazwie Thread-30 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:50:50 CEST 2023 ] Nowy wątek o nazwie Thread-31 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:51:48 CEST 2023 ] Nowy wątek o nazwie Thread-32 został utworzony.
+[INFO] database: [ Mon Jun 12 15:51:48 CEST 2023 ] Nieudana próba logowania na konto użytkownika o e-mailu: julia@interia.pl.
+[INFO] ServerGUI: [ Mon Jun 12 15:51:53 CEST 2023 ] Nowy wątek o nazwie Thread-33 został utworzony.
+[INFO] database: [ Mon Jun 12 15:51:53 CEST 2023 ] Nieudana próba logowania na konto użytkownika o e-mailu: julia@interia.pl.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:04 CEST 2023 ] Nowy wątek o nazwie Thread-34 został utworzony.
+[INFO] database: [ Mon Jun 12 15:52:04 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:05 CEST 2023 ] Nowy wątek o nazwie Thread-35 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:05 CEST 2023 ] Nowy wątek o nazwie Thread-36 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:05 CEST 2023 ] Nowy wątek o nazwie Thread-37 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:08 CEST 2023 ] Nowy wątek o nazwie Thread-38 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:08 CEST 2023 ] Nowy wątek o nazwie Thread-39 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:08 CEST 2023 ] Nowy wątek o nazwie Thread-40 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:12 CEST 2023 ] Nowy wątek o nazwie Thread-41 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:12 CEST 2023 ] Nowy wątek o nazwie Thread-42 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:12 CEST 2023 ] Nowy wątek o nazwie Thread-43 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:52:14 CEST 2023 ] Nowy wątek o nazwie Thread-44 został utworzony.
+[INFO] database: [ Mon Jun 12 15:52:14 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:15 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:47 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Mon Jun 12 15:58:48 CEST 2023 ] Administrator o e-mailu: admin@wp.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:48 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:49 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:50 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:52 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:53 CEST 2023 ] Nowy wątek o nazwie Thread-6 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:58:54 CEST 2023 ] Nowy wątek o nazwie Thread-7 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:00 CEST 2023 ] Nowy wątek o nazwie Thread-8 został utworzony.
+[INFO] database: [ Mon Jun 12 15:59:00 CEST 2023 ] Administrator o e-mailu: admin@wp.pl wylogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:19 CEST 2023 ] Nowy wątek o nazwie Thread-9 został utworzony.
+[INFO] database: [ Mon Jun 12 15:59:20 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:20 CEST 2023 ] Nowy wątek o nazwie Thread-10 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:20 CEST 2023 ] Nowy wątek o nazwie Thread-11 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:20 CEST 2023 ] Nowy wątek o nazwie Thread-12 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:25 CEST 2023 ] Nowy wątek o nazwie Thread-13 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:25 CEST 2023 ] Nowy wątek o nazwie Thread-14 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:25 CEST 2023 ] Nowy wątek o nazwie Thread-15 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:30 CEST 2023 ] Nowy wątek o nazwie Thread-16 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:43 CEST 2023 ] Nowy wątek o nazwie Thread-17 został utworzony.
+[INFO] com.server.Database: [ Mon Jun 12 15:59:43 CEST 2023 ] Klient o ID: 1 zedytował swoje dane.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:43 CEST 2023 ] Nowy wątek o nazwie Thread-18 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:47 CEST 2023 ] Nowy wątek o nazwie Thread-19 został utworzony.
+[INFO] com.server.Database: [ Mon Jun 12 15:59:47 CEST 2023 ] Klient o ID: 1 zedytował swoje dane.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:47 CEST 2023 ] Nowy wątek o nazwie Thread-20 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 15:59:52 CEST 2023 ] Nowy wątek o nazwie Thread-21 został utworzony.
+[INFO] database: [ Mon Jun 12 15:59:52 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] database: [ Mon Jun 12 16:01:22 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Mon Jun 12 16:01:22 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] ServerGUI: [ Mon Jun 12 16:14:08 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Mon Jun 12 16:14:27 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Mon Jun 12 16:14:29 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Mon Jun 12 16:14:29 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 16:14:29 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 16:14:30 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Mon Jun 12 16:14:33 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] database: [ Mon Jun 12 16:14:33 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] database: [ Mon Jun 12 16:14:35 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Mon Jun 12 16:14:35 CEST 2023 ] Wylogowano wszystkich z serwera.
