@@ -365,19 +365,19 @@ public class Payment extends javax.swing.JFrame {
     private void payButtonActionPerformed(ActionEvent evt) {
         if(!methodChoosed)
             mistakeSpace.setText("Nie wybrano metody płatności.");
-        else if(!Validation.firstNameAndLastNameIsValid(firstNameLastNameData.getText())) {
+        else if(!Validation.isFirstNameAndLastNameValid(firstNameLastNameData.getText())) {
             mistakeSpace.setText("Nieprawidłowe imię i nazwisko.");
         }
-        else if(!Validation.creditCardNumberIsValid(cardNumberData.getText())) {
+        else if(!Validation.isCreditCardNumberValid(cardNumberData.getText())) {
             mistakeSpace.setText("Nieprawidłowy numer karty kredytowej.");
         }
-        else if(!Validation.cvvIsValid(cvvData.getText())) {
+        else if(!Validation.isCvvValid(cvvData.getText())) {
             mistakeSpace.setText("Nieprawidłowy numer cvv.");
         }
-        else if(!Validation.monthIsValid(monthData.getText())) {
+        else if(!Validation.isMonthValid(monthData.getText())) {
             mistakeSpace.setText("Nieprawidłowy miesiąc ważności karty kredytowej.");
         }
-        else if(!Validation.yearIsValid(yearData.getText())) {
+        else if(!Validation.isYearValid(yearData.getText())) {
             mistakeSpace.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {

@@ -786,7 +786,7 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String number = leaveNumber.getText();
-        if(Validation.phoneNumberIsValid(number)){
+        if(Validation.isPhoneNumberValid(number)){
             leaveNumber.setText("");
             phoneNumberData.clear();
             phoneNumberData.add("sendNumbers");
@@ -994,7 +994,7 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu i przyjazdu
      */
     private boolean performDateValidation() {
-        if(!Validation.dateIsValid(departureTextField.getText()) || !Validation.dateIsValid(arrivalTextField.getText())) {
+        if(!Validation.isDateValid(departureTextField.getText()) || !Validation.isDateValid(arrivalTextField.getText())) {
             JOptionPane.showMessageDialog(null, "Niepoprawnie wpisana data.", "Informacja", JOptionPane.ERROR_MESSAGE);
             return false;
         }

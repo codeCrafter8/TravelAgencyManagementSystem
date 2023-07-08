@@ -505,7 +505,7 @@ public class Trips extends javax.swing.JFrame {
      */
     private void performCityValidation(){
         cityToSearch = searchClientTextField.getText();
-        if(Validation.countryOrCityIsValid(cityToSearch))
+        if(Validation.isCountryOrCityValid(cityToSearch))
             wrongTripLabel.setText("");
         else
             wrongTripLabel.setText("Sprawdź czy podane miasto jest poprawne.");

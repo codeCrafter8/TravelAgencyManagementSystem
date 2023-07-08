@@ -271,7 +271,7 @@ class DataEdition extends javax.swing.JFrame {
             validFirstNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            firstNameCorrect = Validation.firstNameIsValid(firstName);
+            firstNameCorrect = Validation.isFirstNameValid(firstName);
             if (firstNameCorrect)
                 validFirstNameLabel.setText("");
             else
@@ -288,7 +288,7 @@ class DataEdition extends javax.swing.JFrame {
             validLastNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            lastNameCorrect = Validation.lastNameIsValid(lastName);
+            lastNameCorrect = Validation.isLastNameValid(lastName);
             if (lastNameCorrect)
                 validLastNameLabel.setText("");
             else
@@ -305,7 +305,7 @@ class DataEdition extends javax.swing.JFrame {
             validEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = Validation.emailIsValid(email);
+            emailCorrect = Validation.isEmailValid(email);
             if (emailCorrect)
                 validEmailLabel.setText("");
             else
@@ -317,7 +317,7 @@ class DataEdition extends javax.swing.JFrame {
      */
     public void performPhoneNumberValidation(){
         phoneNumber = phoneNumberField.getText();
-        phoneNumberCorrect = Validation.phoneNumberIsValid(phoneNumber);
+        phoneNumberCorrect = Validation.isPhoneNumberValid(phoneNumber);
         if (phoneNumberCorrect || phoneNumber.equals(""))
             validPhoneNumberLabel.setText("");
         else

@@ -507,7 +507,7 @@ public class TripAddition extends javax.swing.JFrame {
             cityCorrect = false;
         }
         else {
-            cityCorrect = Validation.countryOrCityIsValid(city);
+            cityCorrect = Validation.isCountryOrCityValid(city);
             if (cityCorrect)
                 wrongCityLabel.setText("");
             else
@@ -543,7 +543,7 @@ public class TripAddition extends javax.swing.JFrame {
             priceCorrect = false;
         }
         else {
-            priceCorrect = Validation.priceIsValid(price);
+            priceCorrect = Validation.isPriceValid(price);
             if (priceCorrect)
                 wrongPriceLabel.setText("");
             else
@@ -560,7 +560,7 @@ public class TripAddition extends javax.swing.JFrame {
             peopleLimitCorrect = false;
         }
         else {
-            peopleLimitCorrect = Validation.peopleLimitIsValid(peopleLimit);
+            peopleLimitCorrect = Validation.isPeopleLimitValid(peopleLimit);
             if (peopleLimitCorrect)
                 wrongLimitLabel.setText("");
             else
@@ -577,7 +577,7 @@ public class TripAddition extends javax.swing.JFrame {
             hotelNameCorrect = false;
         }
         else {
-            hotelNameCorrect = Validation.hotelNameIsValid(hotelName);
+            hotelNameCorrect = Validation.isHotelNameValid(hotelName);
             if (hotelNameCorrect)
                 wrongHotelNameLabel.setText("");
             else
@@ -594,7 +594,7 @@ public class TripAddition extends javax.swing.JFrame {
             countryCorrect = false;
         }
         else {
-            countryCorrect = Validation.countryOrCityIsValid(country);
+            countryCorrect = Validation.isCountryOrCityValid(country);
             if (countryCorrect)
                 wrongCountryLabel.setText("");
             else

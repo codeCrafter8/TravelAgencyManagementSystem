@@ -11,130 +11,130 @@ public class ValidationTest {
      */
     @Test
     public void testEmailIsValid() {
-        assertTrue(Validation.emailIsValid("test@example.com"));
-        assertFalse(Validation.emailIsValid("invalidemail"));
-        assertFalse(Validation.emailIsValid("test@.com"));
+        assertTrue(Validation.isEmailValid("test@example.com"));
+        assertFalse(Validation.isEmailValid("invalidemail"));
+        assertFalse(Validation.isEmailValid("test@.com"));
     }
     /**
      * Testuje walidację hasła
      */
     @Test
     public void testPasswordIsValid() {
-        assertTrue(Validation.passwordIsValid("P@ssw0rd"));
-        assertFalse(Validation.passwordIsValid("weakpassword"));
-        assertFalse(Validation.passwordIsValid("123456789"));
+        assertTrue(Validation.isPasswordValid("P@ssw0rd"));
+        assertFalse(Validation.isPasswordValid("weakpassword"));
+        assertFalse(Validation.isPasswordValid("123456789"));
     }
     /**
      * Testuje walidację numeru telefonu
      */
     @Test
     public void testPhoneNumberIsValid() {
-        assertTrue(Validation.phoneNumberIsValid("1234567890"));
-        assertFalse(Validation.phoneNumberIsValid("123"));
-        assertFalse(Validation.phoneNumberIsValid("invalidphone"));
+        assertTrue(Validation.isPhoneNumberValid("1234567890"));
+        assertFalse(Validation.isPhoneNumberValid("123"));
+        assertFalse(Validation.isPhoneNumberValid("invalidphone"));
     }
     /**
      * Testuje walidację imienia
      */
     @Test
     public void testFirstNameIsValid() {
-        assertTrue(Validation.firstNameIsValid("John"));
-        assertFalse(Validation.firstNameIsValid("123"));
+        assertTrue(Validation.isFirstNameValid("John"));
+        assertFalse(Validation.isFirstNameValid("123"));
     }
     /**
      * Testuje walidację nazwiska
      */
     @Test
     public void testLastNameIsValid() {
-        assertTrue(Validation.lastNameIsValid("Doe"));
-        assertFalse(Validation.lastNameIsValid("456"));
+        assertTrue(Validation.isLastNameValid("Doe"));
+        assertFalse(Validation.isLastNameValid("456"));
     }
     /**
      * Testuje walidację kraju lub miasta
      */
     @Test
     public void testCountryOrCityIsValid() {
-        assertTrue(Validation.countryOrCityIsValid("USA"));
-        assertFalse(Validation.countryOrCityIsValid("123"));
+        assertTrue(Validation.isCountryOrCityValid("USA"));
+        assertFalse(Validation.isCountryOrCityValid("123"));
     }
     /**
      * Testuje walidację nazwy hotelu
      */
     @Test
     public void testHotelNameIsValid() {
-        assertTrue(Validation.hotelNameIsValid("Hilton"));
-        assertFalse(Validation.hotelNameIsValid("_1"));
+        assertTrue(Validation.isHotelNameValid("Hilton"));
+        assertFalse(Validation.isHotelNameValid("_1"));
     }
     /**
      * Testuje walidację limitu osób
      */
     @Test
     public void testPeopleLimitIsValid() {
-        assertTrue(Validation.peopleLimitIsValid("5"));
-        assertFalse(Validation.peopleLimitIsValid("invalid"));
-        assertFalse(Validation.peopleLimitIsValid("0"));
+        assertTrue(Validation.isPeopleLimitValid("5"));
+        assertFalse(Validation.isPeopleLimitValid("invalid"));
+        assertFalse(Validation.isPeopleLimitValid("0"));
     }
     /**
      * Testuje walidację ceny
      */
     @Test
     public void testPriceIsValid() {
-        assertTrue(Validation.priceIsValid("99.99"));
-        assertFalse(Validation.priceIsValid("invalid"));
-        assertFalse(Validation.priceIsValid("-10.50"));
+        assertTrue(Validation.isPriceValid("99.99"));
+        assertFalse(Validation.isPriceValid("invalid"));
+        assertFalse(Validation.isPriceValid("-10.50"));
     }
     /**
      * Testuje walidację imienia i nazwiska
      */
     @Test
     public void testFirstNameAndLastNameIsValid() {
-        assertTrue(Validation.firstNameAndLastNameIsValid("John Doe"));
-        assertFalse(Validation.firstNameAndLastNameIsValid("123"));
-        assertFalse(Validation.firstNameAndLastNameIsValid("_invalid name"));
+        assertTrue(Validation.isFirstNameAndLastNameValid("John Doe"));
+        assertFalse(Validation.isFirstNameAndLastNameValid("123"));
+        assertFalse(Validation.isFirstNameAndLastNameValid("_invalid name"));
     }
     /**
      * Testuje walidację numeru karty
      */
     @Test
     public void testCreditCardNumberIsValid() {
-        assertTrue(Validation.creditCardNumberIsValid("1234567890123456"));
-        assertFalse(Validation.creditCardNumberIsValid("invalid"));
-        assertFalse(Validation.creditCardNumberIsValid("1234"));
+        assertTrue(Validation.isCreditCardNumberValid("1234567890123456"));
+        assertFalse(Validation.isCreditCardNumberValid("invalid"));
+        assertFalse(Validation.isCreditCardNumberValid("1234"));
     }
     /**
      * Testuje walidację cvv
      */
     @Test
     public void testCvvIsValid() {
-        assertTrue(Validation.cvvIsValid("123"));
-        assertFalse(Validation.cvvIsValid("invalid"));
-        assertFalse(Validation.cvvIsValid("12"));
+        assertTrue(Validation.isCvvValid("123"));
+        assertFalse(Validation.isCvvValid("invalid"));
+        assertFalse(Validation.isCvvValid("12"));
     }
     /**
      * Testuje walidację miesiąca
      */
     @Test
     public void testMonthIsValid() {
-        assertTrue(Validation.monthIsValid("12"));
-        assertFalse(Validation.monthIsValid("invalid"));
-        assertFalse(Validation.monthIsValid("0"));
+        assertTrue(Validation.isMonthValid("12"));
+        assertFalse(Validation.isMonthValid("invalid"));
+        assertFalse(Validation.isMonthValid("0"));
     }
     /**
      * Testuje walidację roku
      */
     @Test
     public void testYearIsValid() {
-        assertTrue(Validation.yearIsValid("2023"));
-        assertFalse(Validation.yearIsValid("invalid"));
-        assertFalse(Validation.yearIsValid("1000"));
+        assertTrue(Validation.isYearValid("2023"));
+        assertFalse(Validation.isYearValid("invalid"));
+        assertFalse(Validation.isYearValid("1000"));
     }
     /**
      * Testuje walidację daty
      */
     @Test
     public void testDateIsValid() {
-        assertTrue(Validation.dateIsValid("03/06/2023"));
-        assertFalse(Validation.dateIsValid("invalid"));
-        assertFalse(Validation.dateIsValid("2023/06/03"));
+        assertTrue(Validation.isDateValid("03/06/2023"));
+        assertFalse(Validation.isDateValid("invalid"));
+        assertFalse(Validation.isDateValid("2023/06/03"));
     }
 }

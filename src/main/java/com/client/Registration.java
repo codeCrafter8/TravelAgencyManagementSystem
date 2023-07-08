@@ -470,7 +470,7 @@ public class Registration extends javax.swing.JFrame {
             wrongFirstNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            firstNameCorrect = Validation.firstNameIsValid(firstName);
+            firstNameCorrect = Validation.isFirstNameValid(firstName);
             if (firstNameCorrect)
                 wrongFirstNameLabel.setText("");
             else
@@ -487,7 +487,7 @@ public class Registration extends javax.swing.JFrame {
             wrongLastNameLabel.setText("Pole jest wymagane.");
         }
         else {
-            lastNameCorrect = Validation.lastNameIsValid(lastName);
+            lastNameCorrect = Validation.isLastNameValid(lastName);
             if (lastNameCorrect)
                 wrongLastNameLabel.setText("");
             else
@@ -499,7 +499,7 @@ public class Registration extends javax.swing.JFrame {
      */
     private void performPhoneNumberValidation(){
         phoneNumber = phoneNumberTextField.getText();
-        phoneNumberCorrect = Validation.phoneNumberIsValid(phoneNumber);
+        phoneNumberCorrect = Validation.isPhoneNumberValid(phoneNumber);
         if (phoneNumberCorrect || phoneNumber.equals(""))
             wrongPhoneNumberLabel.setText("");
         else
@@ -515,7 +515,7 @@ public class Registration extends javax.swing.JFrame {
             wrongEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = Validation.emailIsValid(email);
+            emailCorrect = Validation.isEmailValid(email);
             if (emailCorrect)
                 wrongEmailLabel.setText("");
             else
@@ -532,7 +532,7 @@ public class Registration extends javax.swing.JFrame {
             wrongPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            passwordCorrect = Validation.passwordIsValid(password);
+            passwordCorrect = Validation.isPasswordValid(password);
             if (passwordCorrect)
                 wrongPasswordLabel.setText("");
             else

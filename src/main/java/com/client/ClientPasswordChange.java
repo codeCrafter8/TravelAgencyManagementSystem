@@ -138,7 +138,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
             wrongNewPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            newPasswordCorrect = Validation.passwordIsValid(newPassword);
+            newPasswordCorrect = Validation.isPasswordValid(newPassword);
             if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else

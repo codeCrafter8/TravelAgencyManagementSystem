@@ -561,7 +561,7 @@ public class Reservations extends javax.swing.JFrame {
      */
     private void performLastNameValidation() {
         lastNameToSearch = searchResTextField.getText();
-        if(Validation.lastNameIsValid(lastNameToSearch))
+        if(Validation.isLastNameValid(lastNameToSearch))
             wrongResLabel.setText("");
         else
             wrongResLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");

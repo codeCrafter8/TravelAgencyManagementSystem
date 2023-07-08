@@ -522,7 +522,7 @@ public class Clients extends javax.swing.JFrame {
      */
     private void performEmailValidation(){
         String emailFromTextField = searchClientTextField.getText();
-        if(Validation.emailIsValid(emailFromTextField))
+        if(Validation.isEmailValid(emailFromTextField))
             wrongEmailLabel.setText("");
         else
             wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");

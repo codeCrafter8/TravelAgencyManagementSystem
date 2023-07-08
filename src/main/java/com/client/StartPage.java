@@ -282,7 +282,7 @@ public class StartPage extends javax.swing.JFrame {
             wrongEmailLabel.setText("Pole jest wymagane.");
         }
         else {
-            emailCorrect = Validation.emailIsValid(emailFromTextField);
+            emailCorrect = Validation.isEmailValid(emailFromTextField);
             if (emailCorrect)
                 wrongEmailLabel.setText("");
             else
@@ -299,7 +299,7 @@ public class StartPage extends javax.swing.JFrame {
             wrongPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            passwordCorrect = Validation.passwordIsValid(passwordFromPasswordField);
+            passwordCorrect = Validation.isPasswordValid(passwordFromPasswordField);
             if (passwordCorrect)
                 wrongPasswordLabel.setText("");
             else

@@ -9,31 +9,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b73e272e-c0cc-444c-98a6-e7cc6205e09d" name="Changes" comment="comments added">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Client.java" afterDir="false" />
+    <list default="true" id="b73e272e-c0cc-444c-98a6-e7cc6205e09d" name="Changes" comment="ultimate version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/logs.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/ClientPasswordChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/ClientPasswordChange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Clients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Clients.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Dashboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/DataEdition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/DataEdition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/MyAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/MyAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Offer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Offer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/PasswordChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/PasswordChange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Payment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Registration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/ReservationAddition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/ReservationAddition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Reservations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Reservations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/SearchEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/SearchEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/StartPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/StartPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/TripAddition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/TripAddition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/TripDescription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/TripDescription.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Trips.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Trips.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Validation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Validation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/server/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/server/Logs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/Logs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/ServerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ValidationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ValidationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/Database.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler$ClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler$ClientThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +67,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zuzan/OneDrive/Pulpit/TravelAgency&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zuzan/OneDrive/Pulpit/studia/TravelAgency&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;
@@ -81,7 +80,7 @@
       <recent name="C:\Users\zuzan\OneDrive\Pulpit\aktualne\src\main\java\com\server" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.com.client.StartPage">
+  <component name="RunManager">
     <configuration name="StartPage" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="StartPage" />
       <module name="TravelAgency" />
@@ -183,7 +182,28 @@
       <option name="project" value="LOCAL" />
       <updated>1685982342636</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="ultimate version">
+      <created>1688470519716</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688470519716</updated>
+    </task>
+    <task id="LOCAL-00004" summary="ultimate version">
+      <created>1688470697738</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688470697738</updated>
+    </task>
+    <task id="LOCAL-00005" summary="ultimate version">
+      <created>1688471053999</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688471053999</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,6 +220,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new" />
     <MESSAGE value="comments added" />
-    <option name="LAST_COMMIT_MESSAGE" value="comments added" />
+    <MESSAGE value="ultimate version" />
+    <option name="LAST_COMMIT_MESSAGE" value="ultimate version" />
   </component>
 </project>

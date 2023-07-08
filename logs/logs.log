@@ -106,3 +106,31 @@
 [INFO] database: [ Mon Jun 12 16:14:33 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
 [INFO] database: [ Mon Jun 12 16:14:35 CEST 2023 ] Wylogowano wszystkich z serwera.
 [INFO] database: [ Mon Jun 12 16:14:35 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] ServerGUI: [ Tue Jul 04 13:44:42 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Tue Jul 04 13:45:01 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Tue Jul 04 13:45:03 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Tue Jul 04 13:45:03 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Tue Jul 04 13:45:04 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Tue Jul 04 13:45:04 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Tue Jul 04 13:45:07 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] ServerGUI: [ Tue Jul 04 13:45:10 CEST 2023 ] Nowy wątek o nazwie Thread-6 został utworzony.
+[INFO] database: [ Tue Jul 04 13:45:11 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] database: [ Tue Jul 04 13:54:46 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Tue Jul 04 13:54:46 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:24 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:28 CEST 2023 ] Serwer został uruchomiony.
+[FATAL] ServerGUI: [ Sat Jul 08 13:46:28 CEST 2023 ] Address already in use: bind
+[INFO] ServerGUI: [ Sat Jul 08 13:46:41 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Sat Jul 08 13:46:42 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:42 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:43 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:43 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:46 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] database: [ Sat Jul 08 13:46:46 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] database: [ Sat Jul 08 13:46:50 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Sat Jul 08 13:46:50 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Sat Jul 08 13:46:52 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Sat Jul 08 13:46:52 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] ServerGUI: [ Sat Jul 08 13:46:58 CEST 2023 ] Serwer został uruchomiony.
+[INFO] database: [ Sat Jul 08 13:47:02 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Sat Jul 08 13:47:02 CEST 2023 ] Wylogowano wszystkich z serwera.
