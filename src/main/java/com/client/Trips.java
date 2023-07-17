@@ -16,6 +16,17 @@ import javax.swing.table.TableRowSorter;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących wycieczek
  */
 public class Trips extends javax.swing.JFrame {
+    JPanel menuPanel;
+    JPanel adminPanel;
+    JPanel optionsPanel;
+    JLabel adminIconLabel;
+    JLabel adminLabel;
+    JPanel topPanel;
+    JLabel searchTripLabel;
+    JButton addTripButton;
+    JScrollPane jScrollPane1;
+    JButton deleteTripButton;
+    JButton editTripButton;
     /**
      * Etykieta z imieniem administratora
      */
@@ -115,35 +126,48 @@ public class Trips extends javax.swing.JFrame {
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        JPanel menuPanel = new JPanel();
-        JPanel adminPanel = new JPanel();
-        JLabel adminIconLabel = new JLabel();
-        adminNameLabel = new javax.swing.JLabel();
-        JLabel adminLabel = new JLabel();
-        JPanel optionsPanel = new JPanel();
-        panelButton = new javax.swing.JButton();
-        clientsButton = new javax.swing.JButton();
-        tripsButton = new javax.swing.JButton();
-        reservationsButton = new javax.swing.JButton();
-        JPanel topPanel = new JPanel();
-        logOutButton = new javax.swing.JButton();
-        JLabel searchTripLabel = new JLabel();
-        searchClientTextField = new javax.swing.JTextField();
-        wrongTripLabel = new javax.swing.JLabel();
-        JButton addTripButton = new JButton();
-        JScrollPane jScrollPane1 = new JScrollPane();
-        tripsTable = new javax.swing.JTable();
-        JButton deleteTripButton = new JButton();
-        JButton editTripButton = new JButton();
-
+        setWindowProperties();
+        createAdminPanel();
+        createOptionsPanel();
+        createMenuPanel();
+        createTopPanel();
+        createSearchLabels();
+        createTable();
+        createButtons();
+        createLayout();
+    }
+    private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wycieczki");
+        getContentPane().setBackground(new Color(215,198,151));
         setMaximumSize(new java.awt.Dimension(1040, 770));
         setMinimumSize(new java.awt.Dimension(1040, 770));
-
+    }
+    private void createMenuPanel(){
+        menuPanel = new JPanel();
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
-
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+                menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(adminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(optionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        menuPanelLayout.setVerticalGroup(
+                menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(menuPanelLayout.createSequentialGroup()
+                                .addComponent(adminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(284, Short.MAX_VALUE))
+        );
+    }
+    private void createAdminPanel(){
+        adminPanel = new JPanel();
+        adminIconLabel = new JLabel();
+        adminNameLabel = new javax.swing.JLabel();
+        adminLabel = new JLabel();
         adminPanel.setBackground(new java.awt.Color(118, 98, 75));
         adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
@@ -159,29 +183,36 @@ public class Trips extends javax.swing.JFrame {
         javax.swing.GroupLayout adminPanel1Layout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanel1Layout);
         adminPanel1Layout.setHorizontalGroup(
-            adminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(adminNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-            .addComponent(adminLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(adminIconLabel)
-                .addGap(54, 54, 54))
+                adminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(adminNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(adminLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(adminIconLabel)
+                                .addGap(54, 54, 54))
         );
         adminPanel1Layout.setVerticalGroup(
-            adminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(adminPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(adminIconLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(adminLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                adminPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(adminPanel1Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(adminIconLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(adminNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(adminLabel)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+    }
+    private void createOptionsPanel(){
+        clientsButton = new javax.swing.JButton();
+        tripsButton = new javax.swing.JButton();
+        reservationsButton = new javax.swing.JButton();
+        optionsPanel = new JPanel();
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
         optionsPanel.setBackground(new Color(118,98,75));
 
+        panelButton = new javax.swing.JButton();
         panelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         panelButton.setText("    Panel");
         panelButton.setBorder(null);
@@ -256,41 +287,28 @@ public class Trips extends javax.swing.JFrame {
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanel1Layout);
         optionsPanel1Layout.setHorizontalGroup(
-            optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(clientsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-            .addComponent(tripsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(reservationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clientsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(tripsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reservationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         optionsPanel1Layout.setVerticalGroup(
-            optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(optionsPanel1Layout.createSequentialGroup()
-                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(clientsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(reservationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(optionsPanel1Layout.createSequentialGroup()
+                                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(clientsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(reservationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        javax.swing.GroupLayout menuPanel1Layout = new javax.swing.GroupLayout(menuPanel);
-        menuPanel.setLayout(menuPanel1Layout);
-        menuPanel1Layout.setHorizontalGroup(
-            menuPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(adminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(optionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        menuPanel1Layout.setVerticalGroup(
-            menuPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuPanel1Layout.createSequentialGroup()
-                .addComponent(adminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(284, Short.MAX_VALUE))
-        );
-
+    }
+    private void createTopPanel(){
+        topPanel = new JPanel();
+        logOutButton = new javax.swing.JButton();
         topPanel.setBackground(new java.awt.Color(151, 123, 92));
         topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
 
@@ -315,38 +333,29 @@ public class Trips extends javax.swing.JFrame {
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
-            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(753, Short.MAX_VALUE)
-                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
+                                .addContainerGap(753, Short.MAX_VALUE)
+                                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
         );
         topPanelLayout.setVerticalGroup(
-            topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(topPanelLayout.createSequentialGroup()
-                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(topPanelLayout.createSequentialGroup()
+                                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        searchTripLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
-        searchTripLabel.setText("Wyszukaj wycieczkę po mieście");
-
-        wrongTripLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongTripLabel.setPreferredSize(new java.awt.Dimension(222, 16));
-
-        addTripButton.setBackground(new java.awt.Color(241, 227, 185));
-        addTripButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
-        addTripButton.setText("+ Dodaj Wycieczkę");
-        addTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addTripButton.addActionListener(this::addTripButtonActionPerformed);
-
+    }
+    private void createTable(){
+        jScrollPane1 = new JScrollPane();
+        tripsTable = new javax.swing.JTable();
         tripsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object [][] {
 
-            },
-            new String [] {
-                "Id", "Kraj", "Miasto", "Cena/Osoba", "Limit osób"
-            }
+                },
+                new String [] {
+                        "Id", "Kraj", "Miasto", "Cena/Osoba", "Limit osób"
+                }
         )
         {public boolean isCellEditable(int row, int column){
             return column != 0;
@@ -357,6 +366,31 @@ public class Trips extends javax.swing.JFrame {
         tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
         tripsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
         jScrollPane1.setViewportView(tripsTable);
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(151,123,92));
+        for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
+            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+    }
+    private void createSearchLabels(){
+        searchTripLabel = new JLabel();
+        searchClientTextField = new javax.swing.JTextField();
+        wrongTripLabel = new javax.swing.JLabel();
+        searchTripLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
+        searchTripLabel.setText("Wyszukaj wycieczkę po mieście");
+
+        wrongTripLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongTripLabel.setPreferredSize(new java.awt.Dimension(222, 16));
+    }
+    private void createButtons(){
+        addTripButton = new JButton();
+        deleteTripButton = new JButton();
+        editTripButton = new JButton();
+        addTripButton.setBackground(new java.awt.Color(241, 227, 185));
+        addTripButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
+        addTripButton.setText("+ Dodaj Wycieczkę");
+        addTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addTripButton.addActionListener(this::addTripButtonActionPerformed);
 
         deleteTripButton.setBackground(new java.awt.Color(241, 227, 185));
         deleteTripButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
@@ -369,67 +403,61 @@ public class Trips extends javax.swing.JFrame {
         editTripButton.setText("Edytuj Wycieczkę");
         editTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editTripButton.addActionListener(this::editTripButtonActionPerformed);
-
-        getContentPane().setBackground(new Color(215,198,151));
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
-        for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
-            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
-
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchTripLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(searchClientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(wrongTripLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(320, 320, 320)
-                                        .addComponent(addTripButton)
-                                        .addGap(21, 21, 21))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(282, 282, 282)
-                        .addComponent(deleteTripButton)
-                        .addGap(35, 35, 35)
-                        .addComponent(editTripButton)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(44, 44, 44)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(searchTripLabel)
+                                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addComponent(searchClientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(wrongTripLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addGap(320, 320, 320)
+                                                                                .addComponent(addTripButton)
+                                                                                .addGap(21, 21, 21))
+                                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(282, 282, 282)
+                                                .addComponent(deleteTripButton)
+                                                .addGap(35, 35, 35)
+                                                .addComponent(editTripButton)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchTripLabel)
-                        .addGap(0, 0, 0)
-                        .addComponent(searchClientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(wrongTripLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(addTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(searchTripLabel)
+                                                .addGap(0, 0, 0)
+                                                .addComponent(searchClientTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, 0)
+                                                .addComponent(wrongTripLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(addTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(deleteTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(editTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

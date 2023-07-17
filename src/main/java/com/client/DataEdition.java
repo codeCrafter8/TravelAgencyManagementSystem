@@ -9,6 +9,12 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność edycji danych przez klienta
  */
 class DataEdition extends javax.swing.JFrame {
+    javax.swing.JLabel createLabel;
+    javax.swing.JLabel firstNameLabel;
+    javax.swing.JLabel lastNameLabel;
+    javax.swing.JLabel emailLabel;
+    javax.swing.JLabel phoneNumberLabel;
+    javax.swing.JButton submitButton;
     /**
      * Pole do wprowadzenia emailu przez klienta
      */
@@ -111,36 +117,32 @@ class DataEdition extends javax.swing.JFrame {
             }
         });
         initComponents();
-        getContentPane().setBackground(new Color(215,198,151));
         fillTextFields();
     }
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        javax.swing.JPanel regPanel = new javax.swing.JPanel();
-        javax.swing.JLabel createLabel = new javax.swing.JLabel();
-        javax.swing.JLabel firstNameLabel = new javax.swing.JLabel();
-        firstNameTextField = new javax.swing.JTextField();
-        javax.swing.JLabel lastNameLabel = new javax.swing.JLabel();
-        lastNameTextField = new javax.swing.JTextField();
-        javax.swing.JLabel emailLabel = new javax.swing.JLabel();
-        emailTextField = new javax.swing.JTextField();
-        javax.swing.JLabel phoneNumberLabel = new javax.swing.JLabel();
-        phoneNumberField = new javax.swing.JTextField();
-        javax.swing.JButton submitButton = new javax.swing.JButton();
-        validFirstNameLabel = new javax.swing.JLabel();
-        validLastNameLabel = new javax.swing.JLabel();
-        validEmailLabel = new javax.swing.JLabel();
-        validPhoneNumberLabel = new javax.swing.JLabel();
+        setWindowProperties();
+        createTextFields();
+        createLabels();
+        createButton();
+        createLayout();
+    }
 
+    private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edytuj dane");
         setPreferredSize(new java.awt.Dimension(449, 510));
         setResizable(false);
+    }
 
-        regPanel.setPreferredSize(new java.awt.Dimension(450, 550));
-
+    private void createLabels() {
+        createLabel = new javax.swing.JLabel();
+        firstNameLabel = new javax.swing.JLabel();
+        lastNameLabel = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
+        phoneNumberLabel = new javax.swing.JLabel();
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Edytuj dane");
 
@@ -155,13 +157,6 @@ class DataEdition extends javax.swing.JFrame {
 
         phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         phoneNumberLabel.setText("Numer telefonu");
-
-        submitButton.setBackground(new java.awt.Color(151, 123, 92));
-        submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
-        submitButton.setForeground(new java.awt.Color(255, 255, 255));
-        submitButton.setText("Zatwierdź");
-        submitButton.addActionListener(this::submitButtonActionPerformed);
-        submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         validFirstNameLabel.setForeground(new java.awt.Color(255, 0, 0));
         validFirstNameLabel.setMaximumSize(new java.awt.Dimension(363, 16));
@@ -182,82 +177,106 @@ class DataEdition extends javax.swing.JFrame {
         validPhoneNumberLabel.setMaximumSize(new java.awt.Dimension(363, 16));
         validPhoneNumberLabel.setMinimumSize(new java.awt.Dimension(363, 16));
         validPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(363, 16));
+    }
 
+    private void createTextFields() {
+        firstNameTextField = new javax.swing.JTextField();
+        lastNameTextField = new javax.swing.JTextField();
+        emailTextField = new javax.swing.JTextField();
+        phoneNumberField = new javax.swing.JTextField();
+        validFirstNameLabel = new javax.swing.JLabel();
+        validLastNameLabel = new javax.swing.JLabel();
+        validEmailLabel = new javax.swing.JLabel();
+        validPhoneNumberLabel = new javax.swing.JLabel();
+    }
+
+    private void createButton() {
+        submitButton = new javax.swing.JButton();
+        submitButton.setBackground(new java.awt.Color(151, 123, 92));
+        submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
+        submitButton.setForeground(new java.awt.Color(255, 255, 255));
+        submitButton.setText("Zatwierdź");
+        submitButton.addActionListener(this::submitButtonActionPerformed);
+        submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private void createLayout() {
+        javax.swing.JPanel regPanel = new javax.swing.JPanel();
+        regPanel.setPreferredSize(new java.awt.Dimension(450, 550));
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
         regPanelLayout.setHorizontalGroup(
-            regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
-                .addGap(0, 157, Short.MAX_VALUE)
-                .addComponent(createLabel)
-                .addGap(157, 157, 157))
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(regPanelLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(phoneNumberLabel)
-                            .addComponent(firstNameLabel)
-                            .addComponent(firstNameTextField)
-                            .addComponent(lastNameLabel)
-                            .addComponent(lastNameTextField)
-                            .addComponent(emailLabel)
-                            .addComponent(emailTextField)
-                            .addComponent(phoneNumberField)
-                            .addComponent(validFirstNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(validLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(validEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(validPhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(regPanelLayout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(submitButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                                .addGap(0, 157, Short.MAX_VALUE)
+                                .addComponent(createLabel)
+                                .addGap(157, 157, 157))
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(regPanelLayout.createSequentialGroup()
+                                                .addGap(36, 36, 36)
+                                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(phoneNumberLabel)
+                                                        .addComponent(firstNameLabel)
+                                                        .addComponent(firstNameTextField)
+                                                        .addComponent(lastNameLabel)
+                                                        .addComponent(lastNameTextField)
+                                                        .addComponent(emailLabel)
+                                                        .addComponent(emailTextField)
+                                                        .addComponent(phoneNumberField)
+                                                        .addComponent(validFirstNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(validLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(validEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(validPhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(regPanelLayout.createSequentialGroup()
+                                                .addGap(174, 174, 174)
+                                                .addComponent(submitButton)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         regPanelLayout.setVerticalGroup(
-            regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(createLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(validFirstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(validLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(validEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(validPhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(createLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(validFirstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(validLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(validEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(validPhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(regPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(regPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
-
         pack();
         setLocationRelativeTo(null);
     }

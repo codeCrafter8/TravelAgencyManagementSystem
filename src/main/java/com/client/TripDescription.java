@@ -11,6 +11,17 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wyświetlenia szczegółów rezerwacji
  */
 public class TripDescription extends javax.swing.JFrame {
+    JLabel countryLabel;
+    JLabel cityLabel;
+    JLabel departureCityLabel;
+    JLabel dateLabel;
+    JLabel daysLabel;
+    JLabel peopleLabel;
+    JLabel priceLabel;
+    JLabel insuranceLabel;
+    JLabel hotelNameLabel;
+    JLabel hotelDescriptionLabel;
+    JButton jButton1;
     /**
      * Etykieta z miastem wycieczki
      */
@@ -117,16 +128,22 @@ public class TripDescription extends javax.swing.JFrame {
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        JLabel countryLabel = new JLabel();
-        JLabel cityLabel = new JLabel();
-        JLabel departureCityLabel = new JLabel();
-        JLabel dateLabel = new JLabel();
-        JLabel daysLabel = new JLabel();
-        JLabel peopleLabel = new JLabel();
-        JLabel priceLabel = new JLabel();
-        JLabel insuranceLabel = new JLabel();
-        JLabel hotelNameLabel = new JLabel();
-        JLabel hotelDescriptionLabel = new JLabel();
+        setWindowProperties();
+        createLabels();
+        createButton();
+        createLayout();
+    }
+    private void createLabels(){
+        countryLabel = new JLabel();
+        cityLabel = new JLabel();
+        departureCityLabel = new JLabel();
+        dateLabel = new JLabel();
+        daysLabel = new JLabel();
+        peopleLabel = new JLabel();
+        priceLabel = new JLabel();
+        insuranceLabel = new JLabel();
+        hotelNameLabel = new JLabel();
+        hotelDescriptionLabel = new JLabel();
         typeCountryLabel = new javax.swing.JLabel();
         typeCityLabel = new javax.swing.JLabel();
         typeDepartureCityLabel = new javax.swing.JLabel();
@@ -137,33 +154,24 @@ public class TripDescription extends javax.swing.JFrame {
         typeInsuranceLabel = new javax.swing.JLabel();
         typeHotelNameLabel = new javax.swing.JLabel();
         typeHotelDescriptionLabel = new javax.swing.JLabel();
-        JButton jButton1 = new JButton();
-
+        countryLabel.setText("Kraj:");
+        cityLabel.setText("Miasto:");
+        departureCityLabel.setText("Miejsce wylotu/przylotu:");
+        dateLabel.setText("Data wycieczki:");
+        daysLabel.setText("Liczba dni:");
+        peopleLabel.setText("Liczba osób:");
+        priceLabel.setText("Cena za osobę:");
+        insuranceLabel.setText("Ubezpieczenie:");
+        hotelNameLabel.setText("Nazwa hotelu:");
+        hotelDescriptionLabel.setText("Opis hotelu:");
+        typeHotelDescriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+    }
+    private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Szczegóły wycieczki");
-
-        countryLabel.setText("Kraj:");
-
-        cityLabel.setText("Miasto:");
-
-        departureCityLabel.setText("Miejsce wylotu/przylotu:");
-
-        dateLabel.setText("Data wycieczki:");
-
-        daysLabel.setText("Liczba dni:");
-
-        peopleLabel.setText("Liczba osób:");
-
-        priceLabel.setText("Cena za osobę:");
-
-        insuranceLabel.setText("Ubezpieczenie:");
-
-        hotelNameLabel.setText("Nazwa hotelu:");
-
-        hotelDescriptionLabel.setText("Opis hotelu:");
-
-        typeHotelDescriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
+    }
+    private void createButton(){
+        jButton1 = new JButton();
         jButton1.setBackground(new java.awt.Color(102, 102, 255));
         jButton1.setIcon(new javax.swing.ImageIcon("img\\questionMark.png"));
         jButton1.setBorderPainted(false);
@@ -171,90 +179,91 @@ public class TripDescription extends javax.swing.JFrame {
         jButton1.setMargin(new java.awt.Insets(0, 14, 0, 14));
         jButton1.setPreferredSize(new java.awt.Dimension(22, 24));
         jButton1.addActionListener(this::jButtonActionPerformed);
-
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(hotelDescriptionLabel)
-                    .addComponent(priceLabel)
-                    .addComponent(peopleLabel)
-                    .addComponent(daysLabel)
-                    .addComponent(dateLabel)
-                    .addComponent(countryLabel)
-                    .addComponent(cityLabel)
-                    .addComponent(departureCityLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(insuranceLabel))
-                    .addComponent(hotelNameLabel))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(typeCountryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeDepartureCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeDaysLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typePeopleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typePriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeInsuranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeHotelNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(typeHotelDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(hotelDescriptionLabel)
+                                        .addComponent(priceLabel)
+                                        .addComponent(peopleLabel)
+                                        .addComponent(daysLabel)
+                                        .addComponent(dateLabel)
+                                        .addComponent(countryLabel)
+                                        .addComponent(cityLabel)
+                                        .addComponent(departureCityLabel)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(insuranceLabel))
+                                        .addComponent(hotelNameLabel))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(typeCountryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeDepartureCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeDaysLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typePeopleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typePriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeInsuranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeHotelNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeHotelDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(countryLabel)
-                    .addComponent(typeCountryLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cityLabel)
-                    .addComponent(typeCityLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(departureCityLabel)
-                    .addComponent(typeDepartureCityLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dateLabel)
-                    .addComponent(typeDateLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(daysLabel)
-                    .addComponent(typeDaysLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(typePriceLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(peopleLabel)
-                            .addComponent(typePeopleLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(priceLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(typeInsuranceLabel)
-                            .addComponent(insuranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(typeHotelNameLabel)
-                            .addComponent(hotelNameLabel))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(typeHotelDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hotelDescriptionLabel))
-                .addContainerGap(22, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(countryLabel)
+                                        .addComponent(typeCountryLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cityLabel)
+                                        .addComponent(typeCityLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(departureCityLabel)
+                                        .addComponent(typeDepartureCityLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(dateLabel)
+                                        .addComponent(typeDateLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(daysLabel)
+                                        .addComponent(typeDaysLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(typePriceLabel)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(peopleLabel)
+                                                        .addComponent(typePeopleLabel))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(priceLabel)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(typeInsuranceLabel)
+                                                        .addComponent(insuranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(typeHotelNameLabel)
+                                                        .addComponent(hotelNameLabel))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(typeHotelDescriptionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(hotelDescriptionLabel))
+                                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();

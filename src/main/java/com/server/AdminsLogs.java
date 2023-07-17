@@ -33,8 +33,11 @@ public class AdminsLogs extends javax.swing.JFrame {
     public AdminsLogs() {
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
+        initializeLogsList();
+    }
+    private void initializeLogsList() {
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
-        for(String log : LogsAdmins.logs){
+        for (String log : LogsAdmins.logs) {
             defaultListModel.addElement(log);
         }
         adminsLogsList.setModel(defaultListModel);

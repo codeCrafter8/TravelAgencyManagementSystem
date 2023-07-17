@@ -15,6 +15,32 @@ import java.util.concurrent.TimeUnit;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność strony głównej klienta wraz z wyszukiwarką
  */
 public class SearchEngine extends javax.swing.JFrame {
+    JScrollPane mainScroll;
+    JPanel mainWindow;
+    JPanel mainPanel;
+    JPanel countriesPanel;
+    JButton tripsButton;
+    JButton summer2023Button;
+    JButton lastMinuteButton;
+    JButton exoticButton;
+    JButton greeceButton;
+    JButton spainButton;
+    JButton turkeyButton;
+    JButton egyptButton;
+    JButton italyButton;
+    JButton bulgariaButton;
+    JLabel officeName;
+    JPanel searchPanel;
+    JLabel tripDirection;
+    JLabel departureCity;
+    JLabel departureArrival;
+    JLabel peopleQuantity;
+    JPanel searchPanelIntroduction;
+    JButton searchButton;
+    JScrollPane tableScroll;
+    JPanel footer;
+    JButton sendButton;
+    JLabel headphonesImage;
     /**
      * Menu podręczne z opcjami kierunku podróży
      */
@@ -213,59 +239,61 @@ public class SearchEngine extends javax.swing.JFrame {
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
-    private void initComponents() {
-        JScrollPane mainScroll = new JScrollPane();
-        JPanel mainWindow = new JPanel();
-        JPanel mainPanel = new JPanel();
-        JPanel countriesPanel = new JPanel();
-        JButton tripsButton = new JButton();
-        JButton summer2023Button = new JButton();
-        JButton lastMinuteButton = new JButton();
-        JButton exoticButton = new JButton();
-        JButton greeceButton = new JButton();
-        JButton spainButton = new JButton();
-        JButton turkeyButton = new JButton();
-        JButton egyptButton = new JButton();
-        JButton italyButton = new JButton();
-        JButton bulgariaButton = new JButton();
-        JLabel officeName = new JLabel();
-        JPanel searchPanel = new JPanel();
-        JLabel tripDirection = new JLabel();
-        JLabel departureCity = new JLabel();
-        JLabel departureArrival = new JLabel();
-        JLabel peopleQuantity = new JLabel();
-        JPanel searchPanelIntroduction = new JPanel();
-        destinationChoice = new javax.swing.JComboBox<>();
-        departureCityChoice = new javax.swing.JComboBox<>();
-        departureTextField = new javax.swing.JTextField();
-        arrivalTextField = new javax.swing.JTextField();
-        adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
-        childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
-        JButton searchButton = new JButton();
-        imagesPanel = new javax.swing.JLabel();
-        JScrollPane tableScroll = new JScrollPane();
-        table = new javax.swing.JTable();
-        managing = new javax.swing.JComboBox<>();
-        JPanel footer = new JPanel();
-        leaveNumber = new javax.swing.JTextField();
-        JButton sendButton = new JButton();
-        JLabel headphonesImage = new JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1024, 768));
-
-        mainScroll.setBorder(null);
-        mainScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        mainScroll.setMaximumSize(new java.awt.Dimension(1022, 400));
-        mainScroll.setMinimumSize(new java.awt.Dimension(1022, 400));
-        mainScroll.setPreferredSize(new java.awt.Dimension(1022, 729));
-
-        mainWindow.setMaximumSize(new java.awt.Dimension(1022, 729));
-        mainWindow.setMinimumSize(new java.awt.Dimension(1022, 729));
-        mainWindow.setPreferredSize(new java.awt.Dimension(1022, 720));
-
-        mainPanel.setPreferredSize(new java.awt.Dimension(955, 2000));
-
+    private void initComponents(){
+        setWindowProperties();
+        createButtons();
+        createLabels();
+        createComboBoxes();
+        createTextFields();
+        createTable();
+        createManaging();
+        createSpinners();
+        createCountriesPanel();
+        createSearchPanelIntroduction();
+        createSearchPanel();
+        createMainPanel();
+        createMainWindow();
+        createFooter();
+        createLayout();
+    }
+    /**
+     * Metoda obsługująca menu podręczne
+     * @param evt Przyjęty event podczas kliknięcia przycisku
+     */
+    private void managingActionPerformed(ActionEvent evt) {
+        switch(String.valueOf(managing.getSelectedItem())){
+            case "Wyloguj" -> {
+                Object[] options = {"Tak", "Nie"};
+                if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
+                        JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
+                    dispose();
+                    data.clear();
+                    data.add("logOut");
+                    data.add(client.getUserEmail());
+                    new Client(data);
+                    data.clear();
+                    new StartPage().setVisible(true);
+                }
+            }
+            case "Moje Konto" -> {
+                dispose();
+                new MyAccount(client).setVisible(true);
+            }
+        }
+    }
+    private void createButtons(){
+        tripsButton = new JButton();
+        summer2023Button = new JButton();
+        lastMinuteButton = new JButton();
+        exoticButton = new JButton();
+        greeceButton = new JButton();
+        spainButton = new JButton();
+        turkeyButton = new JButton();
+        egyptButton = new JButton();
+        italyButton = new JButton();
+        bulgariaButton = new JButton();
+        searchButton = new JButton();
+        sendButton = new JButton();
         tripsButton.setBackground(new java.awt.Color(151, 123, 92));
         tripsButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
         tripsButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -347,53 +375,28 @@ public class SearchEngine extends javax.swing.JFrame {
         bulgariaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bulgariaButton.addActionListener(this::bulgariaButtonActionPerformed);
 
-        javax.swing.GroupLayout panel_KrajeLayout = new javax.swing.GroupLayout(countriesPanel);
-        countriesPanel.setLayout(panel_KrajeLayout);
-        panel_KrajeLayout.setHorizontalGroup(
-            panel_KrajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_KrajeLayout.createSequentialGroup()
-                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(summer2023Button, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(lastMinuteButton)
-                .addGap(0, 0, 0)
-                .addComponent(exoticButton)
-                .addGap(0, 0, 0)
-                .addComponent(greeceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(spainButton)
-                .addGap(0, 0, 0)
-                .addComponent(turkeyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(egyptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(italyButton)
-                .addGap(0, 0, 0)
-                .addComponent(bulgariaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
-        panel_KrajeLayout.setVerticalGroup(
-            panel_KrajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_KrajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(summer2023Button, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(lastMinuteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(exoticButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(greeceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(spainButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(turkeyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(egyptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(italyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(bulgariaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        searchButton.setIcon(new javax.swing.ImageIcon("img\\search-icon-png-0.png"));
+        searchButton.setContentAreaFilled(false);
+        searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchButton.addActionListener(this::searchButtonActionPerformed);
 
+        sendButton.setForeground(new java.awt.Color(151, 123, 92));
+        sendButton.setText("Wyślij");
+        sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sendButton.setFocusable(false);
+        sendButton.addActionListener(this::sendButtonActionPerformed);
+    }
+    private void createLabels(){
+        officeName = new JLabel();
+        tripDirection = new JLabel();
+        departureCity = new JLabel();
+        departureArrival = new JLabel();
+        peopleQuantity = new JLabel();
+        imagesPanel = new javax.swing.JLabel();
         officeName.setBackground(new java.awt.Color(151, 123, 92));
         officeName.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
         officeName.setForeground(new java.awt.Color(151, 123, 92));
         officeName.setText("Travel Agency");
-
-        searchPanel.setBackground(new java.awt.Color(151, 123, 92));
 
         tripDirection.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         tripDirection.setForeground(new java.awt.Color(255, 255, 255));
@@ -410,212 +413,224 @@ public class SearchEngine extends javax.swing.JFrame {
         peopleQuantity.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         peopleQuantity.setForeground(new java.awt.Color(255, 255, 255));
         peopleQuantity.setText("Ilość dorosłych/dzieci");
+    }
+    private void createCountriesPanel(){
+        countriesPanel = new JPanel();
+        javax.swing.GroupLayout countriesPanelLayout = new javax.swing.GroupLayout(countriesPanel);
+        countriesPanel.setLayout(countriesPanelLayout);
+        countriesPanelLayout.setHorizontalGroup(
+                countriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(countriesPanelLayout.createSequentialGroup()
+                                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(summer2023Button, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(lastMinuteButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(exoticButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(greeceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(spainButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(turkeyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(egyptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(italyButton)
+                                .addGap(0, 0, 0)
+                                .addComponent(bulgariaButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                                .addGap(0, 0, 0))
+        );
+        countriesPanelLayout.setVerticalGroup(
+                countriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(countriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(summer2023Button, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lastMinuteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(exoticButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(greeceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(spainButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(turkeyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(egyptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(italyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(bulgariaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+    }
+    private void setWindowProperties(){
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1024, 768));
+    }
+    private void createMainWindow(){
+        mainScroll = new JScrollPane();
+        mainWindow = new JPanel();
+        mainScroll.setBorder(null);
+        mainScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        mainScroll.setMaximumSize(new java.awt.Dimension(1022, 400));
+        mainScroll.setMinimumSize(new java.awt.Dimension(1022, 400));
+        mainScroll.setPreferredSize(new java.awt.Dimension(1022, 729));
 
+        mainWindow.setMaximumSize(new java.awt.Dimension(1022, 729));
+        mainWindow.setMinimumSize(new java.awt.Dimension(1022, 729));
+        mainWindow.setPreferredSize(new java.awt.Dimension(1022, 720));
+        javax.swing.GroupLayout mainWindowLayout = new javax.swing.GroupLayout(mainWindow);
+        mainWindow.setLayout(mainWindowLayout);
+        mainWindowLayout.setHorizontalGroup(
+                mainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainWindowLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        mainWindowLayout.setVerticalGroup(
+                mainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+        );
+
+        mainScroll.setViewportView(mainWindow);
+    }
+    private void createSearchPanelIntroduction(){
+        searchPanelIntroduction = new JPanel();
         searchPanelIntroduction.setBackground(new java.awt.Color(151, 123, 92));
-
+        javax.swing.GroupLayout searchPanelIntroductionLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
+        searchPanelIntroduction.setLayout(searchPanelIntroductionLayout);
+        searchPanelIntroductionLayout.setHorizontalGroup(
+                searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
+                                                .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
+                                                .addComponent(adultsQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        searchPanelIntroductionLayout.setVerticalGroup(
+                searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
+                                .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(adultsQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+    }
+    private void createMainPanel(){
+        mainPanel = new JPanel();
+        mainPanel.setPreferredSize(new java.awt.Dimension(955, 2000));
+        javax.swing.GroupLayout glowneLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(glowneLayout);
+        glowneLayout.setHorizontalGroup(
+                glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(countriesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(glowneLayout.createSequentialGroup()
+                                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(imagesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, glowneLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(officeName, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(255, 255, 255)
+                                .addComponent(managing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tableScroll)
+        );
+        glowneLayout.setVerticalGroup(
+                glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(glowneLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(officeName, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(managing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(countriesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(imagesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tableScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+        );
+    }
+    private void createSearchPanel(){
+        searchPanel = new JPanel();
+        searchPanel.setBackground(new java.awt.Color(151, 123, 92));
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+                searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(tripDirection)
+                                        .addComponent(departureArrival)
+                                        .addComponent(departureCity)
+                                        .addComponent(peopleQuantity))
+                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(searchPanelIntroduction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(15, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(searchButton)
+                                                .addGap(29, 29, 29))))
+        );
+        searchPanelLayout.setVerticalGroup(
+                searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                                .addComponent(searchPanelIntroduction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(searchButton))
+                                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                                .addComponent(tripDirection, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(departureCity, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(12, 12, 12)
+                                                .addComponent(departureArrival)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(peopleQuantity)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
+    private void createComboBoxes(){
+        destinationChoice = new javax.swing.JComboBox<>();
+        departureCityChoice = new javax.swing.JComboBox<>();
         destinationChoice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokąd?"}));
         destinationChoice.setFocusable(false);
-
         departureCityChoice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Skąd?"}));
         departureCityChoice.setFocusable(false);
-
+    }
+    private void createTextFields(){
+        departureTextField = new javax.swing.JTextField();
+        arrivalTextField = new javax.swing.JTextField();
         departureTextField.setForeground(new java.awt.Color(153, 153, 153));
         departureTextField.setText("04/07/2023");
         departureTextField.setToolTipText("");
         departureTextField.setAutoscrolls(false);
         departureTextField.setSelectionColor(new java.awt.Color(255, 255, 255));
-
         arrivalTextField.setForeground(new java.awt.Color(153, 153, 153));
         arrivalTextField.setText("11/07/2023");
         arrivalTextField.setAutoscrolls(false);
-        adultsQuantitySpinner.setFocusable(false);
-
-        childrenQuantitySpinner.setFocusable(false);
-
-        javax.swing.GroupLayout searchPanelIntroductionLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
-        searchPanelIntroduction.setLayout(searchPanelIntroductionLayout);
-        searchPanelIntroductionLayout.setHorizontalGroup(
-            searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
-                        .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
-                        .addComponent(adultsQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-        searchPanelIntroductionLayout.setVerticalGroup(
-            searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
-                .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(arrivalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(adultsQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        searchButton.setIcon(new javax.swing.ImageIcon("img\\search-icon-png-0.png"));
-        searchButton.setContentAreaFilled(false);
-        searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        searchButton.addActionListener(this::searchButtonActionPerformed);
-
-        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
-        searchPanel.setLayout(searchPanelLayout);
-        searchPanelLayout.setHorizontalGroup(
-            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tripDirection)
-                    .addComponent(departureArrival)
-                    .addComponent(departureCity)
-                    .addComponent(peopleQuantity))
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchPanelIntroduction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(15, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(searchButton)
-                        .addGap(29, 29, 29))))
-        );
-        searchPanelLayout.setVerticalGroup(
-            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchPanelLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addComponent(searchPanelIntroduction, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton))
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addComponent(tripDirection, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(departureCity, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(departureArrival)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(peopleQuantity)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        tableScroll.setBorder(null);
-        tableScroll.setToolTipText("");
-        tableScroll.setColumnHeaderView(null);
-
-        table.setAutoCreateRowSorter(true);
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Kraj", "Miasto", "Termin", "Cena/Osoba"
-            }
-        ));
-        table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        table.setFocusable(false);
-        table.setGridColor(new java.awt.Color(255, 255, 255));
-        table.setPreferredSize(new java.awt.Dimension(300, 355));
-        table.setSelectionBackground(new java.awt.Color(151, 123, 92));
-        table.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        table.setShowGrid(true);
-        table.getTableHeader().setResizingAllowed(false);
-        tableScroll.setViewportView(table);
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                selectedRow = table.rowAtPoint(evt.getPoint());
-                if (selectedRow >= 0) {
-                    idSelectedTrip = idRows.get(selectedRow);
-                    dispose();
-                    new Offer(client, tripsData,attributesQuantity, adultsQuantity, childrenQuantity, idSelectedTrip, selectedRow).setVisible(true);
-                }
-            }
-        });
-
-        managing.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje Konto", "Wyloguj" }));
-        managing.setBorder(null);
-        managing.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        managing.setFocusable(false);
-        managing.setLightWeightPopupEnabled(false);
-        managing.addActionListener(this::managingActionPerformed);
-
-        javax.swing.GroupLayout glowneLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(glowneLayout);
-        glowneLayout.setHorizontalGroup(
-            glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(countriesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(glowneLayout.createSequentialGroup()
-                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(imagesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, glowneLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(officeName, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(255, 255, 255)
-                .addComponent(managing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(tableScroll)
-        );
-        glowneLayout.setVerticalGroup(
-            glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(glowneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(officeName, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(managing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(countriesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(imagesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tableScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout mainWindowLayout = new javax.swing.GroupLayout(mainWindow);
-        mainWindow.setLayout(mainWindowLayout);
-        mainWindowLayout.setHorizontalGroup(
-            mainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainWindowLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
-        mainWindowLayout.setVerticalGroup(
-            mainWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
-        );
-
-        mainScroll.setViewportView(mainWindow);
-
-        footer.setBackground(new java.awt.Color(151, 123, 92));
-
+        leaveNumber = new javax.swing.JTextField();
         leaveNumber.setForeground(new java.awt.Color(153, 153, 153));
         leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
         leaveNumber.setMinimumSize(new java.awt.Dimension(64, 27));
         leaveNumber.setPreferredSize(new java.awt.Dimension(64, 22));
-
-        sendButton.setForeground(new java.awt.Color(151, 123, 92));
-        sendButton.setText("Wyślij");
-        sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        sendButton.setFocusable(false);
-        sendButton.addActionListener(this::sendButtonActionPerformed);
-        headphonesImage.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
         leaveNumber.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -664,78 +679,113 @@ public class SearchEngine extends javax.swing.JFrame {
                 }
             }
         });
+    }
+    private void createSpinners(){
+        adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+        childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
+        adultsQuantitySpinner.setFocusable(false);
+        childrenQuantitySpinner.setFocusable(false);
+    }
+    private void createTable(){
+        tableScroll = new JScrollPane();
+        table = new javax.swing.JTable();
+        tableScroll.setBorder(null);
+        tableScroll.setToolTipText("");
+        tableScroll.setColumnHeaderView(null);
+
+        table.setAutoCreateRowSorter(true);
+        table.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+
+                },
+                new String [] {
+                        "Kraj", "Miasto", "Termin", "Cena/Osoba"
+                }
+        ));
+        table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setFocusable(false);
+        table.setGridColor(new java.awt.Color(255, 255, 255));
+        table.setPreferredSize(new java.awt.Dimension(300, 355));
+        table.setSelectionBackground(new java.awt.Color(151, 123, 92));
+        table.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.setShowGrid(true);
+        table.getTableHeader().setResizingAllowed(false);
+        tableScroll.setViewportView(table);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectedRow = table.rowAtPoint(evt.getPoint());
+                if (selectedRow >= 0) {
+                    idSelectedTrip = idRows.get(selectedRow);
+                    dispose();
+                    new Offer(client, tripsData,attributesQuantity, adultsQuantity, childrenQuantity, idSelectedTrip, selectedRow).setVisible(true);
+                }
+            }
+        });
+    }
+    private void createManaging(){
+        managing = new javax.swing.JComboBox<>();
+        managing.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje Konto", "Wyloguj" }));
+        managing.setBorder(null);
+        managing.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        managing.setFocusable(false);
+        managing.setLightWeightPopupEnabled(false);
+        managing.addActionListener(this::managingActionPerformed);
+    }
+    private void createFooter(){
+        footer = new JPanel();
+        footer.setBackground(new java.awt.Color(151, 123, 92));
+        headphonesImage = new JLabel();
+        headphonesImage.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
 
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
         footerLayout.setHorizontalGroup(
-            footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(footerLayout.createSequentialGroup()
-                .addGap(349, 349, 349)
-                .addComponent(headphonesImage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(leaveNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sendButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(footerLayout.createSequentialGroup()
+                                .addGap(349, 349, 349)
+                                .addComponent(headphonesImage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(leaveNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(sendButton)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         footerLayout.setVerticalGroup(
-            footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(leaveNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(footerLayout.createSequentialGroup()
-                        .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(sendButton)
-                            .addComponent(headphonesImage))
-                        .addGap(0, 2, Short.MAX_VALUE)))
-                .addGap(8, 8, 8))
+                footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(leaveNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(footerLayout.createSequentialGroup()
+                                                .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(sendButton)
+                                                        .addComponent(headphonesImage))
+                                                .addGap(0, 2, Short.MAX_VALUE)))
+                                .addGap(8, 8, 8))
         );
-
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, 1022, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, 1022, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(mainScroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(mainScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(footer, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
-    }
-    /**
-     * Metoda obsługująca menu podręczne
-     * @param evt Przyjęty event podczas kliknięcia przycisku
-     */
-    private void managingActionPerformed(ActionEvent evt) {
-        switch(String.valueOf(managing.getSelectedItem())){
-            case "Wyloguj" -> {
-                Object[] options = {"Tak", "Nie"};
-                if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
-                        JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
-                    dispose();
-                    data.clear();
-                    data.add("logOut");
-                    data.add(client.getUserEmail());
-                    new Client(data);
-                    data.clear();
-                    new StartPage().setVisible(true);
-                }
-            }
-            case "Moje Konto" -> {
-                dispose();
-                new MyAccount(client).setVisible(true);
-            }
-        }
     }
     /**
      * Metoda obsługująca kliknięcie przycisku "Lato 2023"

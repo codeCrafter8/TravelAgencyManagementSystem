@@ -32,6 +32,9 @@ public class ServerLogs extends javax.swing.JFrame {
     public ServerLogs() {
         initComponents();
         getContentPane().setBackground(new Color(215,198,151));
+        initializeLogsList();
+    }
+    private void initializeLogsList() {
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
         for(String log : LogsServer.logs){
             defaultListModel.addElement(log);

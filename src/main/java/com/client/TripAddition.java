@@ -12,6 +12,19 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania wycieczki
  */
 public class TripAddition extends javax.swing.JFrame {
+    JPanel regPanel;
+    JLabel createLabel;
+    JLabel countryLabel;
+    JLabel cityLabel;
+    JLabel departureCityLabel;
+    JLabel priceLabel ;
+    JLabel limitLabel;
+    JLabel departureLabel;
+    JLabel arrivalLabel;
+    JLabel hotelNameLabel;
+    JButton submitButton;
+    JButton cancelButton;
+    JLabel validCountryLabel6;
     /**
      * Pole do wprowadzenia limitu osób
      */
@@ -182,71 +195,85 @@ public class TripAddition extends javax.swing.JFrame {
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        JPanel regPanel = new JPanel();
-        JLabel createLabel = new JLabel();
-        JLabel countryLabel = new JLabel();
-        countryTextField = new javax.swing.JTextField();
-        JLabel cityLabel = new JLabel();
-        cityTextField = new javax.swing.JTextField();
-        JLabel departureCityLabel = new JLabel();
-        departureCityField = new javax.swing.JTextField();
-        JLabel priceLabel = new JLabel();
-        priceField = new javax.swing.JTextField();
-        JLabel limitLabel = new JLabel();
-        limitTextField = new javax.swing.JTextField();
-        JLabel departureLabel = new JLabel();
-        JLabel arrivalLabel = new JLabel();
-        JLabel hotelNameLabel = new JLabel();
-        nameHotelTextField = new javax.swing.JTextField();
-        JButton submitButton = new JButton();
-        JButton cancelButton = new JButton();
-        departureDateChooser = new com.toedter.calendar.JDateChooser();
-        arrivalDateChooser = new com.toedter.calendar.JDateChooser();
+        setWindowProperties();
+        createLabels();
+        createButtons();
+        createTextFields();
+        createRegPanel();
+        createLayout();
+    }
+    private void setWindowProperties(){
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dodaj wycieczkę");
+        setMaximumSize(new java.awt.Dimension(1024, 728));
+        setMinimumSize(new java.awt.Dimension(1024, 728));
+    }
+    private void createLabels(){
+        createLabel = new JLabel();
+        countryLabel = new JLabel();
+        cityLabel = new JLabel();
+        departureCityLabel = new JLabel();
+        priceLabel = new JLabel();
+        limitLabel = new JLabel();
+        departureLabel = new JLabel();
+        arrivalLabel = new JLabel();
+        hotelNameLabel = new JLabel();
         wrongCountryLabel = new javax.swing.JLabel();
         wrongCityLabel = new javax.swing.JLabel();
         wrongDepartureCityLabel = new javax.swing.JLabel();
         wrongPriceLabel = new javax.swing.JLabel();
         wrongLimitLabel = new javax.swing.JLabel();
         wrongDepartureLabel = new javax.swing.JLabel();
-        JLabel validCountryLabel6 = new JLabel();
+        validCountryLabel6 = new JLabel();
         wrongArrivalLabel = new javax.swing.JLabel();
         wrongHotelNameLabel = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Dodaj wycieczkę");
-        setMaximumSize(new java.awt.Dimension(1024, 728));
-        setMinimumSize(new java.awt.Dimension(1024, 728));
-
-        regPanel.setBackground(new java.awt.Color(247, 233, 201));
-        regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
-
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Dodaj wycieczkę");
-
         countryLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         countryLabel.setText("Kraj");
-
         cityLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         cityLabel.setText("Miasto");
-
         departureCityLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         departureCityLabel.setText("Miasto wylotu/przylotu");
-
         priceLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         priceLabel.setText("Cena za osobę");
-
         limitLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         limitLabel.setText("Limit osób");
-
         departureLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         departureLabel.setText("Wyjazd");
-
         arrivalLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         arrivalLabel.setText("Przyjazd");
-
         hotelNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         hotelNameLabel.setText("Nazwa hotelu");
-
+        wrongCountryLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCountryLabel.setText(" ");
+        wrongCityLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCityLabel.setText(" ");
+        wrongDepartureCityLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongDepartureCityLabel.setText(" ");
+        wrongPriceLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPriceLabel.setText(" ");
+        wrongLimitLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongLimitLabel.setText(" ");
+        wrongDepartureLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongDepartureLabel.setText(" ");
+        validCountryLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        validCountryLabel6.setText(" ");
+        wrongArrivalLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongArrivalLabel.setText(" ");
+        wrongHotelNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongHotelNameLabel.setText(" ");
+        wrongCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        wrongCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        wrongDepartureCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
+        wrongPriceLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        wrongHotelNameLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        wrongDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+        wrongArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+    }
+    private void createButtons(){
+        submitButton = new JButton();
+        cancelButton = new JButton();
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setText("Dodaj wycieczkę");
@@ -259,181 +286,161 @@ public class TripAddition extends javax.swing.JFrame {
         cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
         cancelButton.addActionListener(this::cancelButtonActionPerformed);
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
+    }
+    private void createTextFields(){
+        countryTextField = new javax.swing.JTextField();
+        cityTextField = new javax.swing.JTextField();
+        departureCityField = new javax.swing.JTextField();
+        priceField = new javax.swing.JTextField();
+        limitTextField = new javax.swing.JTextField();
+        nameHotelTextField = new javax.swing.JTextField();
+    }
+    private void createRegPanel(){
+        regPanel = new JPanel();
+        departureDateChooser = new com.toedter.calendar.JDateChooser();
+        arrivalDateChooser = new com.toedter.calendar.JDateChooser();
+        regPanel.setBackground(new java.awt.Color(247, 233, 201));
+        regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
         departureDateChooser.setMinSelectableDate(new java.util.Date(-62135769509000L));
-
-        wrongCountryLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongCountryLabel.setText(" ");
-
-        wrongCityLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongCityLabel.setText(" ");
-
-        wrongDepartureCityLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongDepartureCityLabel.setText(" ");
-
-        wrongPriceLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongPriceLabel.setText(" ");
-
-        wrongLimitLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongLimitLabel.setText(" ");
-
-        wrongDepartureLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongDepartureLabel.setText(" ");
-
-        validCountryLabel6.setForeground(new java.awt.Color(255, 0, 0));
-        validCountryLabel6.setText(" ");
-
-        wrongArrivalLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongArrivalLabel.setText(" ");
-
-        wrongHotelNameLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongHotelNameLabel.setText(" ");
-
-        wrongCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        wrongCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        wrongDepartureCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        wrongPriceLabel.setMinimumSize(new java.awt.Dimension(200, 16));
-        wrongHotelNameLabel.setMinimumSize(new java.awt.Dimension(200, 16));
-        wrongDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
-        wrongArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
 
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
         regPanelLayout.setHorizontalGroup(
-            regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(regPanelLayout.createSequentialGroup()
+                regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(regPanelLayout.createSequentialGroup()
+                                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(hotelNameLabel)
+                                                        .addComponent(wrongPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(wrongDepartureCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(nameHotelTextField)
+                                                                .addComponent(countryTextField)
+                                                                .addComponent(cityTextField)
+                                                                .addComponent(departureCityField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                                                                .addComponent(countryLabel)
+                                                                .addComponent(cityLabel)
+                                                                .addComponent(departureCityLabel)
+                                                                .addComponent(wrongCountryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(wrongCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(wrongHotelNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(regPanelLayout.createSequentialGroup()
+                                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(wrongDepartureLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(departureLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(priceField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(departureDateChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                                        .addComponent(priceLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 88, Short.MAX_VALUE)
+                                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(limitLabel)
+                                                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(arrivalDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(arrivalLabel))
+                                                        .addComponent(limitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(wrongLimitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(wrongArrivalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGap(71, 71, 71)
+                                .addComponent(submitButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(createLabel)
+                                .addGap(135, 135, 135))
                         .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hotelNameLabel)
-                            .addComponent(wrongPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(wrongDepartureCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(nameHotelTextField)
-                                .addComponent(countryTextField)
-                                .addComponent(cityTextField)
-                                .addComponent(departureCityField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                                .addComponent(countryLabel)
-                                .addComponent(cityLabel)
-                                .addComponent(departureCityLabel)
-                                .addComponent(wrongCountryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(wrongCityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(wrongHotelNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(regPanelLayout.createSequentialGroup()
-                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(wrongDepartureLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(departureLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(priceField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(departureDateChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(priceLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 88, Short.MAX_VALUE)
-                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(limitLabel)
-                            .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(arrivalDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(arrivalLabel))
-                            .addComponent(limitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(wrongLimitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(wrongArrivalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(submitButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(createLabel)
-                .addGap(135, 135, 135))
-            .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(regPanelLayout.createSequentialGroup()
-                    .addGap(53, 53, 53)
-                    .addComponent(validCountryLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(292, Short.MAX_VALUE)))
+                                .addGroup(regPanelLayout.createSequentialGroup()
+                                        .addGap(53, 53, 53)
+                                        .addComponent(validCountryLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(292, Short.MAX_VALUE)))
         );
         regPanelLayout.setVerticalGroup(
-            regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(createLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(countryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(countryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(wrongCountryLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongCityLabel)
-                .addGap(2, 2, 2)
-                .addComponent(departureCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(departureCityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongDepartureCityLabel)
-                .addGap(2, 2, 2)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(limitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(limitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(wrongPriceLabel)
-                    .addComponent(wrongLimitLabel))
-                .addGap(2, 2, 2)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(departureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(arrivalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(arrivalDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(departureDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(wrongDepartureLabel)
-                    .addComponent(wrongArrivalLabel))
-                .addGap(2, 2, 2)
-                .addComponent(hotelNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameHotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongHotelNameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58))
-            .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
-                    .addContainerGap(340, Short.MAX_VALUE)
-                    .addComponent(validCountryLabel6)
-                    .addGap(245, 245, 245)))
+                regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(createLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(countryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(countryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(wrongCountryLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongCityLabel)
+                                .addGap(2, 2, 2)
+                                .addComponent(departureCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(departureCityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongDepartureCityLabel)
+                                .addGap(2, 2, 2)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(limitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(limitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(wrongPriceLabel)
+                                        .addComponent(wrongLimitLabel))
+                                .addGap(2, 2, 2)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(departureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(arrivalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(arrivalDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(departureDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(wrongDepartureLabel)
+                                        .addComponent(wrongArrivalLabel))
+                                .addGap(2, 2, 2)
+                                .addComponent(hotelNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nameHotelTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongHotelNameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(58, 58, 58))
+                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                                        .addContainerGap(340, Short.MAX_VALUE)
+                                        .addComponent(validCountryLabel6)
+                                        .addGap(245, 245, 245)))
         );
-
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(287, 287, 287)
+                                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(287, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(63, Short.MAX_VALUE)
+                                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64))
         );
 
         pack();
