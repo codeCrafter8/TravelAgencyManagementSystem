@@ -7,34 +7,12 @@ import java.awt.event.ActionEvent;
  */
 public class ServerLogs extends javax.swing.JFrame {
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi administratorów
-     */
-    private javax.swing.JButton adminsLogsButton;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Logi klientów
-     */
-    private javax.swing.JButton clientsLogsButton;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Zarządzaj pracą serwera
-     */
-    private javax.swing.JButton manageServerButton;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Logi serwera
-     */
-    private javax.swing.JButton serverLogsButton;
-    /**
-     * Lista z logami serwera
-     */
-    private static javax.swing.JList<String> serverLogsList;
-    /**
      * Konstruktor odpowiadający za inicjalizację GUI
      */
     public ServerLogs() {
         initComponents();
-        getContentPane().setBackground(new Color(215,198,151));
-        initializeLogsList();
     }
-    private void initializeLogsList() {
+    private void setLogsList() {
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
         for(String log : LogsServer.logs){
             defaultListModel.addElement(log);
@@ -45,25 +23,89 @@ public class ServerLogs extends javax.swing.JFrame {
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        JPanel menuPanel = new JPanel();
-        JPanel serverPanel = new JPanel();
-        JLabel serverIconLabel = new JLabel();
-        JLabel serverLabel = new JLabel();
-        JPanel optionsPanel = new JPanel();
-        manageServerButton = new javax.swing.JButton();
-        clientsLogsButton = new javax.swing.JButton();
-        adminsLogsButton = new javax.swing.JButton();
-        serverLogsButton = new javax.swing.JButton();
-        JLabel serverLogsLabel = new JLabel();
-        serverLogsList = new javax.swing.JList<>();
-
+        setWindowProperties();
+        createMenuPanel();
+        createServerPanel();
+        createOptionsPanel();
+        setLabels();
+        setButtons();
+        setLogsList();
+        createLayout();
+    }
+    private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logi Serwera");
         setPreferredSize(new java.awt.Dimension(1024, 768));
-
+        getContentPane().setBackground(new Color(215,198,151));
+    }
+    private void createMenuPanel(){
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
-
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+                menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(optionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+        );
+        menuPanelLayout.setVerticalGroup(
+                menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(menuPanelLayout.createSequentialGroup()
+                                .addComponent(serverPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
+    private void createServerPanel(){
         serverPanel.setBackground(new java.awt.Color(118, 98, 75));
+        javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
+        serverPanel.setLayout(serverPanelLayout);
+        serverPanelLayout.setHorizontalGroup(
+                serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(serverLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverPanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(serverIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(74, 74, 74))
+        );
+        serverPanelLayout.setVerticalGroup(
+                serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(serverPanelLayout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(serverIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(serverLabel)
+                                .addContainerGap(31, Short.MAX_VALUE))
+        );
+    }
+    private void createOptionsPanel(){
+        optionsPanel.setBackground(new java.awt.Color(151, 123, 92));
+        optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
+        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
+        javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
+        optionsPanel.setLayout(optionsPanelLayout);
+        optionsPanelLayout.setHorizontalGroup(
+                optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(manageServerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                        .addComponent(clientsLogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(adminsLogsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(serverLogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        optionsPanelLayout.setVerticalGroup(
+                optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(optionsPanelLayout.createSequentialGroup()
+                                .addComponent(manageServerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(clientsLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(adminsLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(serverLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
+    private void setLabels(){
         serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
         serverIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
         serverIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
@@ -73,31 +115,10 @@ public class ServerLogs extends javax.swing.JFrame {
         serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         serverLabel.setText("Serwer");
 
-        javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
-        serverPanel.setLayout(serverPanelLayout);
-        serverPanelLayout.setHorizontalGroup(
-            serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(serverLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, serverPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(serverIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
-        );
-        serverPanelLayout.setVerticalGroup(
-            serverPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(serverPanelLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(serverIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverLabel)
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-
-        optionsPanel.setBackground(new java.awt.Color(151, 123, 92));
-        optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
-
+        serverLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
+        serverLogsLabel.setText("Logi Serwera");
+    }
+    private void setButtons(){
         manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         manageServerButton.setText("    Zarządzaj pracą serwera");
         manageServerButton.setBorder(null);
@@ -170,72 +191,32 @@ public class ServerLogs extends javax.swing.JFrame {
             else
                 serverLogsButton.setForeground(null);
         });
-
-        javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
-        optionsPanel.setLayout(optionsPanelLayout);
-        optionsPanelLayout.setHorizontalGroup(
-            optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(manageServerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-            .addComponent(clientsLogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(adminsLogsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(serverLogsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        optionsPanelLayout.setVerticalGroup(
-            optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(optionsPanelLayout.createSequentialGroup()
-                .addComponent(manageServerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(clientsLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(adminsLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(serverLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
-        menuPanel.setLayout(menuPanelLayout);
-        menuPanelLayout.setHorizontalGroup(
-            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(serverPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(optionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-        );
-        menuPanelLayout.setVerticalGroup(
-            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuPanelLayout.createSequentialGroup()
-                .addComponent(serverPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        serverLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
-        serverLogsLabel.setText("Logi Serwera");
-
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(328, 328, 328)
-                        .addComponent(serverLogsLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 88, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(328, 328, 328)
+                                                .addComponent(serverLogsLabel))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(67, 67, 67)
+                                                .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(serverLogsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(serverLogsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
@@ -284,4 +265,31 @@ public class ServerLogs extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new ServerLogs().setVisible(true));
     }
+    //GUI variables
+    /**
+     * Przycisk umożliwiający przejście do zakładki Logi administratorów
+     */
+    private final javax.swing.JButton adminsLogsButton = new JButton();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Logi klientów
+     */
+    private final javax.swing.JButton clientsLogsButton = new JButton();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Zarządzaj pracą serwera
+     */
+    private final javax.swing.JButton manageServerButton = new JButton();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Logi serwera
+     */
+    private final javax.swing.JButton serverLogsButton = new JButton();
+    /**
+     * Lista z logami serwera
+     */
+    private final javax.swing.JList<String> serverLogsList = new JList<>();
+    private final JPanel menuPanel = new JPanel();
+    private final JPanel serverPanel = new JPanel();
+    private final JLabel serverIconLabel = new JLabel();
+    private final JLabel serverLabel = new JLabel();
+    private final JPanel optionsPanel = new JPanel();
+    private final JLabel serverLogsLabel = new JLabel();
 }

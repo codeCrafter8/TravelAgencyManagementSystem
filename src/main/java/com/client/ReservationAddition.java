@@ -12,22 +12,6 @@ import java.util.Objects;
  */
 public class ReservationAddition extends javax.swing.JFrame {
     /**
-     * Tabela z klientami
-     */
-    private javax.swing.JTable clientsTable;
-    /**
-     * Menu podręczne z opcjami ubezpieczenia
-     */
-    private javax.swing.JComboBox<String> jComboBox1;
-    /**
-     * Element umożliwiający wybór ilości osób
-     */
-    private javax.swing.JSpinner jSpinner1;
-    /**
-     * Tabela z wycieczkami
-     */
-    private javax.swing.JTable tripsTable;
-    /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
     private final List<String> data = new ArrayList<>();
@@ -59,6 +43,24 @@ public class ReservationAddition extends javax.swing.JFrame {
         generateData();
         populateClientsTable();
         populateTripsTable();
+    }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
+    private void initComponents() {
+        setWindowProperties();
+        setTripsTable();
+        setClientsTable();
+        setButtons();
+        setPeopleQuantityComponents();
+        setInsuranceComponents();
+        createLayout();
+    }
+    private void setWindowProperties(){
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1040, 770));
+        setTitle("Dodawanie rezerwacji");
+        getContentPane().setBackground(new Color(215,198,151));
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -77,34 +79,17 @@ public class ReservationAddition extends javax.swing.JFrame {
             }
         });
     }
-    /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
-     */
-    private void initComponents() {
-        JScrollPane jScrollPane1 = new JScrollPane();
-        tripsTable = new javax.swing.JTable();
-        JScrollPane jScrollPane2 = new JScrollPane();
-        clientsTable = new javax.swing.JTable();
-        JButton submitButton = new JButton();
-        JButton cancelButton = new JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        JLabel jLabel1 = new JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        JLabel jLabel2 = new JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1040, 770));
-        setTitle("Dodawanie rezerwacji");
+    private void setTripsTable(){
         tripsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object [][] {
 
-            },
-            new String [] {
-                "Id", "Kraj/Miasto", "Cena/Osoba", "Limit osób", "Termin"
-            }
+                },
+                new String [] {
+                        "Id", "Kraj/Miasto", "Cena/Osoba", "Limit osób", "Termin"
+                }
         ) {
             final boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                    false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -116,18 +101,19 @@ public class ReservationAddition extends javax.swing.JFrame {
         tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
         tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
         tripsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
-        jScrollPane1.setViewportView(tripsTable);
-
+        tripsTableScrollPane.setViewportView(tripsTable);
+    }
+    private void setClientsTable(){
         clientsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object [][] {
 
-            },
-            new String [] {
-                "Id", "Imię", "Nazwisko", "E-mail", "Nr telefonu"
-            }
+                },
+                new String [] {
+                        "Id", "Imię", "Nazwisko", "E-mail", "Nr telefonu"
+                }
         ) {
             final boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                    false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -139,8 +125,9 @@ public class ReservationAddition extends javax.swing.JFrame {
         clientsTable.setMinimumSize(new java.awt.Dimension(375, 550));
         clientsTable.setPreferredSize(new java.awt.Dimension(375, 550));
         clientsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
-        jScrollPane2.setViewportView(clientsTable);
-
+        clientsTableScrollPane.setViewportView(clientsTable);
+    }
+    private void setButtons(){
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setText("Dodaj rezerwację");
@@ -153,63 +140,62 @@ public class ReservationAddition extends javax.swing.JFrame {
         cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
         cancelButton.addActionListener(evt -> cancelButtonActionPerformed());
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
-
-        jLabel1.setText("Liczba osób:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Brak", "Standard", "Komfort", "Premium" }));
-
-        jLabel2.setText("Ubezpieczenie:");
-
-        getContentPane().setBackground(new Color(215,198,151));
-
+    }
+    private void setPeopleQuantityComponents(){
+        peopleQuantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
+        peopleQuantityLabel.setText("Liczba osób:");
+    }
+    private void setInsuranceComponents(){
+        insuranceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Brak", "Standard", "Komfort", "Premium" }));
+        insuranceLabel.setText("Ubezpieczenie:");
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 234, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addGap(150, 150, 150))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(333, 333, 333)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addComponent(submitButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 234, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(tripsTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+                                        .addComponent(clientsTableScrollPane))
+                                .addGap(150, 150, 150))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(333, 333, 333)
+                                                .addComponent(peopleQuantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(peopleQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(40, 40, 40)
+                                                .addComponent(insuranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(insuranceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(374, 374, 374)
+                                                .addComponent(submitButton)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(clientsTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(tripsTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(peopleQuantityLabel)
+                                        .addComponent(peopleQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(insuranceLabel)
+                                        .addComponent(insuranceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(59, 59, 59)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(29, 29, 29))
         );
 
         pack();
@@ -264,7 +250,7 @@ public class ReservationAddition extends javax.swing.JFrame {
         int clientsRow = clientsTable.getSelectedRow();
         DefaultTableModel tripsModel = (DefaultTableModel) tripsTable.getModel();
         int tripsRow = tripsTable.getSelectedRow();
-        if(Integer.parseInt(tripsModel.getValueAt(tripsRow, 3).toString()) < Integer.parseInt(jSpinner1.getValue().toString())){
+        if(Integer.parseInt(tripsModel.getValueAt(tripsRow, 3).toString()) < Integer.parseInt(peopleQuantitySpinner.getValue().toString())){
             JOptionPane.showMessageDialog(null, "Zbyt duża liczba osób.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
         else{
@@ -272,8 +258,8 @@ public class ReservationAddition extends javax.swing.JFrame {
             data.add("addReservation");
             data.add(tripsModel.getValueAt(tripsRow, 0).toString());
             data.add(clientsModel.getValueAt(clientsRow, 0).toString());
-            data.add(jSpinner1.getValue().toString());
-            String item = (String) jComboBox1.getSelectedItem();
+            data.add(peopleQuantitySpinner.getValue().toString());
+            String item = (String) insuranceComboBox.getSelectedItem();
             if(Objects.equals(item, "Brak"))
                 data.add("");
             else
@@ -309,4 +295,27 @@ public class ReservationAddition extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new ReservationAddition(null,null).setVisible(true));
     }
+    //GUI variables
+    /**
+     * Tabela z klientami
+     */
+    private final javax.swing.JTable clientsTable = new JTable();
+    /**
+     * Menu podręczne z opcjami ubezpieczenia
+     */
+    private final javax.swing.JComboBox<String> insuranceComboBox = new JComboBox<>();
+    /**
+     * Element umożliwiający wybór ilości osób
+     */
+    private final javax.swing.JSpinner peopleQuantitySpinner = new JSpinner();
+    /**
+     * Tabela z wycieczkami
+     */
+    private final javax.swing.JTable tripsTable = new JTable();
+    private final JScrollPane tripsTableScrollPane = new JScrollPane();
+    private final JScrollPane clientsTableScrollPane = new JScrollPane();
+    private final JButton submitButton = new JButton();
+    private final JButton cancelButton = new JButton();
+    private final JLabel peopleQuantityLabel = new JLabel();
+    private final JLabel insuranceLabel = new JLabel();
 }

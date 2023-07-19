@@ -8,25 +8,6 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zmiany hasła klienta przez administratora
  */
 public class ClientPasswordChange extends javax.swing.JFrame {
-    private javax.swing.JButton changePasswordButton;
-    private javax.swing.JLabel newPasswordLabel;
-    private javax.swing.JLabel confirmNewPasswordLabel;
-    /**
-     * Pole do wprowadzenia potwierdzonego hasła klienta
-     */
-    private javax.swing.JPasswordField confirmPasswordField;
-    /**
-     * Pole do wprowadzenia nowego hasła klienta
-     */
-    private javax.swing.JPasswordField newPasswordField;
-    /**
-     * Etykieta informująca, że potwierdzone hasło klienta jest niepoprawne
-     */
-    private javax.swing.JLabel wrongConfirmNewPasswordLabel;
-    /**
-     * Etykieta informująca, że nowe hasło klienta jest niepoprawne
-     */
-    private javax.swing.JLabel wrongNewPasswordLabel;
     /**
      * Atrybut przechowujący id klienta, którego hasło jest zmieniane
      */
@@ -60,9 +41,8 @@ public class ClientPasswordChange extends javax.swing.JFrame {
      */
     private void initComponents() {
         setWindowProperties();
-        createLabels();
-        createTextFields();
-        createButton();
+        setLabels();
+        setButton();
         createLayout();
     }
 
@@ -73,29 +53,16 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(330, 300));
     }
 
-    private void createLabels() {
-        newPasswordLabel = new javax.swing.JLabel();
+    private void setLabels() {
         newPasswordLabel.setText("Nowe hasło");
-
-        confirmNewPasswordLabel = new javax.swing.JLabel();
         confirmNewPasswordLabel.setText("Powtórz nowe hasło");
-
-        wrongNewPasswordLabel = new javax.swing.JLabel();
         wrongNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
         wrongNewPasswordLabel.setPreferredSize(new java.awt.Dimension(205, 16));
-
-        wrongConfirmNewPasswordLabel = new javax.swing.JLabel();
         wrongConfirmNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
         wrongConfirmNewPasswordLabel.setPreferredSize(new java.awt.Dimension(205, 16));
     }
 
-    private void createTextFields() {
-        newPasswordField = new javax.swing.JPasswordField();
-        confirmPasswordField = new javax.swing.JPasswordField();
-    }
-
-    private void createButton() {
-        changePasswordButton = new javax.swing.JButton();
+    private void setButton() {
         changePasswordButton.setBackground(new java.awt.Color(189, 165, 111));
         changePasswordButton.setText("Zmień hasło");
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -213,4 +180,24 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new ClientPasswordChange(-1).setVisible(true));
     }
+    //GUI variables
+    private final javax.swing.JButton changePasswordButton = new javax.swing.JButton();
+    private final javax.swing.JLabel newPasswordLabel = new javax.swing.JLabel();
+    private final javax.swing.JLabel confirmNewPasswordLabel = new javax.swing.JLabel();
+    /**
+     * Pole do wprowadzenia potwierdzonego hasła klienta
+     */
+    private final javax.swing.JPasswordField confirmPasswordField = new javax.swing.JPasswordField();
+    /**
+     * Pole do wprowadzenia nowego hasła klienta
+     */
+    private final javax.swing.JPasswordField newPasswordField = new javax.swing.JPasswordField();
+    /**
+     * Etykieta informująca, że potwierdzone hasło klienta jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongConfirmNewPasswordLabel = new javax.swing.JLabel();
+    /**
+     * Etykieta informująca, że nowe hasło klienta jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongNewPasswordLabel = new javax.swing.JLabel();
 }

@@ -1,6 +1,8 @@
 package com.client;
 
 import com.server.LogsAdmins;
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.text.DateFormat;
@@ -12,83 +14,6 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania wycieczki
  */
 public class TripAddition extends javax.swing.JFrame {
-    JPanel regPanel;
-    JLabel createLabel;
-    JLabel countryLabel;
-    JLabel cityLabel;
-    JLabel departureCityLabel;
-    JLabel priceLabel ;
-    JLabel limitLabel;
-    JLabel departureLabel;
-    JLabel arrivalLabel;
-    JLabel hotelNameLabel;
-    JButton submitButton;
-    JButton cancelButton;
-    JLabel validCountryLabel6;
-    /**
-     * Pole do wprowadzenia limitu osób
-     */
-    private javax.swing.JTextField limitTextField;
-    /**
-     * Element do wyboru daty przyjazdu
-     */
-    private com.toedter.calendar.JDateChooser arrivalDateChooser;
-    /**
-     * Pole do wprowadzenia miasta
-     */
-    private javax.swing.JTextField cityTextField;
-    /**
-     * Pole do wprowadzenia kraju
-     */
-    private javax.swing.JTextField countryTextField;
-    /**
-     * Element do wyboru daty wyjazdu
-     */
-    private com.toedter.calendar.JDateChooser departureDateChooser;
-    /**
-     * Pole do wprowadzenia miasta wylotu/przylotu
-     */
-    private javax.swing.JTextField departureCityField;
-    /**
-     * Pole do wprowadzenia nazwy hotelu
-     */
-    private javax.swing.JTextField nameHotelTextField;
-    /**
-     * Pole do wprowadzenia ceny
-     */
-    private javax.swing.JTextField priceField;
-    /**
-     * Etykieta informująca, że data przyjazu jest niepoprawna
-     */
-    private javax.swing.JLabel wrongArrivalLabel;
-    /**
-     * Etykieta informująca, że miasto jest niepoprawne
-     */
-    private javax.swing.JLabel wrongCityLabel;
-    /**
-     * Etykieta informująca, że kraj jest niepoprawny
-     */
-    private javax.swing.JLabel wrongCountryLabel;
-    /**
-     * Etykieta informująca, że miasto wylotu/przylotu jest niepoprawne
-     */
-    private javax.swing.JLabel wrongDepartureCityLabel;
-    /**
-     * Etykieta informująca, że data wyjazdu jest niepoprawna
-     */
-    private javax.swing.JLabel wrongDepartureLabel;
-    /**
-     * Etykieta informująca, że limit osób jest niepoprawny
-     */
-    private javax.swing.JLabel wrongLimitLabel;
-    /**
-     * Etykieta informująca, że nazwa hotelu jest niepoprawna
-     */
-    private javax.swing.JLabel wrongHotelNameLabel;
-    /**
-     * Etykieta informująca, że cena jest niepoprawna
-     */
-    private javax.swing.JLabel wrongPriceLabel;
     /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
@@ -198,7 +123,6 @@ public class TripAddition extends javax.swing.JFrame {
         setWindowProperties();
         createLabels();
         createButtons();
-        createTextFields();
         createRegPanel();
         createLayout();
     }
@@ -209,24 +133,6 @@ public class TripAddition extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1024, 728));
     }
     private void createLabels(){
-        createLabel = new JLabel();
-        countryLabel = new JLabel();
-        cityLabel = new JLabel();
-        departureCityLabel = new JLabel();
-        priceLabel = new JLabel();
-        limitLabel = new JLabel();
-        departureLabel = new JLabel();
-        arrivalLabel = new JLabel();
-        hotelNameLabel = new JLabel();
-        wrongCountryLabel = new javax.swing.JLabel();
-        wrongCityLabel = new javax.swing.JLabel();
-        wrongDepartureCityLabel = new javax.swing.JLabel();
-        wrongPriceLabel = new javax.swing.JLabel();
-        wrongLimitLabel = new javax.swing.JLabel();
-        wrongDepartureLabel = new javax.swing.JLabel();
-        validCountryLabel6 = new JLabel();
-        wrongArrivalLabel = new javax.swing.JLabel();
-        wrongHotelNameLabel = new javax.swing.JLabel();
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Dodaj wycieczkę");
         countryLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
@@ -272,8 +178,6 @@ public class TripAddition extends javax.swing.JFrame {
         wrongArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
     }
     private void createButtons(){
-        submitButton = new JButton();
-        cancelButton = new JButton();
         submitButton.setBackground(new java.awt.Color(189, 165, 111));
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setText("Dodaj wycieczkę");
@@ -287,18 +191,7 @@ public class TripAddition extends javax.swing.JFrame {
         cancelButton.addActionListener(this::cancelButtonActionPerformed);
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
-    private void createTextFields(){
-        countryTextField = new javax.swing.JTextField();
-        cityTextField = new javax.swing.JTextField();
-        departureCityField = new javax.swing.JTextField();
-        priceField = new javax.swing.JTextField();
-        limitTextField = new javax.swing.JTextField();
-        nameHotelTextField = new javax.swing.JTextField();
-    }
     private void createRegPanel(){
-        regPanel = new JPanel();
-        departureDateChooser = new com.toedter.calendar.JDateChooser();
-        arrivalDateChooser = new com.toedter.calendar.JDateChooser();
         regPanel.setBackground(new java.awt.Color(247, 233, 201));
         regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
         departureDateChooser.setMinSelectableDate(new java.util.Date(-62135769509000L));
@@ -633,4 +526,82 @@ public class TripAddition extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new TripAddition(null,null).setVisible(true));
     }
+    //GUI variables
+    private final JPanel regPanel = new JPanel();
+    private final JLabel createLabel = new JLabel();
+    private final JLabel countryLabel = new JLabel();
+    private final JLabel cityLabel = new JLabel();
+    private final JLabel departureCityLabel = new JLabel();
+    private final JLabel priceLabel = new JLabel();
+    private final JLabel limitLabel = new JLabel();
+    private final JLabel departureLabel = new JLabel();
+    private final JLabel arrivalLabel = new JLabel();
+    private final JLabel hotelNameLabel = new JLabel();
+    private final JButton submitButton = new JButton();
+    private final JButton cancelButton = new JButton();
+    private final JLabel validCountryLabel6 = new JLabel();
+    /**
+     * Pole do wprowadzenia limitu osób
+     */
+    private final javax.swing.JTextField limitTextField = new JTextField();
+    /**
+     * Element do wyboru daty przyjazdu
+     */
+    private final com.toedter.calendar.JDateChooser arrivalDateChooser = new com.toedter.calendar.JDateChooser();
+    /**
+     * Pole do wprowadzenia miasta
+     */
+    private final javax.swing.JTextField cityTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia kraju
+     */
+    private final javax.swing.JTextField countryTextField = new JTextField();
+    /**
+     * Element do wyboru daty wyjazdu
+     */
+    private final com.toedter.calendar.JDateChooser departureDateChooser = new com.toedter.calendar.JDateChooser();
+    /**
+     * Pole do wprowadzenia miasta wylotu/przylotu
+     */
+    private final javax.swing.JTextField departureCityField = new JTextField();
+    /**
+     * Pole do wprowadzenia nazwy hotelu
+     */
+    private final javax.swing.JTextField nameHotelTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia ceny
+     */
+    private final javax.swing.JTextField priceField = new JTextField();
+    /**
+     * Etykieta informująca, że data przyjazu jest niepoprawna
+     */
+    private final javax.swing.JLabel wrongArrivalLabel = new JLabel();
+    /**
+     * Etykieta informująca, że miasto jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongCityLabel = new JLabel();
+    /**
+     * Etykieta informująca, że kraj jest niepoprawny
+     */
+    private final javax.swing.JLabel wrongCountryLabel = new JLabel();
+    /**
+     * Etykieta informująca, że miasto wylotu/przylotu jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongDepartureCityLabel = new JLabel();
+    /**
+     * Etykieta informująca, że data wyjazdu jest niepoprawna
+     */
+    private final javax.swing.JLabel wrongDepartureLabel = new JLabel();
+    /**
+     * Etykieta informująca, że limit osób jest niepoprawny
+     */
+    private final javax.swing.JLabel wrongLimitLabel = new JLabel();
+    /**
+     * Etykieta informująca, że nazwa hotelu jest niepoprawna
+     */
+    private final javax.swing.JLabel wrongHotelNameLabel = new JLabel();
+    /**
+     * Etykieta informująca, że cena jest niepoprawna
+     */
+    private final javax.swing.JLabel wrongPriceLabel = new JLabel();
 }

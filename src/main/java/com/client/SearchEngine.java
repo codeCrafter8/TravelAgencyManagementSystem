@@ -15,72 +15,6 @@ import java.util.concurrent.TimeUnit;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność strony głównej klienta wraz z wyszukiwarką
  */
 public class SearchEngine extends javax.swing.JFrame {
-    JScrollPane mainScroll;
-    JPanel mainWindow;
-    JPanel mainPanel;
-    JPanel countriesPanel;
-    JButton tripsButton;
-    JButton summer2023Button;
-    JButton lastMinuteButton;
-    JButton exoticButton;
-    JButton greeceButton;
-    JButton spainButton;
-    JButton turkeyButton;
-    JButton egyptButton;
-    JButton italyButton;
-    JButton bulgariaButton;
-    JLabel officeName;
-    JPanel searchPanel;
-    JLabel tripDirection;
-    JLabel departureCity;
-    JLabel departureArrival;
-    JLabel peopleQuantity;
-    JPanel searchPanelIntroduction;
-    JButton searchButton;
-    JScrollPane tableScroll;
-    JPanel footer;
-    JButton sendButton;
-    JLabel headphonesImage;
-    /**
-     * Menu podręczne z opcjami kierunku podróży
-     */
-    private javax.swing.JComboBox<String> destinationChoice;
-    /**
-     * Element umożliwiający wybór ilości dorosłych
-     */
-    private javax.swing.JSpinner adultsQuantitySpinner;
-    /**
-     * Element umożliwiający wybór ilości dzieci
-     */
-    private javax.swing.JSpinner childrenQuantitySpinner;
-    /**
-     * Etykieta ze zdjęciem
-     */
-    private javax.swing.JLabel imagesPanel;
-    /**
-     * Pole do wprowadzenia daty zakończenia wycieczki
-     */
-    private javax.swing.JTextField arrivalTextField;
-    /**
-     * Menu podręczne z opcjami miejsca wylotu
-     */
-    private javax.swing.JComboBox<String> departureCityChoice;
-    /**
-     * Tabela z dostępnymi wycieczkami
-     */
-    private javax.swing.JTable table;
-    /**
-     * Pole do wprowadzenia daty rozpoczęcia wycieczki
-     */
-    private javax.swing.JTextField departureTextField;
-    /**
-     * Menu podręczne z opcjami Strona Główna, Moje Konto, Wyloguj się
-     */
-    private javax.swing.JComboBox<String> managing;
-    /**
-     * Pole do wprowadzenia numeru telefonu
-     */
-    private javax.swing.JTextField leaveNumber;
     /**
      * Atrybut będący licznikiem wykorzystywanym przy pokazie slajdow
      */
@@ -116,11 +50,11 @@ public class SearchEngine extends javax.swing.JFrame {
     /**
      * Atrybut określający ilość dorosłych
      */
-    private int adultsQuantity;
+    private int adultsQuantity = 1;
     /**
      * Atrybut określający ilość dzieci
      */
-    private int childrenQuantity;
+    private int childrenQuantity = 0;
     /**
      * Mapa przechowująca numer wiersza jako klucz i id wycieczki jako wartość
      */
@@ -151,27 +85,9 @@ public class SearchEngine extends javax.swing.JFrame {
         this.client = client;
         email = client.getUserEmail();
         initComponents();
-        childrenQuantity = 0;
-        adultsQuantity = 1;
         showPhotos();
         generateData();
         populateTable();
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                try {
-                    data.clear();
-                    data.add("logOut");
-                    data.add(email);
-                    new Client(data);
-                    data.clear();
-                }
-                catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    new LogsClients("SearchEngine", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
-                }
-            }
-        });
     }
     /**
      * Metoda pobierająca kierunki podróży z klasy Client a następnie dodająca je do GUI
@@ -182,9 +98,9 @@ public class SearchEngine extends javax.swing.JFrame {
         destination.clear();
         Client client1 = new Client(data);
         destination.addAll(client1.getReturningData());
-        destinationChoice.removeAllItems();
+        destinationChoiceComboBox.removeAllItems();
         for(String s : destination)
-            destinationChoice.addItem(s);
+            destinationChoiceComboBox.addItem(s);
     }
     /**
      * Metoda pobierająca miejsca wylotu z klasy Client a następnie dodająca je do GUI
@@ -214,7 +130,7 @@ public class SearchEngine extends javax.swing.JFrame {
     private void populateTable(){
         int counter = 0;
         int size = (tripsData.size()/10);
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         for(int i=0; i<size; i++){
             model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter+1), (tripsData.get(counter+2) + " - " + tripsData.get(counter+3)),
@@ -228,9 +144,9 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda wyświetlająca pokaz slajdów
      */
     private void showPhotos() {
-        imagesPanel.setIcon(new javax.swing.ImageIcon("img\\photo1.jpg"));
+        imagesLabel.setIcon(new javax.swing.ImageIcon("img\\photo1.jpg"));
         Timer time = new Timer(3000, e -> {
-            imagesPanel.setIcon(new ImageIcon("img\\photo" + counter + ".jpg"));
+            imagesLabel.setIcon(new ImageIcon("img\\photo" + counter + ".jpg"));
             if (counter == 5) counter = 0;
             counter++;
         });
@@ -241,13 +157,13 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private void initComponents(){
         setWindowProperties();
-        createButtons();
-        createLabels();
-        createComboBoxes();
-        createTextFields();
-        createTable();
-        createManaging();
-        createSpinners();
+        setButtons();
+        setLabels();
+        setComboBoxes();
+        setTextFields();
+        setTable();
+        setManaging();
+        setSpinners();
         createCountriesPanel();
         createSearchPanelIntroduction();
         createSearchPanel();
@@ -261,7 +177,7 @@ public class SearchEngine extends javax.swing.JFrame {
      * @param evt Przyjęty event podczas kliknięcia przycisku
      */
     private void managingActionPerformed(ActionEvent evt) {
-        switch(String.valueOf(managing.getSelectedItem())){
+        switch(String.valueOf(managingComboBox.getSelectedItem())){
             case "Wyloguj" -> {
                 Object[] options = {"Tak", "Nie"};
                 if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
@@ -281,19 +197,7 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         }
     }
-    private void createButtons(){
-        tripsButton = new JButton();
-        summer2023Button = new JButton();
-        lastMinuteButton = new JButton();
-        exoticButton = new JButton();
-        greeceButton = new JButton();
-        spainButton = new JButton();
-        turkeyButton = new JButton();
-        egyptButton = new JButton();
-        italyButton = new JButton();
-        bulgariaButton = new JButton();
-        searchButton = new JButton();
-        sendButton = new JButton();
+    private void setButtons(){
         tripsButton.setBackground(new java.awt.Color(151, 123, 92));
         tripsButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
         tripsButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -386,36 +290,29 @@ public class SearchEngine extends javax.swing.JFrame {
         sendButton.setFocusable(false);
         sendButton.addActionListener(this::sendButtonActionPerformed);
     }
-    private void createLabels(){
-        officeName = new JLabel();
-        tripDirection = new JLabel();
-        departureCity = new JLabel();
-        departureArrival = new JLabel();
-        peopleQuantity = new JLabel();
-        imagesPanel = new javax.swing.JLabel();
-        officeName.setBackground(new java.awt.Color(151, 123, 92));
-        officeName.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
-        officeName.setForeground(new java.awt.Color(151, 123, 92));
-        officeName.setText("Travel Agency");
+    private void setLabels(){
+        agencyNameLabel.setBackground(new java.awt.Color(151, 123, 92));
+        agencyNameLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
+        agencyNameLabel.setForeground(new java.awt.Color(151, 123, 92));
+        agencyNameLabel.setText("Travel Agency");
 
-        tripDirection.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        tripDirection.setForeground(new java.awt.Color(255, 255, 255));
-        tripDirection.setText("Kierunek podróży");
+        tripDirectionLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        tripDirectionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        tripDirectionLabel.setText("Kierunek podróży");
 
-        departureCity.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        departureCity.setForeground(new java.awt.Color(255, 255, 255));
-        departureCity.setText("Miejsce wylotu");
+        departureCityLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        departureCityLabel.setForeground(new java.awt.Color(255, 255, 255));
+        departureCityLabel.setText("Miejsce wylotu");
 
-        departureArrival.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        departureArrival.setForeground(new java.awt.Color(255, 255, 255));
-        departureArrival.setText("Wyjazd/Przyjazd");
+        departureArrivalLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        departureArrivalLabel.setForeground(new java.awt.Color(255, 255, 255));
+        departureArrivalLabel.setText("Wyjazd/Przyjazd");
 
-        peopleQuantity.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        peopleQuantity.setForeground(new java.awt.Color(255, 255, 255));
-        peopleQuantity.setText("Ilość dorosłych/dzieci");
+        peopleQuantityLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        peopleQuantityLabel.setForeground(new java.awt.Color(255, 255, 255));
+        peopleQuantityLabel.setText("Ilość dorosłych/dzieci");
     }
     private void createCountriesPanel(){
-        countriesPanel = new JPanel();
         javax.swing.GroupLayout countriesPanelLayout = new javax.swing.GroupLayout(countriesPanel);
         countriesPanel.setLayout(countriesPanelLayout);
         countriesPanelLayout.setHorizontalGroup(
@@ -460,10 +357,24 @@ public class SearchEngine extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    data.clear();
+                    data.add("logOut");
+                    data.add(email);
+                    new Client(data);
+                    data.clear();
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    new LogsClients("SearchEngine", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
+                }
+            }
+        });
     }
     private void createMainWindow(){
-        mainScroll = new JScrollPane();
-        mainWindow = new JPanel();
         mainScroll.setBorder(null);
         mainScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         mainScroll.setMaximumSize(new java.awt.Dimension(1022, 400));
@@ -490,7 +401,6 @@ public class SearchEngine extends javax.swing.JFrame {
         mainScroll.setViewportView(mainWindow);
     }
     private void createSearchPanelIntroduction(){
-        searchPanelIntroduction = new JPanel();
         searchPanelIntroduction.setBackground(new java.awt.Color(151, 123, 92));
         javax.swing.GroupLayout searchPanelIntroductionLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
         searchPanelIntroduction.setLayout(searchPanelIntroductionLayout);
@@ -499,7 +409,7 @@ public class SearchEngine extends javax.swing.JFrame {
                         .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(destinationChoiceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
                                                 .addComponent(departureTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -514,7 +424,7 @@ public class SearchEngine extends javax.swing.JFrame {
         searchPanelIntroductionLayout.setVerticalGroup(
                 searchPanelIntroductionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(searchPanelIntroductionLayout.createSequentialGroup()
-                                .addComponent(destinationChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(destinationChoiceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(departureCityChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -528,7 +438,6 @@ public class SearchEngine extends javax.swing.JFrame {
         );
     }
     private void createMainPanel(){
-        mainPanel = new JPanel();
         mainPanel.setPreferredSize(new java.awt.Dimension(955, 2000));
         javax.swing.GroupLayout glowneLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(glowneLayout);
@@ -538,12 +447,12 @@ public class SearchEngine extends javax.swing.JFrame {
                         .addGroup(glowneLayout.createSequentialGroup()
                                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(imagesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(imagesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, glowneLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(officeName, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(agencyNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(255, 255, 255)
-                                .addComponent(managing, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(managingComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(tableScroll)
         );
         glowneLayout.setVerticalGroup(
@@ -551,20 +460,19 @@ public class SearchEngine extends javax.swing.JFrame {
                         .addGroup(glowneLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(officeName, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(managing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(agencyNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(managingComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(countriesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(glowneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(searchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(imagesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(imagesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(tableScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
         );
     }
     private void createSearchPanel(){
-        searchPanel = new JPanel();
         searchPanel.setBackground(new java.awt.Color(151, 123, 92));
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -573,10 +481,10 @@ public class SearchEngine extends javax.swing.JFrame {
                         .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(tripDirection)
-                                        .addComponent(departureArrival)
-                                        .addComponent(departureCity)
-                                        .addComponent(peopleQuantity))
+                                        .addComponent(tripDirectionLabel)
+                                        .addComponent(departureArrivalLabel)
+                                        .addComponent(departureCityLabel)
+                                        .addComponent(peopleQuantityLabel))
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(searchPanelLayout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -597,27 +505,23 @@ public class SearchEngine extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(searchButton))
                                         .addGroup(searchPanelLayout.createSequentialGroup()
-                                                .addComponent(tripDirection, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(tripDirectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(departureCity, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(departureCityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(12, 12, 12)
-                                                .addComponent(departureArrival)
+                                                .addComponent(departureArrivalLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(peopleQuantity)))
+                                                .addComponent(peopleQuantityLabel)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
-    private void createComboBoxes(){
-        destinationChoice = new javax.swing.JComboBox<>();
-        departureCityChoice = new javax.swing.JComboBox<>();
-        destinationChoice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokąd?"}));
-        destinationChoice.setFocusable(false);
+    private void setComboBoxes(){
+        destinationChoiceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokąd?"}));
+        destinationChoiceComboBox.setFocusable(false);
         departureCityChoice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Skąd?"}));
         departureCityChoice.setFocusable(false);
     }
-    private void createTextFields(){
-        departureTextField = new javax.swing.JTextField();
-        arrivalTextField = new javax.swing.JTextField();
+    private void setTextFields(){
         departureTextField.setForeground(new java.awt.Color(153, 153, 153));
         departureTextField.setText("04/07/2023");
         departureTextField.setToolTipText("");
@@ -626,24 +530,23 @@ public class SearchEngine extends javax.swing.JFrame {
         arrivalTextField.setForeground(new java.awt.Color(153, 153, 153));
         arrivalTextField.setText("11/07/2023");
         arrivalTextField.setAutoscrolls(false);
-        leaveNumber = new javax.swing.JTextField();
-        leaveNumber.setForeground(new java.awt.Color(153, 153, 153));
-        leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
-        leaveNumber.setMinimumSize(new java.awt.Dimension(64, 27));
-        leaveNumber.setPreferredSize(new java.awt.Dimension(64, 22));
-        leaveNumber.addFocusListener(new FocusListener() {
+        leaveNumberTextField.setForeground(new java.awt.Color(153, 153, 153));
+        leaveNumberTextField.setText("Zostaw nr tel. - oddzwonimy do ciebie");
+        leaveNumberTextField.setMinimumSize(new java.awt.Dimension(64, 27));
+        leaveNumberTextField.setPreferredSize(new java.awt.Dimension(64, 22));
+        leaveNumberTextField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (leaveNumber.getText().equals("Zostaw nr tel. - oddzwonimy do ciebie")) {
-                    leaveNumber.setText("");
-                    leaveNumber.setForeground(Color.BLACK);
+                if (leaveNumberTextField.getText().equals("Zostaw nr tel. - oddzwonimy do ciebie")) {
+                    leaveNumberTextField.setText("");
+                    leaveNumberTextField.setForeground(Color.BLACK);
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
-                if (leaveNumber.getText().isEmpty()) {
-                    leaveNumber.setForeground(Color.GRAY);
-                    leaveNumber.setText("Zostaw nr tel. - oddzwonimy do ciebie");
+                if (leaveNumberTextField.getText().isEmpty()) {
+                    leaveNumberTextField.setForeground(Color.GRAY);
+                    leaveNumberTextField.setText("Zostaw nr tel. - oddzwonimy do ciebie");
                 }
             }
         });
@@ -680,21 +583,17 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         });
     }
-    private void createSpinners(){
-        adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
-        childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
+    private void setSpinners(){
         adultsQuantitySpinner.setFocusable(false);
         childrenQuantitySpinner.setFocusable(false);
     }
-    private void createTable(){
-        tableScroll = new JScrollPane();
-        table = new javax.swing.JTable();
+    private void setTable(){
         tableScroll.setBorder(null);
         tableScroll.setToolTipText("");
         tableScroll.setColumnHeaderView(null);
 
-        table.setAutoCreateRowSorter(true);
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        tripsTable.setAutoCreateRowSorter(true);
+        tripsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
 
                 },
@@ -702,20 +601,20 @@ public class SearchEngine extends javax.swing.JFrame {
                         "Kraj", "Miasto", "Termin", "Cena/Osoba"
                 }
         ));
-        table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        table.setFocusable(false);
-        table.setGridColor(new java.awt.Color(255, 255, 255));
-        table.setPreferredSize(new java.awt.Dimension(300, 355));
-        table.setSelectionBackground(new java.awt.Color(151, 123, 92));
-        table.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        table.setShowGrid(true);
-        table.getTableHeader().setResizingAllowed(false);
-        tableScroll.setViewportView(table);
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
+        tripsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tripsTable.setFocusable(false);
+        tripsTable.setGridColor(new java.awt.Color(255, 255, 255));
+        tripsTable.setPreferredSize(new java.awt.Dimension(300, 355));
+        tripsTable.setSelectionBackground(new java.awt.Color(151, 123, 92));
+        tripsTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tripsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tripsTable.setShowGrid(true);
+        tripsTable.getTableHeader().setResizingAllowed(false);
+        tableScroll.setViewportView(tripsTable);
+        tripsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                selectedRow = table.rowAtPoint(evt.getPoint());
+                selectedRow = tripsTable.rowAtPoint(evt.getPoint());
                 if (selectedRow >= 0) {
                     idSelectedTrip = idRows.get(selectedRow);
                     dispose();
@@ -724,20 +623,17 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         });
     }
-    private void createManaging(){
-        managing = new javax.swing.JComboBox<>();
-        managing.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje Konto", "Wyloguj" }));
-        managing.setBorder(null);
-        managing.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        managing.setFocusable(false);
-        managing.setLightWeightPopupEnabled(false);
-        managing.addActionListener(this::managingActionPerformed);
+    private void setManaging(){
+        managingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje Konto", "Wyloguj" }));
+        managingComboBox.setBorder(null);
+        managingComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        managingComboBox.setFocusable(false);
+        managingComboBox.setLightWeightPopupEnabled(false);
+        managingComboBox.addActionListener(this::managingActionPerformed);
     }
     private void createFooter(){
-        footer = new JPanel();
         footer.setBackground(new java.awt.Color(151, 123, 92));
-        headphonesImage = new JLabel();
-        headphonesImage.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
+        headphonesIconLabel.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
 
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
@@ -745,9 +641,9 @@ public class SearchEngine extends javax.swing.JFrame {
                 footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(footerLayout.createSequentialGroup()
                                 .addGap(349, 349, 349)
-                                .addComponent(headphonesImage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(headphonesIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(leaveNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(leaveNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(sendButton)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -757,11 +653,11 @@ public class SearchEngine extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(leaveNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(leaveNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(footerLayout.createSequentialGroup()
                                                 .addGroup(footerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(sendButton)
-                                                        .addComponent(headphonesImage))
+                                                        .addComponent(headphonesIconLabel))
                                                 .addGap(0, 2, Short.MAX_VALUE)))
                                 .addGap(8, 8, 8))
         );
@@ -794,7 +690,7 @@ public class SearchEngine extends javax.swing.JFrame {
     private void summer2023ButtonActionPerformed(ActionEvent evt) {
         int counter = 0;
         int size = (tripsData.size()/10);
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String start = "2023-07-01";
@@ -835,9 +731,9 @@ public class SearchEngine extends javax.swing.JFrame {
      * @param evt Przyjęty event podczas kliknięcia przycisku
      */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String number = leaveNumber.getText();
+        String number = leaveNumberTextField.getText();
         if(Validation.isPhoneNumberValid(number)){
-            leaveNumber.setText("");
+            leaveNumberTextField.setText("");
             phoneNumberData.clear();
             phoneNumberData.add("sendNumbers");
             phoneNumberData.add(number);
@@ -897,7 +793,7 @@ public class SearchEngine extends javax.swing.JFrame {
     private void filterTable(String country){
         int counter = 0;
         int size = (tripsData.size()/10);
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         idRows.clear();
         int rowCounter = 0;
@@ -920,7 +816,7 @@ public class SearchEngine extends javax.swing.JFrame {
     private void filterTable(String country1, String country2){
         int counter = 0;
         int size = (tripsData.size()/10);
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         idRows.clear();
         int rowCounter = 0;
@@ -949,7 +845,7 @@ public class SearchEngine extends javax.swing.JFrame {
     private void lastMinuteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         int counter = 0;
         int size = (tripsData.size()/10);
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = null;
@@ -999,7 +895,7 @@ public class SearchEngine extends javax.swing.JFrame {
         if(isDateValid) {
             adultsQuantity = (int) adultsQuantitySpinner.getValue();
             childrenQuantity = (int) childrenQuantitySpinner.getValue();
-            String country = (String) destinationChoice.getSelectedItem();
+            String country = (String) destinationChoiceComboBox.getSelectedItem();
             String departure_city = (String) departureCityChoice.getSelectedItem();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat formatterSearch = new SimpleDateFormat("dd/MM/yyyy");
@@ -1010,7 +906,7 @@ public class SearchEngine extends javax.swing.JFrame {
 
             int counter = 0;
             int size = (tripsData.size()/10);
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
             model.setRowCount(0);
             idRows.clear();
             int rowCounter = 0;
@@ -1068,4 +964,70 @@ public class SearchEngine extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new SearchEngine().setVisible(true));
     }
+    private final JScrollPane mainScroll = new JScrollPane();
+    private final JPanel mainWindow = new JPanel();
+    private final JPanel mainPanel = new JPanel();
+    private final JPanel countriesPanel = new JPanel();
+    private final JButton tripsButton = new JButton();
+    private final JButton summer2023Button = new JButton();
+    private final JButton lastMinuteButton = new JButton();
+    private final JButton exoticButton = new JButton();
+    private final JButton greeceButton = new JButton();
+    private final JButton spainButton = new JButton();
+    private final JButton turkeyButton = new JButton();
+    private final JButton egyptButton = new JButton();
+    private final JButton italyButton = new JButton();
+    private final JButton bulgariaButton = new JButton();
+    private final JLabel agencyNameLabel = new JLabel();
+    private final JPanel searchPanel = new JPanel();
+    private final JLabel tripDirectionLabel = new JLabel();
+    private final JLabel departureCityLabel = new JLabel();
+    private final JLabel departureArrivalLabel = new JLabel();
+    private final JLabel peopleQuantityLabel = new JLabel();
+    private final JPanel searchPanelIntroduction = new JPanel();
+    private final JButton searchButton = new JButton();
+    private final JScrollPane tableScroll = new JScrollPane();
+    private final JPanel footer = new JPanel();
+    private final JButton sendButton = new JButton();
+    private final JLabel headphonesIconLabel = new JLabel();
+    /**
+     * Menu podręczne z opcjami kierunku podróży
+     */
+    private final javax.swing.JComboBox<String> destinationChoiceComboBox = new JComboBox<>();
+    /**
+     * Element umożliwiający wybór ilości dorosłych
+     */
+    private final javax.swing.JSpinner adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+    /**
+     * Element umożliwiający wybór ilości dzieci
+     */
+    private final javax.swing.JSpinner childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
+    /**
+     * Etykieta ze zdjęciem
+     */
+    private final javax.swing.JLabel imagesLabel = new JLabel();
+    /**
+     * Pole do wprowadzenia daty zakończenia wycieczki
+     */
+    private final javax.swing.JTextField arrivalTextField = new JTextField();
+    /**
+     * Menu podręczne z opcjami miejsca wylotu
+     */
+    private final javax.swing.JComboBox<String> departureCityChoice = new JComboBox<>();
+    /**
+     * Tabela z dostępnymi wycieczkami
+     */
+    private final javax.swing.JTable tripsTable= new JTable();
+    /**
+     * Pole do wprowadzenia daty rozpoczęcia wycieczki
+     */
+    private final javax.swing.JTextField departureTextField = new JTextField();
+    /**
+     * Menu podręczne z opcjami Strona Główna, Moje Konto, Wyloguj się
+     */
+    private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
+    /**
+     * Pole do wprowadzenia numeru telefonu
+     */
+    private final javax.swing.JTextField leaveNumberTextField = new JTextField();
 }

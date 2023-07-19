@@ -10,42 +10,6 @@ import javax.swing.border.LineBorder;
  */
 public class Payment extends javax.swing.JFrame {
     /**
-     * Pole do wprowadzenia numeru cvv
-     */
-    private javax.swing.JTextField cvvData;
-    /**
-     * Przycisk umożliwiający wybór discover
-     */
-    private javax.swing.JButton discover;
-    /**
-     * Pole do wprowadzenia imienia i nazwiska
-     */
-    private javax.swing.JTextField firstNameLastNameData;
-    /**
-     * Przycisk umożliwiający wybór mastercard
-     */
-    private javax.swing.JButton mastercard;
-    /**
-     * Etykieta z błędem operacji opłaty
-     */
-    private javax.swing.JLabel mistakeSpace;
-    /**
-     * Pole do wprowadzenia miesiąca ważności karty kredytowej
-     */
-    private javax.swing.JTextField monthData;
-    /**
-     * Pole do wprowadzenia numeru karty kredytowej
-     */
-    private javax.swing.JTextField cardNumberData;
-    /**
-     * Pole do wprowadzenia roku ważności karty kredytowej
-     */
-    private javax.swing.JTextField yearData;
-    /**
-     * Przycisk umożliwiający wybór visa
-     */
-    private javax.swing.JButton visa;
-    /**
      * Atrybut informujący, czy została wybrana metoda opłaty
      */
     private boolean methodChoosed = false;
@@ -91,269 +55,255 @@ public class Payment extends javax.swing.JFrame {
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        mistakeSpace = new javax.swing.JLabel();
-        JLabel paymentMethod = new JLabel();
-        JPanel choicePanel = new JPanel();
-        mastercard = new javax.swing.JButton();
-        visa = new javax.swing.JButton();
-        discover = new javax.swing.JButton();
-        JLabel owner = new JLabel();
-        JPanel firstNameLastNamePanel = new JPanel();
-        JLabel firstNameLastName = new JLabel();
-        firstNameLastNameData = new javax.swing.JTextField();
-        JLabel number = new JLabel();
-        JPanel numberPanel = new JPanel();
-        JLabel cardNumber = new JLabel();
-        cardNumberData = new javax.swing.JTextField();
-        JLabel cvv = new JLabel();
-        cvvData = new javax.swing.JTextField();
-        JLabel validityDate = new JLabel();
-        JPanel validityDatePanel = new JPanel();
-        JLabel month = new JLabel();
-        monthData = new javax.swing.JTextField();
-        JLabel year = new JLabel();
-        yearData = new javax.swing.JTextField();
-        JButton payButton = new JButton();
-
+        setWindowProperties();
+        setLabels();
+        setButtons();
+        setTextFields();
+        createChoicePanel();
+        createFirstNameLastNamePanel();
+        createNumberPanel();
+        createExpirationDatePanel();
+        createLayout();
+    }
+    private void setWindowProperties(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(450, 124));
         setPreferredSize(new java.awt.Dimension(548, 640));
-
-        mistakeSpace.setBackground(new java.awt.Color(255, 255, 255));
-        mistakeSpace.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        mistakeSpace.setText("Miejsce na informacje o błędzie");
-        mistakeSpace.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        paymentMethod.setBackground(new java.awt.Color(210, 180, 140));
-        paymentMethod.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        paymentMethod.setText("Metoda płatności");
-        paymentMethod.setOpaque(true);
-
-        choicePanel.setBackground(new java.awt.Color(151, 123, 92));
-
-        mastercard.setIcon(new javax.swing.ImageIcon("img\\mastercard.png"));
-        mastercard.addActionListener(this::mastercardActionPerformed);
-        mastercard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        visa.setIcon(new javax.swing.ImageIcon("img\\visa.png"));
-        visa.addActionListener(this::visaActionPerformed);
-        visa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        discover.setIcon(new javax.swing.ImageIcon("img\\discover-logo.png"));
-        discover.addActionListener(this::discoverActionPerformed);
-        discover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         setTitle("Płatność kartą kredytową");
-        mastercard.setFocusable(false);
-        visa.setFocusable(false);
-        discover.setFocusable(false);
-        mistakeSpace.setForeground(Color.RED);
-        mistakeSpace.setText("");
+    }
+    private void setLabels(){
+        errorLabel.setBackground(new java.awt.Color(255, 255, 255));
+        errorLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        errorLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setText("");
 
-        javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
-        choicePanel.setLayout(choicePanelLayout);
-        choicePanelLayout.setHorizontalGroup(
-            choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(choicePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mastercard, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(visa, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(discover, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-        );
-        choicePanelLayout.setVerticalGroup(
-            choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(choicePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(mastercard, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(visa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(discover, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        paymentMethodLabel.setBackground(new java.awt.Color(210, 180, 140));
+        paymentMethodLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        paymentMethodLabel.setText("Metoda płatności");
+        paymentMethodLabel.setOpaque(true);
 
-        owner.setBackground(new java.awt.Color(210, 180, 140));
-        owner.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        owner.setText("Właściciel");
-        owner.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        owner.setOpaque(true);
+        ownerLabel.setBackground(new java.awt.Color(210, 180, 140));
+        ownerLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        ownerLabel.setText("Właściciel");
+        ownerLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ownerLabel.setOpaque(true);
 
-        firstNameLastNamePanel.setBackground(new java.awt.Color(151, 123, 92));
+        firstNameLastNameLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
+        firstNameLastNameLabel.setText("Imie i nazwisko:");
 
-        firstNameLastName.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
-        firstNameLastName.setText("Imie i nazwisko:");
+        numberLabel.setBackground(new java.awt.Color(210, 180, 140));
+        numberLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        numberLabel.setText("Numer");
+        numberLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        numberLabel.setOpaque(true);
 
-        firstNameLastNameData.setBackground(new java.awt.Color(242, 242, 242));
+        cardNumberLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
+        cardNumberLabel.setText("Numer karty kredytowej:");
 
-        javax.swing.GroupLayout firstNameLastNamePanelLayout = new javax.swing.GroupLayout(firstNameLastNamePanel);
-        firstNameLastNamePanel.setLayout(firstNameLastNamePanelLayout);
-        firstNameLastNamePanelLayout.setHorizontalGroup(
-            firstNameLastNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(firstNameLastNamePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(firstNameLastNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(firstNameLastNamePanelLayout.createSequentialGroup()
-                        .addComponent(firstNameLastName)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(firstNameLastNameData))
-                .addContainerGap())
-        );
-        firstNameLastNamePanelLayout.setVerticalGroup(
-            firstNameLastNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(firstNameLastNamePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(firstNameLastName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(firstNameLastNameData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
+        cvvLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
+        cvvLabel.setText("CVV:");
 
-        number.setBackground(new java.awt.Color(210, 180, 140));
-        number.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        number.setText("Numer");
-        number.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        number.setOpaque(true);
+        expirationDateLabel.setBackground(new java.awt.Color(210, 180, 140));
+        expirationDateLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        expirationDateLabel.setText("Termin ważności");
+        expirationDateLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        expirationDateLabel.setOpaque(true);
 
-        numberPanel.setBackground(new java.awt.Color(151, 123, 92));
+        monthLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
+        monthLabel.setText("Miesiąc:");
 
-        cardNumber.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
-        cardNumber.setText("Numer karty kredytowej:");
+        yearLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
+        yearLabel.setText("Rok:");
+    }
+    private void setButtons(){
+        mastercardButton.setIcon(new javax.swing.ImageIcon("img\\mastercard.png"));
+        mastercardButton.addActionListener(this::mastercardActionPerformed);
+        mastercardButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        cardNumberData.setBackground(new java.awt.Color(242, 242, 242));
+        visaButton.setIcon(new javax.swing.ImageIcon("img\\visa.png"));
+        visaButton.addActionListener(this::visaActionPerformed);
+        visaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        cvv.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
-        cvv.setText("CVV:");
+        discoverButton.setIcon(new javax.swing.ImageIcon("img\\discover-logo.png"));
+        discoverButton.addActionListener(this::discoverActionPerformed);
+        discoverButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        javax.swing.GroupLayout numberPanelLayout = new javax.swing.GroupLayout(numberPanel);
-        numberPanel.setLayout(numberPanelLayout);
-        numberPanelLayout.setHorizontalGroup(
-            numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(numberPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cardNumberData, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cardNumber))
-                .addGap(18, 18, 18)
-                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cvv)
-                    .addComponent(cvvData, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-        numberPanelLayout.setVerticalGroup(
-            numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(numberPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cardNumber)
-                    .addComponent(cvv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cardNumberData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cvvData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
-
-        validityDate.setBackground(new java.awt.Color(210, 180, 140));
-        validityDate.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        validityDate.setText("Termin ważności");
-        validityDate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        validityDate.setOpaque(true);
-
-        validityDatePanel.setBackground(new java.awt.Color(151, 123, 92));
-
-        month.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
-        month.setText("Miesiąc:");
-
-        monthData.setBackground(new java.awt.Color(242, 242, 242));
-
-        year.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
-        year.setText("Rok:");
-
-        javax.swing.GroupLayout validityDatePanelLayout = new javax.swing.GroupLayout(validityDatePanel);
-        validityDatePanel.setLayout(validityDatePanelLayout);
-        validityDatePanelLayout.setHorizontalGroup(
-            validityDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(validityDatePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(validityDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(monthData, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(month))
-                .addGap(47, 47, 47)
-                .addGroup(validityDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(year)
-                    .addComponent(yearData, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-        validityDatePanelLayout.setVerticalGroup(
-            validityDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(validityDatePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(validityDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(month)
-                    .addComponent(year, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(validityDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(monthData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
+        mastercardButton.setFocusable(false);
+        visaButton.setFocusable(false);
+        discoverButton.setFocusable(false);
 
         payButton.setIcon(new javax.swing.ImageIcon("img\\pay.png"));
         payButton.addActionListener(this::payButtonActionPerformed);
         payButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
+    }
+    private void createChoicePanel(){
+        choicePanel.setBackground(new java.awt.Color(151, 123, 92));
+        javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
+        choicePanel.setLayout(choicePanelLayout);
+        choicePanelLayout.setHorizontalGroup(
+                choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(choicePanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mastercardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(visaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(discoverButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41))
+        );
+        choicePanelLayout.setVerticalGroup(
+                choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(choicePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(mastercardButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(visaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(discoverButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
+    private void setTextFields(){
+        firstNameLastNameTextField.setBackground(new java.awt.Color(242, 242, 242));
+        cardNumberTextField.setBackground(new java.awt.Color(242, 242, 242));
+        monthTextField.setBackground(new java.awt.Color(242, 242, 242));
+    }
+    private void createFirstNameLastNamePanel(){
+        firstNameLastNamePanel.setBackground(new java.awt.Color(151, 123, 92));
+        javax.swing.GroupLayout firstNameLastNamePanelLayout = new javax.swing.GroupLayout(firstNameLastNamePanel);
+        firstNameLastNamePanel.setLayout(firstNameLastNamePanelLayout);
+        firstNameLastNamePanelLayout.setHorizontalGroup(
+                firstNameLastNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(firstNameLastNamePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(firstNameLastNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(firstNameLastNamePanelLayout.createSequentialGroup()
+                                                .addComponent(firstNameLastNameLabel)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(firstNameLastNameTextField))
+                                .addContainerGap())
+        );
+        firstNameLastNamePanelLayout.setVerticalGroup(
+                firstNameLastNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(firstNameLastNamePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(firstNameLastNameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(firstNameLastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(8, Short.MAX_VALUE))
+        );
+    }
+    private void createNumberPanel(){
+        numberPanel.setBackground(new java.awt.Color(151, 123, 92));
+        javax.swing.GroupLayout numberPanelLayout = new javax.swing.GroupLayout(numberPanel);
+        numberPanel.setLayout(numberPanelLayout);
+        numberPanelLayout.setHorizontalGroup(
+                numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(numberPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cardNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cardNumberLabel))
+                                .addGap(18, 18, 18)
+                                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cvvLabel)
+                                        .addComponent(cvvData, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(11, Short.MAX_VALUE))
+        );
+        numberPanelLayout.setVerticalGroup(
+                numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(numberPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cardNumberLabel)
+                                        .addComponent(cvvLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(numberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(cardNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cvvData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(8, Short.MAX_VALUE))
+        );
+    }
+    private void createExpirationDatePanel(){
+        expirationDatePanel.setBackground(new java.awt.Color(151, 123, 92));
+        javax.swing.GroupLayout expirationDatePanelLayout = new javax.swing.GroupLayout(expirationDatePanel);
+        expirationDatePanel.setLayout(expirationDatePanelLayout);
+        expirationDatePanelLayout.setHorizontalGroup(
+                expirationDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(expirationDatePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(expirationDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(monthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(monthLabel))
+                                .addGap(47, 47, 47)
+                                .addGroup(expirationDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(yearLabel)
+                                        .addComponent(yearData, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(11, Short.MAX_VALUE))
+        );
+        expirationDatePanelLayout.setVerticalGroup(
+                expirationDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(expirationDatePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(expirationDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(monthLabel)
+                                        .addComponent(yearLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(expirationDatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(monthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yearData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(8, Short.MAX_VALUE))
+        );
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mistakeSpace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(validityDatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(validityDate, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(numberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(number, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(owner, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(paymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(choicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(firstNameLastNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(payButton)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(19, 19, 19)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(expirationDatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(expirationDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(numberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(numberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(paymentMethodLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(choicePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(firstNameLastNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(221, 221, 221)
+                                                .addComponent(payButton)))
+                                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mistakeSpace, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(paymentMethod, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(owner, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(firstNameLastNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(number, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(numberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(validityDate, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(validityDatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(payButton)
-                .addContainerGap(20, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(paymentMethodLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(choicePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(ownerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(firstNameLastNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(numberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(numberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(expirationDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(expirationDatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(payButton)
+                                .addContainerGap(20, Short.MAX_VALUE))
         );
-
-        mistakeSpace.getAccessibleContext().setAccessibleName("Miejs");
 
         pack();
         setLocationRelativeTo(null);
@@ -364,21 +314,21 @@ public class Payment extends javax.swing.JFrame {
      */
     private void payButtonActionPerformed(ActionEvent evt) {
         if(!methodChoosed)
-            mistakeSpace.setText("Nie wybrano metody płatności.");
-        else if(!Validation.isFirstNameAndLastNameValid(firstNameLastNameData.getText())) {
-            mistakeSpace.setText("Nieprawidłowe imię i nazwisko.");
+            errorLabel.setText("Nie wybrano metody płatności.");
+        else if(!Validation.isFirstNameAndLastNameValid(firstNameLastNameTextField.getText())) {
+            errorLabel.setText("Nieprawidłowe imię i nazwisko.");
         }
-        else if(!Validation.isCreditCardNumberValid(cardNumberData.getText())) {
-            mistakeSpace.setText("Nieprawidłowy numer karty kredytowej.");
+        else if(!Validation.isCreditCardNumberValid(cardNumberTextField.getText())) {
+            errorLabel.setText("Nieprawidłowy numer karty kredytowej.");
         }
         else if(!Validation.isCvvValid(cvvData.getText())) {
-            mistakeSpace.setText("Nieprawidłowy numer cvv.");
+            errorLabel.setText("Nieprawidłowy numer cvv.");
         }
-        else if(!Validation.isMonthValid(monthData.getText())) {
-            mistakeSpace.setText("Nieprawidłowy miesiąc ważności karty kredytowej.");
+        else if(!Validation.isMonthValid(monthTextField.getText())) {
+            errorLabel.setText("Nieprawidłowy miesiąc ważności karty kredytowej.");
         }
         else if(!Validation.isYearValid(yearData.getText())) {
-            mistakeSpace.setText("Nieprawidłowy rok ważności karty kredytowej.");
+            errorLabel.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {
             data.clear();
@@ -398,10 +348,10 @@ public class Payment extends javax.swing.JFrame {
      */
     private void discoverActionPerformed(ActionEvent evt) {
         methodChoosed = true;
-        mistakeSpace.setText("");
-        discover.setBorder(new LineBorder(Color.BLUE, 3));
-        visa.setBorder(null);
-        mastercard.setBorder(null);
+        errorLabel.setText("");
+        discoverButton.setBorder(new LineBorder(Color.BLUE, 3));
+        visaButton.setBorder(null);
+        mastercardButton.setBorder(null);
     }
     /**
      * Metoda obsługująca kliknięcie przycisku visa
@@ -409,10 +359,10 @@ public class Payment extends javax.swing.JFrame {
      */
     private void visaActionPerformed(ActionEvent evt) {
         methodChoosed = true;
-        mistakeSpace.setText("");
-        visa.setBorder(new LineBorder(Color.BLUE, 3));
-        mastercard.setBorder(null);
-        discover.setBorder(null);
+        errorLabel.setText("");
+        visaButton.setBorder(new LineBorder(Color.BLUE, 3));
+        mastercardButton.setBorder(null);
+        discoverButton.setBorder(null);
     }
     /**
      * Metoda obsługująca kliknięcie przycisku mastercard
@@ -420,10 +370,10 @@ public class Payment extends javax.swing.JFrame {
      */
     private void mastercardActionPerformed(ActionEvent evt) {
         methodChoosed = true;
-        mistakeSpace.setText("");
-        mastercard.setBorder(new LineBorder(Color.BLUE, 3));
-        visa.setBorder(null);
-        discover.setBorder(null);
+        errorLabel.setText("");
+        mastercardButton.setBorder(new LineBorder(Color.BLUE, 3));
+        visaButton.setBorder(null);
+        discoverButton.setBorder(null);
     }
     /**
      * Metoda pozwalająca na uruchomienie okna
@@ -443,4 +393,55 @@ public class Payment extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Payment().setVisible(true));
     }
+    //GUI variables
+    /**
+     * Pole do wprowadzenia numeru cvv
+     */
+    private final javax.swing.JTextField cvvData = new JTextField();
+    /**
+     * Przycisk umożliwiający wybór discover
+     */
+    private final javax.swing.JButton discoverButton = new JButton();
+    /**
+     * Pole do wprowadzenia imienia i nazwiska
+     */
+    private final javax.swing.JTextField firstNameLastNameTextField = new JTextField();
+    /**
+     * Przycisk umożliwiający wybór mastercard
+     */
+    private final javax.swing.JButton mastercardButton = new JButton();
+    /**
+     * Etykieta z błędem operacji opłaty
+     */
+    private final javax.swing.JLabel errorLabel = new JLabel();
+    /**
+     * Pole do wprowadzenia miesiąca ważności karty kredytowej
+     */
+    private final javax.swing.JTextField monthTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia numeru karty kredytowej
+     */
+    private final javax.swing.JTextField cardNumberTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia roku ważności karty kredytowej
+     */
+    private final javax.swing.JTextField yearData = new JTextField();
+    /**
+     * Przycisk umożliwiający wybór visa
+     */
+    private final javax.swing.JButton visaButton = new JButton();
+    private final JLabel paymentMethodLabel = new JLabel();
+    private final JPanel choicePanel = new JPanel();
+    private final JLabel ownerLabel = new JLabel();
+    private final JPanel firstNameLastNamePanel = new JPanel();
+    private final JLabel firstNameLastNameLabel = new JLabel();
+    private final JLabel numberLabel = new JLabel();
+    private final JPanel numberPanel = new JPanel();
+    private final JLabel cardNumberLabel = new JLabel();
+    private final JLabel cvvLabel = new JLabel();
+    private final JLabel expirationDateLabel = new JLabel();
+    private final JPanel expirationDatePanel = new JPanel();
+    private final JLabel monthLabel = new JLabel();
+    private final JLabel yearLabel = new JLabel();
+    private final JButton payButton = new JButton();
 }

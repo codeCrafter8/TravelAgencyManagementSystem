@@ -12,62 +12,6 @@ import java.util.List;
  */
 public class Registration extends javax.swing.JFrame {
     /**
-     * Etykieta informująca, że potwierdzone hasło jest niepoprawne
-     */
-    private javax.swing.JLabel wrongConfirmPasswordLabel;
-    /**
-     * Etykieta informująca, że email jest niepoprawny
-     */
-    private javax.swing.JLabel wrongEmailLabel;
-    /**
-     * Etykieta informująca, że imię jest niepoprawne
-     */
-    private javax.swing.JLabel wrongFirstNameLabel;
-    /**
-     * Etykieta informująca, że nazwisko jest niepoprawne
-     */
-    private javax.swing.JLabel wrongLastNameLabel;
-    /**
-     * Etykieta informująca, że hasło jest niepoprawne
-     */
-    private javax.swing.JLabel wrongPasswordLabel;
-    /**
-     * Etykieta informująca, że numer telefonu jest niepoprawny
-     */
-    private javax.swing.JLabel wrongPhoneNumberLabel;
-    /**
-     * Przycisk umożliwiający cofnięcie do strony logowania
-     */
-    private javax.swing.JButton cancelButton;
-    /**
-     * Pole do wprowadzenia potwierdzonego hasła
-     */
-    private javax.swing.JPasswordField confirmPasswordField;
-    /**
-     * Pole do wprowadzenia emailu
-     */
-    private javax.swing.JTextField emailTextField;
-    /**
-     * Pole do wprowadzenia imienia
-     */
-    private javax.swing.JTextField firstNameTextField;
-    /**
-     * Pole do wprowadzenia nazwiska
-     */
-    private javax.swing.JTextField lastNameTextField;
-    /**
-     * Pole do wprowadzenia hasła
-     */
-    private javax.swing.JPasswordField passwordField;
-    /**
-     * Pole do wprowadzenia numeru telefonu
-     */
-    private javax.swing.JTextField phoneNumberTextField;
-    /**
-     * Przycisk umożliwiający utworzenie konta
-     */
-    private javax.swing.JButton submitButton;
-    /**
      * Atrybut określający, czy klient istnieje w bazie
      */
     public String clientExists;
@@ -168,6 +112,26 @@ public class Registration extends javax.swing.JFrame {
         this.adminLogged = adminLogged;
         this.adminName = adminName;
         initComponents();
+    }
+    /**
+     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     */
+    public Registration(){initComponents();}
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
+    private void initComponents() {
+        setWindowProperties();
+        createRegPanel();
+        setLabels();
+        setTextFields();
+        setButtons();
+        createLayout();
+    }
+    private void setWindowProperties(){
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Rejestracja");
+        setPreferredSize(new java.awt.Dimension(1024, 768));
         getContentPane().setBackground(new Color(215,198,151));
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -186,136 +150,117 @@ public class Registration extends javax.swing.JFrame {
             }
         });
     }
-    /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
-     */
-    public Registration(){initComponents();}
-    /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
-     */
-    private void initComponents() {
-        JPanel regPanel = new JPanel();
-        JLabel createLabel = new JLabel();
-        JLabel firstNameLabel = new JLabel();
-        firstNameTextField = new javax.swing.JTextField();
-        JLabel lastNameLabel = new JLabel();
-        lastNameTextField = new javax.swing.JTextField();
-        JLabel phoneNumberLabel = new JLabel();
-        phoneNumberTextField = new javax.swing.JTextField();
-        JLabel emailLabel = new JLabel();
-        emailTextField = new javax.swing.JTextField();
-        JLabel passwordLabel = new JLabel();
-        passwordField = new javax.swing.JPasswordField();
-        JLabel confirmPasswordLabel = new JLabel();
-        confirmPasswordField = new javax.swing.JPasswordField();
-        submitButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        wrongConfirmPasswordLabel = new javax.swing.JLabel();
-        wrongPasswordLabel = new javax.swing.JLabel();
-        wrongEmailLabel = new javax.swing.JLabel();
-        wrongPhoneNumberLabel = new javax.swing.JLabel();
-        wrongLastNameLabel = new javax.swing.JLabel();
-        wrongFirstNameLabel = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Rejestracja");
-        setPreferredSize(new java.awt.Dimension(1024, 768));
-
+    private void createRegPanel(){
         regPanel.setBackground(new java.awt.Color(247, 233, 201));
         regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
-
-        createLabel.setFont(new java.awt.Font("Myanmar Text", Font.PLAIN, 24));
-        createLabel.setText("Utwórz konto");
+        javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
+        regPanel.setLayout(regPanelLayout);
+        regPanelLayout.setHorizontalGroup(
+                regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGap(100, 100, 100)
+                                .addComponent(submitButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(emailTextField)
+                                        .addComponent(confirmPasswordField)
+                                        .addComponent(confirmPasswordLabel)
+                                        .addComponent(passwordLabel)
+                                        .addComponent(emailLabel)
+                                        .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(firstNameLabel)
+                                                .addComponent(firstNameTextField)
+                                                .addComponent(lastNameLabel)
+                                                .addComponent(lastNameTextField)
+                                                .addComponent(phoneNumberLabel)
+                                                .addComponent(phoneNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                                                .addComponent(wrongPhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(wrongLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(wrongFirstNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(wrongEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                                        .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                                .addGap(44, 44, 44))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
+                                .addContainerGap(153, Short.MAX_VALUE)
+                                .addComponent(createAccountLabel)
+                                .addGap(152, 152, 152))
+        );
+        regPanelLayout.setVerticalGroup(
+                regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(regPanelLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(createAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongFirstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongPhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(confirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25))
+        );
+    }
+    private void setLabels(){
+        createAccountLabel.setFont(new java.awt.Font("Myanmar Text", Font.PLAIN, 24));
+        createAccountLabel.setText("Utwórz konto");
 
         firstNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         firstNameLabel.setText("Imię");
-        firstNameTextField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {}
-            public void focusLost(FocusEvent e) {
-                if(e.getOppositeComponent() != null)
-                    if(!e.getOppositeComponent().equals(cancelButton)) {
-                        performFirstNameValidation();
-                    }
-            }
-        });
 
         lastNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         lastNameLabel.setText("Nazwisko");
-        lastNameTextField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {}
-            public void focusLost(FocusEvent e) {
-                if(e.getOppositeComponent() != null)
-                    if(!e.getOppositeComponent().equals(cancelButton)) {
-                        performLastNameValidation();
-                    }
-            }
-        });
 
         phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         phoneNumberLabel.setText("Numer telefonu");
-        phoneNumberTextField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {}
-            public void focusLost(FocusEvent e) {
-                if(!e.getOppositeComponent().equals(cancelButton)) {
-                    performPhoneNumberValidation();
-                }
-            }
-        });
 
         emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         emailLabel.setText("E-mail");
-        emailTextField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {}
-            public void focusLost(FocusEvent e) {
-                if(!e.getOppositeComponent().equals(cancelButton)) {
-                    performEmailValidation();
-                }
-            }
-        });
+
 
         passwordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         passwordLabel.setText("Hasło");
-        passwordField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {}
-            public void focusLost(FocusEvent e) {
-                if(!e.getOppositeComponent().equals(cancelButton)) {
-                    performPasswordValidation();
-                }
-            }
-        });
 
         confirmPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         confirmPasswordLabel.setText("Potwierdź hasło");
-        confirmPasswordField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {}
-            public void focusLost(FocusEvent e) {
-                if(!e.getOppositeComponent().equals(cancelButton)) {
-                    performConfirmPasswordValidation();
-                }
-            }
-        });
-
-        submitButton.setBackground(new java.awt.Color(189, 165, 111));
-        submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
-        submitButton.setMinimumSize(new java.awt.Dimension(116, 27));
-        submitButton.setText("Utwórz");
-        submitButton.addActionListener(this::submitButtonActionPerformed);
-        submitButton.getModel().addChangeListener(e -> {
-            ButtonModel model = (ButtonModel) e.getSource();
-            if(model.isRollover())
-                submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        });
-
-        cancelButton.setBackground(new java.awt.Color(189, 165, 111));
-        cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
-        cancelButton.setText("Anuluj");
-        cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
-        cancelButton.addActionListener(this::cancelButtonActionPerformed);
-        cancelButton.getModel().addChangeListener(e -> {
-            ButtonModel model = (ButtonModel) e.getSource();
-            if(model.isRollover())
-                cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        });
 
         wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
         wrongConfirmPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
@@ -340,110 +285,98 @@ public class Registration extends javax.swing.JFrame {
         wrongFirstNameLabel.setForeground(new java.awt.Color(255, 0, 0));
         wrongFirstNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
         wrongFirstNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+    }
+    private void setTextFields(){
+        firstNameTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(e.getOppositeComponent() != null)
+                    if(!e.getOppositeComponent().equals(cancelButton)) {
+                        performFirstNameValidation();
+                    }
+            }
+        });
+        lastNameTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(e.getOppositeComponent() != null)
+                    if(!e.getOppositeComponent().equals(cancelButton)) {
+                        performLastNameValidation();
+                    }
+            }
+        });
+        phoneNumberTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    performPhoneNumberValidation();
+                }
+            }
+        });
+        emailTextField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    performEmailValidation();
+                }
+            }
+        });
+        passwordField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    performPasswordValidation();
+                }
+            }
+        });
+        confirmPasswordField.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+                if(!e.getOppositeComponent().equals(cancelButton)) {
+                    performConfirmPasswordValidation();
+                }
+            }
+        });
+    }
+    private void setButtons(){
+        submitButton.setBackground(new java.awt.Color(189, 165, 111));
+        submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
+        submitButton.setMinimumSize(new java.awt.Dimension(116, 27));
+        submitButton.setText("Utwórz");
+        submitButton.addActionListener(this::submitButtonActionPerformed);
+        submitButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover())
+                submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        });
 
-        getContentPane().setBackground(new Color(215,198,151));
-
-        javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
-        regPanel.setLayout(regPanelLayout);
-        regPanelLayout.setHorizontalGroup(
-            regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(submitButton)
-                .addGap(18, 18, 18)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(emailTextField)
-                    .addComponent(confirmPasswordField)
-                    .addComponent(confirmPasswordLabel)
-                    .addComponent(passwordLabel)
-                    .addComponent(emailLabel)
-                    .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(firstNameLabel)
-                        .addComponent(firstNameTextField)
-                        .addComponent(lastNameLabel)
-                        .addComponent(lastNameTextField)
-                        .addComponent(phoneNumberLabel)
-                        .addComponent(phoneNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                        .addComponent(wrongPhoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(wrongLastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(wrongFirstNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(wrongEmailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
-                .addGap(44, 44, 44))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
-                .addContainerGap(153, Short.MAX_VALUE)
-                .addComponent(createLabel)
-                .addGap(152, 152, 152))
-        );
-        regPanelLayout.setVerticalGroup(
-            regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(regPanelLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(createLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongFirstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongLastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(phoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongPhoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(confirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
-        );
-
+        cancelButton.setBackground(new java.awt.Color(189, 165, 111));
+        cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
+        cancelButton.setText("Anuluj");
+        cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
+        cancelButton.addActionListener(this::cancelButtonActionPerformed);
+        cancelButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover())
+                cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        });
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(287, 287, 287)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(287, 287, 287)
+                                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(287, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(54, Short.MAX_VALUE)
+                                .addComponent(regPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54))
         );
 
         pack();
@@ -605,4 +538,69 @@ public class Registration extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Registration().setVisible(true));
     }
+    //GUI variables
+    /**
+     * Etykieta informująca, że potwierdzone hasło jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongConfirmPasswordLabel = new JLabel();
+    /**
+     * Etykieta informująca, że email jest niepoprawny
+     */
+    private final javax.swing.JLabel wrongEmailLabel = new JLabel();
+    /**
+     * Etykieta informująca, że imię jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongFirstNameLabel = new JLabel();
+    /**
+     * Etykieta informująca, że nazwisko jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongLastNameLabel = new JLabel();
+    /**
+     * Etykieta informująca, że hasło jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongPasswordLabel = new JLabel();
+    /**
+     * Etykieta informująca, że numer telefonu jest niepoprawny
+     */
+    private final javax.swing.JLabel wrongPhoneNumberLabel = new JLabel();
+    /**
+     * Przycisk umożliwiający cofnięcie do strony logowania
+     */
+    private final javax.swing.JButton cancelButton = new JButton();
+    /**
+     * Pole do wprowadzenia potwierdzonego hasła
+     */
+    private final javax.swing.JPasswordField confirmPasswordField = new JPasswordField();
+    /**
+     * Pole do wprowadzenia emailu
+     */
+    private final javax.swing.JTextField emailTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia imienia
+     */
+    private final javax.swing.JTextField firstNameTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia nazwiska
+     */
+    private final javax.swing.JTextField lastNameTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia hasła
+     */
+    private final javax.swing.JPasswordField passwordField = new JPasswordField();
+    /**
+     * Pole do wprowadzenia numeru telefonu
+     */
+    private final javax.swing.JTextField phoneNumberTextField = new JTextField();
+    /**
+     * Przycisk umożliwiający utworzenie konta
+     */
+    private final javax.swing.JButton submitButton = new JButton();
+    private final JPanel regPanel = new JPanel();
+    private final JLabel createAccountLabel = new JLabel();
+    private final JLabel firstNameLabel = new JLabel();
+    private final JLabel lastNameLabel = new JLabel();
+    private final JLabel phoneNumberLabel = new JLabel();
+    private final JLabel emailLabel = new JLabel();
+    private final JLabel passwordLabel = new JLabel();
+    private final JLabel confirmPasswordLabel = new JLabel();
 }

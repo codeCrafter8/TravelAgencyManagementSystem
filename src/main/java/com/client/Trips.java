@@ -16,53 +16,6 @@ import javax.swing.table.TableRowSorter;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących wycieczek
  */
 public class Trips extends javax.swing.JFrame {
-    JPanel menuPanel;
-    JPanel adminPanel;
-    JPanel optionsPanel;
-    JLabel adminIconLabel;
-    JLabel adminLabel;
-    JPanel topPanel;
-    JLabel searchTripLabel;
-    JButton addTripButton;
-    JScrollPane jScrollPane1;
-    JButton deleteTripButton;
-    JButton editTripButton;
-    /**
-     * Etykieta z imieniem administratora
-     */
-    private javax.swing.JLabel adminNameLabel;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Klienci
-     */
-    private javax.swing.JButton clientsButton;
-    /**
-     * Przycisk umożliwiający wylogowanie się
-     */
-    private javax.swing.JButton logOutButton;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Panel
-     */
-    private javax.swing.JButton panelButton;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Rezerwacje
-     */
-    private javax.swing.JButton reservationsButton;
-    /**
-     * Pole do wprowadzenia miasta przy wyszukiwaniu
-     */
-    private javax.swing.JTextField searchClientTextField;
-    /**
-     * Przycisk umożliwiający przejście do zakładki Wycieczki
-     */
-    private javax.swing.JButton tripsButton;
-    /**
-     * Tabela z wycieczkami
-     */
-    private javax.swing.JTable tripsTable;
-    /**
-     * Etykieta informująca, że miasto przy wyszukiwaniu jest niepoprawne
-     */
-    private javax.swing.JLabel wrongTripLabel;
     /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
@@ -127,13 +80,13 @@ public class Trips extends javax.swing.JFrame {
      */
     private void initComponents() {
         setWindowProperties();
+        setLabels();
         createAdminPanel();
         createOptionsPanel();
         createMenuPanel();
         createTopPanel();
-        createSearchLabels();
         createTable();
-        createButtons();
+        setButtons();
         createLayout();
     }
     private void setWindowProperties() {
@@ -144,7 +97,6 @@ public class Trips extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1040, 770));
     }
     private void createMenuPanel(){
-        menuPanel = new JPanel();
         menuPanel.setBackground(new java.awt.Color(118, 98, 75));
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
@@ -163,12 +115,7 @@ public class Trips extends javax.swing.JFrame {
                                 .addContainerGap(284, Short.MAX_VALUE))
         );
     }
-    private void createAdminPanel(){
-        adminPanel = new JPanel();
-        adminIconLabel = new JLabel();
-        adminNameLabel = new javax.swing.JLabel();
-        adminLabel = new JLabel();
-        adminPanel.setBackground(new java.awt.Color(118, 98, 75));
+    private void setLabels(){
         adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
@@ -180,6 +127,14 @@ public class Trips extends javax.swing.JFrame {
         adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminLabel.setText("Admin");
 
+        searchTripLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
+        searchTripLabel.setText("Wyszukaj wycieczkę po mieście");
+
+        wrongTripLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongTripLabel.setPreferredSize(new java.awt.Dimension(222, 16));
+    }
+    private void createAdminPanel(){
+        adminPanel.setBackground(new java.awt.Color(118, 98, 75));
         javax.swing.GroupLayout adminPanel1Layout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanel1Layout);
         adminPanel1Layout.setHorizontalGroup(
@@ -204,15 +159,112 @@ public class Trips extends javax.swing.JFrame {
         );
     }
     private void createOptionsPanel(){
-        clientsButton = new javax.swing.JButton();
-        tripsButton = new javax.swing.JButton();
-        reservationsButton = new javax.swing.JButton();
-        optionsPanel = new JPanel();
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
         optionsPanel.setBackground(new Color(118,98,75));
+        javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
+        optionsPanel.setLayout(optionsPanel1Layout);
+        optionsPanel1Layout.setHorizontalGroup(
+                optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clientsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(tripsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(reservationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        optionsPanel1Layout.setVerticalGroup(
+                optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(optionsPanel1Layout.createSequentialGroup()
+                                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(clientsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(reservationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+        );
+    }
+    private void createTopPanel(){
+        topPanel.setBackground(new java.awt.Color(151, 123, 92));
+        topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
+        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
+        topPanel.setLayout(topPanelLayout);
+        topPanelLayout.setHorizontalGroup(
+                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
+                                .addContainerGap(753, Short.MAX_VALUE)
+                                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+        );
+        topPanelLayout.setVerticalGroup(
+                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(topPanelLayout.createSequentialGroup()
+                                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
+    private void createTable(){
+        tripsTable.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
 
-        panelButton = new javax.swing.JButton();
+                },
+                new String [] {
+                        "Id", "Kraj", "Miasto", "Cena/Osoba", "Limit osób"
+                }
+        )
+        {public boolean isCellEditable(int row, int column){
+            return column != 0;
+        }});
+        tripsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tripsTable.setMaximumSize(new java.awt.Dimension(375, 550));
+        tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
+        tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        tripsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        tripsTableScrollPane.setViewportView(tripsTable);
+
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(151,123,92));
+        for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
+            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+    }
+    private void setButtons(){
+        addTripButton.setBackground(new java.awt.Color(241, 227, 185));
+        addTripButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
+        addTripButton.setText("+ Dodaj Wycieczkę");
+        addTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addTripButton.addActionListener(this::addTripButtonActionPerformed);
+
+        deleteTripButton.setBackground(new java.awt.Color(241, 227, 185));
+        deleteTripButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
+        deleteTripButton.setText("Usuń Wycieczkę");
+        deleteTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteTripButton.addActionListener(this::deleteTripButtonActionPerformed);
+
+        editTripButton.setBackground(new java.awt.Color(241, 227, 185));
+        editTripButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
+        editTripButton.setText("Edytuj Wycieczkę");
+        editTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editTripButton.addActionListener(this::editTripButtonActionPerformed);
+
+        logOutButton.setBackground(new java.awt.Color(242, 242, 242));
+        logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
+        logOutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logOutButton.setText("Wyloguj");
+        logOutButton.setContentAreaFilled(false);
+        logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
+        logOutButton.getModel().addChangeListener(e -> {
+            ButtonModel model = (ButtonModel) e.getSource();
+            if(model.isRollover()) {
+                logOutButton.setForeground(Color.lightGray);
+                logOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            else
+                logOutButton.setForeground(Color.white);
+        });
+        logOutButton.addActionListener(this::logOutButtonActionPerformed);
+
         panelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         panelButton.setText("    Panel");
         panelButton.setBorder(null);
@@ -283,126 +335,6 @@ public class Trips extends javax.swing.JFrame {
                 reservationsButton.setForeground(null);
         });
         reservationsButton.addActionListener(this::reservationsButtonActionPerformed);
-
-        javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
-        optionsPanel.setLayout(optionsPanel1Layout);
-        optionsPanel1Layout.setHorizontalGroup(
-                optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clientsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                        .addComponent(tripsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(reservationsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        optionsPanel1Layout.setVerticalGroup(
-                optionsPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(optionsPanel1Layout.createSequentialGroup()
-                                .addComponent(panelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(clientsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(tripsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(reservationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-        );
-    }
-    private void createTopPanel(){
-        topPanel = new JPanel();
-        logOutButton = new javax.swing.JButton();
-        topPanel.setBackground(new java.awt.Color(151, 123, 92));
-        topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
-
-        logOutButton.setBackground(new java.awt.Color(242, 242, 242));
-        logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
-        logOutButton.setForeground(new java.awt.Color(255, 255, 255));
-        logOutButton.setText("Wyloguj");
-        logOutButton.setContentAreaFilled(false);
-        logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
-        logOutButton.getModel().addChangeListener(e -> {
-            ButtonModel model = (ButtonModel) e.getSource();
-            if(model.isRollover()) {
-                logOutButton.setForeground(Color.lightGray);
-                logOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            }
-            else
-                logOutButton.setForeground(Color.white);
-        });
-        logOutButton.addActionListener(this::logOutButtonActionPerformed);
-
-        javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
-        topPanel.setLayout(topPanelLayout);
-        topPanelLayout.setHorizontalGroup(
-                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                                .addContainerGap(753, Short.MAX_VALUE)
-                                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18))
-        );
-        topPanelLayout.setVerticalGroup(
-                topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(topPanelLayout.createSequentialGroup()
-                                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-    }
-    private void createTable(){
-        jScrollPane1 = new JScrollPane();
-        tripsTable = new javax.swing.JTable();
-        tripsTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-                        "Id", "Kraj", "Miasto", "Cena/Osoba", "Limit osób"
-                }
-        )
-        {public boolean isCellEditable(int row, int column){
-            return column != 0;
-        }});
-        tripsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tripsTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        tripsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
-        jScrollPane1.setViewportView(tripsTable);
-        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
-        for (int i = 0; i < tripsTable.getModel().getColumnCount(); i++) {
-            tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
-    }
-    private void createSearchLabels(){
-        searchTripLabel = new JLabel();
-        searchClientTextField = new javax.swing.JTextField();
-        wrongTripLabel = new javax.swing.JLabel();
-        searchTripLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
-        searchTripLabel.setText("Wyszukaj wycieczkę po mieście");
-
-        wrongTripLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongTripLabel.setPreferredSize(new java.awt.Dimension(222, 16));
-    }
-    private void createButtons(){
-        addTripButton = new JButton();
-        deleteTripButton = new JButton();
-        editTripButton = new JButton();
-        addTripButton.setBackground(new java.awt.Color(241, 227, 185));
-        addTripButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
-        addTripButton.setText("+ Dodaj Wycieczkę");
-        addTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addTripButton.addActionListener(this::addTripButtonActionPerformed);
-
-        deleteTripButton.setBackground(new java.awt.Color(241, 227, 185));
-        deleteTripButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
-        deleteTripButton.setText("Usuń Wycieczkę");
-        deleteTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        deleteTripButton.addActionListener(this::deleteTripButtonActionPerformed);
-
-        editTripButton.setBackground(new java.awt.Color(241, 227, 185));
-        editTripButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
-        editTripButton.setText("Edytuj Wycieczkę");
-        editTripButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        editTripButton.addActionListener(this::editTripButtonActionPerformed);
     }
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -428,7 +360,7 @@ public class Trips extends javax.swing.JFrame {
                                                                                 .addGap(320, 320, 320)
                                                                                 .addComponent(addTripButton)
                                                                                 .addGap(21, 21, 21))
-                                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addComponent(tripsTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(282, 282, 282)
@@ -452,7 +384,7 @@ public class Trips extends javax.swing.JFrame {
                                                 .addComponent(wrongTripLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(addTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tripsTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(deleteTripButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -644,4 +576,52 @@ public class Trips extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Trips().setVisible(true));
     }
+    //GUI variables
+    private final JPanel menuPanel = new JPanel();
+    private final JPanel adminPanel = new JPanel();
+    private final JPanel optionsPanel = new JPanel();
+    private final JLabel adminIconLabel = new JLabel();
+    private final JLabel adminLabel = new JLabel();
+    private final JPanel topPanel = new JPanel();
+    private final JLabel searchTripLabel = new JLabel();
+    private final JButton addTripButton = new JButton();
+    private final JScrollPane tripsTableScrollPane = new JScrollPane();
+    private final JButton deleteTripButton = new JButton();
+    private final JButton editTripButton = new JButton();
+    /**
+     * Etykieta z imieniem administratora
+     */
+    private final javax.swing.JLabel adminNameLabel = new JLabel();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Klienci
+     */
+    private final javax.swing.JButton clientsButton = new JButton();
+    /**
+     * Przycisk umożliwiający wylogowanie się
+     */
+    private final javax.swing.JButton logOutButton = new JButton();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Panel
+     */
+    private final javax.swing.JButton panelButton = new JButton();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     */
+    private final javax.swing.JButton reservationsButton = new JButton();
+    /**
+     * Pole do wprowadzenia miasta przy wyszukiwaniu
+     */
+    private final javax.swing.JTextField searchClientTextField = new JTextField();
+    /**
+     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     */
+    private final javax.swing.JButton tripsButton = new JButton();
+    /**
+     * Tabela z wycieczkami
+     */
+    private final javax.swing.JTable tripsTable = new JTable();
+    /**
+     * Etykieta informująca, że miasto przy wyszukiwaniu jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongTripLabel = new JLabel();
 }

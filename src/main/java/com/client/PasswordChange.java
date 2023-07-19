@@ -9,33 +9,6 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zmiany hasła przez klienta
  */
 public class PasswordChange extends javax.swing.JFrame {
-    /**
-     * Pole do wprowadzenia potwierdzonego hasła klienta
-     */
-    private javax.swing.JPasswordField confirmPasswordField;
-    /**
-     * Etykieta informująca, że potwierdzone hasło klienta jest niepoprawne
-     */
-    private javax.swing.JLabel wrongConfirmPasswordLabel;
-    /**
-     * Pole do wprowadzenia obecnego hasła klienta
-     */
-    private javax.swing.JPasswordField currentPasswordField;
-    /**
-     * Pole do wprowadzenia nowego hasła klienta
-     */
-    private javax.swing.JPasswordField newPasswordField;
-    /**
-     * Etykieta informująca, że nowe hasło klienta jest niepoprawne
-     */
-    private javax.swing.JLabel wrongNewPasswordLabel;
-    /**
-     * Etykieta informująca, że obecne hasło klienta jest niepoprawne
-     */
-    private javax.swing.JLabel wrongCurrentPasswordLabel;
-    /**
-     * Atrybut określający, czy obecne hasło klienta jest poprawne
-     */
     private boolean currentPasswordCorrect;
     /**
      * Atrybut określający, czy nowe hasło klienta jest poprawne
@@ -75,100 +48,92 @@ public class PasswordChange extends javax.swing.JFrame {
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
      */
     private void initComponents() {
-        JLabel currentPassword = new JLabel();
-        JLabel newPassword = new JLabel();
-        JLabel confirmPassword = new JLabel();
-        JButton changeButton = new JButton();
-        wrongCurrentPasswordLabel = new javax.swing.JLabel();
-        wrongNewPasswordLabel = new javax.swing.JLabel();
-        wrongConfirmPasswordLabel = new javax.swing.JLabel();
-        currentPasswordField = new javax.swing.JPasswordField();
-        newPasswordField = new javax.swing.JPasswordField();
-        confirmPasswordField = new javax.swing.JPasswordField();
-
+        setWindowProperties();
+        setLabels();
+        setButton();
+        createLayout();
+    }
+    private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Zmiana hasła");
+    }
+    private void setLabels(){
+        currentPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        currentPasswordLabel.setText("Aktualne hasło:");
 
-        currentPassword.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        currentPassword.setText("Aktualne hasło:");
+        newPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        newPasswordLabel.setText("Podaj nowe hasło:");
 
-        newPassword.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        newPassword.setText("Podaj nowe hasło:");
+        confirmPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        confirmPasswordLabel.setText("Potwierdź nowe hasło:");
 
-        confirmPassword.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        confirmPassword.setText("Potwierdź nowe hasło:");
+        wrongCurrentPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCurrentPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
 
+        wrongNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongNewPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongNewPasswordLabel.setText("");
+
+        wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongConfirmPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+    }
+    private void setButton(){
         changeButton.setBackground(new java.awt.Color(151, 123, 92));
         changeButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
         changeButton.setForeground(new java.awt.Color(255, 255, 255));
         changeButton.setText("Zmień hasło");
         changeButton.addActionListener(this::changeButtonActionPerformed);
-
-        wrongCurrentPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongCurrentPasswordLabel.setText("cos");
-
-        wrongNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongNewPasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
-
-        wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
-        wrongConfirmPasswordLabel.setText("cos");
-
-        wrongCurrentPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
-        wrongNewPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
-        wrongConfirmPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
-        wrongCurrentPasswordLabel.setText("");
-        wrongNewPasswordLabel.setText("");
-        wrongConfirmPasswordLabel.setText("");
-
+    }
+    private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(confirmPassword)
-                            .addComponent(newPassword)
-                            .addComponent(currentPassword))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(wrongCurrentPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(wrongNewPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(currentPasswordField)
-                            .addComponent(newPasswordField)
-                            .addComponent(confirmPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(changeButton)))
-                .addGap(10, 10, 10))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(11, 11, 11)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(confirmPasswordLabel)
+                                                        .addComponent(newPasswordLabel)
+                                                        .addComponent(currentPasswordLabel))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(wrongCurrentPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(wrongNewPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(wrongConfirmPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(currentPasswordField)
+                                                        .addComponent(newPasswordField)
+                                                        .addComponent(confirmPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(changeButton)))
+                                .addGap(10, 10, 10))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(currentPassword)
-                    .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addComponent(wrongCurrentPasswordLabel)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newPassword)
-                    .addComponent(newPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addComponent(wrongNewPasswordLabel)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confirmPassword)
-                    .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addComponent(wrongConfirmPasswordLabel)
-                .addGap(18, 18, 18)
-                .addComponent(changeButton)
-                .addContainerGap(15, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(currentPasswordLabel)
+                                        .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(2, 2, 2)
+                                .addComponent(wrongCurrentPasswordLabel)
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(newPasswordLabel)
+                                        .addComponent(newPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(2, 2, 2)
+                                .addComponent(wrongNewPasswordLabel)
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(confirmPasswordLabel)
+                                        .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(2, 2, 2)
+                                .addComponent(wrongConfirmPasswordLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(changeButton)
+                                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -263,4 +228,36 @@ public class PasswordChange extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(() -> new PasswordChange(null,null).setVisible(true));
     }
+    //GUI variables
+    /**
+     * Pole do wprowadzenia potwierdzonego hasła klienta
+     */
+    private final javax.swing.JPasswordField confirmPasswordField = new JPasswordField();
+    /**
+     * Etykieta informująca, że potwierdzone hasło klienta jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongConfirmPasswordLabel = new JLabel();
+    /**
+     * Pole do wprowadzenia obecnego hasła klienta
+     */
+    private final javax.swing.JPasswordField currentPasswordField = new JPasswordField();
+    /**
+     * Pole do wprowadzenia nowego hasła klienta
+     */
+    private final javax.swing.JPasswordField newPasswordField = new JPasswordField();
+    /**
+     * Etykieta informująca, że nowe hasło klienta jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongNewPasswordLabel = new JLabel();
+    /**
+     * Etykieta informująca, że obecne hasło klienta jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongCurrentPasswordLabel = new JLabel();
+    /**
+     * Atrybut określający, czy obecne hasło klienta jest poprawne
+     */
+    private final JLabel currentPasswordLabel = new JLabel();
+    private final JLabel newPasswordLabel = new JLabel();
+    private final JLabel confirmPasswordLabel = new JLabel();
+    private final JButton changeButton = new JButton();
 }

@@ -9,44 +9,6 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność edycji danych przez klienta
  */
 class DataEdition extends javax.swing.JFrame {
-    javax.swing.JLabel createLabel;
-    javax.swing.JLabel firstNameLabel;
-    javax.swing.JLabel lastNameLabel;
-    javax.swing.JLabel emailLabel;
-    javax.swing.JLabel phoneNumberLabel;
-    javax.swing.JButton submitButton;
-    /**
-     * Pole do wprowadzenia emailu przez klienta
-     */
-    private javax.swing.JTextField emailTextField;
-    /**
-     * Pole do wprowadzenia imienia przez klienta
-     */
-    private javax.swing.JTextField firstNameTextField;
-    /**
-     * Pole do wprowadzenia nazwiska przez klienta
-     */
-    private javax.swing.JTextField lastNameTextField;
-    /**
-     * Pole do wprowadzenia numeru telefonu przez klienta
-     */
-    private javax.swing.JTextField phoneNumberField;
-    /**
-     * Etykieta informująca, że email klienta jest niepoprawny
-     */
-    private javax.swing.JLabel validEmailLabel;
-    /**
-     * Etykieta informująca, że imię klienta jest niepoprawne
-     */
-    private javax.swing.JLabel validFirstNameLabel;
-    /**
-     * Etykieta informująca, że nazwisko klienta jest niepoprawne
-     */
-    private javax.swing.JLabel validLastNameLabel;
-    /**
-     * Etykieta informująca, że numer telefonu klienta jest niepoprawny
-     */
-    private javax.swing.JLabel validPhoneNumberLabel;
     /**
      * Atrybut określający, czy imię klienta jest poprawne
      */
@@ -104,6 +66,25 @@ class DataEdition extends javax.swing.JFrame {
         this.client = client;
         this.clientData.addAll(clientData);
         this.clientId = clientData.get(4);
+        initComponents();
+    }
+    /**
+     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     */
+    private void initComponents() {
+        setWindowProperties();
+        setTextFields();
+        createLabels();
+        createButton();
+        createRegPanel();
+        createLayout();
+    }
+
+    private void setWindowProperties() {
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Edytuj dane");
+        setPreferredSize(new java.awt.Dimension(449, 510));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -116,33 +97,9 @@ class DataEdition extends javax.swing.JFrame {
                 }
             }
         });
-        initComponents();
-        fillTextFields();
-    }
-    /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
-     */
-    private void initComponents() {
-        setWindowProperties();
-        createTextFields();
-        createLabels();
-        createButton();
-        createLayout();
-    }
-
-    private void setWindowProperties() {
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Edytuj dane");
-        setPreferredSize(new java.awt.Dimension(449, 510));
-        setResizable(false);
     }
 
     private void createLabels() {
-        createLabel = new javax.swing.JLabel();
-        firstNameLabel = new javax.swing.JLabel();
-        lastNameLabel = new javax.swing.JLabel();
-        emailLabel = new javax.swing.JLabel();
-        phoneNumberLabel = new javax.swing.JLabel();
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Edytuj dane");
 
@@ -179,19 +136,14 @@ class DataEdition extends javax.swing.JFrame {
         validPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(363, 16));
     }
 
-    private void createTextFields() {
-        firstNameTextField = new javax.swing.JTextField();
-        lastNameTextField = new javax.swing.JTextField();
-        emailTextField = new javax.swing.JTextField();
-        phoneNumberField = new javax.swing.JTextField();
-        validFirstNameLabel = new javax.swing.JLabel();
-        validLastNameLabel = new javax.swing.JLabel();
-        validEmailLabel = new javax.swing.JLabel();
-        validPhoneNumberLabel = new javax.swing.JLabel();
+    private void setTextFields() {
+        firstNameTextField.setText(clientData.get(0));
+        lastNameTextField.setText(clientData.get(1));
+        emailTextField.setText(clientData.get(2));
+        phoneNumberField.setText(clientData.get(3));
     }
 
     private void createButton() {
-        submitButton = new javax.swing.JButton();
         submitButton.setBackground(new java.awt.Color(151, 123, 92));
         submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
         submitButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -199,9 +151,7 @@ class DataEdition extends javax.swing.JFrame {
         submitButton.addActionListener(this::submitButtonActionPerformed);
         submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
-
-    private void createLayout() {
-        javax.swing.JPanel regPanel = new javax.swing.JPanel();
+    private void createRegPanel(){
         regPanel.setPreferredSize(new java.awt.Dimension(450, 550));
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
@@ -266,7 +216,8 @@ class DataEdition extends javax.swing.JFrame {
                                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(26, Short.MAX_VALUE))
         );
-
+    }
+    private void createLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -343,15 +294,6 @@ class DataEdition extends javax.swing.JFrame {
             validPhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
     }
     /**
-     * Metoda odpowiadająca za wypełnienie odpowiednich pól danymi klienta
-     */
-    private void fillTextFields(){
-        firstNameTextField.setText(clientData.get(0));
-        lastNameTextField.setText(clientData.get(1));
-        emailTextField.setText(clientData.get(2));
-        phoneNumberField.setText(clientData.get(3));
-    }
-    /**
      * Metoda obsługująca kliknięcie przycisku "Zatwierdź"
      * @param evt Przyjęty event podczas kliknięcia przycisku
      */
@@ -394,4 +336,44 @@ class DataEdition extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new DataEdition(new ArrayList<>(), null).setVisible(true));
     }
+    //GUI variables
+    private final JLabel createLabel = new JLabel();
+    private final JLabel firstNameLabel = new JLabel();
+    private final JLabel lastNameLabel = new JLabel();
+    private final JLabel emailLabel = new JLabel();
+    private final JLabel phoneNumberLabel = new JLabel();
+    private final JButton submitButton = new JButton();
+    /**
+     * Pole do wprowadzenia emailu przez klienta
+     */
+    private final JTextField emailTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia imienia przez klienta
+     */
+    private final JTextField firstNameTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia nazwiska przez klienta
+     */
+    private final JTextField lastNameTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia numeru telefonu przez klienta
+     */
+    private final JTextField phoneNumberField = new JTextField();
+    /**
+     * Etykieta informująca, że email klienta jest niepoprawny
+     */
+    private final JLabel validEmailLabel = new JLabel();
+    /**
+     * Etykieta informująca, że imię klienta jest niepoprawne
+     */
+    private final JLabel validFirstNameLabel = new JLabel();
+    /**
+     * Etykieta informująca, że nazwisko klienta jest niepoprawne
+     */
+    private final JLabel validLastNameLabel = new JLabel();
+    /**
+     * Etykieta informująca, że numer telefonu klienta jest niepoprawny
+     */
+    private final JLabel validPhoneNumberLabel = new JLabel();
+    private final JPanel regPanel = new JPanel();
 }

@@ -10,34 +10,6 @@ import javax.swing.*;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność logowania
  */
 public class StartPage extends javax.swing.JFrame {
-    JPanel loginPanel;
-    JLabel emailLabel;
-    JLabel passwordLabel;
-    JLabel jLabel2;
-    /**
-     * Pole do wprowadzenia emailu
-     */
-    private javax.swing.JTextField emailTextField;
-    /**
-     * Pole do wprowadzenia hasła
-     */
-    private javax.swing.JPasswordField passwordField;
-    /**
-     * Przycisk umożliwiający zalogowanie się
-     */
-    private javax.swing.JButton registerButton;
-    /**
-     * Przycisk umożliwiający przejście do okna z rejestracją
-     */
-    private javax.swing.JButton signInButton;
-    /**
-     * Etykieta informująca, że email jest niepoprawny
-     */
-    private javax.swing.JLabel wrongEmailLabel;
-    /**
-     * Etykieta informująca, że hasło jest niepoprawne
-     */
-    private javax.swing.JLabel wrongPasswordLabel;
     /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
@@ -93,9 +65,9 @@ public class StartPage extends javax.swing.JFrame {
      */
     private void initComponents() {
         setWindowProperties();
-        createLabels();
-        createTextFields();
-        createButtons();
+        setLabels();
+        setTextFields();
+        setButtons();
         createLoginPanel();
         createLayout();
     }
@@ -108,7 +80,6 @@ public class StartPage extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(215,198,151));
     }
     private void createLoginPanel(){
-        loginPanel = new JPanel();
         loginPanel.setBackground(new java.awt.Color(247, 233, 201));
         loginPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(229, 221, 192), null, null));
         loginPanel.setForeground(new java.awt.Color(224, 214, 176));
@@ -172,7 +143,7 @@ public class StartPage extends javax.swing.JFrame {
                                 .addGap(106, 106, 106)
                                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jLabel2)
+                                .addComponent(photoLabel)
                                 .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -184,18 +155,13 @@ public class StartPage extends javax.swing.JFrame {
                                                 .addComponent(loginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(154, 154, 154))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(28, 28, 28))))
         );
         pack();
         setLocationRelativeTo(null);
     }
-    private void createLabels(){
-        emailLabel = new JLabel();
-        passwordLabel = new JLabel();
-        jLabel2 = new JLabel();
-        wrongEmailLabel = new javax.swing.JLabel();
-        wrongPasswordLabel = new javax.swing.JLabel();
+    private void setLabels(){
         emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         emailLabel.setText("E-mail");
         passwordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
@@ -208,8 +174,8 @@ public class StartPage extends javax.swing.JFrame {
         wrongPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
         wrongPasswordLabel.setMinimumSize(new java.awt.Dimension(94, 18));
         wrongPasswordLabel.setPreferredSize(new java.awt.Dimension(94, 18));
-        jLabel2.setIcon(new javax.swing.ImageIcon("img\\paris.jpg"));
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        photoLabel.setIcon(new javax.swing.ImageIcon("img\\paris.jpg"));
+        photoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         JLabel travelLabel = new JLabel("Travel");
         travelLabel.setFont(new Font("Monotype Corsiva", Font.ITALIC, 65));
         travelLabel.setBounds(182, 50, 250, 65);
@@ -219,9 +185,7 @@ public class StartPage extends javax.swing.JFrame {
         agencyLabel.setBounds(247, 85, 250, 100);
         add(agencyLabel);
     }
-    private void createTextFields(){
-        emailTextField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JPasswordField();
+    private void setTextFields(){
         emailTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         emailTextField.setPreferredSize(new java.awt.Dimension(64, 28));
         emailTextField.addFocusListener(new FocusListener() {
@@ -245,9 +209,7 @@ public class StartPage extends javax.swing.JFrame {
             }
         });
     }
-    private void createButtons(){
-        signInButton = new javax.swing.JButton();
-        registerButton = new javax.swing.JButton();
+    private void setButtons(){
         signInButton.setBackground(new java.awt.Color(189, 165, 111));
         signInButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         signInButton.setText("Zaloguj się");
@@ -384,4 +346,33 @@ public class StartPage extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new StartPage().setVisible(true));
     }
+    //GUI variables
+    private final JPanel loginPanel = new JPanel();
+    private final JLabel emailLabel = new JLabel();
+    private final JLabel passwordLabel = new JLabel();
+    private final JLabel photoLabel = new JLabel();
+    /**
+     * Pole do wprowadzenia emailu
+     */
+    private final javax.swing.JTextField emailTextField = new JTextField();
+    /**
+     * Pole do wprowadzenia hasła
+     */
+    private final javax.swing.JPasswordField passwordField = new JPasswordField();
+    /**
+     * Przycisk umożliwiający zalogowanie się
+     */
+    private final javax.swing.JButton registerButton = new JButton();
+    /**
+     * Przycisk umożliwiający przejście do okna z rejestracją
+     */
+    private final javax.swing.JButton signInButton = new JButton();
+    /**
+     * Etykieta informująca, że email jest niepoprawny
+     */
+    private final javax.swing.JLabel wrongEmailLabel = new JLabel();
+    /**
+     * Etykieta informująca, że hasło jest niepoprawne
+     */
+    private final javax.swing.JLabel wrongPasswordLabel = new JLabel();
 }

@@ -11,57 +11,6 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wyświetlenia szczegółów rezerwacji
  */
 public class TripDescription extends javax.swing.JFrame {
-    JLabel countryLabel;
-    JLabel cityLabel;
-    JLabel departureCityLabel;
-    JLabel dateLabel;
-    JLabel daysLabel;
-    JLabel peopleLabel;
-    JLabel priceLabel;
-    JLabel insuranceLabel;
-    JLabel hotelNameLabel;
-    JLabel hotelDescriptionLabel;
-    JButton jButton1;
-    /**
-     * Etykieta z miastem wycieczki
-     */
-    private javax.swing.JLabel typeCityLabel;
-    /**
-     * Etykieta z krajem wycieczki
-     */
-    private javax.swing.JLabel typeCountryLabel;
-    /**
-     * Etykieta z datą wycieczki
-     */
-    private javax.swing.JLabel typeDateLabel;
-    /**
-     * Etykieta z ilością dni wycieczki
-     */
-    private javax.swing.JLabel typeDaysLabel;
-    /**
-     * Etykieta z miastem wylotu/przylotu wycieczki
-     */
-    private javax.swing.JLabel typeDepartureCityLabel;
-    /**
-     * Etykieta z opisem hotelu wycieczki
-     */
-    private javax.swing.JLabel typeHotelDescriptionLabel;
-    /**
-     * Etykieta z nazwą hotelu wycieczki
-     */
-    private javax.swing.JLabel typeHotelNameLabel;
-    /**
-     * Etykieta z ubezpieczeniem wycieczki
-     */
-    private javax.swing.JLabel typeInsuranceLabel;
-    /**
-     * Etykieta z ilością osób wycieczki
-     */
-    private javax.swing.JLabel typePeopleLabel;
-    /**
-     * Etykieta z ceną wycieczki
-     */
-    private javax.swing.JLabel typePriceLabel;
     /**
      * Atrybut przechowujący ubezpieczenie wycieczki
      */
@@ -129,31 +78,11 @@ public class TripDescription extends javax.swing.JFrame {
      */
     private void initComponents() {
         setWindowProperties();
-        createLabels();
-        createButton();
+        setLabels();
+        setButton();
         createLayout();
     }
-    private void createLabels(){
-        countryLabel = new JLabel();
-        cityLabel = new JLabel();
-        departureCityLabel = new JLabel();
-        dateLabel = new JLabel();
-        daysLabel = new JLabel();
-        peopleLabel = new JLabel();
-        priceLabel = new JLabel();
-        insuranceLabel = new JLabel();
-        hotelNameLabel = new JLabel();
-        hotelDescriptionLabel = new JLabel();
-        typeCountryLabel = new javax.swing.JLabel();
-        typeCityLabel = new javax.swing.JLabel();
-        typeDepartureCityLabel = new javax.swing.JLabel();
-        typeDateLabel = new javax.swing.JLabel();
-        typeDaysLabel = new javax.swing.JLabel();
-        typePeopleLabel = new javax.swing.JLabel();
-        typePriceLabel = new javax.swing.JLabel();
-        typeInsuranceLabel = new javax.swing.JLabel();
-        typeHotelNameLabel = new javax.swing.JLabel();
-        typeHotelDescriptionLabel = new javax.swing.JLabel();
+    private void setLabels(){
         countryLabel.setText("Kraj:");
         cityLabel.setText("Miasto:");
         departureCityLabel.setText("Miejsce wylotu/przylotu:");
@@ -170,15 +99,14 @@ public class TripDescription extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Szczegóły wycieczki");
     }
-    private void createButton(){
-        jButton1 = new JButton();
-        jButton1.setBackground(new java.awt.Color(102, 102, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("img\\questionMark.png"));
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setMargin(new java.awt.Insets(0, 14, 0, 14));
-        jButton1.setPreferredSize(new java.awt.Dimension(22, 24));
-        jButton1.addActionListener(this::jButtonActionPerformed);
+    private void setButton(){
+        questionMarkButton.setBackground(new java.awt.Color(102, 102, 255));
+        questionMarkButton.setIcon(new javax.swing.ImageIcon("img\\questionMark.png"));
+        questionMarkButton.setBorderPainted(false);
+        questionMarkButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        questionMarkButton.setMargin(new java.awt.Insets(0, 14, 0, 14));
+        questionMarkButton.setPreferredSize(new java.awt.Dimension(22, 24));
+        questionMarkButton.addActionListener(this::jButtonActionPerformed);
     }
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,7 +125,7 @@ public class TripDescription extends javax.swing.JFrame {
                                         .addComponent(cityLabel)
                                         .addComponent(departureCityLabel)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(questionMarkButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(insuranceLabel))
                                         .addComponent(hotelNameLabel))
@@ -249,7 +177,7 @@ public class TripDescription extends javax.swing.JFrame {
                                                 .addComponent(priceLabel)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(questionMarkButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(3, 3, 3)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -328,4 +256,56 @@ public class TripDescription extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new TripDescription().setVisible(true));
     }
+    //GUI variables
+    private final JLabel countryLabel = new JLabel();
+    private final JLabel cityLabel = new JLabel();
+    private final JLabel departureCityLabel = new JLabel();
+    private final JLabel dateLabel = new JLabel();
+    private final JLabel daysLabel = new JLabel();
+    private final JLabel peopleLabel = new JLabel();
+    private final JLabel priceLabel = new JLabel();
+    private final JLabel insuranceLabel = new JLabel();
+    private final JLabel hotelNameLabel = new JLabel();
+    private final JLabel hotelDescriptionLabel = new JLabel();
+    private final JButton questionMarkButton = new JButton();
+    /**
+     * Etykieta z miastem wycieczki
+     */
+    private final javax.swing.JLabel typeCityLabel = new JLabel();
+    /**
+     * Etykieta z krajem wycieczki
+     */
+    private final javax.swing.JLabel typeCountryLabel = new JLabel();
+    /**
+     * Etykieta z datą wycieczki
+     */
+    private final javax.swing.JLabel typeDateLabel = new JLabel();
+    /**
+     * Etykieta z ilością dni wycieczki
+     */
+    private final javax.swing.JLabel typeDaysLabel = new JLabel();
+    /**
+     * Etykieta z miastem wylotu/przylotu wycieczki
+     */
+    private final javax.swing.JLabel typeDepartureCityLabel = new JLabel();
+    /**
+     * Etykieta z opisem hotelu wycieczki
+     */
+    private final javax.swing.JLabel typeHotelDescriptionLabel = new JLabel();
+    /**
+     * Etykieta z nazwą hotelu wycieczki
+     */
+    private final javax.swing.JLabel typeHotelNameLabel = new JLabel();
+    /**
+     * Etykieta z ubezpieczeniem wycieczki
+     */
+    private final javax.swing.JLabel typeInsuranceLabel = new JLabel();
+    /**
+     * Etykieta z ilością osób wycieczki
+     */
+    private final javax.swing.JLabel typePeopleLabel = new JLabel();
+    /**
+     * Etykieta z ceną wycieczki
+     */
+    private final javax.swing.JLabel typePriceLabel = new JLabel();
 }
