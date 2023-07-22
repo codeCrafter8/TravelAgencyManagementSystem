@@ -198,82 +198,82 @@ public class SearchEngine extends javax.swing.JFrame {
         }
     }
     private void setButtons(){
-        tripsButton.setBackground(new java.awt.Color(151, 123, 92));
+        tripsButton.setBackground(ColorUtils.LIGHT_BROWN);
         tripsButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        tripsButton.setForeground(new java.awt.Color(255, 255, 255));
+        tripsButton.setForeground(Color.white);
         tripsButton.setText("Wczasy");
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton.setFocusPainted(false);
         tripsButton.setFocusable(false);
         tripsButton.addActionListener(this::tripsButtonActionPerformed);
 
-        summer2023Button.setBackground(new java.awt.Color(151, 123, 92));
+        summer2023Button.setBackground(ColorUtils.LIGHT_BROWN);
         summer2023Button.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        summer2023Button.setForeground(new java.awt.Color(255, 255, 255));
+        summer2023Button.setForeground(Color.white);
         summer2023Button.setText("Lato 2023");
         summer2023Button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         summer2023Button.setFocusable(false);
         summer2023Button.addActionListener(this::summer2023ButtonActionPerformed);
 
-        lastMinuteButton.setBackground(new java.awt.Color(151, 123, 92));
+        lastMinuteButton.setBackground(ColorUtils.LIGHT_BROWN);
         lastMinuteButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        lastMinuteButton.setForeground(new java.awt.Color(255, 255, 255));
+        lastMinuteButton.setForeground(Color.white);
         lastMinuteButton.setText("Last Minute");
         lastMinuteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lastMinuteButton.setFocusable(false);
         lastMinuteButton.addActionListener(this::lastMinuteButtonActionPerformed);
 
-        exoticButton.setBackground(new java.awt.Color(151, 123, 92));
+        exoticButton.setBackground(ColorUtils.LIGHT_BROWN);
         exoticButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        exoticButton.setForeground(new java.awt.Color(255, 255, 255));
+        exoticButton.setForeground(Color.white);
         exoticButton.setText("Egzotyka");
         exoticButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         exoticButton.setFocusable(false);
         exoticButton.addActionListener(this::exoticButtonActionPerformed);
 
-        greeceButton.setBackground(new java.awt.Color(151, 123, 92));
+        greeceButton.setBackground(ColorUtils.LIGHT_BROWN);
         greeceButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        greeceButton.setForeground(new java.awt.Color(255, 255, 255));
+        greeceButton.setForeground(Color.white);
         greeceButton.setText("Grecja");
         greeceButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         greeceButton.setFocusable(false);
         greeceButton.addActionListener(this::greeceButtonActionPerformed);
 
-        spainButton.setBackground(new java.awt.Color(151, 123, 92));
+        spainButton.setBackground(ColorUtils.LIGHT_BROWN);
         spainButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        spainButton.setForeground(new java.awt.Color(255, 255, 255));
+        spainButton.setForeground(Color.white);
         spainButton.setText("Hiszpania");
         spainButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         spainButton.setFocusable(false);
         spainButton.addActionListener(this::spainButtonActionPerformed);
 
-        turkeyButton.setBackground(new java.awt.Color(151, 123, 92));
+        turkeyButton.setBackground(ColorUtils.LIGHT_BROWN);
         turkeyButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        turkeyButton.setForeground(new java.awt.Color(255, 255, 255));
+        turkeyButton.setForeground(Color.white);
         turkeyButton.setText("Turcja");
         turkeyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         turkeyButton.setFocusable(false);
         turkeyButton.addActionListener(this::turkeyButtonActionPerformed);
 
-        egyptButton.setBackground(new java.awt.Color(151, 123, 92));
+        egyptButton.setBackground(ColorUtils.LIGHT_BROWN);
         egyptButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        egyptButton.setForeground(new java.awt.Color(255, 255, 255));
+        egyptButton.setForeground(Color.white);
         egyptButton.setText("Egipt");
         egyptButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         egyptButton.setFocusable(false);
         egyptButton.addActionListener(this::egyptButtonActionPerformed);
 
-        italyButton.setBackground(new java.awt.Color(151, 123, 92));
+        italyButton.setBackground(ColorUtils.LIGHT_BROWN);
         italyButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        italyButton.setForeground(new java.awt.Color(255, 255, 255));
+        italyButton.setForeground(Color.white);
         italyButton.setText("Włochy");
         italyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         italyButton.setFocusable(false);
         italyButton.addActionListener(this::italyButtonActionPerformed);
 
-        bulgariaButton.setBackground(new java.awt.Color(151, 123, 92));
+        bulgariaButton.setBackground(ColorUtils.LIGHT_BROWN);
         bulgariaButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        bulgariaButton.setForeground(new java.awt.Color(255, 255, 255));
+        bulgariaButton.setForeground(Color.white);
         bulgariaButton.setText("Bułgaria");
         bulgariaButton.setFocusable(false);
         bulgariaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -284,32 +284,32 @@ public class SearchEngine extends javax.swing.JFrame {
         searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         searchButton.addActionListener(this::searchButtonActionPerformed);
 
-        sendButton.setForeground(new java.awt.Color(151, 123, 92));
+        sendButton.setForeground(ColorUtils.LIGHT_BROWN);
         sendButton.setText("Wyślij");
         sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sendButton.setFocusable(false);
         sendButton.addActionListener(this::sendButtonActionPerformed);
     }
     private void setLabels(){
-        agencyNameLabel.setBackground(new java.awt.Color(151, 123, 92));
+        agencyNameLabel.setBackground(ColorUtils.LIGHT_BROWN);
         agencyNameLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
-        agencyNameLabel.setForeground(new java.awt.Color(151, 123, 92));
+        agencyNameLabel.setForeground(ColorUtils.LIGHT_BROWN);
         agencyNameLabel.setText("Travel Agency");
 
         tripDirectionLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        tripDirectionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        tripDirectionLabel.setForeground(Color.white);
         tripDirectionLabel.setText("Kierunek podróży");
 
         departureCityLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        departureCityLabel.setForeground(new java.awt.Color(255, 255, 255));
+        departureCityLabel.setForeground(Color.white);
         departureCityLabel.setText("Miejsce wylotu");
 
         departureArrivalLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        departureArrivalLabel.setForeground(new java.awt.Color(255, 255, 255));
+        departureArrivalLabel.setForeground(Color.white);
         departureArrivalLabel.setText("Wyjazd/Przyjazd");
 
         peopleQuantityLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
-        peopleQuantityLabel.setForeground(new java.awt.Color(255, 255, 255));
+        peopleQuantityLabel.setForeground(Color.white);
         peopleQuantityLabel.setText("Ilość dorosłych/dzieci");
     }
     private void createCountriesPanel(){
@@ -401,7 +401,7 @@ public class SearchEngine extends javax.swing.JFrame {
         mainScroll.setViewportView(mainWindow);
     }
     private void createSearchPanelIntroduction(){
-        searchPanelIntroduction.setBackground(new java.awt.Color(151, 123, 92));
+        searchPanelIntroduction.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout searchPanelIntroductionLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
         searchPanelIntroduction.setLayout(searchPanelIntroductionLayout);
         searchPanelIntroductionLayout.setHorizontalGroup(
@@ -473,7 +473,7 @@ public class SearchEngine extends javax.swing.JFrame {
         );
     }
     private void createSearchPanel(){
-        searchPanel.setBackground(new java.awt.Color(151, 123, 92));
+        searchPanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
         searchPanelLayout.setHorizontalGroup(
@@ -522,15 +522,15 @@ public class SearchEngine extends javax.swing.JFrame {
         departureCityChoice.setFocusable(false);
     }
     private void setTextFields(){
-        departureTextField.setForeground(new java.awt.Color(153, 153, 153));
+        departureTextField.setForeground(ColorUtils.GREY);
         departureTextField.setText("04/07/2023");
         departureTextField.setToolTipText("");
         departureTextField.setAutoscrolls(false);
-        departureTextField.setSelectionColor(new java.awt.Color(255, 255, 255));
-        arrivalTextField.setForeground(new java.awt.Color(153, 153, 153));
+        departureTextField.setSelectionColor(Color.white);
+        arrivalTextField.setForeground(ColorUtils.GREY);
         arrivalTextField.setText("11/07/2023");
         arrivalTextField.setAutoscrolls(false);
-        leaveNumberTextField.setForeground(new java.awt.Color(153, 153, 153));
+        leaveNumberTextField.setForeground(ColorUtils.GREY);
         leaveNumberTextField.setText("Zostaw nr tel. - oddzwonimy do ciebie");
         leaveNumberTextField.setMinimumSize(new java.awt.Dimension(64, 27));
         leaveNumberTextField.setPreferredSize(new java.awt.Dimension(64, 22));
@@ -603,10 +603,10 @@ public class SearchEngine extends javax.swing.JFrame {
         ));
         tripsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tripsTable.setFocusable(false);
-        tripsTable.setGridColor(new java.awt.Color(255, 255, 255));
+        tripsTable.setGridColor(Color.white);
         tripsTable.setPreferredSize(new java.awt.Dimension(300, 355));
-        tripsTable.setSelectionBackground(new java.awt.Color(151, 123, 92));
-        tripsTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tripsTable.setSelectionBackground(ColorUtils.LIGHT_BROWN);
+        tripsTable.setSelectionForeground(Color.white);
         tripsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tripsTable.setShowGrid(true);
         tripsTable.getTableHeader().setResizingAllowed(false);
@@ -632,7 +632,7 @@ public class SearchEngine extends javax.swing.JFrame {
         managingComboBox.addActionListener(this::managingActionPerformed);
     }
     private void createFooter(){
-        footer.setBackground(new java.awt.Color(151, 123, 92));
+        footer.setBackground(ColorUtils.LIGHT_BROWN);
         headphonesIconLabel.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
 
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);

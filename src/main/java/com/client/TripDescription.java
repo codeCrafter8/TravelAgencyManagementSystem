@@ -1,6 +1,7 @@
 package com.client;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wyświetlenia szczegółów rezerwacji
  */
 public class TripDescription extends javax.swing.JFrame {
+    private static final Color BLUE = new Color(102, 102, 255);
     /**
      * Atrybut przechowujący ubezpieczenie wycieczki
      */
@@ -100,7 +102,7 @@ public class TripDescription extends javax.swing.JFrame {
         setTitle("Szczegóły wycieczki");
     }
     private void setButton(){
-        questionMarkButton.setBackground(new java.awt.Color(102, 102, 255));
+        questionMarkButton.setBackground(BLUE);
         questionMarkButton.setIcon(new javax.swing.ImageIcon("img\\questionMark.png"));
         questionMarkButton.setBorderPainted(false);
         questionMarkButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

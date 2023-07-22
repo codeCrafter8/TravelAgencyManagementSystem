@@ -1,7 +1,6 @@
 package com.client;
 
 import com.server.LogsAdmins;
-import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,26 +94,14 @@ public class TripAddition extends javax.swing.JFrame {
         this.client = client;
         this.adminName = adminName;
         initComponents();
-        getContentPane().setBackground(new Color(215,198,151));
+        setDepartureCities();
+    }
+    private void setDepartureCities(){
         departureCities.add("Krakow");
         departureCities.add("Warszawa");
         departureCities.add("Wroclaw");
         departureCities.add("Katowice");
         departureCities.add("Gdansk");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                try {
-                    data.clear();
-                    data.add("logOut");
-                    new Client(data);
-                }
-                catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    new LogsAdmins("TripAdditon", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
-                }
-            }
-        });
     }
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
@@ -129,8 +116,23 @@ public class TripAddition extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dodaj wycieczkę");
+        getContentPane().setBackground(ColorUtils.BEIGE);
         setMaximumSize(new java.awt.Dimension(1024, 728));
         setMinimumSize(new java.awt.Dimension(1024, 728));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    data.clear();
+                    data.add("logOut");
+                    new Client(data);
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    new LogsAdmins("TripAdditon", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
+                }
+            }
+        });
     }
     private void createLabels(){
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
@@ -151,23 +153,23 @@ public class TripAddition extends javax.swing.JFrame {
         arrivalLabel.setText("Przyjazd");
         hotelNameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         hotelNameLabel.setText("Nazwa hotelu");
-        wrongCountryLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCountryLabel.setForeground(Color.red);
         wrongCountryLabel.setText(" ");
-        wrongCityLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCityLabel.setForeground(Color.red);
         wrongCityLabel.setText(" ");
-        wrongDepartureCityLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongDepartureCityLabel.setForeground(Color.red);
         wrongDepartureCityLabel.setText(" ");
-        wrongPriceLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPriceLabel.setForeground(Color.red);
         wrongPriceLabel.setText(" ");
-        wrongLimitLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongLimitLabel.setForeground(Color.red);
         wrongLimitLabel.setText(" ");
-        wrongDepartureLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongDepartureLabel.setForeground(Color.red);
         wrongDepartureLabel.setText(" ");
-        validCountryLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        validCountryLabel6.setForeground(Color.red);
         validCountryLabel6.setText(" ");
-        wrongArrivalLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongArrivalLabel.setForeground(Color.red);
         wrongArrivalLabel.setText(" ");
-        wrongHotelNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongHotelNameLabel.setForeground(Color.red);
         wrongHotelNameLabel.setText(" ");
         wrongCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
         wrongCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
@@ -178,13 +180,13 @@ public class TripAddition extends javax.swing.JFrame {
         wrongArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
     }
     private void createButtons(){
-        submitButton.setBackground(new java.awt.Color(189, 165, 111));
+        submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setText("Dodaj wycieczkę");
         submitButton.addActionListener(this::submitButtonActionPerformed);
         submitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        cancelButton.setBackground(new java.awt.Color(189, 165, 111));
+        cancelButton.setBackground(ColorUtils.DARK_BEIGE);
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
         cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
@@ -192,7 +194,7 @@ public class TripAddition extends javax.swing.JFrame {
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
     private void createRegPanel(){
-        regPanel.setBackground(new java.awt.Color(247, 233, 201));
+        regPanel.setBackground(ColorUtils.LIGHT_BEIGE);
         regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
         departureDateChooser.setMinSelectableDate(new java.util.Date(-62135769509000L));
 

@@ -60,7 +60,7 @@ public class ReservationAddition extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1040, 770));
         setTitle("Dodawanie rezerwacji");
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -100,7 +100,7 @@ public class ReservationAddition extends javax.swing.JFrame {
         tripsTable.setMaximumSize(new java.awt.Dimension(375, 550));
         tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
         tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        tripsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        tripsTable.setSelectionBackground(ColorUtils.BEIGE);
         tripsTableScrollPane.setViewportView(tripsTable);
     }
     private void setClientsTable(){
@@ -124,17 +124,17 @@ public class ReservationAddition extends javax.swing.JFrame {
         clientsTable.setMaximumSize(new java.awt.Dimension(375, 550));
         clientsTable.setMinimumSize(new java.awt.Dimension(375, 550));
         clientsTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        clientsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        clientsTable.setSelectionBackground(ColorUtils.BEIGE);
         clientsTableScrollPane.setViewportView(clientsTable);
     }
     private void setButtons(){
-        submitButton.setBackground(new java.awt.Color(189, 165, 111));
+        submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setText("Dodaj rezerwację");
         submitButton.addActionListener(evt -> submitButtonActionPerformed());
         submitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        cancelButton.setBackground(new java.awt.Color(189, 165, 111));
+        cancelButton.setBackground(ColorUtils.DARK_BEIGE);
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
         cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));

@@ -73,7 +73,7 @@ public class Clients extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Klienci");
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -93,7 +93,7 @@ public class Clients extends javax.swing.JFrame {
         });
     }
     private void createTopPanel(){
-        topPanel.setBackground(new java.awt.Color(151, 123, 92));
+        topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -112,9 +112,9 @@ public class Clients extends javax.swing.JFrame {
         );
     }
     private void setButtons(){
-        logOutButton.setBackground(new java.awt.Color(242, 242, 242));
+        logOutButton.setBackground(ColorUtils.MILK);
         logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
-        logOutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logOutButton.setForeground(Color.WHITE);
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -136,11 +136,10 @@ public class Clients extends javax.swing.JFrame {
         panelButton.setContentAreaFilled(false);
         panelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        Color hoverColor = new Color(190, 190, 192);
         panelButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                panelButton.setForeground(hoverColor);
+                panelButton.setForeground(ColorUtils.LIGHT_GREY);
                 panelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -150,7 +149,7 @@ public class Clients extends javax.swing.JFrame {
 
         clientsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         clientsButton.setText("   Klienci");
-        clientsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        clientsButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.WHITE));
         clientsButton.setContentAreaFilled(false);
         clientsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -158,7 +157,7 @@ public class Clients extends javax.swing.JFrame {
         clientsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                clientsButton.setForeground(hoverColor);
+                clientsButton.setForeground(ColorUtils.LIGHT_GREY);
                 clientsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -174,7 +173,7 @@ public class Clients extends javax.swing.JFrame {
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                tripsButton.setForeground(hoverColor);
+                tripsButton.setForeground(ColorUtils.LIGHT_GREY);
                 tripsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -191,7 +190,7 @@ public class Clients extends javax.swing.JFrame {
         reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                reservationsButton.setForeground(hoverColor);
+                reservationsButton.setForeground(ColorUtils.LIGHT_GREY);
                 reservationsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -199,32 +198,32 @@ public class Clients extends javax.swing.JFrame {
         });
         reservationsButton.addActionListener(this::reservationsButtonActionPerformed);
 
-        addClientButton.setBackground(new java.awt.Color(241, 227, 185));
+        addClientButton.setBackground(ColorUtils.CREAM);
         addClientButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
         addClientButton.setText("+ Dodaj Klienta");
         addClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addClientButton.addActionListener(this::addClientButtonActionPerformed);
 
-        deleteClientButton.setBackground(new java.awt.Color(241, 227, 185));
+        deleteClientButton.setBackground(ColorUtils.CREAM);
         deleteClientButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         deleteClientButton.setText("Usuń Klienta");
         deleteClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteClientButton.addActionListener(this::deleteClientButtonActionPerformed);
 
-        editClientButton.setBackground(new java.awt.Color(241, 227, 185));
+        editClientButton.setBackground(ColorUtils.CREAM);
         editClientButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         editClientButton.setText("Edytuj Klienta");
         editClientButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editClientButton.addActionListener(this::editClientButtonActionPerformed);
 
-        editPasswordButton.setBackground(new java.awt.Color(241, 227, 185));
+        editPasswordButton.setBackground(ColorUtils.CREAM);
         editPasswordButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         editPasswordButton.setText("Zmień hasło klienta");
         editPasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editPasswordButton.addActionListener(this::editPasswordButtonActionPerformed);
     }
     private void createMenuPanel(){
-        menuPanel.setBackground(new java.awt.Color(118, 98, 75));
+        menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -242,7 +241,7 @@ public class Clients extends javax.swing.JFrame {
         );
     }
     private void createAdminPanel(){
-        adminPanel.setBackground(new java.awt.Color(118, 98, 75));
+        adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanelLayout);
         adminPanelLayout.setHorizontalGroup(
@@ -278,14 +277,14 @@ public class Clients extends javax.swing.JFrame {
         adminLabel.setText("Admin");
         searchClientLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         searchClientLabel.setText("Wyszukaj klienta po e-mailu");
-        wrongEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongEmailLabel.setForeground(Color.RED);
         wrongEmailLabel.setText("");
         wrongEmailLabel.setPreferredSize(new java.awt.Dimension(222, 16));
     }
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
-        optionsPanel.setBackground(new Color(118,98,75));
+        optionsPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
         optionsPanelLayout.setHorizontalGroup(
@@ -322,10 +321,10 @@ public class Clients extends javax.swing.JFrame {
         clientsTable.setMaximumSize(new java.awt.Dimension(375, 550));
         clientsTable.setMinimumSize(new java.awt.Dimension(375, 550));
         clientsTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        clientsTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        clientsTable.setSelectionBackground(ColorUtils.BEIGE);
         jScrollPane1.setViewportView(clientsTable);
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
+        headerRenderer.setBackground(ColorUtils.LIGHT_BROWN);
         for (int i = 0; i < clientsTable.getModel().getColumnCount(); i++) {
             clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }

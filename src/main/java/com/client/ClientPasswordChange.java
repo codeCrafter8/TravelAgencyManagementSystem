@@ -49,21 +49,21 @@ public class ClientPasswordChange extends javax.swing.JFrame {
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Zmień hasło klienta");
-        getContentPane().setBackground(new Color(247, 233, 201));
+        getContentPane().setBackground(ColorUtils.LIGHT_BEIGE);
         setPreferredSize(new java.awt.Dimension(330, 300));
     }
 
     private void setLabels() {
         newPasswordLabel.setText("Nowe hasło");
         confirmNewPasswordLabel.setText("Powtórz nowe hasło");
-        wrongNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongNewPasswordLabel.setForeground(Color.RED);
         wrongNewPasswordLabel.setPreferredSize(new java.awt.Dimension(205, 16));
-        wrongConfirmNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongConfirmNewPasswordLabel.setForeground(Color.RED);
         wrongConfirmNewPasswordLabel.setPreferredSize(new java.awt.Dimension(205, 16));
     }
 
     private void setButton() {
-        changePasswordButton.setBackground(new java.awt.Color(189, 165, 111));
+        changePasswordButton.setBackground(ColorUtils.DARK_BEIGE);
         changePasswordButton.setText("Zmień hasło");
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);

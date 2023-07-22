@@ -60,23 +60,6 @@ public class Reservations extends javax.swing.JFrame {
         generateData();
         populateTable();
         searchRes();
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                try {
-                    data.clear();
-                    data.add("logOut");
-                    data.add(email);
-                    new Client(data);
-                    data.clear();
-                    dispose();
-                }
-                catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    new LogsAdmins("Reservations", "info", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
-                }
-            }
-        });
     }
     /**
      * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
@@ -97,11 +80,28 @@ public class Reservations extends javax.swing.JFrame {
         setTitle("Rezerwacje");
         setMaximumSize(new java.awt.Dimension(1040, 770));
         setMinimumSize(new java.awt.Dimension(1040, 770));
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
         setLocationRelativeTo(null);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                try {
+                    data.clear();
+                    data.add("logOut");
+                    data.add(email);
+                    new Client(data);
+                    data.clear();
+                    dispose();
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    new LogsAdmins("Reservations", "info", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
+                }
+            }
+        });
     }
     private void createMenuPanel(){
-        menuPanel.setBackground(new java.awt.Color(118, 98, 75));
+        menuPanel.setBackground(ColorUtils.BROWN);
         menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
         javax.swing.GroupLayout menuPanel1Layout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanel1Layout);
@@ -120,7 +120,7 @@ public class Reservations extends javax.swing.JFrame {
         );
     }
     private void createAdminPanel(){
-        adminPanel.setBackground(new java.awt.Color(118, 98, 75));
+        adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanel1Layout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanel1Layout);
         adminPanel1Layout.setHorizontalGroup(
@@ -159,13 +159,13 @@ public class Reservations extends javax.swing.JFrame {
         searchResLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         searchResLabel.setText("Wyszukaj rezerwację po nazwisku");
 
-        wrongResLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongResLabel.setForeground(Color.RED);
         wrongResLabel.setMinimumSize(new java.awt.Dimension(300, 16));
     }
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
-        optionsPanel.setBackground(new Color(118,98,75));
+        optionsPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanel1Layout);
         optionsPanel1Layout.setHorizontalGroup(
@@ -195,11 +195,10 @@ public class Reservations extends javax.swing.JFrame {
         panelButton.setContentAreaFilled(false);
         panelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        Color hoverColor = new Color(190, 190, 192);
         panelButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                panelButton.setForeground(hoverColor);
+                panelButton.setForeground(ColorUtils.LIGHT_GREY);
                 panelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -217,7 +216,7 @@ public class Reservations extends javax.swing.JFrame {
         clientsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                clientsButton.setForeground(hoverColor);
+                clientsButton.setForeground(ColorUtils.LIGHT_GREY);
                 clientsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -236,7 +235,7 @@ public class Reservations extends javax.swing.JFrame {
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                tripsButton.setForeground(hoverColor);
+                tripsButton.setForeground(ColorUtils.LIGHT_GREY);
                 tripsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -246,7 +245,7 @@ public class Reservations extends javax.swing.JFrame {
 
         reservationsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         reservationsButton.setText("   Rezerwacje");
-        reservationsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        reservationsButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.white));
         reservationsButton.setContentAreaFilled(false);
         reservationsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -254,16 +253,16 @@ public class Reservations extends javax.swing.JFrame {
         reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                reservationsButton.setForeground(hoverColor);
+                reservationsButton.setForeground(ColorUtils.LIGHT_GREY);
                 reservationsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
                 reservationsButton.setForeground(null);
         });
 
-        logOutButton.setBackground(new java.awt.Color(242, 242, 242));
+        logOutButton.setBackground(ColorUtils.MILK);
         logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
-        logOutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logOutButton.setForeground(Color.white);
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -279,26 +278,26 @@ public class Reservations extends javax.swing.JFrame {
         });
         logOutButton.addActionListener(this::logOutButtonActionPerformed);
 
-        addResButton.setBackground(new java.awt.Color(241, 227, 185));
+        addResButton.setBackground(ColorUtils.CREAM);
         addResButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
         addResButton.setText("+ Dodaj Rezerwację");
         addResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addResButton.addActionListener(this::addResButtonActionPerformed);
 
-        deleteResButton.setBackground(new java.awt.Color(241, 227, 185));
+        deleteResButton.setBackground(ColorUtils.CREAM);
         deleteResButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         deleteResButton.setText("Usuń Rezerwację");
         deleteResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteResButton.addActionListener(this::deleteResButtonActionPerformed);
 
-        editResButton.setBackground(new java.awt.Color(241, 227, 185));
+        editResButton.setBackground(ColorUtils.CREAM);
         editResButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         editResButton.setText("Edytuj Rezerwację");
         editResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editResButton.setVisible(false);
     }
     private void createTopPanel(){
-        topPanel.setBackground(new java.awt.Color(151, 123, 92));
+        topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -332,11 +331,11 @@ public class Reservations extends javax.swing.JFrame {
         resTable.setMaximumSize(new java.awt.Dimension(375, 550));
         resTable.setMinimumSize(new java.awt.Dimension(375, 550));
         resTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        resTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        resTable.setSelectionBackground(ColorUtils.BEIGE);
         resTableScrollPane.setViewportView(resTable);
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
+        headerRenderer.setBackground(ColorUtils.LIGHT_BROWN);
         for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
             resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }

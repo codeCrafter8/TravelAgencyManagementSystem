@@ -84,22 +84,6 @@ public class Registration extends javax.swing.JFrame {
         this.client = client;
         this.adminLogged = adminLogged;
         initComponents();
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                try {
-                    if(adminLogged) {
-                        data.clear();
-                        data.add("logOut");
-                        new Client(data);
-                    }
-                }
-                catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-                    //new com.server.Logs("[ " + new java.util.Date() + " ] " + ex.getMessage(), "EkranGlownyAdmin", "error");
-                }
-            }
-        });
     }
     /**
      * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
@@ -132,7 +116,7 @@ public class Registration extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Rejestracja");
         setPreferredSize(new java.awt.Dimension(1024, 768));
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -151,7 +135,7 @@ public class Registration extends javax.swing.JFrame {
         });
     }
     private void createRegPanel(){
-        regPanel.setBackground(new java.awt.Color(247, 233, 201));
+        regPanel.setBackground(ColorUtils.LIGHT_BEIGE);
         regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
@@ -262,27 +246,27 @@ public class Registration extends javax.swing.JFrame {
         confirmPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         confirmPasswordLabel.setText("Potwierdź hasło");
 
-        wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongConfirmPasswordLabel.setForeground(Color.RED);
         wrongConfirmPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
         wrongConfirmPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        wrongPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPasswordLabel.setForeground(Color.RED);
         wrongPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
         wrongPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        wrongEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongEmailLabel.setForeground(Color.RED);
         wrongEmailLabel.setMaximumSize(new java.awt.Dimension(400, 16));
         wrongEmailLabel.setPreferredSize(new java.awt.Dimension(400, 16));
 
-        wrongPhoneNumberLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPhoneNumberLabel.setForeground(Color.RED);
         wrongPhoneNumberLabel.setMaximumSize(new java.awt.Dimension(400, 16));
         wrongPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(350, 16));
 
-        wrongLastNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongLastNameLabel.setForeground(Color.RED);
         wrongLastNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
         wrongLastNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
 
-        wrongFirstNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongFirstNameLabel.setForeground(Color.RED);
         wrongFirstNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
         wrongFirstNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
     }
@@ -339,7 +323,7 @@ public class Registration extends javax.swing.JFrame {
         });
     }
     private void setButtons(){
-        submitButton.setBackground(new java.awt.Color(189, 165, 111));
+        submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         submitButton.setMinimumSize(new java.awt.Dimension(116, 27));
         submitButton.setText("Utwórz");
@@ -350,7 +334,7 @@ public class Registration extends javax.swing.JFrame {
                 submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
 
-        cancelButton.setBackground(new java.awt.Color(189, 165, 111));
+        cancelButton.setBackground(ColorUtils.DARK_BEIGE);
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
         cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));

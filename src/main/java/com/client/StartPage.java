@@ -75,14 +75,14 @@ public class StartPage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logowanie");
         setAlwaysOnTop(true);
-        setBackground(new java.awt.Color(242, 214, 158));
+        setBackground(ColorUtils.BEIGE);
         setPreferredSize(new java.awt.Dimension(1024, 768));
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
     }
     private void createLoginPanel(){
-        loginPanel.setBackground(new java.awt.Color(247, 233, 201));
-        loginPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(229, 221, 192), null, null));
-        loginPanel.setForeground(new java.awt.Color(224, 214, 176));
+        loginPanel.setBackground(ColorUtils.LIGHT_BEIGE);
+        loginPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, ColorUtils.LIGHT_BEIGE, null, null));
+        loginPanel.setForeground(ColorUtils.LIGHT_BEIGE);
         javax.swing.GroupLayout loginPanelLayout = new javax.swing.GroupLayout(loginPanel);
         loginPanel.setLayout(loginPanelLayout);
         loginPanelLayout.setHorizontalGroup(
@@ -167,11 +167,11 @@ public class StartPage extends javax.swing.JFrame {
         passwordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         passwordLabel.setText("Hasło");
         wrongEmailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
-        wrongEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongEmailLabel.setForeground(Color.red);
         wrongEmailLabel.setMinimumSize(new java.awt.Dimension(94, 18));
         wrongEmailLabel.setPreferredSize(new java.awt.Dimension(94, 18));
         wrongPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
-        wrongPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongPasswordLabel.setForeground(Color.red);
         wrongPasswordLabel.setMinimumSize(new java.awt.Dimension(94, 18));
         wrongPasswordLabel.setPreferredSize(new java.awt.Dimension(94, 18));
         photoLabel.setIcon(new javax.swing.ImageIcon("img\\paris.jpg"));
@@ -186,7 +186,7 @@ public class StartPage extends javax.swing.JFrame {
         add(agencyLabel);
     }
     private void setTextFields(){
-        emailTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        emailTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, ColorUtils.MILK, ColorUtils.GREY, ColorUtils.GREY, ColorUtils.GREY));
         emailTextField.setPreferredSize(new java.awt.Dimension(64, 28));
         emailTextField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {}
@@ -197,7 +197,7 @@ public class StartPage extends javax.swing.JFrame {
                     }
             }
         });
-        passwordField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
+        passwordField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), ColorUtils.GREY, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
         passwordField.setPreferredSize(new java.awt.Dimension(64, 28));
         passwordField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {}
@@ -210,7 +210,7 @@ public class StartPage extends javax.swing.JFrame {
         });
     }
     private void setButtons(){
-        signInButton.setBackground(new java.awt.Color(189, 165, 111));
+        signInButton.setBackground(ColorUtils.DARK_BEIGE);
         signInButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         signInButton.setText("Zaloguj się");
         signInButton.setActionCommand("Zaloguj się");
@@ -225,7 +225,7 @@ public class StartPage extends javax.swing.JFrame {
                 signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
 
-        registerButton.setBackground(new java.awt.Color(189, 165, 111));
+        registerButton.setBackground(ColorUtils.DARK_BEIGE);
         registerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         registerButton.setText("Utwórz konto");
         registerButton.addActionListener(this::registerButtonActionPerformed);

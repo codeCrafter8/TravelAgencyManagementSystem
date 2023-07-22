@@ -96,7 +96,7 @@ public class MyAccount extends javax.swing.JFrame {
         managingComboBox.addActionListener(this::managingActionPerformed);
     }
     private void createResTable(){
-        resTableScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        resTableScrollPane.setBackground(Color.WHITE);
         resTableScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         resTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -111,12 +111,12 @@ public class MyAccount extends javax.swing.JFrame {
         resTable.setMaximumSize(new java.awt.Dimension(375, 550));
         resTable.setMinimumSize(new java.awt.Dimension(375, 550));
         resTable.setPreferredSize(new java.awt.Dimension(375, 550));
-        resTable.setSelectionBackground(new java.awt.Color(202, 186, 143));
+        resTable.setSelectionBackground(ColorUtils.BEIGE);
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         resTableScrollPane.setViewportView(resTable);
 
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-        headerRenderer.setBackground(new Color(151,123,92));
+        headerRenderer.setBackground(ColorUtils.LIGHT_BROWN);
         for (int i = 0; i < resTable.getModel().getColumnCount(); i++) {
             resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
@@ -125,7 +125,7 @@ public class MyAccount extends javax.swing.JFrame {
         myReservationsLabel.setFont(new java.awt.Font("Arial", Font.ITALIC, 18));
         myReservationsLabel.setText("Moje rezerwacje");
 
-        infoConfirmLabel.setForeground(new java.awt.Color(255, 0, 0));
+        infoConfirmLabel.setForeground(Color.RED);
         infoConfirmLabel.setText("   ");
 
         userIconLabel.setIcon(new javax.swing.ImageIcon("img\\345564670_3623767247845558_3120332870085421246_n.png"));
@@ -148,36 +148,36 @@ public class MyAccount extends javax.swing.JFrame {
         typePhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
     }
     private void setButtons(){
-        cancelReservationButton.setBackground(new java.awt.Color(151, 123, 92));
+        cancelReservationButton.setBackground(ColorUtils.LIGHT_BROWN);
         cancelReservationButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
-        cancelReservationButton.setForeground(new java.awt.Color(255, 255, 255));
+        cancelReservationButton.setForeground(Color.WHITE);
         cancelReservationButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelReservationButton.setFocusable(false);
         cancelReservationButton.setPreferredSize(new java.awt.Dimension(150, 43));
         cancelReservationButton.addActionListener(this::cancelReservationButtonActionPerformed);
         cancelReservationButton.setText("<html><center>"+"Anuluj"+"<br>"+"rezerwację"+"</center></html>");
 
-        downloadTripDescriptionButton.setBackground(new java.awt.Color(151, 123, 92));
+        downloadTripDescriptionButton.setBackground(ColorUtils.LIGHT_BROWN);
         downloadTripDescriptionButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
-        downloadTripDescriptionButton.setForeground(new java.awt.Color(255, 255, 255));
+        downloadTripDescriptionButton.setForeground(Color.WHITE);
         downloadTripDescriptionButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         downloadTripDescriptionButton.setFocusable(false);
         downloadTripDescriptionButton.setPreferredSize(new java.awt.Dimension(150, 43));
         downloadTripDescriptionButton.addActionListener(this::downloadTripDescriptionActionPerformed);
         downloadTripDescriptionButton.setText("<html><center>"+"Szczegóły"+"<br>"+"rezerwacji"+"</center></html>");
 
-        editButton.setBackground(new java.awt.Color(151, 123, 92));
+        editButton.setBackground(ColorUtils.LIGHT_BROWN);
         editButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
-        editButton.setForeground(new java.awt.Color(255, 255, 255));
+        editButton.setForeground(Color.WHITE);
         editButton.setText("Edytuj dane");
         editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editButton.setFocusable(false);
         editButton.setPreferredSize(new java.awt.Dimension(150, 43));
         editButton.addActionListener(this::editButtonActionPerformed);
 
-        changePasswordButton.setBackground(new java.awt.Color(151, 123, 92));
+        changePasswordButton.setBackground(ColorUtils.LIGHT_BROWN);
         changePasswordButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
-        changePasswordButton.setForeground(new java.awt.Color(255, 255, 255));
+        changePasswordButton.setForeground(Color.WHITE);
         changePasswordButton.setText("Zmień hasło");
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changePasswordButton.setFocusable(false);
@@ -185,7 +185,7 @@ public class MyAccount extends javax.swing.JFrame {
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
     }
     private void createUserDataPanel(){
-        userDataPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        userDataPanel.setBorder(javax.swing.BorderFactory.createLineBorder(ColorUtils.GREY));
         javax.swing.GroupLayout userDataPanelLayout = new javax.swing.GroupLayout(userDataPanel);
         userDataPanel.setLayout(userDataPanelLayout);
         userDataPanelLayout.setHorizontalGroup(

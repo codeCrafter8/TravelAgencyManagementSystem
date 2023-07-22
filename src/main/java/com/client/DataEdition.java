@@ -115,22 +115,22 @@ class DataEdition extends javax.swing.JFrame {
         phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         phoneNumberLabel.setText("Numer telefonu");
 
-        validFirstNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        validFirstNameLabel.setForeground(Color.RED);
         validFirstNameLabel.setMaximumSize(new java.awt.Dimension(363, 16));
         validFirstNameLabel.setMinimumSize(new java.awt.Dimension(363, 16));
         validFirstNameLabel.setPreferredSize(new java.awt.Dimension(363, 16));
 
-        validLastNameLabel.setForeground(new java.awt.Color(255, 0, 0));
+        validLastNameLabel.setForeground(Color.RED);
         validLastNameLabel.setMaximumSize(new java.awt.Dimension(363, 16));
         validLastNameLabel.setMinimumSize(new java.awt.Dimension(363, 16));
         validLastNameLabel.setPreferredSize(new java.awt.Dimension(363, 16));
 
-        validEmailLabel.setForeground(new java.awt.Color(255, 0, 0));
+        validEmailLabel.setForeground(Color.RED);
         validEmailLabel.setMaximumSize(new java.awt.Dimension(363, 16));
         validEmailLabel.setMinimumSize(new java.awt.Dimension(363, 16));
         validEmailLabel.setPreferredSize(new java.awt.Dimension(363, 16));
 
-        validPhoneNumberLabel.setForeground(new java.awt.Color(255, 0, 0));
+        validPhoneNumberLabel.setForeground(Color.RED);
         validPhoneNumberLabel.setMaximumSize(new java.awt.Dimension(363, 16));
         validPhoneNumberLabel.setMinimumSize(new java.awt.Dimension(363, 16));
         validPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(363, 16));
@@ -144,9 +144,9 @@ class DataEdition extends javax.swing.JFrame {
     }
 
     private void createButton() {
-        submitButton.setBackground(new java.awt.Color(151, 123, 92));
+        submitButton.setBackground(ColorUtils.LIGHT_BROWN);
         submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
-        submitButton.setForeground(new java.awt.Color(255, 255, 255));
+        submitButton.setForeground(Color.white);
         submitButton.setText("Zatwierdź");
         submitButton.addActionListener(this::submitButtonActionPerformed);
         submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

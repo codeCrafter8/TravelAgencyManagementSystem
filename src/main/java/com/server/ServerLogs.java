@@ -1,4 +1,6 @@
 package com.server;
+import com.client.ColorUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,10 +38,10 @@ public class ServerLogs extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logi Serwera");
         setPreferredSize(new java.awt.Dimension(1024, 768));
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
     }
     private void createMenuPanel(){
-        menuPanel.setBackground(new java.awt.Color(118, 98, 75));
+        menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -57,7 +59,7 @@ public class ServerLogs extends javax.swing.JFrame {
         );
     }
     private void createServerPanel(){
-        serverPanel.setBackground(new java.awt.Color(118, 98, 75));
+        serverPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
         serverPanel.setLayout(serverPanelLayout);
         serverPanelLayout.setHorizontalGroup(
@@ -79,7 +81,7 @@ public class ServerLogs extends javax.swing.JFrame {
         );
     }
     private void createOptionsPanel(){
-        optionsPanel.setBackground(new java.awt.Color(151, 123, 92));
+        optionsPanel.setBackground(ColorUtils.LIGHT_BROWN);
         optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
@@ -125,11 +127,10 @@ public class ServerLogs extends javax.swing.JFrame {
         manageServerButton.setContentAreaFilled(false);
         manageServerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         manageServerButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        Color hoverColor = new Color(190, 190, 192);
         manageServerButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                manageServerButton.setForeground(hoverColor);
+                manageServerButton.setForeground(ColorUtils.LIGHT_GREY);
                 manageServerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -147,7 +148,7 @@ public class ServerLogs extends javax.swing.JFrame {
         clientsLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                clientsLogsButton.setForeground(hoverColor);
+                clientsLogsButton.setForeground(ColorUtils.LIGHT_GREY);
                 clientsLogsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -165,7 +166,7 @@ public class ServerLogs extends javax.swing.JFrame {
         adminsLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                adminsLogsButton.setForeground(hoverColor);
+                adminsLogsButton.setForeground(ColorUtils.LIGHT_GREY);
                 adminsLogsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -175,7 +176,7 @@ public class ServerLogs extends javax.swing.JFrame {
 
         serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         serverLogsButton.setText("   Logi serwera");
-        serverLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        serverLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.white));
         serverLogsButton.setContentAreaFilled(false);
         serverLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         serverLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -185,7 +186,7 @@ public class ServerLogs extends javax.swing.JFrame {
         serverLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                serverLogsButton.setForeground(hoverColor);
+                serverLogsButton.setForeground(ColorUtils.LIGHT_GREY);
                 serverLogsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else

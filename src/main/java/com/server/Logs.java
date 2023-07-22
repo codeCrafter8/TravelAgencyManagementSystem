@@ -1,6 +1,7 @@
 package com.server;
 
-import org.apache.log4j.*;
+import org.apache.logging.log4j.*;
+
 import java.io.File;
 import java.io.FileWriter;
 /**

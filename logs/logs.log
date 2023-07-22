@@ -430,3 +430,48 @@
 [INFO] ServerGUI: [ Tue Jul 18 18:19:52 CEST 2023 ] Serwer został uruchomiony.
 [INFO] database: [ Tue Jul 18 18:19:54 CEST 2023 ] Wylogowano wszystkich z serwera.
 [INFO] database: [ Tue Jul 18 18:19:54 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:13 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:31 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Fri Jul 21 18:00:33 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:33 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:34 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:34 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:36 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] ServerGUI: [ Fri Jul 21 18:00:43 CEST 2023 ] Nowy wątek o nazwie Thread-6 został utworzony.
+[INFO] database: [ Fri Jul 21 18:00:43 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] ServerGUI: [ Fri Jul 21 18:01:17 CEST 2023 ] Nowy wątek o nazwie Thread-7 został utworzony.
+[ERROR] database: [ Fri Jul 21 18:01:17 CEST 2023 ] Index 1 out of bounds for length 1
+[INFO] ServerGUI: [ Fri Jul 21 19:06:32 CEST 2023 ] Nowy wątek o nazwie Thread-8 został utworzony.
+[INFO] ServerGUI: [ Fri Jul 21 19:08:07 CEST 2023 ] Nowy wątek o nazwie Thread-9 został utworzony.
+[ERROR] database: [ Fri Jul 21 19:08:07 CEST 2023 ] Index 1 out of bounds for length 1
+[INFO] ServerGUI: [ Sat Jul 22 16:25:21 CEST 2023 ] Serwer został uruchomiony.
+[INFO] database: [ Sat Jul 22 16:25:26 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Sat Jul 22 16:25:26 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] ServerGUI: [ Sat Jul 22 16:26:16 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Sat Jul 22 16:26:31 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] database: [ Sat Jul 22 16:26:32 CEST 2023 ] Administrator o e-mailu: admin@wp.pl zalogował się.
+[INFO] ServerGUI: [ Sat Jul 22 16:26:32 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:26:32 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:26:34 CEST 2023 ] Nowy wątek o nazwie Thread-4 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:26:37 CEST 2023 ] Nowy wątek o nazwie Thread-5 został utworzony.
+[INFO] database: [ Sat Jul 22 16:26:37 CEST 2023 ] Administrator o e-mailu: admin@wp.pl wylogował się.
+[INFO] ServerGUI: [ Sat Jul 22 16:27:29 CEST 2023 ] Nowy wątek o nazwie Thread-6 został utworzony.
+[INFO] database: [ Sat Jul 22 16:27:29 CEST 2023 ] Klient o e-mailu: julia@interia.pl zalogował się.
+[INFO] ServerGUI: [ Sat Jul 22 16:27:29 CEST 2023 ] Nowy wątek o nazwie Thread-7 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:27:29 CEST 2023 ] Nowy wątek o nazwie Thread-8 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:27:29 CEST 2023 ] Nowy wątek o nazwie Thread-9 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:27:31 CEST 2023 ] Nowy wątek o nazwie Thread-10 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:27:37 CEST 2023 ] Nowy wątek o nazwie Thread-11 został utworzony.
+[INFO] database: [ Sat Jul 22 16:27:37 CEST 2023 ] Klient o e-mailu: julia@interia.pl wylogował się.
+[INFO] ServerGUI: [ Sat Jul 22 16:29:20 CEST 2023 ] Nowy wątek o nazwie Thread-12 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:30:39 CEST 2023 ] Nowy wątek o nazwie Thread-13 został utworzony.
+[ERROR] database: [ Sat Jul 22 16:30:40 CEST 2023 ] Index 1 out of bounds for length 1
+[INFO] ServerGUI: [ Sat Jul 22 16:30:55 CEST 2023 ] Nowy wątek o nazwie Thread-14 został utworzony.
+[ERROR] database: [ Sat Jul 22 16:30:55 CEST 2023 ] Index 1 out of bounds for length 1
+[INFO] ServerGUI: [ Sat Jul 22 16:34:56 CEST 2023 ] Serwer został uruchomiony.
+[INFO] ServerGUI: [ Sat Jul 22 16:38:05 CEST 2023 ] Nowy wątek o nazwie Thread-0 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:40:09 CEST 2023 ] Nowy wątek o nazwie Thread-2 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:40:21 CEST 2023 ] Nowy wątek o nazwie Thread-3 został utworzony.
+[INFO] ServerGUI: [ Sat Jul 22 16:54:40 CEST 2023 ] Serwer został uruchomiony.
+[INFO] database: [ Sat Jul 22 16:54:42 CEST 2023 ] Wylogowano wszystkich z serwera.
+[INFO] database: [ Sat Jul 22 16:54:43 CEST 2023 ] Wylogowano wszystkich z serwera.

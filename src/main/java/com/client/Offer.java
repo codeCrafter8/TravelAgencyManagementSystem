@@ -209,9 +209,9 @@ public class Offer extends javax.swing.JFrame {
         );
     }
     private void setLabels(){
-        travelAgencyLabel.setBackground(new java.awt.Color(151, 123, 92));
+        travelAgencyLabel.setBackground(ColorUtils.LIGHT_BROWN);
         travelAgencyLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
-        travelAgencyLabel.setForeground(new java.awt.Color(151, 123, 92));
+        travelAgencyLabel.setForeground(ColorUtils.LIGHT_BROWN);
         travelAgencyLabel.setText("Travel Agency");
 
         hotelPhotoLabel.setMaximumSize(new java.awt.Dimension(550, 225));
@@ -247,15 +247,15 @@ public class Offer extends javax.swing.JFrame {
         hotelDescriptionLabel.setText("Opis hotelu:");
     }
     private void setButtons(){
-        reservationButton.setBackground(new java.awt.Color(151, 123, 92));
+        reservationButton.setBackground(ColorUtils.LIGHT_BROWN);
         reservationButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
-        reservationButton.setForeground(new java.awt.Color(255, 255, 255));
+        reservationButton.setForeground(Color.WHITE);
         reservationButton.setText("Rezerwuj");
         reservationButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationButton.addActionListener(this::reservationButtonActionPerformed);
 
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 12));
-        cancelButton.setForeground(new java.awt.Color(151, 123, 92));
+        cancelButton.setForeground(ColorUtils.LIGHT_BROWN);
         cancelButton.setText("Cofnij");
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelButton.addActionListener(this::cancelActionPerformed);

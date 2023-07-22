@@ -67,13 +67,13 @@ public class Payment extends javax.swing.JFrame {
     }
     private void setWindowProperties(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(Color.WHITE);
         setMinimumSize(new java.awt.Dimension(450, 124));
         setPreferredSize(new java.awt.Dimension(548, 640));
         setTitle("Płatność kartą kredytową");
     }
     private void setLabels(){
-        errorLabel.setBackground(new java.awt.Color(255, 255, 255));
+        errorLabel.setBackground(Color.WHITE);
         errorLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         errorLabel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         errorLabel.setForeground(Color.RED);
@@ -139,7 +139,7 @@ public class Payment extends javax.swing.JFrame {
         payButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
     private void createChoicePanel(){
-        choicePanel.setBackground(new java.awt.Color(151, 123, 92));
+        choicePanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
         choicePanel.setLayout(choicePanelLayout);
         choicePanelLayout.setHorizontalGroup(
@@ -165,12 +165,12 @@ public class Payment extends javax.swing.JFrame {
         );
     }
     private void setTextFields(){
-        firstNameLastNameTextField.setBackground(new java.awt.Color(242, 242, 242));
-        cardNumberTextField.setBackground(new java.awt.Color(242, 242, 242));
-        monthTextField.setBackground(new java.awt.Color(242, 242, 242));
+        firstNameLastNameTextField.setBackground(ColorUtils.MILK);
+        cardNumberTextField.setBackground(ColorUtils.MILK);
+        monthTextField.setBackground(ColorUtils.MILK);
     }
     private void createFirstNameLastNamePanel(){
-        firstNameLastNamePanel.setBackground(new java.awt.Color(151, 123, 92));
+        firstNameLastNamePanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout firstNameLastNamePanelLayout = new javax.swing.GroupLayout(firstNameLastNamePanel);
         firstNameLastNamePanel.setLayout(firstNameLastNamePanelLayout);
         firstNameLastNamePanelLayout.setHorizontalGroup(
@@ -195,7 +195,7 @@ public class Payment extends javax.swing.JFrame {
         );
     }
     private void createNumberPanel(){
-        numberPanel.setBackground(new java.awt.Color(151, 123, 92));
+        numberPanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout numberPanelLayout = new javax.swing.GroupLayout(numberPanel);
         numberPanel.setLayout(numberPanelLayout);
         numberPanelLayout.setHorizontalGroup(
@@ -226,7 +226,7 @@ public class Payment extends javax.swing.JFrame {
         );
     }
     private void createExpirationDatePanel(){
-        expirationDatePanel.setBackground(new java.awt.Color(151, 123, 92));
+        expirationDatePanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout expirationDatePanelLayout = new javax.swing.GroupLayout(expirationDatePanel);
         expirationDatePanel.setLayout(expirationDatePanelLayout);
         expirationDatePanelLayout.setHorizontalGroup(

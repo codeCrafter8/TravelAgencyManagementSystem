@@ -67,20 +67,20 @@ public class PasswordChange extends javax.swing.JFrame {
         confirmPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         confirmPasswordLabel.setText("Potwierdź nowe hasło:");
 
-        wrongCurrentPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongCurrentPasswordLabel.setForeground(Color.RED);
         wrongCurrentPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
 
-        wrongNewPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongNewPasswordLabel.setForeground(Color.RED);
         wrongNewPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
         wrongNewPasswordLabel.setText("");
 
-        wrongConfirmPasswordLabel.setForeground(new java.awt.Color(255, 0, 0));
+        wrongConfirmPasswordLabel.setForeground(Color.RED);
         wrongConfirmPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
     }
     private void setButton(){
-        changeButton.setBackground(new java.awt.Color(151, 123, 92));
+        changeButton.setBackground(ColorUtils.LIGHT_BROWN);
         changeButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
-        changeButton.setForeground(new java.awt.Color(255, 255, 255));
+        changeButton.setForeground(Color.WHITE);
         changeButton.setText("Zmień hasło");
         changeButton.addActionListener(this::changeButtonActionPerformed);
     }

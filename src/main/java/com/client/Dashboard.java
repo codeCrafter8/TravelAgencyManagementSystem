@@ -11,6 +11,7 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność panelu administratora
  */
 class Dashboard extends javax.swing.JFrame {
+    private static final Color LIGHT = new Color(209, 197, 178);
     /**
      * Atrybut przechowujący imię administratora
      */
@@ -84,7 +85,7 @@ class Dashboard extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Panel Admina");
-        getContentPane().setBackground(new Color(215,198,151));
+        getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -103,7 +104,7 @@ class Dashboard extends javax.swing.JFrame {
         });
     }
     private void createMenuPanel(){
-        menuPanel.setBackground(new java.awt.Color(118, 98, 75));
+        menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -121,7 +122,7 @@ class Dashboard extends javax.swing.JFrame {
         );
     }
     private void createAdminPanel(){
-        adminPanel.setBackground(new java.awt.Color(118, 98, 75));
+        adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanelLayout);
         adminPanelLayout.setHorizontalGroup(
@@ -203,7 +204,7 @@ class Dashboard extends javax.swing.JFrame {
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
         optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
-        optionsPanel.setBackground(new Color(118,98,75));
+        optionsPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
         optionsPanelLayout.setHorizontalGroup(
@@ -229,15 +230,14 @@ class Dashboard extends javax.swing.JFrame {
     private void setButtons(){
         panelButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         panelButton.setText("   Panel");
-        panelButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        panelButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.WHITE));
         panelButton.setContentAreaFilled(false);
         panelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         panelButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        Color hoverColor = new Color(190, 190, 192);
         panelButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                panelButton.setForeground(hoverColor);
+                panelButton.setForeground(ColorUtils.LIGHT_GREY);
                 panelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -253,7 +253,7 @@ class Dashboard extends javax.swing.JFrame {
         clientsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                clientsButton.setForeground(hoverColor);
+                clientsButton.setForeground(ColorUtils.LIGHT_GREY);
                 clientsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -270,7 +270,7 @@ class Dashboard extends javax.swing.JFrame {
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                tripsButton.setForeground(hoverColor);
+                tripsButton.setForeground(ColorUtils.LIGHT_GREY);
                 tripsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -287,7 +287,7 @@ class Dashboard extends javax.swing.JFrame {
         reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
-                reservationsButton.setForeground(hoverColor);
+                reservationsButton.setForeground(ColorUtils.LIGHT_GREY);
                 reservationsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             }
             else
@@ -295,9 +295,9 @@ class Dashboard extends javax.swing.JFrame {
         });
         reservationsButton.addActionListener(this::reservationsButtonActionPerformed);
 
-        logOutButton.setBackground(new java.awt.Color(242, 242, 242));
+        logOutButton.setBackground(ColorUtils.MILK);
         logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
-        logOutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logOutButton.setForeground(Color.WHITE);
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -315,7 +315,7 @@ class Dashboard extends javax.swing.JFrame {
         logOutButton.addActionListener(this::logOutButtonActionPerformed);
     }
     private void createTopPanel(){
-        topPanel.setBackground(new java.awt.Color(151, 123, 92));
+        topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -334,7 +334,7 @@ class Dashboard extends javax.swing.JFrame {
         );
     }
     private void createTripsNumberPanel(){
-        tripsNumberPanel.setBackground(new java.awt.Color(175, 157, 121));
+        tripsNumberPanel.setBackground(ColorUtils.NUDE);
         tripsNumberPanel.setPreferredSize(new java.awt.Dimension(215, 130));
         javax.swing.GroupLayout tripsNumberPanelLayout = new javax.swing.GroupLayout(tripsNumberPanel);
         tripsNumberPanel.setLayout(tripsNumberPanelLayout);
@@ -354,7 +354,7 @@ class Dashboard extends javax.swing.JFrame {
         );
     }
     private void createReservationsNumberPanel(){
-        reservationsNumberPanel.setBackground(new java.awt.Color(175, 157, 121));
+        reservationsNumberPanel.setBackground(ColorUtils.NUDE);
         reservationsNumberPanel.setPreferredSize(new java.awt.Dimension(215, 108));
         javax.swing.GroupLayout reservationsNumberPanelLayout = new javax.swing.GroupLayout(reservationsNumberPanel);
         reservationsNumberPanel.setLayout(reservationsNumberPanelLayout);
@@ -374,7 +374,7 @@ class Dashboard extends javax.swing.JFrame {
         );
     }
     private void createIncomeNumberPanel(){
-        incomeNumberPanel.setBackground(new java.awt.Color(175, 157, 121));
+        incomeNumberPanel.setBackground(ColorUtils.NUDE);
         incomeNumberPanel.setPreferredSize(new java.awt.Dimension(280, 130));
         javax.swing.GroupLayout profitNumberPanelLayout = new javax.swing.GroupLayout(incomeNumberPanel);
         incomeNumberPanel.setLayout(profitNumberPanelLayout);
@@ -394,7 +394,7 @@ class Dashboard extends javax.swing.JFrame {
         );
     }
     private void createClientsNumberPanel(){
-        clientsNumberPanel.setBackground(new java.awt.Color(175, 157, 121));
+        clientsNumberPanel.setBackground(ColorUtils.NUDE);
         clientsNumberPanel.setPreferredSize(new java.awt.Dimension(215, 130));
         javax.swing.GroupLayout clientsNumberPanelLayout = new javax.swing.GroupLayout(clientsNumberPanel);
         clientsNumberPanel.setLayout(clientsNumberPanelLayout);
@@ -414,9 +414,9 @@ class Dashboard extends javax.swing.JFrame {
         );
     }
     private void createPhoneNumbersList(){
-        phoneNumbersList.setBackground(new java.awt.Color(209, 197, 178));
+        phoneNumbersList.setBackground(LIGHT);
         phoneNumbersList.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
-        phoneNumbersList.setForeground(new java.awt.Color(0, 0, 0));
+        phoneNumbersList.setForeground(Color.BLACK);
         phoneNumbersList.setModel(new javax.swing.AbstractListModel<>() {
             final String[] strings = {};
 
