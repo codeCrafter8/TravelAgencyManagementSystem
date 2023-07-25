@@ -1,5 +1,6 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
 import com.server.LogsClients;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ import java.util.Date;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność oferty wycieczki
  */
 public class Offer extends javax.swing.JFrame {
+    private static final Dimension HOTEL_PHOTO_DIMENSION = new Dimension(550, 225);
+    private static final Dimension WINDOW_DIMENSION = new Dimension(1067, 388);
     /**
      * Atrybut będący ilością osób
      */
@@ -133,7 +136,7 @@ public class Offer extends javax.swing.JFrame {
     }
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1067, 388));
+        setMinimumSize(WINDOW_DIMENSION);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -150,8 +153,6 @@ public class Offer extends javax.swing.JFrame {
         });
     }
     private void createMainPanel(){
-        mainPanel.setMaximumSize(new java.awt.Dimension(1067, 388));
-        mainPanel.setMinimumSize(new java.awt.Dimension(1067, 388));
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -214,9 +215,7 @@ public class Offer extends javax.swing.JFrame {
         travelAgencyLabel.setForeground(ColorUtils.LIGHT_BROWN);
         travelAgencyLabel.setText("Travel Agency");
 
-        hotelPhotoLabel.setMaximumSize(new java.awt.Dimension(550, 225));
-        hotelPhotoLabel.setMinimumSize(new java.awt.Dimension(550, 225));
-        hotelPhotoLabel.setPreferredSize(new java.awt.Dimension(550, 225));
+        hotelPhotoLabel.setPreferredSize(HOTEL_PHOTO_DIMENSION);
 
         cityCountryLabel.setToolTipText("");
         cityCountryLabel.setFont(new Font("Segoe Print", Font.PLAIN, 15));

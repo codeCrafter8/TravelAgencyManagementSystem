@@ -1,5 +1,6 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
 import com.server.LogsClients;
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,8 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność edycji danych przez klienta
  */
 class DataEdition extends javax.swing.JFrame {
+    private static final Dimension VALIDATION_LABEL_DIMENSION = new Dimension(363, 16);
+    private static final Dimension WINDOW_DIMENSION = new Dimension(449, 510);
     /**
      * Atrybut określający, czy imię klienta jest poprawne
      */
@@ -83,7 +86,7 @@ class DataEdition extends javax.swing.JFrame {
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edytuj dane");
-        setPreferredSize(new java.awt.Dimension(449, 510));
+        setPreferredSize(WINDOW_DIMENSION);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -116,24 +119,24 @@ class DataEdition extends javax.swing.JFrame {
         phoneNumberLabel.setText("Numer telefonu");
 
         validFirstNameLabel.setForeground(Color.RED);
-        validFirstNameLabel.setMaximumSize(new java.awt.Dimension(363, 16));
-        validFirstNameLabel.setMinimumSize(new java.awt.Dimension(363, 16));
-        validFirstNameLabel.setPreferredSize(new java.awt.Dimension(363, 16));
+        validFirstNameLabel.setMaximumSize(VALIDATION_LABEL_DIMENSION);
+        validFirstNameLabel.setMinimumSize(VALIDATION_LABEL_DIMENSION);
+        validFirstNameLabel.setPreferredSize(VALIDATION_LABEL_DIMENSION);
 
         validLastNameLabel.setForeground(Color.RED);
-        validLastNameLabel.setMaximumSize(new java.awt.Dimension(363, 16));
-        validLastNameLabel.setMinimumSize(new java.awt.Dimension(363, 16));
-        validLastNameLabel.setPreferredSize(new java.awt.Dimension(363, 16));
+        validLastNameLabel.setMaximumSize(VALIDATION_LABEL_DIMENSION);
+        validLastNameLabel.setMinimumSize(VALIDATION_LABEL_DIMENSION);
+        validLastNameLabel.setPreferredSize(VALIDATION_LABEL_DIMENSION);
 
         validEmailLabel.setForeground(Color.RED);
-        validEmailLabel.setMaximumSize(new java.awt.Dimension(363, 16));
-        validEmailLabel.setMinimumSize(new java.awt.Dimension(363, 16));
-        validEmailLabel.setPreferredSize(new java.awt.Dimension(363, 16));
+        validEmailLabel.setMaximumSize(VALIDATION_LABEL_DIMENSION);
+        validEmailLabel.setMinimumSize(VALIDATION_LABEL_DIMENSION);
+        validEmailLabel.setPreferredSize(VALIDATION_LABEL_DIMENSION);
 
         validPhoneNumberLabel.setForeground(Color.RED);
-        validPhoneNumberLabel.setMaximumSize(new java.awt.Dimension(363, 16));
-        validPhoneNumberLabel.setMinimumSize(new java.awt.Dimension(363, 16));
-        validPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(363, 16));
+        validPhoneNumberLabel.setMaximumSize(VALIDATION_LABEL_DIMENSION);
+        validPhoneNumberLabel.setMinimumSize(VALIDATION_LABEL_DIMENSION);
+        validPhoneNumberLabel.setPreferredSize(VALIDATION_LABEL_DIMENSION);
     }
 
     private void setTextFields() {
@@ -144,6 +147,7 @@ class DataEdition extends javax.swing.JFrame {
     }
 
     private void createButton() {
+        submitButton.setBackground(ColorUtils.LIGHT_BROWN);
         submitButton.setBackground(ColorUtils.LIGHT_BROWN);
         submitButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
         submitButton.setForeground(Color.white);

@@ -1,5 +1,7 @@
 package com.server;
-import com.client.ColorUtils;
+
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +39,7 @@ public class ServerLogs extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logi Serwera");
-        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
     }
     private void createMenuPanel(){
@@ -83,8 +85,8 @@ public class ServerLogs extends javax.swing.JFrame {
     private void createOptionsPanel(){
         optionsPanel.setBackground(ColorUtils.LIGHT_BROWN);
         optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
+        optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
+        optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
         optionsPanelLayout.setHorizontalGroup(
@@ -109,9 +111,9 @@ public class ServerLogs extends javax.swing.JFrame {
     }
     private void setLabels(){
         serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
-        serverIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
-        serverIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
-        serverIconLabel.setPreferredSize(new java.awt.Dimension(70, 70));
+        serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
+        serverIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);
+        serverIconLabel.setPreferredSize(DimensionUtils.ICON_LABEL_DIMENSION);
 
         serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
         serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -144,7 +146,7 @@ public class ServerLogs extends javax.swing.JFrame {
         clientsLogsButton.setContentAreaFilled(false);
         clientsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        clientsLogsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        clientsLogsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         clientsLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -162,7 +164,7 @@ public class ServerLogs extends javax.swing.JFrame {
         adminsLogsButton.setContentAreaFilled(false);
         adminsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         adminsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        adminsLogsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        adminsLogsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         adminsLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {

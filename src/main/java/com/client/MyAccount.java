@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsClients;
 
 import java.awt.*;
@@ -16,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność Moje Konto po stronie klienta
  */
 public class MyAccount extends javax.swing.JFrame {
+    private static final Dimension BUTTON_DIMENSION = new Dimension(150, 43);
+    private static final Dimension WINDOW_DIMENSION = new Dimension(989, 770);
     /**
      * Lista przechowująca dane osobowe klienta
      */
@@ -68,7 +72,7 @@ public class MyAccount extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Moje konto");
-        setPreferredSize(new java.awt.Dimension(989, 770));
+        setPreferredSize(WINDOW_DIMENSION);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -108,9 +112,9 @@ public class MyAccount extends javax.swing.JFrame {
                 }
         ));
         resTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        resTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        resTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        resTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        resTable.setMaximumSize(DimensionUtils.TABLE_DIMENSION);
+        resTable.setMinimumSize(DimensionUtils.TABLE_DIMENSION);
+        resTable.setPreferredSize(DimensionUtils.TABLE_DIMENSION);
         resTable.setSelectionBackground(ColorUtils.BEIGE);
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         resTableScrollPane.setViewportView(resTable);
@@ -153,7 +157,7 @@ public class MyAccount extends javax.swing.JFrame {
         cancelReservationButton.setForeground(Color.WHITE);
         cancelReservationButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelReservationButton.setFocusable(false);
-        cancelReservationButton.setPreferredSize(new java.awt.Dimension(150, 43));
+        cancelReservationButton.setPreferredSize(BUTTON_DIMENSION);
         cancelReservationButton.addActionListener(this::cancelReservationButtonActionPerformed);
         cancelReservationButton.setText("<html><center>"+"Anuluj"+"<br>"+"rezerwację"+"</center></html>");
 
@@ -162,7 +166,7 @@ public class MyAccount extends javax.swing.JFrame {
         downloadTripDescriptionButton.setForeground(Color.WHITE);
         downloadTripDescriptionButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         downloadTripDescriptionButton.setFocusable(false);
-        downloadTripDescriptionButton.setPreferredSize(new java.awt.Dimension(150, 43));
+        downloadTripDescriptionButton.setPreferredSize(BUTTON_DIMENSION);
         downloadTripDescriptionButton.addActionListener(this::downloadTripDescriptionActionPerformed);
         downloadTripDescriptionButton.setText("<html><center>"+"Szczegóły"+"<br>"+"rezerwacji"+"</center></html>");
 
@@ -172,7 +176,7 @@ public class MyAccount extends javax.swing.JFrame {
         editButton.setText("Edytuj dane");
         editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editButton.setFocusable(false);
-        editButton.setPreferredSize(new java.awt.Dimension(150, 43));
+        editButton.setPreferredSize(BUTTON_DIMENSION);
         editButton.addActionListener(this::editButtonActionPerformed);
 
         changePasswordButton.setBackground(ColorUtils.LIGHT_BROWN);
@@ -181,7 +185,7 @@ public class MyAccount extends javax.swing.JFrame {
         changePasswordButton.setText("Zmień hasło");
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changePasswordButton.setFocusable(false);
-        changePasswordButton.setPreferredSize(new java.awt.Dimension(150, 43));
+        changePasswordButton.setPreferredSize(BUTTON_DIMENSION);
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
     }
     private void createUserDataPanel(){

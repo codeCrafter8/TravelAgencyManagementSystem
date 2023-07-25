@@ -1,13 +1,16 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * Klasa zawierająca pola i metody służące do obsługi okna zmiany hasła klienta przez administratora
  */
 public class ClientPasswordChange extends javax.swing.JFrame {
+    private static final Dimension LABEL_DIMENSION = new java.awt.Dimension(205, 16);
     /**
      * Atrybut przechowujący id klienta, którego hasło jest zmieniane
      */
@@ -57,9 +60,9 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         newPasswordLabel.setText("Nowe hasło");
         confirmNewPasswordLabel.setText("Powtórz nowe hasło");
         wrongNewPasswordLabel.setForeground(Color.RED);
-        wrongNewPasswordLabel.setPreferredSize(new java.awt.Dimension(205, 16));
+        wrongNewPasswordLabel.setPreferredSize(LABEL_DIMENSION);
         wrongConfirmNewPasswordLabel.setForeground(Color.RED);
-        wrongConfirmNewPasswordLabel.setPreferredSize(new java.awt.Dimension(205, 16));
+        wrongConfirmNewPasswordLabel.setPreferredSize(LABEL_DIMENSION);
     }
 
     private void setButton() {

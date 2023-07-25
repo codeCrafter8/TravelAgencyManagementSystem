@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsAdmins;
 
 import java.awt.*;
@@ -78,8 +80,7 @@ public class Reservations extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rezerwacje");
-        setMaximumSize(new java.awt.Dimension(1040, 770));
-        setMinimumSize(new java.awt.Dimension(1040, 770));
+        setMinimumSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
         setLocationRelativeTo(null);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -102,7 +103,7 @@ public class Reservations extends javax.swing.JFrame {
     }
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
-        menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
+        menuPanel.setPreferredSize(DimensionUtils.MENU_PANEL_DIMENSION);
         javax.swing.GroupLayout menuPanel1Layout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanel1Layout);
         menuPanel1Layout.setHorizontalGroup(
@@ -150,7 +151,7 @@ public class Reservations extends javax.swing.JFrame {
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        adminNameLabel.setPreferredSize(new java.awt.Dimension(73, 25));
+        adminNameLabel.setPreferredSize(DimensionUtils.ADMIN_NAME_LABEL_DIMENSION);
 
         adminLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -160,11 +161,11 @@ public class Reservations extends javax.swing.JFrame {
         searchResLabel.setText("Wyszukaj rezerwację po nazwisku");
 
         wrongResLabel.setForeground(Color.RED);
-        wrongResLabel.setMinimumSize(new java.awt.Dimension(300, 16));
+        wrongResLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
     private void createOptionsPanel(){
-        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
+        optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
+        optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
         optionsPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanel1Layout);
@@ -212,7 +213,7 @@ public class Reservations extends javax.swing.JFrame {
         clientsButton.setContentAreaFilled(false);
         clientsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        clientsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        clientsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         clientsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -231,7 +232,7 @@ public class Reservations extends javax.swing.JFrame {
         tripsButton.setContentAreaFilled(false);
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        tripsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        tripsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -249,7 +250,7 @@ public class Reservations extends javax.swing.JFrame {
         reservationsButton.setContentAreaFilled(false);
         reservationsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        reservationsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        reservationsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -266,7 +267,7 @@ public class Reservations extends javax.swing.JFrame {
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
+        logOutButton.setPreferredSize(DimensionUtils.LOG_OUT_BUTTON_DIMENSION);
         logOutButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -298,7 +299,7 @@ public class Reservations extends javax.swing.JFrame {
     }
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
-        topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
+        topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
@@ -328,9 +329,9 @@ public class Reservations extends javax.swing.JFrame {
             return column != 0;
         }});
         resTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        resTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        resTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        resTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        resTable.setMaximumSize(DimensionUtils.TABLE_DIMENSION);
+        resTable.setMinimumSize(DimensionUtils.TABLE_DIMENSION);
+        resTable.setPreferredSize(DimensionUtils.TABLE_DIMENSION);
         resTable.setSelectionBackground(ColorUtils.BEIGE);
         resTableScrollPane.setViewportView(resTable);
 

@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsAdmins;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -58,7 +60,7 @@ public class ReservationAddition extends javax.swing.JFrame {
     }
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1040, 770));
+        setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         setTitle("Dodawanie rezerwacji");
         getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -97,9 +99,9 @@ public class ReservationAddition extends javax.swing.JFrame {
             }
         });
         tripsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tripsTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        tripsTable.setMaximumSize(DimensionUtils.TABLE_DIMENSION);
+        tripsTable.setMinimumSize(DimensionUtils.TABLE_DIMENSION);
+        tripsTable.setPreferredSize(DimensionUtils.TABLE_DIMENSION);
         tripsTable.setSelectionBackground(ColorUtils.BEIGE);
         tripsTableScrollPane.setViewportView(tripsTable);
     }
@@ -121,9 +123,9 @@ public class ReservationAddition extends javax.swing.JFrame {
             }
         });
         clientsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        clientsTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        clientsTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        clientsTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        clientsTable.setMaximumSize(DimensionUtils.TABLE_DIMENSION);
+        clientsTable.setMinimumSize(DimensionUtils.TABLE_DIMENSION);
+        clientsTable.setPreferredSize(DimensionUtils.TABLE_DIMENSION);
         clientsTable.setSelectionBackground(ColorUtils.BEIGE);
         clientsTableScrollPane.setViewportView(clientsTable);
     }
@@ -137,7 +139,7 @@ public class ReservationAddition extends javax.swing.JFrame {
         cancelButton.setBackground(ColorUtils.DARK_BEIGE);
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
-        cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
+        cancelButton.setPreferredSize(DimensionUtils.SUBMIT_CANCEL_BUTTON_DIMENSION);
         cancelButton.addActionListener(evt -> cancelButtonActionPerformed());
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }

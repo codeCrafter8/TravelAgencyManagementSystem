@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class TripDescription extends javax.swing.JFrame {
     private static final Color BLUE = new Color(102, 102, 255);
+    public static final Dimension QUESTION_MARK_BUTTON_DIMENSION = new Dimension(22, 24);
     /**
      * Atrybut przechowujący ubezpieczenie wycieczki
      */
@@ -107,7 +108,7 @@ public class TripDescription extends javax.swing.JFrame {
         questionMarkButton.setBorderPainted(false);
         questionMarkButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         questionMarkButton.setMargin(new java.awt.Insets(0, 14, 0, 14));
-        questionMarkButton.setPreferredSize(new java.awt.Dimension(22, 24));
+        questionMarkButton.setPreferredSize(QUESTION_MARK_BUTTON_DIMENSION);
         questionMarkButton.addActionListener(this::jButtonActionPerformed);
     }
     private void createLayout(){

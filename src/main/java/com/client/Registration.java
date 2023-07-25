@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.Logs;
 import javax.swing.*;
 import java.awt.*;
@@ -115,7 +117,7 @@ public class Registration extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Rejestracja");
-        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -136,7 +138,7 @@ public class Registration extends javax.swing.JFrame {
     }
     private void createRegPanel(){
         regPanel.setBackground(ColorUtils.LIGHT_BEIGE);
-        regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
+        regPanel.setPreferredSize(DimensionUtils.REG_PANEL_DIMENSION);
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
         regPanel.setLayout(regPanelLayout);
         regPanelLayout.setHorizontalGroup(
@@ -247,28 +249,22 @@ public class Registration extends javax.swing.JFrame {
         confirmPasswordLabel.setText("Potwierdź hasło");
 
         wrongConfirmPasswordLabel.setForeground(Color.RED);
-        wrongConfirmPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        wrongConfirmPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+        wrongConfirmPasswordLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
 
         wrongPasswordLabel.setForeground(Color.RED);
-        wrongPasswordLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        wrongPasswordLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+        wrongPasswordLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
 
         wrongEmailLabel.setForeground(Color.RED);
-        wrongEmailLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        wrongEmailLabel.setPreferredSize(new java.awt.Dimension(400, 16));
+        wrongEmailLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
 
         wrongPhoneNumberLabel.setForeground(Color.RED);
-        wrongPhoneNumberLabel.setMaximumSize(new java.awt.Dimension(400, 16));
-        wrongPhoneNumberLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+        wrongPhoneNumberLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
 
         wrongLastNameLabel.setForeground(Color.RED);
-        wrongLastNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
-        wrongLastNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+        wrongLastNameLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
 
         wrongFirstNameLabel.setForeground(Color.RED);
-        wrongFirstNameLabel.setMaximumSize(new java.awt.Dimension(350, 16));
-        wrongFirstNameLabel.setPreferredSize(new java.awt.Dimension(350, 16));
+        wrongFirstNameLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
     private void setTextFields(){
         firstNameTextField.addFocusListener(new FocusListener() {
@@ -325,7 +321,7 @@ public class Registration extends javax.swing.JFrame {
     private void setButtons(){
         submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
-        submitButton.setMinimumSize(new java.awt.Dimension(116, 27));
+        submitButton.setMinimumSize(DimensionUtils.SUBMIT_CANCEL_BUTTON_DIMENSION);
         submitButton.setText("Utwórz");
         submitButton.addActionListener(this::submitButtonActionPerformed);
         submitButton.getModel().addChangeListener(e -> {
@@ -337,7 +333,7 @@ public class Registration extends javax.swing.JFrame {
         cancelButton.setBackground(ColorUtils.DARK_BEIGE);
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
-        cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
+        cancelButton.setPreferredSize(DimensionUtils.SUBMIT_CANCEL_BUTTON_DIMENSION);
         cancelButton.addActionListener(this::cancelButtonActionPerformed);
         cancelButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();

@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsAdmins;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ import java.util.List;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania wycieczki
  */
 public class TripAddition extends javax.swing.JFrame {
+    public static final Dimension WRONG_ITEM_LABEL_DIMENSION_SMALL = new Dimension(100, 16);
     /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
@@ -117,8 +120,7 @@ public class TripAddition extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dodaj wycieczkę");
         getContentPane().setBackground(ColorUtils.BEIGE);
-        setMaximumSize(new java.awt.Dimension(1024, 728));
-        setMinimumSize(new java.awt.Dimension(1024, 728));
+        setMinimumSize(DimensionUtils.WINDOW_DIMENSION);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -171,13 +173,13 @@ public class TripAddition extends javax.swing.JFrame {
         wrongArrivalLabel.setText(" ");
         wrongHotelNameLabel.setForeground(Color.red);
         wrongHotelNameLabel.setText(" ");
-        wrongCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        wrongCountryLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        wrongDepartureCityLabel.setMinimumSize(new java.awt.Dimension(350, 16));
-        wrongPriceLabel.setMinimumSize(new java.awt.Dimension(200, 16));
-        wrongHotelNameLabel.setMinimumSize(new java.awt.Dimension(200, 16));
-        wrongDepartureLabel.setMinimumSize(new java.awt.Dimension(100, 16));
-        wrongArrivalLabel.setMinimumSize(new java.awt.Dimension(100, 16));
+        wrongCityLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
+        wrongCountryLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
+        wrongDepartureCityLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
+        wrongDepartureLabel.setMinimumSize(WRONG_ITEM_LABEL_DIMENSION_SMALL);
+        wrongArrivalLabel.setMinimumSize(WRONG_ITEM_LABEL_DIMENSION_SMALL);
+        wrongPriceLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
+        wrongHotelNameLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
     private void createButtons(){
         submitButton.setBackground(ColorUtils.DARK_BEIGE);
@@ -189,13 +191,14 @@ public class TripAddition extends javax.swing.JFrame {
         cancelButton.setBackground(ColorUtils.DARK_BEIGE);
         cancelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         cancelButton.setText("Anuluj");
-        cancelButton.setPreferredSize(new java.awt.Dimension(116, 27));
+        cancelButton.setPreferredSize(DimensionUtils.SUBMIT_CANCEL_BUTTON_DIMENSION);
         cancelButton.addActionListener(this::cancelButtonActionPerformed);
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
     private void createRegPanel(){
         regPanel.setBackground(ColorUtils.LIGHT_BEIGE);
-        regPanel.setPreferredSize(new java.awt.Dimension(450, 620));
+        regPanel.setPreferredSize(DimensionUtils.REG_PANEL_DIMENSION);
+        regPanel.setPreferredSize(DimensionUtils.REG_PANEL_DIMENSION);
         departureDateChooser.setMinSelectableDate(new java.util.Date(-62135769509000L));
 
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);

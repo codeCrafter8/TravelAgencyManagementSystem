@@ -1,5 +1,8 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
+
 import java.awt.event.FocusEvent;
 import java.awt.*;
 import java.awt.event.FocusListener;
@@ -10,6 +13,8 @@ import javax.swing.*;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność logowania
  */
 public class StartPage extends javax.swing.JFrame {
+    private static final Dimension TEXT_FIELD_DIMENSION = new Dimension(64, 28);
+    private static final Dimension BUTTON_DIMENSION = new Dimension(105, 25);
     /**
      * Atrybut będący listą przechowującą dane przekazywane do klasy Client
      */
@@ -76,7 +81,7 @@ public class StartPage extends javax.swing.JFrame {
         setTitle("Logowanie");
         setAlwaysOnTop(true);
         setBackground(ColorUtils.BEIGE);
-        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
     }
     private void createLoginPanel(){
@@ -168,12 +173,10 @@ public class StartPage extends javax.swing.JFrame {
         passwordLabel.setText("Hasło");
         wrongEmailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         wrongEmailLabel.setForeground(Color.red);
-        wrongEmailLabel.setMinimumSize(new java.awt.Dimension(94, 18));
-        wrongEmailLabel.setPreferredSize(new java.awt.Dimension(94, 18));
+        wrongEmailLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
         wrongPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
         wrongPasswordLabel.setForeground(Color.red);
-        wrongPasswordLabel.setMinimumSize(new java.awt.Dimension(94, 18));
-        wrongPasswordLabel.setPreferredSize(new java.awt.Dimension(94, 18));
+        wrongPasswordLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
         photoLabel.setIcon(new javax.swing.ImageIcon("img\\paris.jpg"));
         photoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         JLabel travelLabel = new JLabel("Travel");
@@ -187,7 +190,7 @@ public class StartPage extends javax.swing.JFrame {
     }
     private void setTextFields(){
         emailTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, ColorUtils.MILK, ColorUtils.GREY, ColorUtils.GREY, ColorUtils.GREY));
-        emailTextField.setPreferredSize(new java.awt.Dimension(64, 28));
+        emailTextField.setPreferredSize(TEXT_FIELD_DIMENSION);
         emailTextField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {}
             public void focusLost(FocusEvent e) {
@@ -198,7 +201,7 @@ public class StartPage extends javax.swing.JFrame {
             }
         });
         passwordField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 204), ColorUtils.GREY, new java.awt.Color(102, 102, 102), new java.awt.Color(102, 102, 102)));
-        passwordField.setPreferredSize(new java.awt.Dimension(64, 28));
+        passwordField.setPreferredSize(TEXT_FIELD_DIMENSION);
         passwordField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {}
             public void focusLost(FocusEvent e) {
@@ -215,9 +218,7 @@ public class StartPage extends javax.swing.JFrame {
         signInButton.setText("Zaloguj się");
         signInButton.setActionCommand("Zaloguj się");
         signInButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        signInButton.setMaximumSize(new java.awt.Dimension(105, 25));
-        signInButton.setMinimumSize(new java.awt.Dimension(105, 25));
-        signInButton.setPreferredSize(new java.awt.Dimension(105, 25));
+        signInButton.setPreferredSize(BUTTON_DIMENSION);
         signInButton.addActionListener(this::signInButtonActionPerformed);
         signInButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();

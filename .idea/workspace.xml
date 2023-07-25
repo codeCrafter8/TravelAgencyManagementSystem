@@ -9,13 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b73e272e-c0cc-444c-98a6-e7cc6205e09d" name="Changes" comment="initComponents method dividing">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/client/ColorUtils.java" afterDir="false" />
+    <list default="true" id="b73e272e-c0cc-444c-98a6-e7cc6205e09d" name="Changes" comment="colors management improvement">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/client/utils/DimensionUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/logs.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/ClientPasswordChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/ClientPasswordChange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Clients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Clients.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/client/ColorUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/utils/ColorUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Dashboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/DataEdition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/DataEdition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/MyAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/MyAccount.java" afterDir="false" />
@@ -32,38 +32,20 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/client/Trips.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/client/Trips.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/server/AdminsLogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/AdminsLogs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/server/ClientsLogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/ClientsLogs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/server/Logs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/Logs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/server/ServerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/ServerGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/server/ServerLogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/server/ServerLogs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/ClientPasswordChange.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/ClientPasswordChange.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Clients.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Clients.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Dashboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/DataEdition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/DataEdition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/MyAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/MyAccount.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Offer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Offer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/PasswordChange.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/PasswordChange.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Payment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Payment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration$8.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Registration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Registration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/SearchEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/SearchEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/StartPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/StartPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/TripAddition$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/TripAddition$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/TripAddition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/TripAddition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Trips$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Trips$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Trips.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Trips.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/server/AdminsLogs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/AdminsLogs.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ClientsLogs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ClientsLogs.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerLogs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerLogs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Clients$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Clients$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Clients$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Clients$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Dashboard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Dashboard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/ReservationAddition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/ReservationAddition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Reservations$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Reservations$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/TripDescription.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/TripDescription.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/client/Trips$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/client/Trips$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/Logs.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/Logs.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler$ClientThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler$ClientThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/server/ServerGUI$GUIHandler.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,15 +77,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/zuzan/OneDrive/Pulpit/TravelAgency&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.36091954&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_directory_selection": "C:/Users/zuzan/OneDrive/Pulpit/TravelAgency/src/main/java/com/client",
+    "last_opened_file_path": "C:/Users/zuzan/OneDrive/Pulpit/TravelAgency",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.36091954"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\zuzan\OneDrive\Pulpit\aktualne\src\main\java\com\client" />
@@ -255,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689763555619</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="colors management improvement">
+      <created>1690037727381</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1690037727381</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -276,6 +266,7 @@
     <MESSAGE value="validation methods rename" />
     <MESSAGE value="code refactoring" />
     <MESSAGE value="initComponents method dividing" />
-    <option name="LAST_COMMIT_MESSAGE" value="initComponents method dividing" />
+    <MESSAGE value="colors management improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="colors management improvement" />
   </component>
 </project>

@@ -1,5 +1,7 @@
 package com.server;
-import com.client.ColorUtils;
+
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -72,7 +74,7 @@ public class ServerGUI extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aplikacja Serwera");
-        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -135,9 +137,9 @@ public class ServerGUI extends javax.swing.JFrame {
     }
     private void setLabels(){
         serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
-        serverIconLabel.setMaximumSize(new java.awt.Dimension(70, 70));
-        serverIconLabel.setMinimumSize(new java.awt.Dimension(70, 70));
-        serverIconLabel.setPreferredSize(new java.awt.Dimension(70, 70));
+        serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
+        serverIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);
+        serverIconLabel.setPreferredSize(DimensionUtils.ICON_LABEL_DIMENSION);
 
         serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
         serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -145,7 +147,7 @@ public class ServerGUI extends javax.swing.JFrame {
 
         connectedUsersNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 42));
         connectedUsersNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        connectedUsersNumberLabel.setPreferredSize(new java.awt.Dimension(178, 57));
+        connectedUsersNumberLabel.setPreferredSize(DimensionUtils.NUMBER_LABEL_DIMENSION);
         try (BufferedReader reader = new BufferedReader(new FileReader("connectedUsersNumber.dat"))) {
             connectedUsersNumber = Integer.parseInt(reader.readLine());
         } catch (Exception e){
@@ -160,8 +162,8 @@ public class ServerGUI extends javax.swing.JFrame {
     private void createOptionsPanel(){
         optionsPanel.setBackground(ColorUtils.LIGHT_BROWN);
         optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
+        optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
+        optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
         optionsPanelLayout.setHorizontalGroup(
@@ -207,7 +209,7 @@ public class ServerGUI extends javax.swing.JFrame {
         clientsLogsButton.setContentAreaFilled(false);
         clientsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        clientsLogsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        clientsLogsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         clientsLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -224,7 +226,7 @@ public class ServerGUI extends javax.swing.JFrame {
         adminsLogsButton.setContentAreaFilled(false);
         adminsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         adminsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        adminsLogsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        adminsLogsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         adminsLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -241,7 +243,7 @@ public class ServerGUI extends javax.swing.JFrame {
         serverLogsButton.setContentAreaFilled(false);
         serverLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         serverLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        serverLogsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        serverLogsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         serverLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -274,7 +276,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
     private void createConnectedUsersPanel(){
         connectedUsersPanel.setBackground(ColorUtils.NUDE);
-        connectedUsersPanel.setPreferredSize(new java.awt.Dimension(280, 130));
+        connectedUsersPanel.setPreferredSize(DimensionUtils.NUMBER_PANEL_DIMENSION);
         javax.swing.GroupLayout connectedUsersPanelLayout = new javax.swing.GroupLayout(connectedUsersPanel);
         connectedUsersPanel.setLayout(connectedUsersPanelLayout);
         connectedUsersPanelLayout.setHorizontalGroup(

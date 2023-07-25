@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import javax.swing.border.LineBorder;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność opłacenia rezerwacji
  */
 public class Payment extends javax.swing.JFrame {
+    private static final Dimension WINDOW_DIMENSION = new Dimension(548, 640);
     /**
      * Atrybut informujący, czy została wybrana metoda opłaty
      */
@@ -68,8 +71,7 @@ public class Payment extends javax.swing.JFrame {
     private void setWindowProperties(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(Color.WHITE);
-        setMinimumSize(new java.awt.Dimension(450, 124));
-        setPreferredSize(new java.awt.Dimension(548, 640));
+        setPreferredSize(WINDOW_DIMENSION);
         setTitle("Płatność kartą kredytową");
     }
     private void setLabels(){

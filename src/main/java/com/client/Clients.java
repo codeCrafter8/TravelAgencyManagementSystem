@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsAdmins;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -94,7 +96,7 @@ public class Clients extends javax.swing.JFrame {
     }
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
-        topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
+        topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
@@ -118,7 +120,7 @@ public class Clients extends javax.swing.JFrame {
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
+        logOutButton.setPreferredSize(DimensionUtils.LOG_OUT_BUTTON_DIMENSION);
         logOutButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -153,7 +155,7 @@ public class Clients extends javax.swing.JFrame {
         clientsButton.setContentAreaFilled(false);
         clientsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        clientsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        clientsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         clientsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -169,7 +171,7 @@ public class Clients extends javax.swing.JFrame {
         tripsButton.setContentAreaFilled(false);
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        tripsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        tripsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -186,7 +188,7 @@ public class Clients extends javax.swing.JFrame {
         reservationsButton.setContentAreaFilled(false);
         reservationsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        reservationsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        reservationsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -270,7 +272,7 @@ public class Clients extends javax.swing.JFrame {
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        adminNameLabel.setPreferredSize(new java.awt.Dimension(73, 25));
+        adminNameLabel.setPreferredSize(DimensionUtils.ADMIN_NAME_LABEL_DIMENSION);
         adminNameLabel.setText(adminName);
         adminLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -279,11 +281,11 @@ public class Clients extends javax.swing.JFrame {
         searchClientLabel.setText("Wyszukaj klienta po e-mailu");
         wrongEmailLabel.setForeground(Color.RED);
         wrongEmailLabel.setText("");
-        wrongEmailLabel.setPreferredSize(new java.awt.Dimension(222, 16));
+        wrongEmailLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
     private void createOptionsPanel(){
-        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
+        optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
+        optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
         optionsPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
@@ -318,9 +320,9 @@ public class Clients extends javax.swing.JFrame {
             return column != 0;
         }});
         clientsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        clientsTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        clientsTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        clientsTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        clientsTable.setMaximumSize(DimensionUtils.TABLE_DIMENSION);
+        clientsTable.setMinimumSize(DimensionUtils.TABLE_DIMENSION);
+        clientsTable.setPreferredSize(DimensionUtils.TABLE_DIMENSION);
         clientsTable.setSelectionBackground(ColorUtils.BEIGE);
         jScrollPane1.setViewportView(clientsTable);
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();

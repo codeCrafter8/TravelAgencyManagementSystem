@@ -1,4 +1,4 @@
-package com.client;
+package com.client.utils;
 
 import java.awt.*;
 

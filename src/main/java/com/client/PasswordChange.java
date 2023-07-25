@@ -1,5 +1,8 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,14 +71,14 @@ public class PasswordChange extends javax.swing.JFrame {
         confirmPasswordLabel.setText("Potwierdź nowe hasło:");
 
         wrongCurrentPasswordLabel.setForeground(Color.RED);
-        wrongCurrentPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongCurrentPasswordLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
 
         wrongNewPasswordLabel.setForeground(Color.RED);
-        wrongNewPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongNewPasswordLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
         wrongNewPasswordLabel.setText("");
 
         wrongConfirmPasswordLabel.setForeground(Color.RED);
-        wrongConfirmPasswordLabel.setMinimumSize(new java.awt.Dimension(38, 16));
+        wrongConfirmPasswordLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
     private void setButton(){
         changeButton.setBackground(ColorUtils.LIGHT_BROWN);

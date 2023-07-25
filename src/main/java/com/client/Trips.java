@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsAdmins;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -78,8 +80,7 @@ public class Trips extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wycieczki");
         getContentPane().setBackground(ColorUtils.BEIGE);
-        setMaximumSize(new java.awt.Dimension(1040, 770));
-        setMinimumSize(new java.awt.Dimension(1040, 770));
+        setMinimumSize(DimensionUtils.WINDOW_DIMENSION);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -98,7 +99,7 @@ public class Trips extends javax.swing.JFrame {
     }
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
-        menuPanel.setPreferredSize(new java.awt.Dimension(180, 806));
+        menuPanel.setPreferredSize(DimensionUtils.MENU_PANEL_DIMENSION);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -121,7 +122,7 @@ public class Trips extends javax.swing.JFrame {
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        adminNameLabel.setPreferredSize(new java.awt.Dimension(73, 25));
+        adminNameLabel.setPreferredSize(DimensionUtils.ADMIN_NAME_LABEL_DIMENSION);
 
         adminLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -131,7 +132,7 @@ public class Trips extends javax.swing.JFrame {
         searchTripLabel.setText("Wyszukaj wycieczkę po mieście");
 
         wrongTripLabel.setForeground(Color.red);
-        wrongTripLabel.setPreferredSize(new java.awt.Dimension(222, 16));
+        wrongTripLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
     private void createAdminPanel(){
         adminPanel.setBackground(ColorUtils.BROWN);
@@ -159,8 +160,8 @@ public class Trips extends javax.swing.JFrame {
         );
     }
     private void createOptionsPanel(){
-        optionsPanel.setMinimumSize(new java.awt.Dimension(180, 200));
-        optionsPanel.setPreferredSize(new java.awt.Dimension(180, 230));
+        optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
+        optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
         optionsPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout optionsPanel1Layout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanel1Layout);
@@ -186,7 +187,7 @@ public class Trips extends javax.swing.JFrame {
     }
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
-        topPanel.setPreferredSize(new java.awt.Dimension(205, 34));
+        topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
@@ -216,9 +217,9 @@ public class Trips extends javax.swing.JFrame {
             return column != 0;
         }});
         tripsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tripsTable.setMaximumSize(new java.awt.Dimension(375, 550));
-        tripsTable.setMinimumSize(new java.awt.Dimension(375, 550));
-        tripsTable.setPreferredSize(new java.awt.Dimension(375, 550));
+        tripsTable.setMaximumSize(DimensionUtils.TABLE_DIMENSION);
+        tripsTable.setMinimumSize(DimensionUtils.TABLE_DIMENSION);
+        tripsTable.setPreferredSize(DimensionUtils.TABLE_DIMENSION);
         tripsTable.setSelectionBackground(ColorUtils.BEIGE);
         tripsTableScrollPane.setViewportView(tripsTable);
 
@@ -253,7 +254,7 @@ public class Trips extends javax.swing.JFrame {
         logOutButton.setText("Wyloguj");
         logOutButton.setContentAreaFilled(false);
         logOutButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logOutButton.setPreferredSize(new java.awt.Dimension(74, 34));
+        logOutButton.setPreferredSize(DimensionUtils.LOG_OUT_BUTTON_DIMENSION);
         logOutButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -288,7 +289,7 @@ public class Trips extends javax.swing.JFrame {
         clientsButton.setContentAreaFilled(false);
         clientsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        clientsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        clientsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         clientsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -307,7 +308,7 @@ public class Trips extends javax.swing.JFrame {
         tripsButton.setContentAreaFilled(false);
         tripsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tripsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        tripsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        tripsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         tripsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -323,7 +324,7 @@ public class Trips extends javax.swing.JFrame {
         reservationsButton.setContentAreaFilled(false);
         reservationsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reservationsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        reservationsButton.setPreferredSize(new java.awt.Dimension(75, 46));
+        reservationsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         reservationsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {

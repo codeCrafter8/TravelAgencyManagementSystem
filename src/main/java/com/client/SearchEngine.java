@@ -1,5 +1,7 @@
 package com.client;
 
+import com.client.utils.ColorUtils;
+import com.client.utils.DimensionUtils;
 import com.server.LogsClients;
 import java.awt.*;
 import javax.swing.*;
@@ -15,6 +17,10 @@ import java.util.concurrent.TimeUnit;
  * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność strony głównej klienta wraz z wyszukiwarką
  */
 public class SearchEngine extends javax.swing.JFrame {
+    private static final Dimension MAIN_SCROLL_DIMENSION = new Dimension(1022, 400);
+    private static final Dimension MAIN_WINDOW_DIMENSION = new Dimension(1022, 729);
+    private static final Dimension LEAVE_NUMBER_TF_DIMENSION = new Dimension(64, 22);
+    private static final Dimension TRIPS_TABLE_DIMENSION = new Dimension(300, 355);
     /**
      * Atrybut będący licznikiem wykorzystywanym przy pokazie slajdow
      */
@@ -356,7 +362,7 @@ public class SearchEngine extends javax.swing.JFrame {
     }
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1024, 768));
+        setMinimumSize(DimensionUtils.WINDOW_DIMENSION);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -377,13 +383,13 @@ public class SearchEngine extends javax.swing.JFrame {
     private void createMainWindow(){
         mainScroll.setBorder(null);
         mainScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        mainScroll.setMaximumSize(new java.awt.Dimension(1022, 400));
-        mainScroll.setMinimumSize(new java.awt.Dimension(1022, 400));
-        mainScroll.setPreferredSize(new java.awt.Dimension(1022, 729));
+        mainScroll.setMaximumSize(MAIN_SCROLL_DIMENSION);
+        mainScroll.setMinimumSize(MAIN_SCROLL_DIMENSION);
+        mainScroll.setPreferredSize(MAIN_SCROLL_DIMENSION);
 
-        mainWindow.setMaximumSize(new java.awt.Dimension(1022, 729));
-        mainWindow.setMinimumSize(new java.awt.Dimension(1022, 729));
-        mainWindow.setPreferredSize(new java.awt.Dimension(1022, 720));
+        mainWindow.setMaximumSize(MAIN_WINDOW_DIMENSION);
+        mainWindow.setMinimumSize(MAIN_WINDOW_DIMENSION);
+        mainWindow.setPreferredSize(MAIN_WINDOW_DIMENSION);
         javax.swing.GroupLayout mainWindowLayout = new javax.swing.GroupLayout(mainWindow);
         mainWindow.setLayout(mainWindowLayout);
         mainWindowLayout.setHorizontalGroup(
@@ -438,7 +444,6 @@ public class SearchEngine extends javax.swing.JFrame {
         );
     }
     private void createMainPanel(){
-        mainPanel.setPreferredSize(new java.awt.Dimension(955, 2000));
         javax.swing.GroupLayout glowneLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(glowneLayout);
         glowneLayout.setHorizontalGroup(
@@ -532,8 +537,7 @@ public class SearchEngine extends javax.swing.JFrame {
         arrivalTextField.setAutoscrolls(false);
         leaveNumberTextField.setForeground(ColorUtils.GREY);
         leaveNumberTextField.setText("Zostaw nr tel. - oddzwonimy do ciebie");
-        leaveNumberTextField.setMinimumSize(new java.awt.Dimension(64, 27));
-        leaveNumberTextField.setPreferredSize(new java.awt.Dimension(64, 22));
+        leaveNumberTextField.setPreferredSize(LEAVE_NUMBER_TF_DIMENSION);
         leaveNumberTextField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -604,7 +608,7 @@ public class SearchEngine extends javax.swing.JFrame {
         tripsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tripsTable.setFocusable(false);
         tripsTable.setGridColor(Color.white);
-        tripsTable.setPreferredSize(new java.awt.Dimension(300, 355));
+        tripsTable.setPreferredSize(TRIPS_TABLE_DIMENSION);
         tripsTable.setSelectionBackground(ColorUtils.LIGHT_BROWN);
         tripsTable.setSelectionForeground(Color.white);
         tripsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
