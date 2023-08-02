@@ -1,6 +1,7 @@
 package com.client;
 
 import com.client.utils.ColorUtils;
+import com.client.validation.ClientValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class ClientPasswordChange extends javax.swing.JFrame {
     private static final Dimension LABEL_DIMENSION = new java.awt.Dimension(205, 16);
+    private static final Dimension WINDOW_DIMENSION = new java.awt.Dimension(330, 300);
     /**
      * Atrybut przechowujący id klienta, którego hasło jest zmieniane
      */
@@ -53,7 +55,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Zmień hasło klienta");
         getContentPane().setBackground(ColorUtils.LIGHT_BEIGE);
-        setPreferredSize(new java.awt.Dimension(330, 300));
+        setPreferredSize(WINDOW_DIMENSION);
     }
 
     private void setLabels() {
@@ -125,7 +127,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
             wrongNewPasswordLabel.setText("Pole jest wymagane.");
         }
         else {
-            newPasswordCorrect = Validation.isPasswordValid(newPassword);
+            newPasswordCorrect = ClientValidator.isPasswordValid(newPassword);
             if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else

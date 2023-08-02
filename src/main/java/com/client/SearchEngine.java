@@ -2,6 +2,8 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.DateValidator;
+import com.client.validation.ClientValidator;
 import com.server.LogsClients;
 import java.awt.*;
 import javax.swing.*;
@@ -736,7 +738,7 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String number = leaveNumberTextField.getText();
-        if(Validation.isPhoneNumberValid(number)){
+        if(ClientValidator.isPhoneNumberValid(number)){
             leaveNumberTextField.setText("");
             phoneNumberData.clear();
             phoneNumberData.add("sendNumbers");
@@ -944,7 +946,7 @@ public class SearchEngine extends javax.swing.JFrame {
      * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu i przyjazdu
      */
     private boolean performDateValidation() {
-        if(!Validation.isDateValid(departureTextField.getText()) || !Validation.isDateValid(arrivalTextField.getText())) {
+        if(!DateValidator.isDateValid(departureTextField.getText()) || !DateValidator.isDateValid(arrivalTextField.getText())) {
             JOptionPane.showMessageDialog(null, "Niepoprawnie wpisana data.", "Informacja", JOptionPane.ERROR_MESSAGE);
             return false;
         }

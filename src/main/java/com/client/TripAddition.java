@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.TripValidator;
 import com.server.LogsAdmins;
 
 import javax.swing.*;
@@ -412,7 +413,7 @@ public class TripAddition extends javax.swing.JFrame {
             cityCorrect = false;
         }
         else {
-            cityCorrect = Validation.isCountryOrCityValid(city);
+            cityCorrect = TripValidator.isCountryOrCityValid(city);
             if (cityCorrect)
                 wrongCityLabel.setText("");
             else
@@ -448,7 +449,7 @@ public class TripAddition extends javax.swing.JFrame {
             priceCorrect = false;
         }
         else {
-            priceCorrect = Validation.isPriceValid(price);
+            priceCorrect = TripValidator.isPriceValid(price);
             if (priceCorrect)
                 wrongPriceLabel.setText("");
             else
@@ -465,7 +466,7 @@ public class TripAddition extends javax.swing.JFrame {
             peopleLimitCorrect = false;
         }
         else {
-            peopleLimitCorrect = Validation.isPeopleLimitValid(peopleLimit);
+            peopleLimitCorrect = TripValidator.isPeopleLimitValid(peopleLimit);
             if (peopleLimitCorrect)
                 wrongLimitLabel.setText("");
             else
@@ -482,7 +483,7 @@ public class TripAddition extends javax.swing.JFrame {
             hotelNameCorrect = false;
         }
         else {
-            hotelNameCorrect = Validation.isHotelNameValid(hotelName);
+            hotelNameCorrect = TripValidator.isHotelNameValid(hotelName);
             if (hotelNameCorrect)
                 wrongHotelNameLabel.setText("");
             else
@@ -499,7 +500,7 @@ public class TripAddition extends javax.swing.JFrame {
             countryCorrect = false;
         }
         else {
-            countryCorrect = Validation.isCountryOrCityValid(country);
+            countryCorrect = TripValidator.isCountryOrCityValid(country);
             if (countryCorrect)
                 wrongCountryLabel.setText("");
             else

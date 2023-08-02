@@ -1,3 +1,5 @@
+package database;
+
 import com.server.Database;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;

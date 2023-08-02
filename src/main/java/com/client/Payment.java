@@ -1,6 +1,8 @@
 package com.client;
 
 import com.client.utils.ColorUtils;
+import com.client.validation.CreditCardValidator;
+import com.client.validation.DateValidator;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -317,19 +319,19 @@ public class Payment extends javax.swing.JFrame {
     private void payButtonActionPerformed(ActionEvent evt) {
         if(!methodChoosed)
             errorLabel.setText("Nie wybrano metody płatności.");
-        else if(!Validation.isFirstNameAndLastNameValid(firstNameLastNameTextField.getText())) {
+        else if(!CreditCardValidator.isFirstNameAndLastNameValid(firstNameLastNameTextField.getText())) {
             errorLabel.setText("Nieprawidłowe imię i nazwisko.");
         }
-        else if(!Validation.isCreditCardNumberValid(cardNumberTextField.getText())) {
+        else if(!CreditCardValidator.isCreditCardNumberValid(cardNumberTextField.getText())) {
             errorLabel.setText("Nieprawidłowy numer karty kredytowej.");
         }
-        else if(!Validation.isCvvValid(cvvData.getText())) {
+        else if(!CreditCardValidator.isCvvValid(cvvData.getText())) {
             errorLabel.setText("Nieprawidłowy numer cvv.");
         }
-        else if(!Validation.isMonthValid(monthTextField.getText())) {
+        else if(!DateValidator.isMonthValid(monthTextField.getText())) {
             errorLabel.setText("Nieprawidłowy miesiąc ważności karty kredytowej.");
         }
-        else if(!Validation.isYearValid(yearData.getText())) {
+        else if(!DateValidator.isYearValid(yearData.getText())) {
             errorLabel.setText("Nieprawidłowy rok ważności karty kredytowej.");
         }
         else {

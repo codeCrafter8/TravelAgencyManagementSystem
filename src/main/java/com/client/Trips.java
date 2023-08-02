@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.TripValidator;
 import com.server.LogsAdmins;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -465,7 +466,7 @@ public class Trips extends javax.swing.JFrame {
      */
     private void performCityValidation(){
         cityToSearch = searchClientTextField.getText();
-        if(Validation.isCountryOrCityValid(cityToSearch))
+        if(TripValidator.isCountryOrCityValid(cityToSearch))
             wrongTripLabel.setText("");
         else
             wrongTripLabel.setText("Sprawdź czy podane miasto jest poprawne.");
