@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.ClientValidator;
 import com.server.Logs;
 import javax.swing.*;
 import java.awt.*;
@@ -10,77 +11,77 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność rejestracji
+ * Class containing fields and methods for handling the registration window functionality.
  */
 public class Registration extends javax.swing.JFrame {
     /**
-     * Atrybut określający, czy klient istnieje w bazie
+     * Attribute indicating whether the client exists in the database.
      */
     public String clientExists;
     /**
-     * Atrybut będący imieniem
+     * Attribute representing the first name.
      */
     public String firstName;
     /**
-     * Atrybut będący nazwiskiem
+     * Attribute representing the last name.
      */
     public String lastName;
     /**
-     * Atrybut będący numerem telefonu
+     * Attribute representing the phone number.
      */
     public String phoneNumber;
     /**
-     * Atrybut będący emailem
+     * Attribute representing the email.
      */
     public String email;
     /**
-     * Atrybut będący hasłem
+     * Attribute representing the password.
      */
     public String password;
     /**
-     * Atrybut określający, czy imię jest poprawne
+     * Attribute indicating whether the first name is valid.
      */
     private boolean firstNameCorrect;
     /**
-     * Atrybut określający, czy nazwisko jest poprawne
+     * Attribute indicating whether the last name is valid.
      */
     private boolean lastNameCorrect;
     /**
-     * Atrybut określający, czy numer telefonu jest poprawny
+     * Attribute indicating whether the phone number is valid.
      */
     private boolean phoneNumberCorrect;
     /**
-     * Atrybut określający, czy email jest poprawny
+     * Attribute indicating whether the email is valid.
      */
     private boolean emailCorrect;
     /**
-     * Atrybut określający, czy hasło jest poprawne
+     * Attribute indicating whether the password is valid.
      */
     private boolean passwordCorrect;
     /**
-     * Atrybut określający, czy potwierdzone hasło jest poprawne
+     * Attribute indicating whether the confirmed password is valid.
      */
     private boolean confirmPasswordCorrect;
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut określający, czy adminstrator jest zalogowany
+     * Attribute indicating whether an administrator is logged in.
      */
     private boolean adminLogged;
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing the Client object.
      */
     private Client client;
     /**
-     * Atrybut będący imieniem administatora
+     * Attribute representing the administrator's name.
      */
     private String adminName;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param adminLogged parametr określający, czy administrator jest zalogowany
-     * @param client parametr przechowujący obiekt klasy Client
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param adminLogged Parameter indicating whether an administrator is logged in.
+     * @param client Parameter storing the Client object.
      */
     public Registration(boolean adminLogged, Client client) {
         this.client = client;
@@ -88,23 +89,25 @@ public class Registration extends javax.swing.JFrame {
         initComponents();
     }
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param adminLogged parametr określający, czy administrator jest zalogowany
-     * @param client parametr przechowujący obiekt klasy Client
-     * @param adminName parametr będący imieniem administratora
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param adminLogged Parameter indicating whether an administrator is logged in.
+     * @param client Parameter storing the Client object.
+     * @param adminName Parameter representing the administrator's name.
      */
-    public Registration(boolean adminLogged, Client client, String adminName){
+    public Registration(boolean adminLogged, Client client, String adminName) {
         this.client = client;
         this.adminLogged = adminLogged;
         this.adminName = adminName;
         initComponents();
     }
     /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     * Auxiliary constructor responsible for initializing the GUI.
      */
-    public Registration(){initComponents();}
+    public Registration() {
+        initComponents();
+    }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing the graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -363,112 +366,107 @@ public class Registration extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Cofnij"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Cancel" button click event.
+     * @param evt The event received when the button is clicked.
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        if(adminLogged)
+        if (adminLogged)
             new Clients(client, adminName).setVisible(true);
         else
             new StartPage().setVisible(true);
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji imienia
+     * Method handling the validation of the first name.
      */
-    private void performFirstNameValidation(){
+    private void performFirstNameValidation() {
         firstName = firstNameTextField.getText();
-        if(firstName.equals("")) {
+        if (firstName.equals("")) {
             firstNameCorrect = false;
-            wrongFirstNameLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            firstNameCorrect = Validation.isFirstNameValid(firstName);
+            wrongFirstNameLabel.setText("Field is required.");
+        } else {
+            firstNameCorrect = ClientValidator.isFirstNameValid(firstName);
             if (firstNameCorrect)
                 wrongFirstNameLabel.setText("");
             else
-                wrongFirstNameLabel.setText("Sprawdź czy podane imię jest poprawne.");
+                wrongFirstNameLabel.setText("Check if the provided first name is correct.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji nazwiska
+     * Method handling the validation of the last name.
      */
-    private void performLastNameValidation(){
+    private void performLastNameValidation() {
         lastName = lastNameTextField.getText();
-        if(lastName.equals("")) {
+        if (lastName.equals("")) {
             lastNameCorrect = false;
-            wrongLastNameLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            lastNameCorrect = Validation.isLastNameValid(lastName);
+            wrongLastNameLabel.setText("Field is required.");
+        } else {
+            lastNameCorrect = ClientValidator.isLastNameValid(lastName);
             if (lastNameCorrect)
                 wrongLastNameLabel.setText("");
             else
-                wrongLastNameLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
+                wrongLastNameLabel.setText("Check if the provided last name is correct.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji numeru telefonu
+     * Method handling the validation of the phone number.
      */
-    private void performPhoneNumberValidation(){
+    private void performPhoneNumberValidation() {
         phoneNumber = phoneNumberTextField.getText();
-        phoneNumberCorrect = Validation.isPhoneNumberValid(phoneNumber);
+        phoneNumberCorrect = ClientValidator.isPhoneNumberValid(phoneNumber);
         if (phoneNumberCorrect || phoneNumber.equals(""))
             wrongPhoneNumberLabel.setText("");
         else
-            wrongPhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
+            wrongPhoneNumberLabel.setText("Check if the provided phone number is correct.");
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji emailu
+     * Method handling the validation of the email.
      */
-    private void performEmailValidation(){
+    private void performEmailValidation() {
         email = emailTextField.getText();
-        if(email.equals("")) {
+        if (email.equals("")) {
             emailCorrect = false;
-            wrongEmailLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            emailCorrect = Validation.isEmailValid(email);
+            wrongEmailLabel.setText("Field is required.");
+        } else {
+            emailCorrect = ClientValidator.isEmailValid(email);
             if (emailCorrect)
                 wrongEmailLabel.setText("");
             else
-                wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+                wrongEmailLabel.setText("Check if the provided email address is correct.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji hasła
+     * Method handling the validation of the password.
      */
-    private void performPasswordValidation(){
+    private void performPasswordValidation() {
         password = new String(passwordField.getPassword());
-        if(password.equals("")) {
+        if (password.equals("")) {
             passwordCorrect = false;
-            wrongPasswordLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            passwordCorrect = Validation.isPasswordValid(password);
+            wrongPasswordLabel.setText("Field is required.");
+        } else {
+            passwordCorrect = ClientValidator.isPasswordValid(password);
             if (passwordCorrect)
                 wrongPasswordLabel.setText("");
             else
-                wrongPasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
+                wrongPasswordLabel.setText("Minimum 8 characters including one digit, one uppercase letter, and one lowercase letter.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji potwierdzonego hasła
+     * Method handling the validation of the confirmed password.
      */
-    private void performConfirmPasswordValidation(){
+    private void performConfirmPasswordValidation() {
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
-        if(!confirmPasswordFromPasswordField.equals(password)){
-            wrongConfirmPasswordLabel.setText("Hasła się nie zgadzają.");
+        if (!confirmPasswordFromPasswordField.equals(password)) {
+            wrongConfirmPasswordLabel.setText("Passwords do not match.");
             confirmPasswordCorrect = false;
-        }
-        else {
+        } else {
             wrongConfirmPasswordLabel.setText("");
             confirmPasswordCorrect = true;
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Utwórz"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Submit" button click event.
+     * @param evt The event received when the button is clicked.
      */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performFirstNameValidation();
@@ -477,7 +475,7 @@ public class Registration extends javax.swing.JFrame {
         performEmailValidation();
         performPasswordValidation();
         performConfirmPasswordValidation();
-        if(firstNameCorrect && lastNameCorrect && phoneNumberCorrect && emailCorrect && passwordCorrect && confirmPasswordCorrect) {
+        if (firstNameCorrect && lastNameCorrect && phoneNumberCorrect && emailCorrect && passwordCorrect && confirmPasswordCorrect) {
             data.clear();
             data.add("addClient");
             data.add(firstName);
@@ -488,12 +486,11 @@ public class Registration extends javax.swing.JFrame {
             Client client = new Client(data);
             clientExists = client.getReturningData().get(0);
             if (clientExists.equals("Tak")) {
-                wrongEmailLabel.setText("Użytkownik o tym adresie e-mail już istnieje. Podaj inny.");
+                wrongEmailLabel.setText("A user with this email address already exists. Please provide a different one.");
                 data.clear();
-            }
-            else{
+            } else {
                 dispose();
-                if(adminLogged)
+                if (adminLogged)
                     new Clients(this.client, adminName).setVisible(true);
                 else
                     new StartPage().setVisible(true);
@@ -501,8 +498,8 @@ public class Registration extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments passed when running the application.
      */
     public static void main(String[] args) {
         try {
@@ -520,59 +517,59 @@ public class Registration extends javax.swing.JFrame {
     }
     //GUI variables
     /**
-     * Etykieta informująca, że potwierdzone hasło jest niepoprawne
+     * Label informing that the confirmed password is incorrect.
      */
     private final javax.swing.JLabel wrongConfirmPasswordLabel = new JLabel();
     /**
-     * Etykieta informująca, że email jest niepoprawny
+     * Label informing that the email is incorrect.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
     /**
-     * Etykieta informująca, że imię jest niepoprawne
+     * Label informing that the first name is incorrect.
      */
     private final javax.swing.JLabel wrongFirstNameLabel = new JLabel();
     /**
-     * Etykieta informująca, że nazwisko jest niepoprawne
+     * Label informing that the last name is incorrect.
      */
     private final javax.swing.JLabel wrongLastNameLabel = new JLabel();
     /**
-     * Etykieta informująca, że hasło jest niepoprawne
+     * Label informing that the password is incorrect.
      */
     private final javax.swing.JLabel wrongPasswordLabel = new JLabel();
     /**
-     * Etykieta informująca, że numer telefonu jest niepoprawny
+     * Label informing that the phone number is incorrect.
      */
     private final javax.swing.JLabel wrongPhoneNumberLabel = new JLabel();
     /**
-     * Przycisk umożliwiający cofnięcie do strony logowania
+     * Button allowing the cancellation and returning to the login page.
      */
     private final javax.swing.JButton cancelButton = new JButton();
     /**
-     * Pole do wprowadzenia potwierdzonego hasła
+     * Text field for entering the confirmed password.
      */
     private final javax.swing.JPasswordField confirmPasswordField = new JPasswordField();
     /**
-     * Pole do wprowadzenia emailu
+     * Text field for entering the email.
      */
     private final javax.swing.JTextField emailTextField = new JTextField();
     /**
-     * Pole do wprowadzenia imienia
+     * Text field for entering the first name.
      */
     private final javax.swing.JTextField firstNameTextField = new JTextField();
     /**
-     * Pole do wprowadzenia nazwiska
+     * Text field for entering the last name.
      */
     private final javax.swing.JTextField lastNameTextField = new JTextField();
     /**
-     * Pole do wprowadzenia hasła
+     * Text field for entering the password.
      */
     private final javax.swing.JPasswordField passwordField = new JPasswordField();
     /**
-     * Pole do wprowadzenia numeru telefonu
+     * Text field for entering the phone number.
      */
     private final javax.swing.JTextField phoneNumberTextField = new JTextField();
     /**
-     * Przycisk umożliwiający utworzenie konta
+     * Button allowing the account creation.
      */
     private final javax.swing.JButton submitButton = new JButton();
     private final JPanel regPanel = new JPanel();

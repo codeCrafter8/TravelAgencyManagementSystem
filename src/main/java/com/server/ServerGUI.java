@@ -12,37 +12,37 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody obsługujące konstrukcję GUI i stronę techniczną serwera
+ * Class containing fields and methods for handling GUI construction and server technical aspects.
  */
 public class ServerGUI extends javax.swing.JFrame {
     /**
-     * Atrybut będący listą wszystkich wątków serwera
+     * Attribute representing a list of all server threads.
      */
     private final List<Thread> threads = new ArrayList<>();
     /**
-     * Atrybut określający ilość zalogowanych użytkowników
+     * Attribute specifying the number of connected users.
      */
     public int connectedUsersNumber;
     /**
-     * Atrybut określający czy serwer jest uruchomiony
+     * Attribute indicating whether the server is running.
      */
     private boolean running = true;
     /**
-     * Atrybut będący gniazdem, z którego podłącza się klient
+     * Attribute representing the socket to which the client is connected.
      */
     public Socket socket;
     /**
-     * Atrybut będący gniazdem serwera
+     * Attribute representing the server socket.
      */
     public ServerSocket serverSocket;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI aplikacji serwera
+     * Constructor responsible for initializing the server application GUI.
      */
     public ServerGUI() {
         initComponents();
     }
     /**
-     * Metoda zapisująca do pliku liczbę zalogowanych użytkowników
+     * Method for saving the number of connected users to a file.
      */
     public void saveConnectedUsersNumber(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("connectedUsersNumber.dat"))) {
@@ -52,14 +52,14 @@ public class ServerGUI extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda ustawiająca zmienną, która określa czy serwer jest uruchomiony
-     * @param running określa, czy serwer jest uruchomiony
+     * Method for setting the variable that determines whether the server is running.
+     * @param running specifies whether the server is running
      */
     public void setRunning(boolean running){
         this.running = running;
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne aplikacji serwera
+     * Method for initializing the graphical components of the server application.
      */
     private void initComponents() {
         setWindowProperties();
@@ -335,73 +335,79 @@ public class ServerGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca sytuację wciśnięcia przycisku "Logi serwera"
-     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     * Method handling the situation when the "Server Logs" button is pressed
+     * @param evt Event buffer created during the button click
      */
     private void serverLogsButtonActionPerformed(ActionEvent evt) {
         saveConnectedUsersNumber();
         dispose();
         new ServerLogs().setVisible(true);
     }
+
     /**
-     * Metoda obsługująca sytuację wciśnięcia przycisku "Logi administratorów"
-     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     * Method handling the situation when the "Admins Logs" button is pressed
+     * @param evt Event buffer created during the button click
      */
     private void adminsLogsButtonActionPerformed(ActionEvent evt) {
         saveConnectedUsersNumber();
         dispose();
         new AdminsLogs().setVisible(true);
     }
+
     /**
-     * Metoda obsługująca sytuację wciśnięcia przycisku "Logi klientów"
-     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     * Method handling the situation when the "Clients Logs" button is pressed
+     * @param evt Event buffer created during the button click
      */
     private void clientsLogsButtonActionPerformed(ActionEvent evt) {
         saveConnectedUsersNumber();
         dispose();
         new ClientsLogs().setVisible(true);
     }
+
     /**
-     * Metoda obsługująca sytuację wciśnięcia przycisku "Zrestartuj serwer"
-     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     * Method handling the situation when the "Restart Server" button is pressed
+     * @param evt Event buffer created during the button click
      */
     private void restartServerButtonActionPerformed(ActionEvent evt) {
-        if(running){
+        if (running) {
             setRunning(false);
             setRunning(true);
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Serwer został zrestartowany.");
+            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been restarted.");
+        } else {
+            JOptionPane.showMessageDialog(null, "The server is not running.", "Information", JOptionPane.ERROR_MESSAGE);
         }
-        else
-            JOptionPane.showMessageDialog(null, "Serwer nie jest uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
+
     /**
-     * Metoda obsługująca sytuację wciśnięcia przycisku "Zatrzymaj serwer"
-     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     * Method handling the situation when the "Stop Server" button is pressed
+     * @param evt Event buffer created during the button click
      */
     private void stopServerButtonActionPerformed(ActionEvent evt) {
-        if(running) {
+        if (running) {
             setRunning(false);
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Serwer został zatrzymany.");
+            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been stopped.");
+        } else {
+            JOptionPane.showMessageDialog(null, "The server is not running.", "Information", JOptionPane.ERROR_MESSAGE);
         }
-        else
-            JOptionPane.showMessageDialog(null, "Serwer nie jest uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
+
     /**
-     * Metoda obsługująca sytuację wciśnięcia przycisku "Uruchom serwer"
-     * @param evt Bufor pobierający event utworzony podczas kliknięcia przycisku
+     * Method handling the situation when the "Start Server" button is pressed
+     * @param evt Event buffer created during the button click
      */
     private void startServerButtonActionPerformed(ActionEvent evt) {
-        if(!running) {
+        if (!running) {
             setRunning(true);
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Serwer został uruchomiony.");
+            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been started.");
+        } else {
+            JOptionPane.showMessageDialog(null, "The server is already running.", "Information", JOptionPane.ERROR_MESSAGE);
         }
-        else
-            JOptionPane.showMessageDialog(null, "Serwer jest już uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
     }
+
     /**
-     * Metoda, której zadaniem jest akceptowanie połączeń nowych klientów do serwera
+     * Method responsible for accepting new client connections to the server
      */
-    private void operate(){
+    private void operate() {
         try {
             serverSocket = new ServerSocket(1522);
             serverSocket.setReuseAddress(true);
@@ -410,15 +416,15 @@ public class ServerGUI extends javax.swing.JFrame {
                 SwingWorker<Void, Void> worker = new GUIHandler();
                 worker.execute();
             }
-        }
-        catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("ServerGUI", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pozwalająca na uruchomienie okna aplikacji serwera
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method to launch the server application window
+     * @param args Arguments passed during the application launch
      */
     public static void main(String[] args) {
         try {
@@ -432,32 +438,37 @@ public class ServerGUI extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             new LogsServer("ServerGUI", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
-        new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Serwer został uruchomiony.");
+        new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been started.");
         ServerGUI serverGUI = new ServerGUI();
         java.awt.EventQueue.invokeLater(() -> serverGUI.setVisible(true));
         serverGUI.operate();
     }
+
     /**
-     * Klasa pozwalająca na działanie wątków niezależnie od GUI serwera
+     * A class allowing threads to work independently of the server GUI
      */
-    class GUIHandler extends SwingWorker<Void, Void> implements Serializable{
+    class GUIHandler extends SwingWorker<Void, Void> implements Serializable {
+
         /**
-         * Przesłonięcie metody konwertującej dane na typ łańcucha znaków
+         * Overridden method converting data to a string type
          */
         @Override
-        public String toString(){
+        public String toString() {
             return super.toString();
         }
+
         /**
-         * Klasa implementująca interfejs Runnable tak, aby można było tworzyć nowe wątki na serwerze
+         * Class implementing the Runnable interface to create new threads on the server
          */
         private class ClientThread implements Runnable {
+
             /**
-             * Atrybut będący listą zawierającą dane przekazywane z serwera do bazy danych
+             * Attribute holding a list containing data passed from the server to the database
              */
             private final List<String> data = new ArrayList<>();
+
             /**
-             * Metoda wysyłająca dane do klienta
+             * Method sending data to the client
              */
             private void sendData() {
                 try {
@@ -473,8 +484,9 @@ public class ServerGUI extends javax.swing.JFrame {
                     System.out.println(e.getMessage());
                 }
             }
+
             /**
-             * Przesłonięcie metody run, obsługującej uruchomiony wątek
+             * Overridden method run, handling the running thread
              */
             @Override
             public void run() {
@@ -490,52 +502,62 @@ public class ServerGUI extends javax.swing.JFrame {
                 }
             }
         }
+
         /**
-         * Przesłonięcie metody doInBackground, dzięki czemu wątki mogą działać w tle nie wpływając na GUI serwera
-         * @return Nie zwraca nic
+         * Overridden method doInBackground, allowing threads to work in the background without affecting the server GUI
+         * @return No return value
          */
         @Override
         protected Void doInBackground() {
             Thread thread = new Thread(new ClientThread());
             threads.add(thread);
             thread.start();
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Nowy wątek o nazwie " + thread.getName() + " został utworzony.");
+            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "New thread named " + thread.getName() + " has been created.");
             return null;
         }
     }
-    //GUI variables
+
+// GUI variables
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi administratorów
+     * Button to navigate to the "Admins Logs" tab
      */
     private final javax.swing.JButton adminsLogsButton = new JButton();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi klientów
+     * Button to navigate to the "Clients Logs" tab
      */
     private final javax.swing.JButton clientsLogsButton = new JButton();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Zarządzaj pracą serwera
+     * Button to navigate to the "Manage Server" tab
      */
     private final javax.swing.JButton manageServerButton = new JButton();
+
     /**
-     * Przycisk umożliwiający zrestartowanie serwera
+     * Button to restart the server
      */
     private final javax.swing.JButton restartServerButton = new JButton();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi serwera
+     * Button to navigate to the "Server Logs" tab
      */
     private final javax.swing.JButton serverLogsButton = new JButton();
+
     /**
-     * Przycisk umożliwiający uruchomienie serwera
+     * Button to start the server
      */
     private final javax.swing.JButton startServerButton = new JButton();
+
     /**
-     * Przycisk umożliwiający zatrzymanie serwera
+     * Button to stop the server
      */
     private final javax.swing.JButton stopServerButton = new JButton();
+
     /**
-     * Etykieta z liczbą połączonych użytkowników
+     * Label displaying the number of connected users
      */
     private final javax.swing.JLabel connectedUsersNumberLabel = new JLabel();
+
     private final JPanel menuPanel = new JPanel();
     private final JPanel serverPanel = new JPanel();
     private final JLabel serverIconLabel = new JLabel();

@@ -8,41 +8,41 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zmiany hasła klienta przez administratora
+ * Class containing fields and methods for handling the client password change window by the administrator.
  */
 public class ClientPasswordChange extends javax.swing.JFrame {
     private static final Dimension LABEL_DIMENSION = new java.awt.Dimension(205, 16);
     private static final Dimension WINDOW_DIMENSION = new java.awt.Dimension(330, 300);
     /**
-     * Atrybut przechowujący id klienta, którego hasło jest zmieniane
+     * Attribute holding the client ID whose password is being changed.
      */
     private final int clientId;
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute that is a list holding data passed to the Client class.
      */
     public List<String> data = new ArrayList<>();
     /**
-     * Atrybut przechowujący nowe hasło klienta, którego hasło jest zmieniane
+     * Attribute holding the new password of the client whose password is being changed.
      */
     private String newPassword;
     /**
-     * Atrybut określający, czy nowe hasło klienta jest poprawne
+     * Attribute indicating whether the new client password is valid.
      */
     private boolean newPasswordCorrect;
     /**
-     * Atrybut określający, czy potwierdzone hasło klienta jest poprawne
+     * Attribute indicating whether the confirmed client password is valid.
      */
     private boolean confirmPasswordCorrect;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param clientId parametr przechowujący id klienta, którego hasło jest zmieniane
+     * Constructor responsible for initializing the GUI and its components.
+     * @param clientId parameter holding the client ID whose password is being changed.
      */
     public ClientPasswordChange(int clientId) {
         this.clientId = clientId;
         initComponents();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -53,14 +53,14 @@ public class ClientPasswordChange extends javax.swing.JFrame {
 
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Zmień hasło klienta");
+        setTitle("Change Client Password");
         getContentPane().setBackground(ColorUtils.LIGHT_BEIGE);
         setPreferredSize(WINDOW_DIMENSION);
     }
 
     private void setLabels() {
-        newPasswordLabel.setText("Nowe hasło");
-        confirmNewPasswordLabel.setText("Powtórz nowe hasło");
+        newPasswordLabel.setText("New Password");
+        confirmNewPasswordLabel.setText("Confirm New Password");
         wrongNewPasswordLabel.setForeground(Color.RED);
         wrongNewPasswordLabel.setPreferredSize(LABEL_DIMENSION);
         wrongConfirmNewPasswordLabel.setForeground(Color.RED);
@@ -69,7 +69,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
 
     private void setButton() {
         changePasswordButton.setBackground(ColorUtils.DARK_BEIGE);
-        changePasswordButton.setText("Zmień hasło");
+        changePasswordButton.setText("Change Password");
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
     }
@@ -118,45 +118,43 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji nowego hasła klienta
+     * Method responsible for validating the new client password.
      */
-    private void performPasswordValidation(){
+    private void performPasswordValidation() {
         newPassword = new String(newPasswordField.getPassword());
-        if(newPassword.equals("")) {
+        if (newPassword.equals("")) {
             newPasswordCorrect = false;
-            wrongNewPasswordLabel.setText("Pole jest wymagane.");
-        }
-        else {
+            wrongNewPasswordLabel.setText("Field is required.");
+        } else {
             newPasswordCorrect = ClientValidator.isPasswordValid(newPassword);
             if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else
-                wrongNewPasswordLabel.setText("Hasło nie spełnia wymagań.");
+                wrongNewPasswordLabel.setText("Password does not meet the requirements.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji potwierdzonego hasła klienta
+     * Method responsible for validating the confirmed client password.
      */
-    private void performConfirmPasswordValidation(){
+    private void performConfirmPasswordValidation() {
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
-        if(!confirmPasswordFromPasswordField.equals(newPassword)){
-            wrongConfirmNewPasswordLabel.setText("Hasła się nie zgadzają.");
+        if (!confirmPasswordFromPasswordField.equals(newPassword)) {
+            wrongConfirmNewPasswordLabel.setText("Passwords do not match.");
             confirmPasswordCorrect = false;
-        }
-        else {
+        } else {
             wrongConfirmNewPasswordLabel.setText("");
             confirmPasswordCorrect = true;
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Zmień hasło"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Change Password" button.
+     * @param evt Event generated on button click.
      */
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performPasswordValidation();
         performConfirmPasswordValidation();
-        if(newPasswordCorrect){
-            if(confirmPasswordCorrect){
+        if (newPasswordCorrect) {
+            if (confirmPasswordCorrect) {
                 data.clear();
                 data.add("changeClientPassword");
                 data.add(newPassword);
@@ -168,8 +166,8 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing to run the window.
+     * @param args Arguments received when running the application.
      */
     public static void main(String[] args) {
         try {
@@ -188,21 +186,24 @@ public class ClientPasswordChange extends javax.swing.JFrame {
     //GUI variables
     private final javax.swing.JButton changePasswordButton = new javax.swing.JButton();
     private final javax.swing.JLabel newPasswordLabel = new javax.swing.JLabel();
+    /**
+     * Label for confirming the new password
+     */
     private final javax.swing.JLabel confirmNewPasswordLabel = new javax.swing.JLabel();
     /**
-     * Pole do wprowadzenia potwierdzonego hasła klienta
+     * Field for entering the confirmed password of the client.
      */
     private final javax.swing.JPasswordField confirmPasswordField = new javax.swing.JPasswordField();
     /**
-     * Pole do wprowadzenia nowego hasła klienta
+     * Field for entering the new password of the client.
      */
     private final javax.swing.JPasswordField newPasswordField = new javax.swing.JPasswordField();
     /**
-     * Etykieta informująca, że potwierdzone hasło klienta jest niepoprawne
+     * Label indicating that the confirmed password of the client is incorrect.
      */
     private final javax.swing.JLabel wrongConfirmNewPasswordLabel = new javax.swing.JLabel();
     /**
-     * Etykieta informująca, że nowe hasło klienta jest niepoprawne
+     * Label indicating that the new password of the client is incorrect.
      */
     private final javax.swing.JLabel wrongNewPasswordLabel = new javax.swing.JLabel();
 }

@@ -7,15 +7,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 /**
- * Klasa zawierająca pola i metody obsługujące komponenty GUI dotyczącego logów administratorów
+ * Class containing fields and methods for handling GUI components related to administrator logs.
  */
 public class AdminsLogs extends javax.swing.JFrame {
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI
+     * Constructor responsible for initializing the GUI.
      */
     public AdminsLogs() {
         initComponents();
     }
+
     private void setLogsList() {
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
         for (String log : LogsAdmins.logs) {
@@ -24,7 +25,7 @@ public class AdminsLogs extends javax.swing.JFrame {
         adminsLogsList.setModel(defaultListModel);
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method for initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -223,32 +224,35 @@ public class AdminsLogs extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku serverLogs
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the serverLogsButton.
+     * @param evt The event triggered by clicking the button.
      */
     private void serverLogsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ServerLogs().setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku manageServer
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the manageServerButton.
+     * @param evt The event triggered by clicking the button.
      */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ServerGUI().setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku clientsLogs
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the clientsLogsButton.
+     * @param evt The event triggered by clicking the button.
      */
     private void clientsLogsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new ClientsLogs().setVisible(true);
     }
+
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments accepted during application launch.
      */
     public static void main(String[] args) {
         try {
@@ -265,31 +269,37 @@ public class AdminsLogs extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new AdminsLogs().setVisible(true));
     }
-    //GUI variables
+
+    // GUI variables
     private final JPanel menuPanel = new JPanel();
     private final JPanel serverPanel = new JPanel();
     private final JLabel serverIconLabel = new JLabel();
     private final JLabel serverLabel = new JLabel();
     private final JPanel optionsPanel = new JPanel();
     private final JLabel adminsLogsLabel = new JLabel();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi administratorów
+     * Button allowing switching to the Administrators Logs tab.
      */
     private final javax.swing.JButton adminsLogsButton = new JButton();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi klientów
+     * Button allowing switching to the Clients Logs tab.
      */
     private final javax.swing.JButton clientsLogsButton = new JButton();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Zarządzaj pracą serwera
+     * Button allowing switching to the Manage Server tab.
      */
     private final javax.swing.JButton manageServerButton = new JButton();
+
     /**
-     * Przycisk umożliwiający przejście do zakładki Logi serwera
+     * Button allowing switching to the Server Logs tab.
      */
     private final javax.swing.JButton serverLogsButton = new JButton();
+
     /**
-     * Lista z logami administratorów
+     * List containing administrators logs.
      */
     private final javax.swing.JList<String> adminsLogsList = new JList<>();
 }

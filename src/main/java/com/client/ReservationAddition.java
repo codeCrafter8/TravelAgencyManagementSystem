@@ -10,33 +10,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania rezerwacji
+ * Class containing fields and methods for handling the window that allows adding reservations.
  */
 public class ReservationAddition extends javax.swing.JFrame {
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list that stores data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane wycieczek zwracane z klasy Client
+     * Attribute representing a list that stores trip data returned from the Client class.
      */
     private final List<String> tripsData = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane klientów zwracane z klasy Client
+     * Attribute representing a list that stores client data returned from the Client class.
      */
     private final List<String> clientsData = new ArrayList<>();
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private final Client client;
     /**
-     * Atrybut będący imieniem administratora
+     * Attribute representing the name of the administrator.
      */
     private final String adminName;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Klient
-     * @param adminName parametr przechowujący imię administratora
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param client Parameter storing an object of the Client class.
+     * @param adminName Parameter storing the administrator's name.
      */
     public ReservationAddition(Client client, String adminName) {
         this.client = client;
@@ -47,7 +47,7 @@ public class ReservationAddition extends javax.swing.JFrame {
         populateTripsTable();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method for initializing the graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -204,9 +204,9 @@ public class ReservationAddition extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda pobierająca odpowiednie dane z klasy Client
+     * Method for fetching relevant data from the Client class.
      */
-    private void generateData(){
+    private void generateData() {
         data.clear();
         data.add("clientsUpdate");
         Client client1 = new Client(data);
@@ -217,71 +217,71 @@ public class ReservationAddition extends javax.swing.JFrame {
         tripsData.addAll(client2.getReturningData());
     }
     /**
-     * Metoda wypełniająca tabelę z klientami
+     * Method for populating the clients table.
      */
-    private void populateClientsTable(){
+    private void populateClientsTable() {
         int counter = 0;
-        int size = (clientsData.size()/5);
+        int size = (clientsData.size() / 5);
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{clientsData.get(counter), clientsData.get(counter+1), clientsData.get(counter+2), clientsData.get(counter+3),
-                    clientsData.get(counter+4)});
-            if(size > 1)
-                counter+=5;
+        for (int i = 0; i < size; i++) {
+            model.addRow(new Object[]{clientsData.get(counter), clientsData.get(counter + 1), clientsData.get(counter + 2), clientsData.get(counter + 3),
+                    clientsData.get(counter + 4)});
+            if (size > 1)
+                counter += 5;
         }
     }
     /**
-     * Metoda wypełniająca tabelę z wycieczkami
+     * Method for populating the trips table.
      */
-    private void populateTripsTable(){
+    private void populateTripsTable() {
         int counter = 0;
-        int size = (tripsData.size()/10);
+        int size = (tripsData.size() / 10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{tripsData.get(counter+7), tripsData.get(counter) + '/' + tripsData.get(counter+1), tripsData.get(counter+4) + " zł", tripsData.get(counter+6),(tripsData.get(counter+2) + " - " + tripsData.get(counter+3)),});
-            if(size > 1)
-                counter+=10;
+        for (int i = 0; i < size; i++) {
+            model.addRow(new Object[]{tripsData.get(counter + 7), tripsData.get(counter) + '/' + tripsData.get(counter + 1), tripsData.get(counter + 4) + " zł", tripsData.get(counter + 6),
+                    (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),});
+            if (size > 1)
+                counter += 10;
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Dodaj rezerwację"
+     * Method handling the "Add Reservation" button click.
      */
     private void submitButtonActionPerformed() {
         DefaultTableModel clientsModel = (DefaultTableModel) clientsTable.getModel();
         int clientsRow = clientsTable.getSelectedRow();
         DefaultTableModel tripsModel = (DefaultTableModel) tripsTable.getModel();
         int tripsRow = tripsTable.getSelectedRow();
-        if(Integer.parseInt(tripsModel.getValueAt(tripsRow, 3).toString()) < Integer.parseInt(peopleQuantitySpinner.getValue().toString())){
-            JOptionPane.showMessageDialog(null, "Zbyt duża liczba osób.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        }
-        else{
+        if (Integer.parseInt(tripsModel.getValueAt(tripsRow, 3).toString()) < Integer.parseInt(peopleQuantitySpinner.getValue().toString())) {
+            JOptionPane.showMessageDialog(null, "Too many people.", "Information", JOptionPane.ERROR_MESSAGE);
+        } else {
             data.clear();
             data.add("addReservation");
             data.add(tripsModel.getValueAt(tripsRow, 0).toString());
             data.add(clientsModel.getValueAt(clientsRow, 0).toString());
             data.add(peopleQuantitySpinner.getValue().toString());
             String item = (String) insuranceComboBox.getSelectedItem();
-            if(Objects.equals(item, "Brak"))
+            if (Objects.equals(item, "None"))
                 data.add("");
             else
                 data.add(item);
             new Client(data);
             data.clear();
             dispose();
-            new Reservations(client,adminName).setVisible(true);
+            new Reservations(client, adminName).setVisible(true);
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Anuluj rezerwację"
+     * Method handling the "Cancel Reservation" button click.
      */
     private void cancelButtonActionPerformed() {
         dispose();
-        new Reservations(client,adminName).setVisible(true);
+        new Reservations(client, adminName).setVisible(true);
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing for the window to be launched.
+     * @param args Arguments passed when starting the application
      */
     public static void main(String[] args) {
         try {
@@ -299,19 +299,19 @@ public class ReservationAddition extends javax.swing.JFrame {
     }
     //GUI variables
     /**
-     * Tabela z klientami
+     * Table with clients
      */
     private final javax.swing.JTable clientsTable = new JTable();
     /**
-     * Menu podręczne z opcjami ubezpieczenia
+     * Dropdown menu with insurance options
      */
     private final javax.swing.JComboBox<String> insuranceComboBox = new JComboBox<>();
     /**
-     * Element umożliwiający wybór ilości osób
+     * Element allowing for the selection of the number of people
      */
     private final javax.swing.JSpinner peopleQuantitySpinner = new JSpinner();
     /**
-     * Tabela z wycieczkami
+     * Table with trips
      */
     private final javax.swing.JTable tripsTable = new JTable();
     private final JScrollPane tripsTableScrollPane = new JScrollPane();

@@ -9,31 +9,39 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wyświetlenia szczegółów rezerwacji
+ * Class containing fields and methods for handling a window with functionality to display reservation details.
  */
 public class TripDescription extends javax.swing.JFrame {
     private static final Color BLUE = new Color(102, 102, 255);
     public static final Dimension QUESTION_MARK_BUTTON_DIMENSION = new Dimension(22, 24);
+
     /**
-     * Atrybut przechowujący ubezpieczenie wycieczki
+     * Attribute holding the trip insurance.
      */
     private String insurance;
+
     /**
-     * Atrybut będący listą z danymi wycieczki
+     * Attribute being a list containing trip data.
      */
     private List<String> resData = new ArrayList<>();
+
     /**
-     * Atrybut przechowujący numerem zaznaczonego wiersza w tabeli z rezerwacjami w klasie MyAccount
+     * Attribute holding the selected row number in the reservation table in the MyAccount class.
      */
     private int selectedRow;
+
     /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     * Helper constructor responsible for initializing the GUI.
      */
-    public TripDescription(){initComponents();}
+    public TripDescription() {
+        initComponents();
+    }
+
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param resData parametr będący listą przechowującą dane wycieczki
-     * @param selectedRow parametr będący numerem zaznaczonego wiersza w tabeli z rezerwacjami w klasie MyAccount
+     * Constructor responsible for initializing the GUI and relevant elements.
+     *
+     * @param resData     parameter being a list holding trip data.
+     * @param selectedRow parameter holding the selected row number in the reservation table in the MyAccount class.
      */
     public TripDescription(List<String> resData, int selectedRow) {
         this.resData = resData;
@@ -41,8 +49,9 @@ public class TripDescription extends javax.swing.JFrame {
         initComponents();
         fillLabels();
     }
+
     /**
-     * Metoda wypełniająca odpowiednie etykiety danymi wycieczki
+     * Method filling the corresponding labels with trip data.
      */
     private void fillLabels() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -50,34 +59,35 @@ public class TripDescription extends javax.swing.JFrame {
         Date date2;
         int daysBetween = 0;
         int counter = 0;
-        int size = (resData.size())/11;
-        for(int i=0; i<size; i++){
-            if(i == selectedRow) {
+        int size = (resData.size()) / 11;
+        for (int i = 0; i < size; i++) {
+            if (i == selectedRow) {
                 try {
-                    date1 = formatter.parse(String.valueOf(resData.get(counter+5)));
-                    date2 = formatter.parse(String.valueOf(resData.get(counter+6)));
+                    date1 = formatter.parse(String.valueOf(resData.get(counter + 5)));
+                    date2 = formatter.parse(String.valueOf(resData.get(counter + 6)));
                     daysBetween = (int) SearchEngine.getDifferenceDays(date1, date2);
-                }catch (ParseException e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                typeCountryLabel.setText(resData.get(counter+1));
-                typeCityLabel.setText(resData.get(counter+2));
-                typeDepartureCityLabel.setText(resData.get(counter+8));
-                typeDateLabel.setText("od " + resData.get(counter+5) + " do " + resData.get(counter+6));
+                typeCountryLabel.setText(resData.get(counter + 1));
+                typeCityLabel.setText(resData.get(counter + 2));
+                typeDepartureCityLabel.setText(resData.get(counter + 8));
+                typeDateLabel.setText("from " + resData.get(counter + 5) + " to " + resData.get(counter + 6));
                 typeDaysLabel.setText(String.valueOf(daysBetween));
-                typePeopleLabel.setText(resData.get(counter+4));
-                typePriceLabel.setText(resData.get(counter+3) + " zł");
-                insurance = resData.get(counter+7);
+                typePeopleLabel.setText(resData.get(counter + 4));
+                typePriceLabel.setText(resData.get(counter + 3) + " zł");
+                insurance = resData.get(counter + 7);
                 typeInsuranceLabel.setText(insurance);
-                typeHotelNameLabel.setText(resData.get(counter+9));
-                typeHotelDescriptionLabel.setText("<html>" + resData.get(counter+10)+ "<html>");
+                typeHotelNameLabel.setText(resData.get(counter + 9));
+                typeHotelDescriptionLabel.setText("<html>" + resData.get(counter + 10) + "<html>");
             }
-            if(size > 1)
-                counter+=11;
+            if (size > 1)
+                counter += 11;
         }
     }
+
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -201,49 +211,50 @@ public class TripDescription extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku pytajnika
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the question mark button.
+     * @param evt The event triggered by clicking the button.
      */
     private void jButtonActionPerformed(ActionEvent evt) {
-        if(insurance.equals("Standard"))
+        if (insurance.equals("Standard"))
             JOptionPane.showMessageDialog(null, """
-                    Ubezpieczenie Standard (cena: 150 zł).
+                Standard Insurance (price: 150 zł).
 
-                    Obejmuje ubezpieczenia:
-                    kosztów leczenia i transportu do 20 000 EUR,
-                    następstw nieszczęśliwych wypadków,
-                    """, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-        if(insurance.equals("Komfort"))
+                Covers insurance for:
+                medical expenses and transport up to 20,000 EUR,
+                consequences of accidents,
+                """, "Information", JOptionPane.INFORMATION_MESSAGE);
+        if (insurance.equals("Komfort"))
             JOptionPane.showMessageDialog(null, """
-                    Ubezpieczenie Komfort (cena: 300 zł).
+                Komfort Insurance (price: 300 zł).
 
-                    Obejmuje:
-                    koszty leczenia i transportu do 50 000 EUR, w tym koszty powstałe na skutek zachorowania na COVID-19,
-                    dodatkowe świadczenie na wypadek kwarantanny w wysokości 1 000 EUR,
-                    koszty następstw nieszczęśliwych wypadków,
-                    koszty przerwania podróży (do 5 000 PLN),
-                    ubezpieczenie bagażu do 2 000 PLN,
-                    opóźnienie dostarczenia bagażu do 1 000 PLN,
-                    koszty ratownictwa i poszukiwań (do 5 000 EUR).""", "Informacja", JOptionPane.INFORMATION_MESSAGE);
-        if(insurance.equals("Premium"))
+                Covers:
+                medical expenses and transport up to 50,000 EUR, including costs related to COVID-19,
+                additional benefit for quarantine in the amount of 1,000 EUR,
+                consequences of accidents,
+                trip interruption costs (up to 5,000 PLN),
+                baggage insurance up to 2,000 PLN,
+                delayed baggage delivery up to 1,000 PLN,
+                rescue and search costs (up to 5,000 EUR).""", "Information", JOptionPane.INFORMATION_MESSAGE);
+        if (insurance.equals("Premium"))
             JOptionPane.showMessageDialog(null, """
-                    Ubezpieczenie Premium (cena: 600 zł).
+                Premium Insurance (price: 600 zł).
 
-                    Obejmuje:
-                    koszty leczenia i transportu do 100 000 EUR, w tym koszty powstałe na skutek zachorowania na COVID-19 i następstw chorób przewlekłych,
-                    dodatkowe świadczenia na wypadek kwarantanny w wysokości 1 000 EUR,
-                    koszty następstw nieszczęśliwych wypadków,
-                    koszty przerwania podróży (do 5 000 PLN),
-                    ubezpieczenie bagażu do 3 000 PLN,
-                    opóźnienie dostarczenia bagażu do 1 000 PLN,
-                    koszty ratownictwa i poszukiwań (do 5 000 EUR).
-                    """, "Informacja", JOptionPane.INFORMATION_MESSAGE);
-        if(insurance.equals("Brak"))
-            JOptionPane.showMessageDialog(null, "Ubezpieczenie nie zostało wykupione.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                Covers:
+                medical expenses and transport up to 100,000 EUR, including costs related to COVID-19 and chronic diseases,
+                additional benefit for quarantine in the amount of 1,000 EUR,
+                consequences of accidents,
+                trip interruption costs (up to 5,000 PLN),
+                baggage insurance up to 3,000 PLN,
+                delayed baggage delivery up to 1,000 PLN,
+                rescue and search costs (up to 5,000 EUR).
+                """, "Information", JOptionPane.INFORMATION_MESSAGE);
+        if (insurance.equals("Brak"))
+            JOptionPane.showMessageDialog(null, "No insurance has been purchased.", "Information", JOptionPane.INFORMATION_MESSAGE);
     }
+
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments passed when launching the application.
      */
     public static void main(String[] args) {
         try {
@@ -259,7 +270,8 @@ public class TripDescription extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new TripDescription().setVisible(true));
     }
-    //GUI variables
+
+    // GUI variables
     private final JLabel countryLabel = new JLabel();
     private final JLabel cityLabel = new JLabel();
     private final JLabel departureCityLabel = new JLabel();
@@ -271,44 +283,45 @@ public class TripDescription extends javax.swing.JFrame {
     private final JLabel hotelNameLabel = new JLabel();
     private final JLabel hotelDescriptionLabel = new JLabel();
     private final JButton questionMarkButton = new JButton();
+
     /**
-     * Etykieta z miastem wycieczki
+     * Label for the trip city.
      */
     private final javax.swing.JLabel typeCityLabel = new JLabel();
     /**
-     * Etykieta z krajem wycieczki
+     * Label for the trip country.
      */
     private final javax.swing.JLabel typeCountryLabel = new JLabel();
     /**
-     * Etykieta z datą wycieczki
+     * Label for the trip date.
      */
     private final javax.swing.JLabel typeDateLabel = new JLabel();
     /**
-     * Etykieta z ilością dni wycieczki
+     * Label for the trip duration in days.
      */
     private final javax.swing.JLabel typeDaysLabel = new JLabel();
     /**
-     * Etykieta z miastem wylotu/przylotu wycieczki
+     * Label for the trip departure/arrival city.
      */
     private final javax.swing.JLabel typeDepartureCityLabel = new JLabel();
     /**
-     * Etykieta z opisem hotelu wycieczki
+     * Label for the trip hotel description.
      */
     private final javax.swing.JLabel typeHotelDescriptionLabel = new JLabel();
     /**
-     * Etykieta z nazwą hotelu wycieczki
+     * Label for the trip hotel name.
      */
     private final javax.swing.JLabel typeHotelNameLabel = new JLabel();
     /**
-     * Etykieta z ubezpieczeniem wycieczki
+     * Label for the trip insurance.
      */
     private final javax.swing.JLabel typeInsuranceLabel = new JLabel();
     /**
-     * Etykieta z ilością osób wycieczki
+     * Label for the trip number of people.
      */
     private final javax.swing.JLabel typePeopleLabel = new JLabel();
     /**
-     * Etykieta z ceną wycieczki
+     * Label for the trip price.
      */
     private final javax.swing.JLabel typePriceLabel = new JLabel();
 }

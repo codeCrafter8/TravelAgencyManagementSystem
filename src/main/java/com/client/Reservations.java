@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.ClientValidator;
 import com.server.LogsAdmins;
 
 import java.awt.*;
@@ -16,43 +17,43 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących rezerwacji
+ * Class containing fields and methods to handle the window for performing operations related to reservations.
  */
 public class Reservations extends javax.swing.JFrame {
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list for storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane rezerwacji zwracane z klasy Client
+     * Attribute representing a list for storing reservation data returned from the Client class.
      */
     List<String> resData = new ArrayList<>();
     /**
-     * Element do sortowania tabeli z rezerwacjami
+     * Element for sorting the reservations table.
      */
     private TableRowSorter<TableModel> rowSorter;
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private Client client;
     /**
-     * Atrybut przechowujący email administratora
+     * Attribute storing the administrator's email.
      */
     private String email;
     /**
-     * Atrybut przechowujący nazwisko klienta przy wyszukiwaniu rezerwacji
+     * Attribute storing the last name of the client when searching for reservations.
      */
     private String lastNameToSearch;
     /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     * Auxiliary constructor for initializing the GUI.
      */
     public Reservations() {
         initComponents();
     }
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Klient
-     * @param adminName parametr przechowujący imię administratora
+     * Constructor for initializing the GUI and appropriate elements.
+     * @param client Parameter storing an object of the Client class.
+     * @param adminName Parameter storing the administrator's name.
      */
     public Reservations(Client client, String adminName){
         this.client = client;
@@ -64,7 +65,7 @@ public class Reservations extends javax.swing.JFrame {
         searchRes();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method for initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -394,17 +395,17 @@ public class Reservations extends javax.swing.JFrame {
         );
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Dodaj rezerwację"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the action when the "Add reservation" button is clicked.
+     * @param evt The event received when the button is clicked.
      */
     private void addResButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new ReservationAddition(client,adminNameLabel.getText()).setVisible(true);
+        new ReservationAddition(client, adminNameLabel.getText()).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the action when the "Log out" button is clicked.
+     * @param evt The event received when the button is clicked.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
@@ -416,40 +417,40 @@ public class Reservations extends javax.swing.JFrame {
         new StartPage().setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Klienci"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the action when the "Clients" button is clicked.
+     * @param evt The event received when the button is clicked.
      */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new Clients(client,adminNameLabel.getText()).setVisible(true);
+        new Clients(client, adminNameLabel.getText()).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wycieczki"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the action when the "Trips" button is clicked.
+     * @param evt The event received when the button is clicked.
      */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Trips(client,adminNameLabel.getText()).setVisible(true);
+        new Trips(client, adminNameLabel.getText()).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Panel"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the action when the "Panel" button is clicked.
+     * @param evt The event received when the button is clicked.
      */
     private void panelButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Dashboard(client,adminNameLabel.getText()).setVisible(true);
+        new Dashboard(client, adminNameLabel.getText()).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Usuń rezerwację"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the action when the "Delete reservation" button is clicked.
+     * @param evt The event received when the button is clicked.
      */
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
         if(resTable.getSelectedRow() == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No reservation selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             data.clear();
             data.add("deleteRes");
@@ -460,7 +461,7 @@ public class Reservations extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda pobierająca odpowiednie dane z klasy Client
+     * Method fetching the appropriate data from the Client class.
      */
     private void generateData(){
         data.clear();
@@ -469,7 +470,7 @@ public class Reservations extends javax.swing.JFrame {
         resData.addAll(client1.getReturningData());
     }
     /**
-     * Metoda wypełniająca tabelę z rezerwacjami
+     * Method populating the table with reservations.
      */
     private void populateTable(){
         int counter = 0;
@@ -483,7 +484,7 @@ public class Reservations extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda pozwalająca na wyszukiwanie rezerwacji po nazwisku
+     * Method allowing searching for reservations by last name.
      */
     private void searchRes(){
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -516,20 +517,20 @@ public class Reservations extends javax.swing.JFrame {
         });
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji nazwiska wyszukiwanej rezerwacji
+     * Method handling last name validation for reservation search.
      */
     private void performLastNameValidation() {
         lastNameToSearch = searchResTextField.getText();
-        if(Validation.isLastNameValid(lastNameToSearch))
+        if(ClientValidator.isLastNameValid(lastNameToSearch))
             wrongResLabel.setText("");
         else
-            wrongResLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
+            wrongResLabel.setText("Check if the provided last name is correct.");
         if(lastNameToSearch.equals(""))
             wrongResLabel.setText("");
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments received during application startup.
      */
     public static void main(String[] args) {
         try {
@@ -547,40 +548,40 @@ public class Reservations extends javax.swing.JFrame {
     }
     //GUI variables
     /**
-     * Etykieta z imieniem administratora
+     * Label displaying the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
     /**
-     * Przycisk umożliwiający przejście do zakładki Klienci
+     * Button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
     /**
-     * Przycisk umożliwiający wylogowanie się
+     * Button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Panel
+     * Button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
     /**
-     * Tabela z rezerwacjami
+     * Table displaying reservations.
      */
     private final javax.swing.JTable resTable = new JTable();
     /**
-     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     * Button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
     /**
-     * Pole do wprowadzenia nazwiska klienta przy wyszukiwaniu rezerwacji
+     * Field for entering the last name of the client when searching for reservations.
      */
     private final javax.swing.JTextField searchResTextField = new JTextField();
     /**
-     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     * Button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
     /**
-     * Etykieta informująca, że nazwisko klienta przy wyszukiwaniu rezerwacji jest niepoprawny
-     */
+    * Label indicating that the last name entered for searching reservations is incorrect.
+    */
     private final javax.swing.JLabel wrongResLabel = new JLabel();
     private final JPanel menuPanel = new JPanel();
     private final JPanel adminPanel = new JPanel();
@@ -593,4 +594,4 @@ public class Reservations extends javax.swing.JFrame {
     private final JButton addResButton = new JButton();
     private final JButton deleteResButton = new JButton();
     private final JButton editResButton = new JButton();
-}
+ }

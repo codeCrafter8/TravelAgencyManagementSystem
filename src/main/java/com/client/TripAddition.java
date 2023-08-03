@@ -13,86 +13,86 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność dodania wycieczki
+ * Class containing fields and methods for handling a window with functionality to add a trip.
  */
 public class TripAddition extends javax.swing.JFrame {
     public static final Dimension WRONG_ITEM_LABEL_DIMENSION_SMALL = new Dimension(100, 16);
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list holding data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą możliwe miasta wylotu/przylotu
+     * Attribute representing a list holding possible departure/arrival cities.
      */
     private final List<String> departureCities = new ArrayList<>();
     /**
-     * Atrybut określający, czy kraj jest poprawny
+     * Attribute indicating whether the country is correct.
      */
     private boolean countryCorrect;
     /**
-     * Atrybut określający, czy miasto jest poprawne
+     * Attribute indicating whether the city is correct.
      */
     private boolean cityCorrect;
     /**
-     * Atrybut określający, czy miasto wylotu/przylotu jest poprawne
+     * Attribute indicating whether the departure/arrival city is correct.
      */
     private boolean departureCityCorrect;
     /**
-     * Atrybut określający, czy cena jest poprawna
+     * Attribute indicating whether the price is correct.
      */
     private boolean priceCorrect;
     /**
-     * Atrybut określający, czy nazwa hotelu jest poprawna
+     * Attribute indicating whether the hotel name is correct.
      */
     private boolean hotelNameCorrect;
     /**
-     * Atrybut określający, czy limit osób jest poprawny
+     * Attribute indicating whether the people limit is correct.
      */
     private boolean peopleLimitCorrect;
     /**
-     * Atrybut przechowujący kraj
+     * Attribute holding the country.
      */
     private String country;
     /**
-     * Atrybut przechowujący miasto
+     * Attribute holding the city.
      */
     private String city;
     /**
-     * Atrybut przechowujący miasto wylotu/przylotu
+     * Attribute holding the departure/arrival city.
      */
     private String departureCity;
     /**
-     * Atrybut przechowujący cenę
+     * Attribute holding the price.
      */
     private String price;
     /**
-     * Atrybut przechowujący limit osób
+     * Attribute holding the people limit.
      */
     private String peopleLimit;
     /**
-     * Atrybut przechowujący nazwę hotelu
+     * Attribute holding the hotel name.
      */
     private String hotelName;
     /**
-     * Atrybut przechowujący datę przyjazdu
+     * Attribute holding the arrival date.
      */
     private Date arrivalDate;
     /**
-     * Atrybut przechowujący datę wyjazdu
+     * Attribute holding the departure date.
      */
     private Date departureDate;
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute being an object of the Client class.
      */
     private final Client client;
     /**
-     * Atrybut przechowujący imię administratora
+     * Attribute holding the administrator's name.
      */
     private final String adminName;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Klient
-     * @param adminName parametr przechowujący imię administratora
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param client parameter holding an object of the Client class.
+     * @param adminName parameter holding the administrator's name.
      */
     public TripAddition(Client client, String adminName) {
         this.client = client;
@@ -102,13 +102,13 @@ public class TripAddition extends javax.swing.JFrame {
     }
     private void setDepartureCities(){
         departureCities.add("Krakow");
-        departureCities.add("Warszawa");
+        departureCities.add("Warsaw");
         departureCities.add("Wroclaw");
         departureCities.add("Katowice");
         departureCities.add("Gdansk");
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -346,7 +346,7 @@ public class TripAddition extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Dodaj wycieczkę"
+     * Method handling the "Add Trip" button click.
      */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performCountryValidation();
@@ -357,7 +357,7 @@ public class TripAddition extends javax.swing.JFrame {
         performHotelNameValidation();
         boolean departureCorrect = departureIsValid();
         boolean arrivalCorrect = arrivalIsValid();
-        if(countryCorrect && cityCorrect && departureCityCorrect && priceCorrect && peopleLimitCorrect && hotelNameCorrect && departureCorrect && arrivalCorrect) {
+        if (countryCorrect && cityCorrect && departureCityCorrect && priceCorrect && peopleLimitCorrect && hotelNameCorrect && departureCorrect && arrivalCorrect) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String arrival = dateFormat.format(arrivalDate);
             String departure = dateFormat.format(departureDate);
@@ -374,149 +374,153 @@ public class TripAddition extends javax.swing.JFrame {
             new Client(data);
             data.clear();
             dispose();
-            new Trips(client,adminName).setVisible(true);
+            new Trips(client, adminName).setVisible(true);
         }
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu
-     * @return zwraca true jeśli data wyjazdu jest poprawna, w przeciwnym wypadku zwraca false
+     * Method responsible for the validation of the departure date.
+     * @return Returns true if the departure date is valid; otherwise, returns false.
      */
     private boolean departureIsValid() {
         departureDate = departureDateChooser.getDate();
-        if(departureDate == null) {
-            wrongDepartureLabel.setText("Pole wymagane.");
+        if (departureDate == null) {
+            wrongDepartureLabel.setText("This field is required.");
             return false;
         }
         wrongDepartureLabel.setText("");
         return true;
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji daty przyjazdu
-     * @return zwraca true jeśli data przyjazdu jest poprawna, w przeciwnym wypadku zwraca false
+     * Method responsible for the validation of the arrival date.
+     * @return Returns true if the arrival date is valid; otherwise, returns false.
      */
     private boolean arrivalIsValid() {
         arrivalDate = arrivalDateChooser.getDate();
-        if(arrivalDate == null) {
-            wrongArrivalLabel.setText("Pole wymagane.");
+        if (arrivalDate == null) {
+            wrongArrivalLabel.setText("This field is required.");
             return false;
         }
         wrongArrivalLabel.setText("");
         return true;
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji miasta
+     * Method responsible for the validation of the city.
      */
     private void performCityValidation() {
         city = cityTextField.getText();
-        if(city.equals("")) {
-            wrongCityLabel.setText("Pole wymagane.");
+        if (city.equals("")) {
+            wrongCityLabel.setText("This field is required.");
             cityCorrect = false;
-        }
-        else {
+        } else {
             cityCorrect = TripValidator.isCountryOrCityValid(city);
             if (cityCorrect)
                 wrongCityLabel.setText("");
             else
-                wrongCityLabel.setText("Sprawdź czy podane miasto jest poprawne.");
+                wrongCityLabel.setText("Check if the provided city is valid.");
         }
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji miasta wylotu/przylotu
+     * Method responsible for the validation of the departure city.
      */
     private void performDepartureCityValidation() {
         departureCity = departureCityField.getText();
-        if(departureCity.equals("")) {
-            wrongDepartureCityLabel.setText("Pole wymagane.");
+        if (departureCity.equals("")) {
+            wrongDepartureCityLabel.setText("This field is required.");
             departureCityCorrect = false;
-        }
-        else {
+        } else {
             if (departureCities.contains(departureCity)) {
                 wrongDepartureCityLabel.setText("");
                 departureCityCorrect = true;
             } else {
-                wrongDepartureCityLabel.setText("Nie mozna leciec z tego miasta.");
+                wrongDepartureCityLabel.setText("Cannot fly from this city.");
                 departureCityCorrect = false;
             }
         }
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji ceny
-     */
-    private void performPriceValidation() {
-        price = priceField.getText();
-        if(price.equals("")) {
-            wrongPriceLabel.setText("Pole wymagane.");
-            priceCorrect = false;
-        }
-        else {
-            priceCorrect = TripValidator.isPriceValid(price);
-            if (priceCorrect)
-                wrongPriceLabel.setText("");
-            else
-                wrongPriceLabel.setText("Zły format.");
-        }
-    }
-    /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji limitu osób
-     */
-    private void performPeopleLimitValidation() {
-        peopleLimit = limitTextField.getText();
-        if(peopleLimit.equals("")) {
-            wrongLimitLabel.setText("Pole wymagane.");
-            peopleLimitCorrect = false;
-        }
-        else {
-            peopleLimitCorrect = TripValidator.isPeopleLimitValid(peopleLimit);
-            if (peopleLimitCorrect)
-                wrongLimitLabel.setText("");
-            else
-                wrongLimitLabel.setText("Zły format.");
-        }
-    }
-    /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji nazwy hotelu
-     */
-    private void performHotelNameValidation() {
-        hotelName = nameHotelTextField.getText();
-        if(hotelName.equals("")) {
-            wrongHotelNameLabel.setText("Pole wymagane.");
-            hotelNameCorrect = false;
-        }
-        else {
-            hotelNameCorrect = TripValidator.isHotelNameValid(hotelName);
-            if (hotelNameCorrect)
-                wrongHotelNameLabel.setText("");
-            else
-                wrongHotelNameLabel.setText("Sprawdź czy podana nazwa hotelu jest poprawna.");
-        }
-    }
-    /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji kraju
+     * Method responsible for the validation of the country.
      */
     private void performCountryValidation() {
         country = countryTextField.getText();
-        if(country.equals("")) {
-            wrongCountryLabel.setText("Pole wymagane.");
+        if (country.equals("")) {
+            wrongCountryLabel.setText("This field is required.");
             countryCorrect = false;
-        }
-        else {
+        } else {
             countryCorrect = TripValidator.isCountryOrCityValid(country);
             if (countryCorrect)
                 wrongCountryLabel.setText("");
             else
-                wrongCountryLabel.setText("Sprawdź czy podany kraj jest poprawny.");
+                wrongCountryLabel.setText("Check if the provided country is valid.");
         }
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Anuluj"
+     * Method responsible for the validation of the price.
+     */
+    private void performPriceValidation() {
+        price = priceField.getText();
+        if (price.equals("")) {
+            wrongPriceLabel.setText("This field is required.");
+            priceCorrect = false;
+        } else {
+            priceCorrect = TripValidator.isPriceValid(price);
+            if (priceCorrect)
+                wrongPriceLabel.setText("");
+            else
+                wrongPriceLabel.setText("Invalid format.");
+        }
+    }
+
+    /**
+     * Method responsible for the validation of the people limit.
+     */
+    private void performPeopleLimitValidation() {
+        peopleLimit = limitTextField.getText();
+        if (peopleLimit.equals("")) {
+            wrongLimitLabel.setText("This field is required.");
+            peopleLimitCorrect = false;
+        } else {
+            peopleLimitCorrect = TripValidator.isPeopleLimitValid(peopleLimit);
+            if (peopleLimitCorrect)
+                wrongLimitLabel.setText("");
+            else
+                wrongLimitLabel.setText("Invalid format.");
+        }
+    }
+
+    /**
+     * Method responsible for the validation of the hotel name.
+     */
+    private void performHotelNameValidation() {
+        hotelName = nameHotelTextField.getText();
+        if (hotelName.equals("")) {
+            wrongHotelNameLabel.setText("This field is required.");
+            hotelNameCorrect = false;
+        } else {
+            hotelNameCorrect = TripValidator.isHotelNameValid(hotelName);
+            if (hotelNameCorrect)
+                wrongHotelNameLabel.setText("");
+            else
+                wrongHotelNameLabel.setText("Check if the provided hotel name is valid.");
+        }
+    }
+
+    /**
+     * Method handling the "Cancel" button click.
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new Trips().setVisible(true);
     }
+
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing to run the window.
+     * @param args Arguments passed during application startup.
      */
     public static void main(String[] args) {
         try {
@@ -530,9 +534,10 @@ public class TripAddition extends javax.swing.JFrame {
                  UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TripAddition.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        java.awt.EventQueue.invokeLater(() -> new TripAddition(null,null).setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new TripAddition(null, null).setVisible(true));
     }
-    //GUI variables
+
+    // GUI variables
     private final JPanel regPanel = new JPanel();
     private final JLabel createLabel = new JLabel();
     private final JLabel countryLabel = new JLabel();
@@ -547,67 +552,67 @@ public class TripAddition extends javax.swing.JFrame {
     private final JButton cancelButton = new JButton();
     private final JLabel validCountryLabel6 = new JLabel();
     /**
-     * Pole do wprowadzenia limitu osób
+     * Text field for entering the people limit.
      */
     private final javax.swing.JTextField limitTextField = new JTextField();
     /**
-     * Element do wyboru daty przyjazdu
+     * Element for choosing the arrival date.
      */
     private final com.toedter.calendar.JDateChooser arrivalDateChooser = new com.toedter.calendar.JDateChooser();
     /**
-     * Pole do wprowadzenia miasta
+     * Text field for entering the city.
      */
     private final javax.swing.JTextField cityTextField = new JTextField();
     /**
-     * Pole do wprowadzenia kraju
+     * Text field for entering the country.
      */
     private final javax.swing.JTextField countryTextField = new JTextField();
     /**
-     * Element do wyboru daty wyjazdu
+     * Element for choosing the departure date.
      */
     private final com.toedter.calendar.JDateChooser departureDateChooser = new com.toedter.calendar.JDateChooser();
     /**
-     * Pole do wprowadzenia miasta wylotu/przylotu
+     * Text field for entering the departure city.
      */
     private final javax.swing.JTextField departureCityField = new JTextField();
     /**
-     * Pole do wprowadzenia nazwy hotelu
+     * Text field for entering the hotel name.
      */
     private final javax.swing.JTextField nameHotelTextField = new JTextField();
     /**
-     * Pole do wprowadzenia ceny
+     * Text field for entering the price.
      */
     private final javax.swing.JTextField priceField = new JTextField();
     /**
-     * Etykieta informująca, że data przyjazu jest niepoprawna
+     * Label indicating that the arrival date is incorrect.
      */
     private final javax.swing.JLabel wrongArrivalLabel = new JLabel();
     /**
-     * Etykieta informująca, że miasto jest niepoprawne
+     * Label indicating that the city is incorrect.
      */
     private final javax.swing.JLabel wrongCityLabel = new JLabel();
     /**
-     * Etykieta informująca, że kraj jest niepoprawny
+     * Label indicating that the country is incorrect.
      */
     private final javax.swing.JLabel wrongCountryLabel = new JLabel();
     /**
-     * Etykieta informująca, że miasto wylotu/przylotu jest niepoprawne
+     * Label indicating that the departure city is incorrect.
      */
     private final javax.swing.JLabel wrongDepartureCityLabel = new JLabel();
     /**
-     * Etykieta informująca, że data wyjazdu jest niepoprawna
+     * Label indicating that the departure date is incorrect.
      */
     private final javax.swing.JLabel wrongDepartureLabel = new JLabel();
     /**
-     * Etykieta informująca, że limit osób jest niepoprawny
+     * Label indicating that the people limit is incorrect.
      */
     private final javax.swing.JLabel wrongLimitLabel = new JLabel();
     /**
-     * Etykieta informująca, że nazwa hotelu jest niepoprawna
+     * Label indicating that the hotel name is incorrect.
      */
     private final javax.swing.JLabel wrongHotelNameLabel = new JLabel();
     /**
-     * Etykieta informująca, że cena jest niepoprawna
+     * Label indicating that the price is incorrect.
      */
     private final javax.swing.JLabel wrongPriceLabel = new JLabel();
 }

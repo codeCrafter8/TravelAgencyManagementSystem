@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność panelu administratora
+ * Class containing fields and methods for handling an administrator panel window.
  */
 class Dashboard extends javax.swing.JFrame {
     private static final Color LIGHT = new Color(209, 197, 178);
@@ -18,45 +18,45 @@ class Dashboard extends javax.swing.JFrame {
     private static final Dimension CAPTION_DIMENSION = new Dimension(61, 22);
     private static final Dimension NUMBER_LABEL_DIMENSION = new Dimension(48, 57);
     /**
-     * Atrybut przechowujący imię administratora
+     * Attribute holding the administrator's name.
      */
     public String adminName;
     /**
-     * Atrybut przechowujący liczbę klientów
+     * Attribute holding the number of clients.
      */
     public int clientsQuantity;
     /**
-     * Atrybut przechowujący liczbę wycieczek
+     * Attribute holding the number of trips.
      */
     public int tripsQuantity;
     /**
-     * Atrybut przechowujący liczbę rezerwacji
+     * Attribute holding the number of reservations.
      */
     public int reservationsQuantity;
     /**
-     * Atrybut przechowujący liczbę wpływów
+     * Attribute holding the number of income.
      */
     public int incomeQuantity;
     /**
-     * Atrybut będący listą przechowującą numery telefonów klientów do kontaktu
+     * Attribute representing a list holding phone numbers of clients for contact.
      */
     List<String> phoneNumbers = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list holding data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private Client client;
     /**
-     * Atrybut przechowujący email użytkownika
+     * Attribute holding the user's email.
      */
     public String email;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Client
-     * @param adminName parametr przechowujący imię administratora
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param client The parameter holding an object of the Client class.
+     * @param adminName The parameter holding the administrator's name.
      */
     public Dashboard(Client client, String adminName) {
         this.client = client;
@@ -66,11 +66,11 @@ class Dashboard extends javax.swing.JFrame {
         generateData();
     }
     /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     * Auxiliary constructor responsible for initializing the GUI.
      */
     public Dashboard(){initComponents();}
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method to initialize graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -87,6 +87,7 @@ class Dashboard extends javax.swing.JFrame {
         createPhoneNumbersList();
         createLayout();
     }
+
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Panel Admina");
@@ -488,25 +489,25 @@ class Dashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wycieczki"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Trips" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new Trips(client, adminName).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Rezerwacje"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Reservations" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new Reservations(client, adminName).setVisible(true);
     }
     /**
-     * Metoda pobierająca odpowiednie dane z klasy Client
+     * Method fetching relevant data from the Client class.
      */
-    public void generateData(){
+    public void generateData() {
         data.clear();
         data.add("dashboardUpdate");
         data.add(email);
@@ -536,13 +537,13 @@ class Dashboard extends javax.swing.JFrame {
         phoneNumbers.clear();
         phoneNumbers.addAll(client2.getReturningData());
         DefaultListModel<String> model = new DefaultListModel<>();
-        for(String number : phoneNumbers)
+        for (String number : phoneNumbers)
             model.addElement(number);
         phoneNumbersList.setModel(model);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Log Out" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
@@ -554,16 +555,16 @@ class Dashboard extends javax.swing.JFrame {
         new StartPage().setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Klienci"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Clients" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new Clients(client, adminName).setVisible(true);
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments received when launching the application.
      */
     public static void main(String[] args) {
         try {
@@ -579,49 +580,49 @@ class Dashboard extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
     }
-    //GUI variables
+    // GUI variables
     /**
-     * Etykieta z imieniem administratora
+     * Label displaying the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
     /**
-     * Przycisk umożliwiający przejście do zakładki Klienci
+     * Button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
     /**
-     * Etykieta z liczbą klientów
+     * Label displaying the number of clients.
      */
     private final javax.swing.JLabel clientsNumberLabel = new JLabel();
     /**
-     * Lista z numerami telefonów klientów do kontaktu
+     * List holding phone numbers of clients for contact.
      */
     private final javax.swing.JList<String> phoneNumbersList = new JList<>();
     /**
-     * Etykieta z liczbą wpływów
+     * Label displaying the income number.
      */
     private final javax.swing.JLabel incomeNumberLabel = new JLabel();
     /**
-     * Przycisk umożliwiający wylogowanie się
+     * Button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Panel
+     * Button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     * Button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
     /**
-     * Etykieta z liczbą rezerwacji
+     * Label displaying the number of reservations.
      */
     private final javax.swing.JLabel reservationsNumberLabel = new JLabel();
     /**
-     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     * Button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
     /**
-     * Etykieta z liczbą wycieczek
+     * Label displaying the number of trips.
      */
     private final javax.swing.JLabel tripsNumberLabel = new JLabel();
     private final JPanel menuPanel = new JPanel();

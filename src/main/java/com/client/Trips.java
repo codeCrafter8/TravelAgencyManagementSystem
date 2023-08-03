@@ -16,43 +16,43 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących wycieczek
+ * Class containing fields and methods for handling a window with functionality related to trips.
  */
 public class Trips extends javax.swing.JFrame {
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane zwracane z klasy Client
+     * Attribute representing a list storing data returned from the Client class.
      */
     List<String> tripsData = new ArrayList<>();
     /**
-     * Element do sortowania tabeli z wycieczkami
+     * Element for sorting the trips table.
      */
     private TableRowSorter<TableModel> rowSorter;
     /**
-     * Atrybut przechowujący miasto przy wyszukiwaniu wycieczki
+     * Attribute holding the city during the search for a trip.
      */
     private String cityToSearch;
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private Client client;
     /**
-     * Atrybut przechowujący email użytkownika
+     * Attribute holding the user's email.
      */
     private String email;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI
+     * Constructor responsible for initializing the GUI.
      */
     public Trips() {
         initComponents();
     }
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Klient
-     * @param adminName parametr przechowujący imię administratora
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param client parameter storing an object of the Client class.
+     * @param adminName parameter holding the administrator's name.
      */
     public Trips(Client client, String adminName){
         this.client = client;
@@ -64,7 +64,7 @@ public class Trips extends javax.swing.JFrame {
         searchTrips();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method for initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -397,13 +397,13 @@ public class Trips extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Edytuj wycieczkę"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Edit Trip" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void editTripButtonActionPerformed(ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
-        if(tripsTable.getSelectedRow() == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (tripsTable.getSelectedRow() == -1)
+            JOptionPane.showMessageDialog(null, "No trip selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             int id = Integer.parseInt(model.getValueAt(tripsTable.getSelectedRow(), 0).toString());
             String country = model.getValueAt(tripsTable.getSelectedRow(), 1).toString();
@@ -411,7 +411,7 @@ public class Trips extends javax.swing.JFrame {
             String price = model.getValueAt(tripsTable.getSelectedRow(), 3).toString();
             String peopleLimit = model.getValueAt(tripsTable.getSelectedRow(), 4).toString();
             if (country.equals("") || city.equals("") || price.equals("") || peopleLimit.equals("")) {
-                JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Empty fields detected!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 data.clear();
                 data.add("editTrip");
@@ -425,9 +425,10 @@ public class Trips extends javax.swing.JFrame {
             }
         }
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Log Out" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
@@ -438,45 +439,49 @@ public class Trips extends javax.swing.JFrame {
         dispose();
         new StartPage().setVisible(true);
     }
+
     /**
-     * Metoda pobierająca odpowiednie dane z klasy Client
+     * Method for retrieving appropriate data from the Client class.
      */
-    private void generateData(){
+    private void generateData() {
         data.clear();
         data.add("tripsUpdate");
         Client client1 = new Client(data);
         tripsData.addAll(client1.getReturningData());
     }
+
     /**
-     * Metoda wypełniająca tabelę przechowującą wycieczki
+     * Method for populating the table holding the trips.
      */
-    private void populateTable(){
+    private void populateTable() {
         int counter = 0;
-        int size = (tripsData.size()/5);
+        int size = (tripsData.size() / 5);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter+1), tripsData.get(counter+2), tripsData.get(counter+3),
-                    tripsData.get(counter+4)});
-            if(size > 1)
-                counter+=5;
+        for (int i = 0; i < size; i++) {
+            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), tripsData.get(counter + 2), tripsData.get(counter + 3),
+                    tripsData.get(counter + 4)});
+            if (size > 1)
+                counter += 5;
         }
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji miasta wyszukiwanej wycieczki
+     * Method responsible for validating the city of the searched trip.
      */
-    private void performCityValidation(){
+    private void performCityValidation() {
         cityToSearch = searchClientTextField.getText();
-        if(TripValidator.isCountryOrCityValid(cityToSearch))
+        if (TripValidator.isCountryOrCityValid(cityToSearch))
             wrongTripLabel.setText("");
         else
-            wrongTripLabel.setText("Sprawdź czy podane miasto jest poprawne.");
-        if(cityToSearch.equals(""))
+            wrongTripLabel.setText("Please check if the provided city is correct.");
+        if (cityToSearch.equals(""))
             wrongTripLabel.setText("");
     }
+
     /**
-     * Metoda pozwalająca na wyszukiwanie wycieczki po mieście
+     * Method allowing searching for trips by city.
      */
-    private void searchTrips(){
+    private void searchTrips() {
         tripsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         rowSorter = new TableRowSorter<>(tripsTable.getModel());
         tripsTable.setRowSorter(rowSorter);
@@ -490,6 +495,7 @@ public class Trips extends javax.swing.JFrame {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + cityToSearch, 2));
                 }
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 performCityValidation();
@@ -499,6 +505,7 @@ public class Trips extends javax.swing.JFrame {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + cityToSearch));
                 }
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 performCityValidation();
@@ -506,14 +513,15 @@ public class Trips extends javax.swing.JFrame {
             }
         });
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Usuń wycieczkę"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Delete Trip" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void deleteTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
-        if(tripsTable.getSelectedRow() == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej wycieczki.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (tripsTable.getSelectedRow() == -1)
+            JOptionPane.showMessageDialog(null, "No trip selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             data.clear();
             data.add("deleteTrip");
@@ -523,45 +531,50 @@ public class Trips extends javax.swing.JFrame {
             model.removeRow(tripsTable.getSelectedRow());
         }
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Dodaj wycieczkę"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Add Trip" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void addTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new TripAddition(client,adminNameLabel.getText()).setVisible(true);
+        new TripAddition(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Klienci"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Clients" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new Clients(client,adminNameLabel.getText()).setVisible(true);
+        new Clients(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Rezerwacje"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Reservations" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Reservations(client,adminNameLabel.getText()).setVisible(true);
+        new Reservations(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Panel"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Panel" button.
+     * @param evt The event triggered by clicking the button.
      */
     private void panelButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Dashboard(client,adminNameLabel.getText()).setVisible(true);
+        new Dashboard(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments passed when launching the application.
      */
     public static void main(String[] args) {
         try {
@@ -577,7 +590,8 @@ public class Trips extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Trips().setVisible(true));
     }
-    //GUI variables
+
+    // GUI variables
     private final JPanel menuPanel = new JPanel();
     private final JPanel adminPanel = new JPanel();
     private final JPanel optionsPanel = new JPanel();
@@ -589,40 +603,41 @@ public class Trips extends javax.swing.JFrame {
     private final JScrollPane tripsTableScrollPane = new JScrollPane();
     private final JButton deleteTripButton = new JButton();
     private final JButton editTripButton = new JButton();
+
     /**
-     * Etykieta z imieniem administratora
+     * Label for the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
     /**
-     * Przycisk umożliwiający przejście do zakładki Klienci
+     * Button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
     /**
-     * Przycisk umożliwiający wylogowanie się
+     * Button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Panel
+     * Button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     * Button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
     /**
-     * Pole do wprowadzenia miasta przy wyszukiwaniu
+     * Field for entering the city during the search.
      */
     private final javax.swing.JTextField searchClientTextField = new JTextField();
     /**
-     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     * Button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
     /**
-     * Tabela z wycieczkami
+     * Table holding the trips.
      */
     private final javax.swing.JTable tripsTable = new JTable();
     /**
-     * Etykieta informująca, że miasto przy wyszukiwaniu jest niepoprawne
+     * Label informing that the city during the search is incorrect.
      */
     private final javax.swing.JLabel wrongTripLabel = new JLabel();
 }

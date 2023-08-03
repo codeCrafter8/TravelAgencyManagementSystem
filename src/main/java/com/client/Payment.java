@@ -10,40 +10,40 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność opłacenia rezerwacji
+ * Class containing fields and methods for handling the payment window functionality.
  */
 public class Payment extends javax.swing.JFrame {
     private static final Dimension WINDOW_DIMENSION = new Dimension(548, 640);
     /**
-     * Atrybut informujący, czy została wybrana metoda opłaty
+     * Attribute indicating whether a payment method has been chosen.
      */
-    private boolean methodChoosed = false;
+    private boolean methodChosen = false;
     /**
-     * Atrybut będący id wycieczki
+     * Attribute representing the trip ID.
      */
     private int idTrip;
     /**
-     * Atrybut będący wybranym ubezpieczeniem
+     * Attribute representing the selected insurance.
      */
     private String insurance;
     /**
-     * Atrybut będący ilością osób
+     * Attribute representing the number of people.
      */
     private int peopleQuantity;
     /**
-     * Atrybut będący id klienta
+     * Attribute representing the client ID.
      */
     private int clientId;
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing the list storing data passed to the Client class.
      */
     private final java.util.List<String> data = new ArrayList<>();
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Client
-     * @param idTrip parametr będący id wycieczki
-     * @param insurance parametr będący wybrnaym ubezpieczeniem
-     * @param peopleQuantity parametr będący ilością osób
+     * Constructor responsible for initializing the GUI and related elements.
+     * @param client Parameter holding an object of the Client class.
+     * @param idTrip Parameter representing the trip ID.
+     * @param insurance Parameter representing the selected insurance.
+     * @param peopleQuantity Parameter representing the number of people.
      */
     public Payment(Client client, int idTrip, String insurance, int peopleQuantity) {
         this.idTrip = idTrip;
@@ -53,11 +53,11 @@ public class Payment extends javax.swing.JFrame {
         initComponents();
     }
     /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     * Helper constructor responsible for initializing the GUI.
      */
-    Payment(){initComponents();}
+    Payment() { initComponents(); }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing the graphic components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -83,12 +83,12 @@ public class Payment extends javax.swing.JFrame {
         errorLabel.setForeground(Color.RED);
         errorLabel.setText("");
 
-        paymentMethodLabel.setBackground(new java.awt.Color(210, 180, 140));
+        paymentMethodLabel.setBackground(ColorUtils.BEIGE);
         paymentMethodLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         paymentMethodLabel.setText("Metoda płatności");
         paymentMethodLabel.setOpaque(true);
 
-        ownerLabel.setBackground(new java.awt.Color(210, 180, 140));
+        ownerLabel.setBackground(ColorUtils.BEIGE);
         ownerLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         ownerLabel.setText("Właściciel");
         ownerLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -97,7 +97,7 @@ public class Payment extends javax.swing.JFrame {
         firstNameLastNameLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
         firstNameLastNameLabel.setText("Imie i nazwisko:");
 
-        numberLabel.setBackground(new java.awt.Color(210, 180, 140));
+        numberLabel.setBackground(ColorUtils.BEIGE);
         numberLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         numberLabel.setText("Numer");
         numberLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -109,7 +109,7 @@ public class Payment extends javax.swing.JFrame {
         cvvLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
         cvvLabel.setText("CVV:");
 
-        expirationDateLabel.setBackground(new java.awt.Color(210, 180, 140));
+        expirationDateLabel.setBackground(ColorUtils.BEIGE);
         expirationDateLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         expirationDateLabel.setText("Termin ważności");
         expirationDateLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -313,28 +313,23 @@ public class Payment extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku Zapłać
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Pay" button click event.
+     * @param evt The event received when the button is clicked.
      */
     private void payButtonActionPerformed(ActionEvent evt) {
-        if(!methodChoosed)
-            errorLabel.setText("Nie wybrano metody płatności.");
-        else if(!CreditCardValidator.isFirstNameAndLastNameValid(firstNameLastNameTextField.getText())) {
-            errorLabel.setText("Nieprawidłowe imię i nazwisko.");
-        }
-        else if(!CreditCardValidator.isCreditCardNumberValid(cardNumberTextField.getText())) {
-            errorLabel.setText("Nieprawidłowy numer karty kredytowej.");
-        }
-        else if(!CreditCardValidator.isCvvValid(cvvData.getText())) {
-            errorLabel.setText("Nieprawidłowy numer cvv.");
-        }
-        else if(!DateValidator.isMonthValid(monthTextField.getText())) {
-            errorLabel.setText("Nieprawidłowy miesiąc ważności karty kredytowej.");
-        }
-        else if(!DateValidator.isYearValid(yearData.getText())) {
-            errorLabel.setText("Nieprawidłowy rok ważności karty kredytowej.");
-        }
-        else {
+        if (!methodChosen) {
+            errorLabel.setText("No payment method selected.");
+        } else if (!CreditCardValidator.isFirstNameAndLastNameValid(firstNameLastNameTextField.getText())) {
+            errorLabel.setText("Invalid first name and last name.");
+        } else if (!CreditCardValidator.isCreditCardNumberValid(cardNumberTextField.getText())) {
+            errorLabel.setText("Invalid credit card number.");
+        } else if (!CreditCardValidator.isCvvValid(cvvData.getText())) {
+            errorLabel.setText("Invalid CVV number.");
+        } else if (!DateValidator.isMonthValid(monthTextField.getText())) {
+            errorLabel.setText("Invalid credit card expiration month.");
+        } else if (!DateValidator.isYearValid(yearData.getText())) {
+            errorLabel.setText("Invalid credit card expiration year.");
+        } else {
             data.clear();
             data.add("addReservation");
             data.add(Integer.toString(idTrip));
@@ -347,41 +342,41 @@ public class Payment extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku discover
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Discover" button click event.
+     * @param evt The event received when the button is clicked.
      */
     private void discoverActionPerformed(ActionEvent evt) {
-        methodChoosed = true;
+        methodChosen = true;
         errorLabel.setText("");
         discoverButton.setBorder(new LineBorder(Color.BLUE, 3));
         visaButton.setBorder(null);
         mastercardButton.setBorder(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku visa
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Visa" button click event.
+     * @param evt The event received when the button is clicked.
      */
     private void visaActionPerformed(ActionEvent evt) {
-        methodChoosed = true;
+        methodChosen = true;
         errorLabel.setText("");
         visaButton.setBorder(new LineBorder(Color.BLUE, 3));
         mastercardButton.setBorder(null);
         discoverButton.setBorder(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku mastercard
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Mastercard" button click event.
+     * @param evt The event received when the button is clicked.
      */
     private void mastercardActionPerformed(ActionEvent evt) {
-        methodChoosed = true;
+        methodChosen = true;
         errorLabel.setText("");
         mastercardButton.setBorder(new LineBorder(Color.BLUE, 3));
         visaButton.setBorder(null);
         discoverButton.setBorder(null);
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments passed when running the application.
      */
     public static void main(String[] args) {
         try {
@@ -399,39 +394,39 @@ public class Payment extends javax.swing.JFrame {
     }
     //GUI variables
     /**
-     * Pole do wprowadzenia numeru cvv
+     * Text field for entering the CVV number.
      */
     private final javax.swing.JTextField cvvData = new JTextField();
     /**
-     * Przycisk umożliwiający wybór discover
+     * Button allowing the "Discover" selection.
      */
     private final javax.swing.JButton discoverButton = new JButton();
     /**
-     * Pole do wprowadzenia imienia i nazwiska
+     * Text field for entering the first name and last name.
      */
     private final javax.swing.JTextField firstNameLastNameTextField = new JTextField();
     /**
-     * Przycisk umożliwiający wybór mastercard
+     * Button allowing the "Mastercard" selection.
      */
     private final javax.swing.JButton mastercardButton = new JButton();
     /**
-     * Etykieta z błędem operacji opłaty
+     * Label with payment operation error.
      */
     private final javax.swing.JLabel errorLabel = new JLabel();
     /**
-     * Pole do wprowadzenia miesiąca ważności karty kredytowej
+     * Text field for entering the credit card expiration month.
      */
     private final javax.swing.JTextField monthTextField = new JTextField();
     /**
-     * Pole do wprowadzenia numeru karty kredytowej
+     * Text field for entering the credit card number.
      */
     private final javax.swing.JTextField cardNumberTextField = new JTextField();
     /**
-     * Pole do wprowadzenia roku ważności karty kredytowej
+     * Text field for entering the credit card expiration year.
      */
     private final javax.swing.JTextField yearData = new JTextField();
     /**
-     * Przycisk umożliwiający wybór visa
+     * Button allowing the "Visa" selection.
      */
     private final javax.swing.JButton visaButton = new JButton();
     private final JLabel paymentMethodLabel = new JLabel();

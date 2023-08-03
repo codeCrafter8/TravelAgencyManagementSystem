@@ -15,50 +15,55 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność Moje Konto po stronie klienta
+ * Class containing fields and methods for handling the window with functionality of My Account for the client.
  */
 public class MyAccount extends javax.swing.JFrame {
     private static final Dimension BUTTON_DIMENSION = new Dimension(150, 43);
     private static final Dimension WINDOW_DIMENSION = new Dimension(989, 770);
     /**
-     * Lista przechowująca dane osobowe klienta
+     * List storing client's personal data.
      */
     private final List<String> clientData = new ArrayList<>();
     /**
-     * Atrybut będący numerem zaznaczonego wiersza w tabeli
+     * Attribute representing the selected row number in the table.
      */
     private int row;
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute being an object of the Client class.
      */
     private Client client;
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute being a list that stores data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Lista przechowująca dane rezerwacji klienta
+     * List storing client's reservation data.
      */
     private final List<String> resData = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane zwracane z klasy Client
+     * Attribute being a list that stores data returned from the Client class.
      */
     List<String> returningData = new ArrayList<>();
+
     /**
-     * Pomocniczy konstruktor
+     * Helper constructor.
      */
-    public MyAccount() {}
+    public MyAccount() {
+    }
+
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Client
+     * Constructor responsible for GUI initialization and relevant elements.
+     *
+     * @param client object of the Client class
      */
-    public MyAccount(Client client){
+    public MyAccount(Client client) {
         this.client = client;
         initComponents();
         generateData();
     }
+
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method for initializing graphic components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -69,7 +74,8 @@ public class MyAccount extends javax.swing.JFrame {
         createUserDataPanel();
         createLayout();
     }
-    private void setWindowProperties(){
+
+    private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Moje konto");
         setPreferredSize(WINDOW_DIMENSION);
@@ -82,16 +88,16 @@ public class MyAccount extends javax.swing.JFrame {
                     data.add(client.getUserEmail());
                     new Client(data);
                     data.clear();
-                }
-                catch(Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex, "Informacja", JOptionPane.INFORMATION_MESSAGE);
                     new LogsClients("MyAccount", "error", "[ " + new java.util.Date() + " ] " + "Błąd zamykania okna.");
                 }
             }
         });
     }
-    private void setManagingComboBox(){
-        managingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje konto", "Wyloguj" }));
+
+    private void setManagingComboBox() {
+        managingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Strona Główna", "Moje konto", "Wyloguj"}));
         managingComboBox.setSelectedIndex(1);
         managingComboBox.setBorder(null);
         managingComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -99,15 +105,16 @@ public class MyAccount extends javax.swing.JFrame {
         managingComboBox.setLightWeightPopupEnabled(false);
         managingComboBox.addActionListener(this::managingActionPerformed);
     }
-    private void createResTable(){
+
+    private void createResTable() {
         resTableScrollPane.setBackground(Color.WHITE);
         resTableScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         resTable.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
 
                 },
-                new String [] {
+                new String[]{
                         "Id", "Kraj", "Miasto", "Cena", "Wyjazd", "Przyjazd"
                 }
         ));
@@ -125,7 +132,8 @@ public class MyAccount extends javax.swing.JFrame {
             resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
     }
-    private void setLabels(){
+
+    private void setLabels() {
         myReservationsLabel.setFont(new java.awt.Font("Arial", Font.ITALIC, 18));
         myReservationsLabel.setText("Moje rezerwacje");
 
@@ -151,7 +159,8 @@ public class MyAccount extends javax.swing.JFrame {
         typeEmailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         typePhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
     }
-    private void setButtons(){
+
+    private void setButtons() {
         cancelReservationButton.setBackground(ColorUtils.LIGHT_BROWN);
         cancelReservationButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
         cancelReservationButton.setForeground(Color.WHITE);
@@ -159,7 +168,7 @@ public class MyAccount extends javax.swing.JFrame {
         cancelReservationButton.setFocusable(false);
         cancelReservationButton.setPreferredSize(BUTTON_DIMENSION);
         cancelReservationButton.addActionListener(this::cancelReservationButtonActionPerformed);
-        cancelReservationButton.setText("<html><center>"+"Anuluj"+"<br>"+"rezerwację"+"</center></html>");
+        cancelReservationButton.setText("<html><center>" + "Anuluj" + "<br>" + "rezerwację" + "</center></html>");
 
         downloadTripDescriptionButton.setBackground(ColorUtils.LIGHT_BROWN);
         downloadTripDescriptionButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
@@ -168,7 +177,7 @@ public class MyAccount extends javax.swing.JFrame {
         downloadTripDescriptionButton.setFocusable(false);
         downloadTripDescriptionButton.setPreferredSize(BUTTON_DIMENSION);
         downloadTripDescriptionButton.addActionListener(this::downloadTripDescriptionActionPerformed);
-        downloadTripDescriptionButton.setText("<html><center>"+"Szczegóły"+"<br>"+"rezerwacji"+"</center></html>");
+        downloadTripDescriptionButton.setText("<html><center>" + "Szczegóły" + "<br>" + "rezerwacji" + "</center></html>");
 
         editButton.setBackground(ColorUtils.LIGHT_BROWN);
         editButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
@@ -188,7 +197,8 @@ public class MyAccount extends javax.swing.JFrame {
         changePasswordButton.setPreferredSize(BUTTON_DIMENSION);
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
     }
-    private void createUserDataPanel(){
+
+    private void createUserDataPanel() {
         userDataPanel.setBorder(javax.swing.BorderFactory.createLineBorder(ColorUtils.GREY));
         javax.swing.GroupLayout userDataPanelLayout = new javax.swing.GroupLayout(userDataPanel);
         userDataPanel.setLayout(userDataPanelLayout);
@@ -249,7 +259,8 @@ public class MyAccount extends javax.swing.JFrame {
                                 .addContainerGap())
         );
     }
-    private void createLayout(){
+
+    private void createLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -312,42 +323,43 @@ public class MyAccount extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Zmień hasło"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Change Password" button.
+     *
+     * @param evt ActionEvent object generated on button click
      */
     private void changePasswordButtonActionPerformed(ActionEvent evt) {
-        new PasswordChange(this.returningData.get(4),client).setVisible(true);
+        new PasswordChange(this.returningData.get(4), client).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Anuluj rezerwację"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Cancel Reservation" button.
+     *
+     * @param evt ActionEvent object generated on button click
      */
     private void cancelReservationButtonActionPerformed(ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
         row = resTable.getSelectedRow();
-        if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
-        else {
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "No reservation selected.", "Information", JOptionPane.ERROR_MESSAGE);
+        } else {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date1 = null;
             Date now = new Date();
             try {
                 date1 = formatter.parse(model.getValueAt(row, 4).toString());
-            }catch (ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             assert date1 != null;
-            if(SearchEngine.getDifferenceDays(now, date1) < 14){
-                JOptionPane.showMessageDialog(this, "Nie można anulować tej rezerwacji, ponieważ do wyjazdu zostało mniej niż 14 dni.", "Błąd", JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-                Object[] options = {"Tak", "Nie"};
-                if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz anulować rezerwację?", "Potwierdzenie",
+            if (SearchEngine.getDifferenceDays(now, date1) < 14) {
+                JOptionPane.showMessageDialog(this, "You cannot cancel this reservation as it's less than 14 days before the trip.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                Object[] options = {"Yes", "No"};
+                if (JOptionPane.showOptionDialog(null, "Are you sure you want to cancel this reservation?", "Confirmation",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Pomyślnie anulowano rezerwację. Pieniądze zostaną zwrócone na kartę kredytową, z której dokonano płatności w ciągu 14 dni roboczych.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Reservation successfully canceled. The money will be refunded to the credit card used for payment within 14 business days.", "Information", JOptionPane.INFORMATION_MESSAGE);
                     data.clear();
                     data.add("deleteRes");
-                    data.add(resTable.getValueAt(resTable.getSelectedRow(),0).toString());
+                    data.add(resTable.getValueAt(resTable.getSelectedRow(), 0).toString());
                     new Client(data);
                     data.clear();
                     model.removeRow(row);
@@ -356,15 +368,16 @@ public class MyAccount extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda obsługująca menu podręczne
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the popup menu.
+     *
+     * @param evt ActionEvent object generated on button click
      */
     private void managingActionPerformed(ActionEvent evt) {
-        switch(String.valueOf(managingComboBox.getSelectedItem())){
-            case "Wyloguj" -> {
-                Object[] options = {"Tak", "Nie"};
-                if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
-                        JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
+        switch (String.valueOf(managingComboBox.getSelectedItem())) {
+            case "Logout" -> {
+                Object[] options = {"Yes", "No"};
+                if (JOptionPane.showOptionDialog(null, "Are you sure you want to log out?", "Confirmation",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     dispose();
                     resData.clear();
                     data.clear();
@@ -375,7 +388,7 @@ public class MyAccount extends javax.swing.JFrame {
                     new StartPage().setVisible(true);
                 }
             }
-            case "Strona Główna" -> {
+            case "Home Page" -> {
                 dispose();
                 resData.clear();
                 new SearchEngine(client).setVisible(true);
@@ -383,72 +396,75 @@ public class MyAccount extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda wypełniająca tabelę z rezerwacjami klienta
+     * Method populating the reservation table.
      */
-    private void populateTable(){
+    private void populateTable() {
         int counter = 0;
-        int size = (resData.size())/11;
+        int size = (resData.size()) / 11;
         DefaultTableModel model = (DefaultTableModel) resTable.getModel();
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{resData.get(counter), resData.get(counter+1), resData.get(counter+2), Integer.parseInt(resData.get(counter+3)) * Integer.parseInt(resData.get(counter+4)) + " zł",
-                    resData.get(counter+5), resData.get(counter+6)});
-            if(size > 1)
-                counter+=11;
+        for (int i = 0; i < size; i++) {
+            model.addRow(new Object[]{resData.get(counter), resData.get(counter + 1), resData.get(counter + 2), Integer.parseInt(resData.get(counter + 3)) * Integer.parseInt(resData.get(counter + 4)) + " zł",
+                    resData.get(counter + 5), resData.get(counter + 6)});
+            if (size > 1)
+                counter += 11;
         }
     }
     /**
-     * Metoda wypełniająca odpowiednie etykiety danymi osobowymi klienta
+     * Method updating the labels with client's personal data.
      */
-    public void updateLabels(){
+    public void updateLabels() {
         typeNameLabel.setText(returningData.get(0));
         typeLastNameLabel.setText(returningData.get(1));
         typeEmailLabel.setText(returningData.get(2));
         typePhoneNumberLabel.setText(returningData.get(3));
     }
     /**
-     * Metoda pobierająca odpowiednie dane z klasy Client
+     * Method fetching data from the Client class.
      */
-    public void generateData(){
+    public void generateData() {
         data.clear();
         data.add("myAccountUpdate");
         data.add(client.getUserEmail());
         Client client2 = new Client(data);
         data.clear();
         returningData.addAll(client2.getReturningData());
-        for(int i = 0; i < returningData.size(); i++) {
-            if(i >= 5)
+        for (int i = 0; i < returningData.size(); i++) {
+            if (i >= 5)
                 resData.add(returningData.get(i));
         }
-        for(int i = 0; i < returningData.size(); i++) {
-            if(i < 5)
+        for (int i = 0; i < returningData.size(); i++) {
+            if (i < 5)
                 clientData.add(returningData.get(i));
         }
         updateLabels();
         populateTable();
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Edytuj dane"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Edit Data" button.
+     *
+     * @param evt ActionEvent object generated on button click
      */
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new DataEdition(clientData, client).setVisible(true);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Szczegóły rezerwacji"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click event of the "Trip Details" button.
+     *
+     * @param evt ActionEvent object generated on button click
      */
     private void downloadTripDescriptionActionPerformed(java.awt.event.ActionEvent evt) {
         row = resTable.getSelectedRow();
-        if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnej rezerwacji.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (row == -1)
+            JOptionPane.showMessageDialog(null, "No reservation selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             new TripDescription(this.resData, row).setVisible(true);
         }
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Main method allowing the window to run.
+     *
+     * @param args Arguments passed during application startup
      */
     public static void main(String[] args) {
         try {
@@ -464,31 +480,32 @@ public class MyAccount extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new MyAccount().setVisible(true));
     }
-    //GUI variables
+    // GUI variables
     /**
-     * Tabela z rezerwacjami klienta
+     * Table with client's reservations.
      */
     private final javax.swing.JTable resTable = new JTable();
     /**
-     * Etykieta z emailem klienta
+     * Label with the client's email.
      */
     private final javax.swing.JLabel typeEmailLabel = new JLabel();
     /**
-     * Etykieta z imieniem klienta
+     * Label with the client's first name.
      */
     private final javax.swing.JLabel typeNameLabel = new JLabel();
     /**
-     * Etykieta z numerem telefonu klienta
+     * Label with the client's phone number.
      */
     private final javax.swing.JLabel typePhoneNumberLabel = new JLabel();
     /**
-     * Etykieta z nazwiskiem klienta
+     * Label with the client's last name.
      */
     private final javax.swing.JLabel typeLastNameLabel = new JLabel();
     /**
-     * Menu podręczne z opcjami Strona Główna, Moje Konto, Wyloguj się
+     * Popup menu with options: Logout, Home Page.
      */
     private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
+
     private final JScrollPane resTableScrollPane = new JScrollPane();
     private final JLabel myReservationsLabel = new JLabel();
     private final JLabel infoConfirmLabel = new JLabel();

@@ -7,88 +7,96 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody obsługujące pracę klienta w komunikacji klient-serwer
+ * Class containing fields and methods for handling client-server communication.
  */
-public class Client implements Serializable{
+public class Client implements Serializable {
     /**
-     * Instancja klasy StartPage
+     * Instance of the StartPage class.
      */
     private final StartPage startPage = new StartPage();
     /**
-     * Instancja klasy Offer
+     * Instance of the Offer class.
      */
     private final Offer offer = new Offer();
     /**
-     * Atrybut będący listą zawierającą dane przekazywane z klienta do serwera
+     * Attribute that is a list containing data passed from the client to the server.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Pobiera informację, czy administrator jest zalogowany.
-     * @return true, jeśli administrator jest zalogowany, false w przeciwnym razie
+     * Get information if the administrator is logged in.
+     * @return true if the administrator is logged in, false otherwise.
      */
-    boolean getStartPageAdminLogged(){
+    boolean getStartPageAdminLogged() {
         return startPage.adminLogged;
     }
     /**
-     * Pobiera adres email ze strony startowej.
-     * @return adres email
+     * Get the email address from the start page.
+     * @return the email address.
      */
-    String getUserEmail(){ return startPage.email; }
+    String getUserEmail() {
+        return startPage.email;
+    }
     /**
-     * Pobiera hasło ze strony startowej.
-     * @return hasło
+     * Get the password from the start page.
+     * @return the password.
      */
-    String getUserPassword(){ return startPage.password; }
+    String getUserPassword() {
+        return startPage.password;
+    }
     /**
-     * Pobiera identyfikator użytkownika w ofercie wycieczki.
-     * @return identyfikator użytkownika w ofercie wycieczki
+     * Get the user identifier in the trip offer.
+     * @return the user identifier in the trip offer.
      */
-    int getOfferClientID(){ return offer.userID; }
+    int getOfferClientID() {
+        return offer.userID;
+    }
     /**
-     * Ustawia adres email użytkownika dla strony startowej.
-     * @param userEmail adres email użytkownika
+     * Set the user's email address for the start page.
+     * @param userEmail the user's email address.
      */
-    void setUserEmail(String userEmail) {startPage.email = userEmail;}
+    void setUserEmail(String userEmail) {
+        startPage.email = userEmail;
+    }
     /**
-     * Lista z danymi zwróconymi od serwera
+     * List with data returned from the server.
      */
     private final List<String> returningData = new ArrayList<>();
     /**
-     * Pobiera listę z danymi zwróconymi od serwera
-     * @return lista z danymi zwróconymi od serwera
+     * Get the list with data returned from the server.
+     * @return the list with data returned from the server.
      */
     List<String> getReturningData() {
         return returningData;
     }
     /**
-     * Atrybut będący gniazdem pozwalającym na łączenie się z serwerem
+     * Attribute representing a socket for connecting to the server.
      */
     private Socket socket;
     /**
-     * Przesłonięcie metody konwertującej dane na typ łańcucha znaków
+     * Overridden method converting data to a string.
      */
     @Override
     public String toString() {
         return super.toString();
     }
     /**
-     * Konstruktor klasy Client
-     * @param data lista danych
+     * Constructor of the Client class.
+     * @param data the list of data.
      */
-    Client(List<String> data){
+    Client(List<String> data) {
         this.data.addAll(data);
         try {
             socket = new Socket("localhost", 1522);
             sendData();
             getData();
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
     /**
-     * Metoda wysyłająca dane do serwera
+     * Method sending data to the server.
      */
-    private void sendData(){
+    private void sendData() {
         try {
             OutputStream outputStream = socket.getOutputStream();
             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
@@ -103,9 +111,9 @@ public class Client implements Serializable{
         }
     }
     /**
-     * Metoda przyjmująca dane od serwera
+     * Method receiving data from the server.
      */
-    private void getData(){
+    private void getData() {
         try {
             InputStream inputStream = socket.getInputStream();
             DataInputStream dataInputStream = new DataInputStream(inputStream);

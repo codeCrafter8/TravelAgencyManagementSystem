@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.ClientValidator;
 import com.server.LogsAdmins;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -15,39 +16,39 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność wykonywania operacji dotyczących klientów
+ * Class containing fields and methods for handling a window with client-related operations.
  */
 public class Clients extends javax.swing.JFrame {
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list holding data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą przechowującą dane zwracane z klasy Client
+     * Attribute representing a list holding data returned from the Client class.
      */
     List<String> clientsData = new ArrayList<>();
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private Client client;
     /**
-     * Atrybut przechowujący email użytkownika
+     * Attribute holding the user's email.
      */
     private String email;
     /**
-     * Atrybut przechowujący imię administratora
+     * Attribute holding the administrator's name.
      */
     private String adminName;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI
+     * Constructor responsible for initializing the GUI.
      */
     public Clients() {
         initComponents();
     }
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Klient
-     * @param adminName parametr przechowujący imię administratora
+     * Constructor responsible for initializing the GUI and relevant elements.
+     * @param client The parameter holding an object of the Client class.
+     * @param adminName The parameter holding the administrator's name.
      */
     public Clients(Client client, String adminName){
         this.client = client;
@@ -59,7 +60,7 @@ public class Clients extends javax.swing.JFrame {
         searchClients();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method to initialize graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -395,26 +396,28 @@ public class Clients extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wycieczki"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Trips" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Trips(client,adminNameLabel.getText()).setVisible(true);
+        new Trips(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Rezerwacje"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Reservations" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         data.clear();
-        new Reservations(client,adminNameLabel.getText()).setVisible(true);
+        new Reservations(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wyloguj się"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Log Out" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
         data.clear();
@@ -425,68 +428,74 @@ public class Clients extends javax.swing.JFrame {
         dispose();
         new StartPage().setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Panel"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Dashboard" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void panelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         data.clear();
-        new Dashboard(client,adminName).setVisible(true);
+        new Dashboard(client, adminName).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Zmień hasło klienta"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Edit Client Password" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void editPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
         int row = clientsTable.getSelectedRow();
-        if(row == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (row == -1)
+            JOptionPane.showMessageDialog(null, "No client selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             int clientIDToChangePassword = Integer.parseInt(model.getValueAt(row, 0).toString());
             new ClientPasswordChange(clientIDToChangePassword).setVisible(true);
         }
     }
+
     /**
-     * Metoda pobierająca odpowiednie dane z klasy Client
+     * Method to retrieve relevant data from the Client class.
      */
-    private void generateData(){
+    private void generateData() {
         data.clear();
         data.add("clientsUpdate");
-        Client client1 =  new Client(data);
+        Client client1 = new Client(data);
         clientsData.addAll(client1.getReturningData());
     }
+
     /**
-     * Metoda wypełniająca tabelę przechowującą klientów
+     * Method populating the table holding clients' data.
      */
-    private void populateTable(){
+    private void populateTable() {
         int counter = 0;
-        int size = (clientsData.size()/5);
+        int size = (clientsData.size() / 5);
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{clientsData.get(counter), clientsData.get(counter+1), clientsData.get(counter+2), clientsData.get(counter+3),
-                    clientsData.get(counter+4)});
-            if(size > 1)
-                counter+=5;
+        for (int i = 0; i < size; i++) {
+            model.addRow(new Object[]{clientsData.get(counter), clientsData.get(counter + 1), clientsData.get(counter + 2), clientsData.get(counter + 3),
+                    clientsData.get(counter + 4)});
+            if (size > 1)
+                counter += 5;
         }
     }
+
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji emailu wyszukiwanego klienta
+     * Method handling email validation for searching clients.
      */
-    private void performEmailValidation(){
+    private void performEmailValidation() {
         String emailFromTextField = searchClientTextField.getText();
-        if(Validation.isEmailValid(emailFromTextField))
+        if (ClientValidator.isEmailValid(emailFromTextField))
             wrongEmailLabel.setText("");
         else
-            wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
-        if(searchClientTextField.getText().isEmpty())
+            wrongEmailLabel.setText("Please check if the provided email address is correct.");
+        if (searchClientTextField.getText().isEmpty())
             wrongEmailLabel.setText("");
     }
+
     /**
-     * Metoda pozwalająca na wyszukiwanie klienta po emailu
+     * Method enabling client search by email.
      */
-    private void searchClients(){
+    private void searchClients() {
         clientsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(clientsTable.getModel());
         clientsTable.setRowSorter(rowSorter);
@@ -501,6 +510,7 @@ public class Clients extends javax.swing.JFrame {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text, 3));
                 }
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 performEmailValidation();
@@ -511,6 +521,7 @@ public class Clients extends javax.swing.JFrame {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?s)" + text));
                 }
             }
+
             @Override
             public void changedUpdate(DocumentEvent e) {
                 performEmailValidation();
@@ -518,14 +529,15 @@ public class Clients extends javax.swing.JFrame {
             }
         });
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Usuń klienta"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Delete Client" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void deleteClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        if(clientsTable.getSelectedRow() == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (clientsTable.getSelectedRow() == -1)
+            JOptionPane.showMessageDialog(null, "No client selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             data.clear();
             data.add("deleteClient");
@@ -535,22 +547,24 @@ public class Clients extends javax.swing.JFrame {
             model.removeRow(clientsTable.getSelectedRow());
         }
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Dodaj klienta"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Add Client" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new Registration(true, client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Metoda obsługująca kliknięcie przycisku "Edytuj klienta"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Edit Client" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void editClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
         DefaultTableModel model = (DefaultTableModel) clientsTable.getModel();
-        if(clientsTable.getSelectedRow() == -1)
-            JOptionPane.showMessageDialog(null, "Nie wybrano żadnego klienta.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (clientsTable.getSelectedRow() == -1)
+            JOptionPane.showMessageDialog(null, "No client selected.", "Information", JOptionPane.ERROR_MESSAGE);
         else {
             int id = Integer.parseInt(model.getValueAt(clientsTable.getSelectedRow(), 0).toString());
             String firstName = model.getValueAt(clientsTable.getSelectedRow(), 1).toString();
@@ -558,7 +572,7 @@ public class Clients extends javax.swing.JFrame {
             email = model.getValueAt(clientsTable.getSelectedRow(), 3).toString();
             String phoneNumber = model.getValueAt(clientsTable.getSelectedRow(), 4).toString();
             if (firstName.equals("") || lastName.equals("") || email.equals("") || phoneNumber.equals("")) {
-                JOptionPane.showMessageDialog(this, "Wprowadzono puste dane!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please fill in all the required fields!", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 data.clear();
                 data.add("editClient");
@@ -573,9 +587,10 @@ public class Clients extends javax.swing.JFrame {
             }
         }
     }
+
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments received during application startup.
      */
     public static void main(String[] args) {
         try {
@@ -591,41 +606,41 @@ public class Clients extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Clients().setVisible(true));
     }
-    //GUI variables
+    // GUI variables
     /**
-     * Etykieta z imieniem administratora
+     * Label displaying the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
     /**
-     * Przycisk umożliwiający przejście do zakładki Klienci
+     * Button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
     /**
-     * Przycisk umożliwiający wylogowanie się
+     * Button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Panel
+     * Button for navigating to the "Dashboard" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do zakładki Rezerwacje
+     * Button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
     /**
-     * Tabela z danymi wszystkich klientów
+     * Table holding data for all clients.
      */
     private final javax.swing.JTable clientsTable = new JTable();
     /**
-     * Przycisk umożliwiający przejście do zakładki Wycieczki
+     * Button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
     /**
-     * Pole do wprowadzenia emailu klienta przy wyszukiwaniu
+     * Text field for entering a client's email for searching.
      */
     private final javax.swing.JTextField searchClientTextField = new JTextField();
     /**
-     * Etykieta informująca, że email klienta przy wyszukiwaniu jest niepoprawny
+     * Label informing if the client's email provided for searching is incorrect.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
     private final JPanel topPanel = new JPanel();

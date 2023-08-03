@@ -1,69 +1,72 @@
 package com.client;
 
 import com.client.utils.ColorUtils;
+import com.client.validation.ClientValidator;
 import com.server.LogsClients;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność edycji danych przez klienta
+ * Class containing fields and methods for handling the window with functionality for data edition by the client.
  */
 class DataEdition extends javax.swing.JFrame {
     private static final Dimension VALIDATION_LABEL_DIMENSION = new Dimension(363, 16);
     private static final Dimension WINDOW_DIMENSION = new Dimension(449, 510);
     /**
-     * Atrybut określający, czy imię klienta jest poprawne
+     * Attribute determining if the client's first name is correct.
      */
     private boolean firstNameCorrect;
     /**
-     * Atrybut określający, czy email klienta jest poprawny
+     * Attribute determining if the client's email is correct.
      */
     private boolean emailCorrect;
     /**
-     * Atrybut określający, czy numer telefonu klienta jest poprawny
+     * Attribute determining if the client's phone number is correct.
      */
     private boolean phoneNumberCorrect;
     /**
-     * Atrybut określający, czy nazwisko klienta jest poprawne
+     * Attribute determining if the client's last name is correct.
      */
     private boolean lastNameCorrect;
     /**
-     * Atrybut przechowujący imię klienta, którego dane są edytowane
+     * Attribute storing the first name of the client whose data is being edited.
      */
     private String firstName;
     /**
-     * Atrybut przechowujący nazwisko klienta, którego dane są edytowane
+     * Attribute storing the last name of the client whose data is being edited.
      */
     private String lastName;
     /**
-     * Atrybut przechowujący email klienta, którego dane są edytowane
+     * Attribute storing the email of the client whose data is being edited.
      */
     private String email;
     /**
-     * Atrybut przechowujący numer telefonu klienta, którego dane są edytowane
+     * Attribute storing the phone number of the client whose data is being edited.
      */
     private String phoneNumber;
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute being a list that stores data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut przechowujący id klienta, którego dane są edytowane
+     * Attribute storing the ID of the client whose data is being edited.
      */
     private final String clientId;
     /**
-     * Atrybut będący listą przechowującą dane klienta
+     * Attribute being a list that stores client data.
      */
     private final List<String> clientData = new ArrayList<>();
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute being an object of the Client class.
      */
     private final Client client;
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich atrybutów
-     * @param clientData parametr będący listą przechowującą dane klienta
-     * @param client parametr przechowujący obiekt klasy Client
+     * Constructor responsible for GUI initialization and relevant attributes.
+     *
+     * @param clientData list storing client data
+     * @param client     object of the Client class
      */
     public DataEdition(List<String> clientData, Client client) {
         this.client = client;
@@ -72,7 +75,7 @@ class DataEdition extends javax.swing.JFrame {
         initComponents();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method for initializing graphic components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -82,7 +85,6 @@ class DataEdition extends javax.swing.JFrame {
         createRegPanel();
         createLayout();
     }
-
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edytuj dane");
@@ -236,77 +238,74 @@ class DataEdition extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji imienia klienta
+     * Method responsible for performing first name validation for the client.
      */
-    private void performFirstNameValidation(){
+    private void performFirstNameValidation() {
         firstName = firstNameTextField.getText();
-        if(firstName.equals("")) {
+        if (firstName.equals("")) {
             firstNameCorrect = false;
-            validFirstNameLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            firstNameCorrect = Validation.isFirstNameValid(firstName);
+            validFirstNameLabel.setText("This field is required.");
+        } else {
+            firstNameCorrect = ClientValidator.isFirstNameValid(firstName);
             if (firstNameCorrect)
                 validFirstNameLabel.setText("");
             else
-                validFirstNameLabel.setText("Sprawdź czy podane imię jest poprawne.");
+                validFirstNameLabel.setText("Please check if the entered first name is valid.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji nazwiska klienta
+     * Method responsible for performing last name validation for the client.
      */
-    private void performLastNameValidation(){
+    private void performLastNameValidation() {
         lastName = lastNameTextField.getText();
-        if(lastName.equals("")) {
+        if (lastName.equals("")) {
             lastNameCorrect = false;
-            validLastNameLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            lastNameCorrect = Validation.isLastNameValid(lastName);
+            validLastNameLabel.setText("This field is required.");
+        } else {
+            lastNameCorrect = ClientValidator.isLastNameValid(lastName);
             if (lastNameCorrect)
                 validLastNameLabel.setText("");
             else
-                validLastNameLabel.setText("Sprawdź czy podane nazwisko jest poprawne.");
+                validLastNameLabel.setText("Please check if the entered last name is valid.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji emailu klienta
+     * Method responsible for performing email validation for the client.
      */
-    private void performEmailValidation(){
+    private void performEmailValidation() {
         email = emailTextField.getText();
-        if(email.equals("")) {
+        if (email.equals("")) {
             emailCorrect = false;
-            validEmailLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            emailCorrect = Validation.isEmailValid(email);
+            validEmailLabel.setText("This field is required.");
+        } else {
+            emailCorrect = ClientValidator.isEmailValid(email);
             if (emailCorrect)
                 validEmailLabel.setText("");
             else
-                validEmailLabel.setText("Sprawdź czy podany email jest poprawny.");
+                validEmailLabel.setText("Please check if the entered email is valid.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji numeru telefonu klienta
+     * Method responsible for performing phone number validation for the client.
      */
-    public void performPhoneNumberValidation(){
+    public void performPhoneNumberValidation() {
         phoneNumber = phoneNumberField.getText();
-        phoneNumberCorrect = Validation.isPhoneNumberValid(phoneNumber);
+        phoneNumberCorrect = ClientValidator.isPhoneNumberValid(phoneNumber);
         if (phoneNumberCorrect || phoneNumber.equals(""))
             validPhoneNumberLabel.setText("");
         else
-            validPhoneNumberLabel.setText("Sprawdź czy podany numer telefonu jest poprawny.");
+            validPhoneNumberLabel.setText("Please check if the entered phone number is valid.");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Zatwierdź"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Submit" button click.
+     * @param evt The event received when the button is clicked.
      */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performFirstNameValidation();
         performLastNameValidation();
         performEmailValidation();
         performPhoneNumberValidation();
-        if(firstNameCorrect && lastNameCorrect && emailCorrect && phoneNumberCorrect){
+        if (firstNameCorrect && lastNameCorrect && emailCorrect && phoneNumberCorrect) {
             data.clear();
             data.add("dataEdition");
             data.add(firstName);
@@ -323,8 +322,8 @@ class DataEdition extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing the window to be launched.
+     * @param args Arguments received when launching the application.
      */
     public static void main(String[] args) {
         try {
@@ -340,7 +339,7 @@ class DataEdition extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new DataEdition(new ArrayList<>(), null).setVisible(true));
     }
-    //GUI variables
+    // GUI variables
     private final JLabel createLabel = new JLabel();
     private final JLabel firstNameLabel = new JLabel();
     private final JLabel lastNameLabel = new JLabel();
@@ -348,36 +347,40 @@ class DataEdition extends javax.swing.JFrame {
     private final JLabel phoneNumberLabel = new JLabel();
     private final JButton submitButton = new JButton();
     /**
-     * Pole do wprowadzenia emailu przez klienta
+     * Text field for entering the client's email.
      */
     private final JTextField emailTextField = new JTextField();
     /**
-     * Pole do wprowadzenia imienia przez klienta
+     * Text field for entering the client's first name.
      */
     private final JTextField firstNameTextField = new JTextField();
     /**
-     * Pole do wprowadzenia nazwiska przez klienta
+     * Text field for entering the client's last name.
      */
     private final JTextField lastNameTextField = new JTextField();
     /**
-     * Pole do wprowadzenia numeru telefonu przez klienta
+     * Text field for entering the client's phone number.
      */
     private final JTextField phoneNumberField = new JTextField();
     /**
-     * Etykieta informująca, że email klienta jest niepoprawny
+     * Label indicating that the client's email is invalid.
      */
     private final JLabel validEmailLabel = new JLabel();
     /**
-     * Etykieta informująca, że imię klienta jest niepoprawne
+     * Label indicating that the client's first name is invalid.
      */
     private final JLabel validFirstNameLabel = new JLabel();
     /**
-     * Etykieta informująca, że nazwisko klienta jest niepoprawne
+     * Label indicating that the client's last name is invalid.
      */
     private final JLabel validLastNameLabel = new JLabel();
     /**
-     * Etykieta informująca, że numer telefonu klienta jest niepoprawny
+     * Label indicating that the client's phone number is invalid.
      */
     private final JLabel validPhoneNumberLabel = new JLabel();
+    /**
+     * Panel for the registration form.
+     */
     private final JPanel regPanel = new JPanel();
+
 }

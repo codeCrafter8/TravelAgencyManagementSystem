@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność strony głównej klienta wraz z wyszukiwarką
+ * Class containing fields and methods for handling the main client page window along with the search functionality.
  */
 public class SearchEngine extends javax.swing.JFrame {
     private static final Dimension MAIN_SCROLL_DIMENSION = new Dimension(1022, 400);
@@ -24,72 +24,73 @@ public class SearchEngine extends javax.swing.JFrame {
     private static final Dimension LEAVE_NUMBER_TF_DIMENSION = new Dimension(64, 22);
     private static final Dimension TRIPS_TABLE_DIMENSION = new Dimension(300, 355);
     /**
-     * Atrybut będący licznikiem wykorzystywanym przy pokazie slajdow
+     * Attribute used as a counter for slideshow display.
      */
     private int counter = 1;
     /**
-     * Atrybut będący ilością danych w liście z dostępnymi wycieczkami
+     * Attribute representing the quantity of data in the list of available trips.
      */
     private final int attributesQuantity = 10;
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą z danymi wycieczek
+     * Attribute representing a list of trip data.
      */
     List<String> tripsData = new ArrayList<>();
     /**
-     * Atrybut będący listą z numerami telefonów klientów do kontaktu
+     * Attribute representing a list of client phone numbers for contact.
      */
     List<String> phoneNumberData = new ArrayList<>();
     /**
-     * Atrybut będący listą z kierunkami podróży
+     * Attribute representing a list of travel destinations.
      */
     List<String> destination = new ArrayList<>();
     /**
-     * Atrybut będący listą z miejscami wylotu
+     * Attribute representing a list of departure places.
      */
     List<String> departure = new ArrayList<>();
     /**
-     * Atrybut będący numerem zaznaczonego wiersza w tabeli z wycieczkami
+     * Attribute representing the selected row number in the trips table.
      */
     private int selectedRow;
     /**
-     * Atrybut określający ilość dorosłych
+     * Attribute specifying the number of adults.
      */
     private int adultsQuantity = 1;
     /**
-     * Atrybut określający ilość dzieci
+     * Attribute specifying the number of children.
      */
     private int childrenQuantity = 0;
     /**
-     * Mapa przechowująca numer wiersza jako klucz i id wycieczki jako wartość
+     * Map storing the row number as a key and the trip ID as a value.
      */
     private final Map<Integer, Integer> idRows = new TreeMap<>();
     /**
-     * Atrybut określający id zaznaczonej wycieczki
+     * Attribute specifying the ID of the selected trip.
      */
     private int idSelectedTrip;
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private Client client;
     /**
-     * Atrybut określający email klienta
+     * Attribute specifying the client's email.
      */
     private String email;
     /**
-     * Pomocniczy konstruktor odpowiadający za inicjalizację GUI
+     * Helper constructor responsible for initializing the GUI.
      */
     SearchEngine() {
         initComponents();
     }
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
-     * @param client parametr przechowujący obiekt klasy Klient
+     * Constructor responsible for initializing the GUI and related elements.
+     *
+     * @param client A parameter storing an object of the Client class.
      */
-    SearchEngine(Client client){
+    SearchEngine(Client client) {
         this.client = client;
         email = client.getUserEmail();
         initComponents();
@@ -98,7 +99,7 @@ public class SearchEngine extends javax.swing.JFrame {
         populateTable();
     }
     /**
-     * Metoda pobierająca kierunki podróży z klasy Client a następnie dodająca je do GUI
+     * Method retrieving travel destinations from the Client class and adding them to the GUI.
      */
     private void getDestination() {
         data.clear();
@@ -107,11 +108,11 @@ public class SearchEngine extends javax.swing.JFrame {
         Client client1 = new Client(data);
         destination.addAll(client1.getReturningData());
         destinationChoiceComboBox.removeAllItems();
-        for(String s : destination)
+        for (String s : destination)
             destinationChoiceComboBox.addItem(s);
     }
     /**
-     * Metoda pobierająca miejsca wylotu z klasy Client a następnie dodająca je do GUI
+     * Method retrieving departure places from the Client class and adding them to the GUI.
      */
     private void getDeparture() {
         data.clear();
@@ -120,10 +121,12 @@ public class SearchEngine extends javax.swing.JFrame {
         Client client1 = new Client(data);
         departure.addAll(client1.getReturningData());
         departureCityChoice.removeAllItems();
-        for(String s : departure)
+        for (String s : departure)
             departureCityChoice.addItem(s);
     }
-
+    /**
+     * Method generating data for the GUI.
+     */
     private void generateData() {
         data.clear();
         data.add("tripsListPopulation");
@@ -133,23 +136,24 @@ public class SearchEngine extends javax.swing.JFrame {
         getDeparture();
     }
     /**
-     * Metoda wypełniająca tabelę z dostępnymi wycieczkami
+     * Method populating the table with available trips.
      */
-    private void populateTable(){
+    private void populateTable() {
         int counter = 0;
-        int size = (tripsData.size()/10);
+        int size = (tripsData.size() / 10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
-        for(int i=0; i<size; i++){
-            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter+1), (tripsData.get(counter+2) + " - " + tripsData.get(counter+3)),
-                    tripsData.get(counter+4) + " zł"});
-            idRows.put(i, Integer.parseInt(tripsData.get(counter+7)));
-            if(size > 1)
-                counter+=10;
+        for (int i = 0; i < size; i++) {
+            model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1),
+                    (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
+                    tripsData.get(counter + 4) + " zł"});
+            idRows.put(i, Integer.parseInt(tripsData.get(counter + 7)));
+            if (size > 1)
+                counter += 10;
         }
     }
     /**
-     * Metoda wyświetlająca pokaz slajdów
+     * Method displaying the slideshow.
      */
     private void showPhotos() {
         imagesLabel.setIcon(new javax.swing.ImageIcon("img\\photo1.jpg"));
@@ -161,9 +165,9 @@ public class SearchEngine extends javax.swing.JFrame {
         time.start();
     }
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing graphical components used in the window.
      */
-    private void initComponents(){
+    private void initComponents() {
         setWindowProperties();
         setButtons();
         setLabels();
@@ -181,15 +185,16 @@ public class SearchEngine extends javax.swing.JFrame {
         createLayout();
     }
     /**
-     * Metoda obsługująca menu podręczne
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the context menu.
+     *
+     * @param evt Accepted event during button click.
      */
     private void managingActionPerformed(ActionEvent evt) {
-        switch(String.valueOf(managingComboBox.getSelectedItem())){
-            case "Wyloguj" -> {
-                Object[] options = {"Tak", "Nie"};
-                if(JOptionPane.showOptionDialog(null,"Czy na pewno chcesz się wylogować?","Potwierdzenie",
-                        JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE, null, options, null)== JOptionPane.YES_OPTION){
+        switch (String.valueOf(managingComboBox.getSelectedItem())) {
+            case "Logout" -> {
+                Object[] options = {"Yes", "No"};
+                if (JOptionPane.showOptionDialog(null, "Are you sure you want to log out?", "Confirmation",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     dispose();
                     data.clear();
                     data.add("logOut");
@@ -199,7 +204,7 @@ public class SearchEngine extends javax.swing.JFrame {
                     new StartPage().setVisible(true);
                 }
             }
-            case "Moje Konto" -> {
+            case "My Account" -> {
                 dispose();
                 new MyAccount(client).setVisible(true);
             }
@@ -690,12 +695,12 @@ public class SearchEngine extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Lato 2023"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Summer 2023" button
+     * @param evt The event received when the button is clicked
      */
     private void summer2023ButtonActionPerformed(ActionEvent evt) {
         int counter = 0;
-        int size = (tripsData.size()/10);
+        int size = (tripsData.size() / 10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -706,21 +711,21 @@ public class SearchEngine extends javax.swing.JFrame {
         Date startDate = null;
         Date endDate = null;
         int rowCounter = 0;
-        try{
+        try {
             startDate = formatter.parse(start);
             endDate = formatter.parse(end);
-        }catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(int i=0; i<size; i++){
+        for (int i = 0; i < size; i++) {
             try {
-                date1 = formatter.parse(String.valueOf(tripsData.get(counter+2)));
-                date2 = formatter.parse(String.valueOf(tripsData.get(counter+3)));
-            }catch (ParseException e) {
+                date1 = formatter.parse(String.valueOf(tripsData.get(counter + 2)));
+                date2 = formatter.parse(String.valueOf(tripsData.get(counter + 3)));
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             assert date1 != null;
-            if(date1.compareTo(startDate) >= 0) {
+            if (date1.compareTo(startDate) >= 0) {
                 assert date2 != null;
                 if (date2.compareTo(endDate) <= 0) {
                     model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)), tripsData.get(counter + 4) + " zł"});
@@ -728,129 +733,128 @@ public class SearchEngine extends javax.swing.JFrame {
                     rowCounter++;
                 }
             }
-            if(size > 1)
-                counter+=10;
+            if (size > 1)
+                counter += 10;
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wyślij"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Send" button
+     * @param evt The event received when the button is clicked
      */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String number = leaveNumberTextField.getText();
-        if(ClientValidator.isPhoneNumberValid(number)){
+        if (ClientValidator.isPhoneNumberValid(number)) {
             leaveNumberTextField.setText("");
             phoneNumberData.clear();
             phoneNumberData.add("sendNumbers");
             phoneNumberData.add(number);
             new Client(phoneNumberData);
             phoneNumberData.clear();
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Niepoprawnie wpisany numer telefonu.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Invalid phone number entered.", "Information", JOptionPane.ERROR_MESSAGE);
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Bułgaria"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Bulgaria" button
+     * @param evt The event received when the button is clicked
      */
     private void bulgariaButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Bulgaria");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Włochy"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Italy" button
+     * @param evt The event received when the button is clicked
      */
     private void italyButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        filterTable("Wlochy");
+        filterTable("Italy");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Egipt"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Egypt" button
+     * @param evt The event received when the button is clicked
      */
     private void egyptButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        filterTable("Egipt");
+        filterTable("Egypt");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Turcja"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Turkey" button
+     * @param evt The event received when the button is clicked
      */
     private void turkeyButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        filterTable("Turcja");
+        filterTable("Turkey");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Hiszpania"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Spain" button
+     * @param evt The event received when the button is clicked
      */
     private void spainButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        filterTable("Hiszpania");
+        filterTable("Spain");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Grecja"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Greece" button
+     * @param evt The event received when the button is clicked
      */
     private void greeceButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        filterTable("Grecja");
+        filterTable("Greece");
     }
     /**
-     * Metoda filtrująca tabelę z dostępnymi wycieczkami pod kątem wybranego kraju
-     * @param country wybrany kraj
+     * Method filtering the table with available trips for the selected country
+     * @param country The selected country
      */
-    private void filterTable(String country){
+    private void filterTable(String country) {
         int counter = 0;
-        int size = (tripsData.size()/10);
+        int size = (tripsData.size() / 10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         idRows.clear();
         int rowCounter = 0;
-        for(int i=0; i<size; i++){
-            if(tripsData.get(counter).equals(country)) {
+        for (int i = 0; i < size; i++) {
+            if (tripsData.get(counter).equals(country)) {
                 model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
                         tripsData.get(counter + 4) + " zł"});
                 idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                 rowCounter++;
             }
-            if(size > 1)
-                counter+=10;
+            if (size > 1)
+                counter += 10;
         }
     }
     /**
-     * Metoda filtrująca tabelę z dostępnymi wycieczkami pod kątem wybranej opcji
-     * @param country1 pierwszy kraj
-     * @param country2 drugi kraj
+     * Method filtering the table with available trips for the selected options
+     * @param country1 The first country
+     * @param country2 The second country
      */
-    private void filterTable(String country1, String country2){
+    private void filterTable(String country1, String country2) {
         int counter = 0;
-        int size = (tripsData.size()/10);
+        int size = (tripsData.size() / 10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         idRows.clear();
         int rowCounter = 0;
-        for(int i=0; i<size; i++){
-            if(tripsData.get(counter).equals(country1) || tripsData.get(counter).equals(country2)) {
+        for (int i = 0; i < size; i++) {
+            if (tripsData.get(counter).equals(country1) || tripsData.get(counter).equals(country2)) {
                 model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
                         tripsData.get(counter + 4) + " zł"});
                 idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                 rowCounter++;
             }
-            if(size > 1)
-                counter+=10;
+            if (size > 1)
+                counter += 10;
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Egzotyka"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Exotic" button
+     * @param evt The event received when the button is clicked
      */
     private void exoticButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        filterTable("Kuba", "Emiraty Arabskie");
+        filterTable("Cuba", "United Arab Emirates");
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Last Minute"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Last Minute" button
+     * @param evt The event received when the button is clicked
      */
     private void lastMinuteButtonActionPerformed(java.awt.event.ActionEvent evt) {
         int counter = 0;
-        int size = (tripsData.size()/10);
+        int size = (tripsData.size() / 10);
         DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
         model.setRowCount(0);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -858,47 +862,47 @@ public class SearchEngine extends javax.swing.JFrame {
         Date now = new Date();
         idRows.clear();
         int rowCounter = 0;
-        for(int i=0; i<size; i++){
+        for (int i = 0; i < size; i++) {
             try {
-                date1 = formatter.parse(String.valueOf(tripsData.get(counter+2)));
-            }catch (ParseException e) {
+                date1 = formatter.parse(String.valueOf(tripsData.get(counter + 2)));
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             assert date1 != null;
-            if(getDifferenceDays(now, date1) < 5) {
+            if (getDifferenceDays(now, date1) < 5) {
                 model.addRow(new Object[]{tripsData.get(counter), tripsData.get(counter + 1), (tripsData.get(counter + 2) + " - " + tripsData.get(counter + 3)),
                         tripsData.get(counter + 4) + " zł"});
                 idRows.put(rowCounter, Integer.parseInt(tripsData.get(counter + 7)));
                 rowCounter++;
             }
-            if(size > 1)
-                counter+=10;
+            if (size > 1)
+                counter += 10;
         }
     }
     /**
-     * Metoda odpowiadająca za obliczenie różnicy dni pomiędzy datami
-     * @param d1 pierwsza data
-     * @param d2 druga data
-     * @return liczba dni różnicy
+     * Method calculating the difference in days between dates
+     * @param d1 The first date
+     * @param d2 The second date
+     * @return The number of days difference
      */
     public static long getDifferenceDays(Date d1, Date d2) {
         long diff = d2.getTime() - d1.getTime();
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Wczasy"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the "Vacations" button
+     * @param evt The event received when the button is clicked
      */
     private void tripsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         populateTable();
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku lupy
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the click of the magnifying glass button
+     * @param evt The event received when the button is clicked
      */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
         boolean isDateValid = performDateValidation();
-        if(isDateValid) {
+        if (isDateValid) {
             adultsQuantity = (int) adultsQuantitySpinner.getValue();
             childrenQuantity = (int) childrenQuantitySpinner.getValue();
             String country = (String) destinationChoiceComboBox.getSelectedItem();
@@ -911,7 +915,7 @@ public class SearchEngine extends javax.swing.JFrame {
             Date date2 = null;
 
             int counter = 0;
-            int size = (tripsData.size()/10);
+            int size = (tripsData.size() / 10);
             DefaultTableModel model = (DefaultTableModel) tripsTable.getModel();
             model.setRowCount(0);
             idRows.clear();
@@ -943,18 +947,18 @@ public class SearchEngine extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji daty wyjazdu i przyjazdu
+     * Method performing validation of departure and arrival dates
      */
     private boolean performDateValidation() {
-        if(!DateValidator.isDateValid(departureTextField.getText()) || !DateValidator.isDateValid(arrivalTextField.getText())) {
-            JOptionPane.showMessageDialog(null, "Niepoprawnie wpisana data.", "Informacja", JOptionPane.ERROR_MESSAGE);
+        if (!DateValidator.isDateValid(departureTextField.getText()) || !DateValidator.isDateValid(arrivalTextField.getText())) {
+            JOptionPane.showMessageDialog(null, "Invalid date entered.", "Information", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing to run the window
+     * @param args Arguments passed when the application is launched
      */
     public static void main(String[] args) {
         try {
@@ -997,43 +1001,43 @@ public class SearchEngine extends javax.swing.JFrame {
     private final JButton sendButton = new JButton();
     private final JLabel headphonesIconLabel = new JLabel();
     /**
-     * Menu podręczne z opcjami kierunku podróży
+     * Dropdown menu with travel destination options
      */
     private final javax.swing.JComboBox<String> destinationChoiceComboBox = new JComboBox<>();
     /**
-     * Element umożliwiający wybór ilości dorosłych
+     * Element allowing selection of the number of adults
      */
     private final javax.swing.JSpinner adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
     /**
-     * Element umożliwiający wybór ilości dzieci
+     * Element allowing selection of the number of children
      */
     private final javax.swing.JSpinner childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
     /**
-     * Etykieta ze zdjęciem
+     * Label with images
      */
     private final javax.swing.JLabel imagesLabel = new JLabel();
     /**
-     * Pole do wprowadzenia daty zakończenia wycieczki
+     * Field for entering the departure date of the trip
      */
     private final javax.swing.JTextField arrivalTextField = new JTextField();
     /**
-     * Menu podręczne z opcjami miejsca wylotu
+     * Dropdown menu with departure city options
      */
     private final javax.swing.JComboBox<String> departureCityChoice = new JComboBox<>();
     /**
-     * Tabela z dostępnymi wycieczkami
+     * Table with available trips
      */
     private final javax.swing.JTable tripsTable= new JTable();
     /**
-     * Pole do wprowadzenia daty rozpoczęcia wycieczki
+     * Field for entering the arrival date of the trip
      */
     private final javax.swing.JTextField departureTextField = new JTextField();
     /**
-     * Menu podręczne z opcjami Strona Główna, Moje Konto, Wyloguj się
+     * Dropdown menu with options for Home, My Account, and Logout
      */
     private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
     /**
-     * Pole do wprowadzenia numeru telefonu
+     * Field for entering the phone number
      */
     private final javax.swing.JTextField leaveNumberTextField = new JTextField();
 }

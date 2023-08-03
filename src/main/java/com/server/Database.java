@@ -4,33 +4,33 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Klasa przyjmująca dane od serwera i łącząca się z bazą danych
+ * Class that receives data from the server and connects to the database
  */
 public class Database {
     /**
-     * Atrybut pozwalający na wykonywanie zapytań do bazy danych
+     * Attribute allowing executing queries to the database
      */
     private Statement statement;
     /**
-     * Atrybut pozwalający na połączenie się z bazą danych
+     * Attribute allowing connection to the database
      */
     private Connection connection;
     /**
-     * Atrybut określający rodzaj wykonywanej operacji
+     * Attribute specifying the type of operation being performed
      */
     private final String operation;
     /**
-     * Atrybut będący listą zawierającą dane przyjmowane od serwera
+     * Attribute being a list containing data received from the server
      */
     private final List<String> data = new ArrayList<>();
     /**
-     * Atrybut będący listą zawierającą dane zwracane do serwera
+     * Attribute being a list containing data returned to the server
      */
     private final List<String> returningData = new ArrayList<>();
     /**
-     * Konstruktor pozwalający na tworzenie instancji klasy
-     * @param operation rodzaj wykonywanej operacji
-     * @param data lista zawierająca dane przyjmowane od serwera
+     * Constructor allowing creating an instance of the class
+     * @param operation The type of operation being performed
+     * @param data List containing data received from the server
      */
     public Database(String operation, List<String> data){
         this.operation = operation;
@@ -38,14 +38,14 @@ public class Database {
         connectWithDatabase();
     }
     /**
-     * Metoda zwracająca listę zawierającą dane zwracane do serwera
-     * @return Zwraca listę zawierającą dane zwracane do serwera
+     * Method returning a list containing data returned to the server
+     * @return Returns a list containing data returned to the server
      */
     public List<String> getReturningData(){
         return returningData;
     }
     /**
-     * Metoda pozwalająca na zainicjowanie parametrów połączenia z baza danych oraz wybór odpowiedniej operacji
+     * Method allowing initializing connection parameters with the database and choosing the appropriate operation
      */
     public void connectWithDatabase() {
         try {
@@ -82,7 +82,7 @@ public class Database {
         }
     }
     /**
-     * Metoda pobierająca z bazy danych dane użytkownika
+     * Method retrieving user data from the database
      */
     public void findClientData(){
         try{
@@ -103,8 +103,8 @@ public class Database {
         }
     }
     /**
-     * Metoda pobierająca z bazy danych informację, czy użytkownik jest zalogowany
-     * @return true, jeśli użytkownik jest zalogowany, false jeśli nie
+     * Method retrieving from the database information whether the user is logged in
+     * @return true if the user is logged in, false if not
      */
     public boolean getUserLogged(){
         int userLogged = 0;
@@ -123,7 +123,7 @@ public class Database {
         return userLogged != 0;
     }
     /**
-     * Metoda pobierająca z bazy danych dane wycieczki
+     * Method retrieving trip data from the database
      */
     public void findTrip(){
         int id = 0;
@@ -159,7 +159,7 @@ public class Database {
         }
     }
     /**
-     * Metoda pobierająca z bazy danych dane rezerwacje
+     * Method retrieving reservations data from the database
      */
     public void findReservation(){
         try{
@@ -185,8 +185,9 @@ public class Database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych numery klientów do kontaktu
+     * Method retrieving contact numbers of customers from the database
      */
     public void getNumbers() {
         try {
@@ -200,8 +201,9 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
+
     /**
-     * Metoda zapisująca do bazy danych numery klientów do kontaktu
+     * Method saving contact numbers of customers to the database
      */
     public void sendNumbers(){
         try{
@@ -217,14 +219,15 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
+
     /**
-     * Metoda dodająca do bazy danych nową wycieczkę
+     * Method adding a new trip to the database
      */
     public void addTrip() {
         try {
-            String query = "INSERT INTO trips VALUES (trips_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'Hotel to miejsce, w ktorym jedzenie to kwestia przygody i odkrywania nowych smakow. " +
-                    "W naszej ofercie znajda Panstwo pokoje o roznym standardzie oraz opcje wyzywienia, w tym sniadania, obiady i kolacje, ktore są przygotowywane przez naszych szefow kuchni z pasja i zaangazowaniem. " +
-                    "Nasza restauracja oferuje dania kuchni fusion, a nasza karta drinkow to prawdziwe arcydziela mixologii.', ?, 0)";
+            String query = "INSERT INTO trips VALUES (trips_seq.nextval, ?, ?, ?, ?, ?, ?, ?, 'Hotel is a place where eating is an adventure and discovering new flavors. " +
+                    "We offer rooms of various standards and catering options, including breakfasts, lunches, and dinners, which are prepared by our passionate and dedicated chefs. " +
+                    "Our restaurant offers fusion cuisine dishes, and our drink menu is a true masterpiece of mixology.', ?, 0)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, data.get(1));
             preparedStatement.setString(2, data.get(2));
@@ -238,14 +241,15 @@ public class Database {
             preparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał wycieczkę do : " + data.get(1) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator added a trip to: " + data.get(1) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda usuwająca z bazy danych wybraną rezerwację
+     * Method deleting a selected reservation from the database
      */
     private void deleteRes() {
         try{
@@ -269,14 +273,15 @@ public class Database {
             updateTripsPreparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął rezerwację o ID: " + data.get(1) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator deleted a reservation with ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych wszystkie rezerwacje
+     * Method retrieving all reservations from the database
      */
     private void updateRes() {
         String departure;
@@ -304,8 +309,9 @@ public class Database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda dodająca do bazy danych nową rezerwację
+     * Method adding a new reservation to the database
      */
     public void addReservation() {
         try {
@@ -324,14 +330,15 @@ public class Database {
             updateTripsPreparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał rezerwację wycieczki o ID: " + Integer.parseInt(data.get(1)) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator added a reservation for trip ID: " + Integer.parseInt(data.get(1)) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda usuwająca z bazy danych wybraną wycieczkę
+     * Method deleting a selected trip from the database
      */
     public void deleteTrip() {
         try{
@@ -341,14 +348,15 @@ public class Database {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + data.get(1) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator deleted a trip with ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda zapisująca do bazy danych nowe dane edytowanej wycieczki
+     * Method saving new data of an edited trip to the database
      */
     private void editTrip() {
         try{
@@ -364,14 +372,15 @@ public class Database {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane wycieczki o ID: " + data.get(1) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator edited trip data with ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych dostępne kierunki podróży
+     * Method retrieving available travel destinations from the database
      */
     public void getDestination() {
         try{
@@ -386,8 +395,9 @@ public class Database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych dostępne miasta wylotu/przylotu
+     * Method retrieving available departure/arrival cities from the database
      */
     private void getDeparture() {
         try{
@@ -403,7 +413,7 @@ public class Database {
         }
     }
     /**
-     * Metoda pobierająca z bazy danych dostępne wycieczki
+     * Method retrieving available trips from the database
      */
     public void tripsListPopulate() {
         try {
@@ -412,7 +422,7 @@ public class Database {
             int index;
             String departure;
             String arrival;
-            while(result.next()){
+            while (result.next()) {
                 returningData.add(result.getString("country"));
                 returningData.add(result.getString("city"));
                 departure = result.getString("departure");
@@ -428,16 +438,17 @@ public class Database {
                 returningData.add(result.getString("description"));
                 returningData.add(result.getString("hotel_name"));
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda zapisująca do bazy danych nowe hasło edytowanego użytkownika
+     * Method saving the new password of an edited user to the database
      */
     public void changeClientPassword() {
-        try{
+        try {
             String query = "UPDATE users SET password = ? WHERE id_user = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
             preparedState.setString(1, data.get(1));
@@ -445,34 +456,36 @@ public class Database {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zmienił hasło użytkownika o ID: " + data.get(2) + ".");
-        }catch (SQLException ex) {
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator changed the password of user with ID: " + data.get(2) + ".");
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda usuwająca z bazy danych wybranego klienta
+     * Method deleting a selected client from the database
      */
     private void deleteClient() {
-        try{
+        try {
             String query = "DELETE FROM users WHERE id_user = ?";
             PreparedStatement preparedState = connection.prepareStatement(query);
             preparedState.setInt(1, Integer.parseInt(data.get(1)));
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął klienta o ID: " + data.get(1) + ".");
-        }catch (SQLException ex) {
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator deleted a client with ID: " + data.get(1) + ".");
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda zapisująca do bazy nowych danych nowe dane edytowanego użytkownika
+     * Method saving new data of an edited user to the database
      */
     public void editData() {
-        try{
+        try {
             String query = "UPDATE users " +
                     "SET firstName = ?, lastName = ?, email = ?, phoneNumber = ? " +
                     "WHERE id_user = ?";
@@ -485,110 +498,115 @@ public class Database {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            if(Boolean.parseBoolean(data.get(6)))
-                new LogsAdmins("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane klienta o ID: " + data.get(5) + ".");
+            if (Boolean.parseBoolean(data.get(6)))
+                new LogsAdmins("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Administrator edited user data with ID: " + data.get(5) + ".");
             else
-                new LogsClients("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Klient o ID: " + data.get(5) + " zedytował swoje dane.");
-        }catch (SQLException ex) {
+                new LogsClients("com.server.Database", "info", "[ " + new java.util.Date() + " ] " + "Client with ID: " + data.get(5) + " edited their data.");
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("com.server.Database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych imię administratora
+     * Method retrieving the administrator's first name from the database
      */
-    private void findAdminName(){
-        try{
+    private void findAdminName() {
+        try {
             String adminQuery = "SELECT firstName FROM users WHERE email = ?";
             PreparedStatement adminPreparedState = connection.prepareStatement(adminQuery);
             adminPreparedState.setString(1, data.get(1));
             ResultSet resultAdmin = adminPreparedState.executeQuery();
-            if(resultAdmin.next()){
+            if (resultAdmin.next()) {
                 returningData.add(resultAdmin.getString("firstName"));
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych informacje wyświetlane w panelu administratora
+     * Method retrieving information displayed in the administrator's dashboard from the database
      */
     public void updateDashboard() {
         try {
             findAdminName();
             String howManyClientsQuery = "SELECT COUNT(*) as clientsCount FROM users WHERE userRank = 'client'";
             ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
-            if(resultHowManyClients.next()) {
+            if (resultHowManyClients.next()) {
                 returningData.add(Integer.toString(resultHowManyClients.getInt("clientsCount")));
             }
             String howManyTripsQuery = "SELECT COUNT(*) as tripsCount FROM trips";
             ResultSet resultHowManyTrips = statement.executeQuery(howManyTripsQuery);
-            if(resultHowManyTrips.next()) {
+            if (resultHowManyTrips.next()) {
                 returningData.add(Integer.toString(resultHowManyTrips.getInt("tripsCount")));
             }
             String howManyReservationsQuery = "SELECT COUNT(*) as resCount FROM reservations";
             ResultSet resultHowManyReservations = statement.executeQuery(howManyReservationsQuery);
-            if(resultHowManyReservations.next()) {
+            if (resultHowManyReservations.next()) {
                 returningData.add(Integer.toString(resultHowManyReservations.getInt("resCount")));
             }
             String howMuchIncomeQuery = "SELECT people_quantity, price_per_person FROM reservations " +
                     "JOIN trips ON trips.id_trip = reservations.id_trip";
             ResultSet resultHowMuchIncome = statement.executeQuery(howMuchIncomeQuery);
             int incomeQuantity = 0;
-            while(resultHowMuchIncome.next()) {
+            while (resultHowMuchIncome.next()) {
                 int peopleQuantity = resultHowMuchIncome.getInt("people_quantity");
                 int price = resultHowMuchIncome.getInt("price_per_person");
                 incomeQuantity += peopleQuantity * price;
             }
             returningData.add(Integer.toString(incomeQuantity));
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych wszystkich klientów
+     * Method retrieving all clients from the database
      */
     public void updateClients() {
         try {
             String query = "SELECT * FROM users WHERE userRank = 'client'";
             ResultSet result = statement.executeQuery(query);
-            while(result.next()){
+            while (result.next()) {
                 returningData.add(Integer.toString(result.getInt("ID_user")));
                 returningData.add(result.getString("firstName"));
                 returningData.add(result.getString("lastName"));
                 returningData.add(result.getString("email"));
                 returningData.add(result.getString("phoneNumber"));
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych wszystkie wycieczki
+     * Method retrieving all trips from the database
      */
     public void updateTrips() {
         try {
             String query = "SELECT * FROM trips";
             ResultSet result = statement.executeQuery(query);
-            while(result.next()){
+            while (result.next()) {
                 returningData.add(Integer.toString(result.getInt("id_trip")));
                 returningData.add(result.getString("country"));
                 returningData.add(result.getString("city"));
                 returningData.add(Integer.toString(result.getInt("price_per_person")));
                 returningData.add(Integer.toString(result.getInt("people_limit")));
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda dodająca do bazy danych nowego klienta
+     * Method adding a new client to the database
      */
-    public void addClient(){
+    public void addClient() {
         try {
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
@@ -596,8 +614,7 @@ public class Database {
             ResultSet result = emailPreparedState.executeQuery();
             if (result.next()) {
                 returningData.add("Tak");
-            }
-            else {
+            } else {
                 returningData.add("Nie");
                 String query = "INSERT INTO users (ID_user, email, password, firstName, lastName, phoneNumber, userLogged) VALUES (users_seq.nextval, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -611,24 +628,25 @@ public class Database {
                 preparedStatement.close();
                 String commit = "COMMIT";
                 statement.executeUpdate(commit);
-                if(data.get(6).equals("true")){
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał użytkownika o e-mailu: " + data.get(4) + ".");
+                if (data.get(6).equals("true")) {
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator added a user with email: " + data.get(4) + ".");
                 }
             }
             emailPreparedState.close();
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał klienta o emailu: " + data.get(4) + ".");
+            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator added a client with email: " + data.get(4) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda wypełniająca listę zawierającą dane zwracane do serwera
-     * @param startPageMessage wiadomość wysyłana do klasy StartPage
-     * @param isExisting informacja, czy użytkownik już istnieje w bazie danych
+     * Method filling the list containing data returned to the server
+     * @param startPageMessage message sent to the StartPage class
+     * @param isExisting information whether the user already exists in the database
      */
-    public void fillLoginReturningData(String startPageMessage, boolean isExisting){
-        if(!isExisting) {
+    public void fillLoginReturningData(String startPageMessage, boolean isExisting) {
+        if (!isExisting) {
             returningData.add("false");
             returningData.add("false");
         }
@@ -637,26 +655,27 @@ public class Database {
         returningData.add(Integer.toString(-1));
         returningData.add(startPageMessage);
     }
+
     /**
-     * Metoda pozwalająca na zalogowanie się pojedynczego użytkownika
+     * Method allowing a single user to log in
      */
-    public void login(){
-        try{
+    public void login() {
+        try {
             String startPageMessage = "";
             String emailQuery = "SELECT * FROM users WHERE email = ?";
             PreparedStatement emailPreparedState = connection.prepareStatement(emailQuery);
             emailPreparedState.setString(1, data.get(1));
             ResultSet result = emailPreparedState.executeQuery();
-            if(result.next()){
+            if (result.next()) {
                 returningData.add("true");
                 String passwordQuery = "SELECT * FROM users WHERE password = ? AND email = ?";
                 PreparedStatement passwordPreparedState = connection.prepareStatement(passwordQuery);
                 passwordPreparedState.setString(1, data.get(2));
                 passwordPreparedState.setString(2, data.get(1));
                 ResultSet resultPassword = passwordPreparedState.executeQuery();
-                if(resultPassword.next()){
+                if (resultPassword.next()) {
                     returningData.add("true");
-                    if(resultPassword.getInt("userLogged") == 0) {
+                    if (resultPassword.getInt("userLogged") == 0) {
                         String loggingQuery = "UPDATE users SET userLogged = 1 WHERE email = ?";
                         PreparedStatement loggingPreparedState = connection.prepareStatement(loggingQuery);
                         loggingPreparedState.setString(1, data.get(1));
@@ -668,38 +687,36 @@ public class Database {
                             returningData.add("true");
                             returningData.add("false");
                             returningData.add(Integer.toString(resultPassword.getInt("ID_user")));
-                            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + data.get(1) + " zalogował się.");
+                            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator with email: " + data.get(1) + " logged in.");
                         } else {
                             returningData.add("false");
                             returningData.add("true");
                             returningData.add(Integer.toString(resultPassword.getInt("ID_user")));
-                            new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + data.get(1) + " zalogował się.");
+                            new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Client with email: " + data.get(1) + " logged in.");
                         }
                         returningData.add(startPageMessage);
-                    }
-                    else {
-                        startPageMessage = "Użytkownik jest już zalogowany.";
+                    } else {
+                        startPageMessage = "The user is already logged in.";
                         fillLoginReturningData(startPageMessage, true);
-                        new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(1)+".");
+                        new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Failed attempt to log in to the account with email: " + data.get(1) + ".");
                     }
-                }
-                else{
+                } else {
                     returningData.add("false");
                     fillLoginReturningData(startPageMessage, true);
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(1)+".");
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Failed attempt to log in to the account with email: " + data.get(1) + ".");
                 }
-            }
-            else{
+            } else {
                 fillLoginReturningData(startPageMessage, false);
-                new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto użytkownika o e-mailu: " + data.get(1)+".");
+                new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Failed attempt to log in to the account with email: " + data.get(1) + ".");
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pobierająca z bazy danych informacje wyświetlane w oknie Moje Konto
+     * Method retrieving information displayed in the "My Account" window from the database
      */
     public void updateMyAccount() {
         findClientData();
@@ -714,7 +731,7 @@ public class Database {
             PreparedStatement preparedState = connection.prepareStatement(query);
             preparedState.setString(1, data.get(1));
             ResultSet result = preparedState.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 returningData.add(Integer.toString(result.getInt("id_reservation")));
                 returningData.add(result.getString("country"));
                 returningData.add(result.getString("city"));
@@ -726,7 +743,7 @@ public class Database {
                 arrival = result.getString("arrival");
                 index = arrival.indexOf("00:");
                 returningData.add(arrival.substring(0, index - 1));
-                if(result.getString("insurance") != null)
+                if (result.getString("insurance") != null)
                     returningData.add(result.getString("insurance"));
                 else
                     returningData.add("Brak");
@@ -734,13 +751,14 @@ public class Database {
                 returningData.add(result.getString("hotel_name"));
                 returningData.add(result.getString("description"));
             }
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pozwalająca na wylogowanie się pojedynczego użytkownika
+     * Method allowing a single user to log out
      */
     public void logOut() {
         try {
@@ -754,20 +772,21 @@ public class Database {
             PreparedStatement preparedStatement = connection.prepareStatement(query2);
             preparedStatement.setString(1, data.get(1));
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) {
-                if(resultSet.getString("userRank").equals("admin"))
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o e-mailu: " + data.get(1) + " wylogował się.");
+            if (resultSet.next()) {
+                if (resultSet.getString("userRank").equals("admin"))
+                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator with email: " + data.get(1) + " logged out.");
                 else
-                    new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o e-mailu: " + data.get(1) + " wylogował się.");
+                    new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Client with email: " + data.get(1) + " logged out.");
             }
 
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Metoda pozwalająca na wylogowanie wszystkich użytkowników
+     * Method allowing all users to log out
      */
     public void logOutEveryone() {
         try {
@@ -775,8 +794,8 @@ public class Database {
             statement.executeQuery(query);
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsServer("database", "info", "[ " + new java.util.Date() + " ] " + "Wylogowano wszystkich z serwera.");
-        }catch (SQLException ex) {
+            new LogsServer("database", "info", "[ " + new java.util.Date() + " ] " + "Logged out everyone from the server.");
+        } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }

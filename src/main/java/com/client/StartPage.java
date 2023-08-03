@@ -2,6 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.client.validation.ClientValidator;
 
 import java.awt.event.FocusEvent;
 import java.awt.*;
@@ -10,63 +11,76 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 /**
- * Klasa zawierająca pola i metody służące do obsługi okna zawierającego funkcjonalność logowania
+ * Class containing fields and methods for handling the window with login functionality.
  */
 public class StartPage extends javax.swing.JFrame {
     private static final Dimension TEXT_FIELD_DIMENSION = new Dimension(64, 28);
     private static final Dimension BUTTON_DIMENSION = new Dimension(105, 25);
+
     /**
-     * Atrybut będący listą przechowującą dane przekazywane do klasy Client
+     * Attribute representing a list storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Atrybut określający, czy użytkownik istnieje w bazie
+     * Attribute specifying whether the user exists in the database.
      */
     boolean userExists;
+
     /**
-     * Atrybut określający, czy hasło dla danego emailu zgadza się z tym w bazie danych
+     * Attribute specifying whether the password matches the one in the database for the given email.
      */
     boolean passwordValid;
+
     /**
-     * Atrybut określający, czy administrator jest zalogowany
+     * Attribute specifying whether the administrator is logged in.
      */
     boolean adminLogged;
+
     /**
-     * Atrybut określający, czy klient jest zalogowany
+     * Attribute specifying whether the client is logged in.
      */
     boolean clientLogged;
+
     /**
-     * Atrybut przechowujący email
+     * Attribute storing the email.
      */
     String email;
+
     /**
-     * Atrybut przechowujący hasło
+     * Attribute storing the password.
      */
     String password;
+
     /**
-     * Atrybut przechowujący wiadomość przekazaną od klasy Client
+     * Attribute storing the message passed from the Client class.
      */
     String message;
+
     /**
-     * Atrybut określający, czy email jest poprawny
+     * Attribute specifying whether the email is correct.
      */
     private boolean emailCorrect;
+
     /**
-     * Atrybut określający, czy hasło jest poprawne
+     * Attribute specifying whether the password is correct.
      */
     private boolean passwordCorrect;
+
     /**
-     * Atrybut będący obiektem klasy Client
+     * Attribute representing an object of the Client class.
      */
     private Client client;
+
     /**
-     * Konstruktor odpowiadający za inicjalizację GUI oraz odpowiednich elementów
+     * Constructor responsible for initializing the GUI and related elements.
      */
     StartPage() {
         initComponents();
     }
+
     /**
-     * Metoda inicjalizująca komponenty graficzne wykorzystywane w oknie
+     * Method initializing graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -237,56 +251,54 @@ public class StartPage extends javax.swing.JFrame {
         });
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Utwórz konto"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Create Account" button click.
+     * @param evt Event triggered when the button is clicked.
      */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
-        new Registration(false,client).setVisible(true);
+        new Registration(false, client).setVisible(true);
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji emailu
+     * Method responsible for email validation.
      */
-    private void performEmailValidation(){
+    private void performEmailValidation() {
         String emailFromTextField = emailTextField.getText();
-        if(emailFromTextField.equals("")) {
+        if (emailFromTextField.equals("")) {
             emailCorrect = false;
-            wrongEmailLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            emailCorrect = Validation.isEmailValid(emailFromTextField);
+            wrongEmailLabel.setText("This field is required.");
+        } else {
+            emailCorrect = ClientValidator.isEmailValid(emailFromTextField);
             if (emailCorrect)
                 wrongEmailLabel.setText("");
             else
-                wrongEmailLabel.setText("Sprawdź czy podany adres e-mail jest poprawny.");
+                wrongEmailLabel.setText("Check if the provided email address is valid.");
         }
     }
     /**
-     * Metoda odpowiadająca za przeprowadzenie walidacji hasła
+     * Method responsible for password validation.
      */
-    private void performPasswordValidation(){
+    private void performPasswordValidation() {
         String passwordFromPasswordField = new String(passwordField.getPassword());
-        if(passwordFromPasswordField.equals("")) {
+        if (passwordFromPasswordField.equals("")) {
             passwordCorrect = false;
-            wrongPasswordLabel.setText("Pole jest wymagane.");
-        }
-        else {
-            passwordCorrect = Validation.isPasswordValid(passwordFromPasswordField);
+            wrongPasswordLabel.setText("This field is required.");
+        } else {
+            passwordCorrect = ClientValidator.isPasswordValid(passwordFromPasswordField);
             if (passwordCorrect)
                 wrongPasswordLabel.setText("");
             else
-                wrongPasswordLabel.setText("Minimum 8 znaków w tym jedna cyfra, wielka litera i mała litera.");
+                wrongPasswordLabel.setText("Minimum 8 characters, including at least one digit, uppercase, and lowercase letter.");
         }
     }
     /**
-     * Metoda obsługująca kliknięcie przycisku "Zaloguj się"
-     * @param evt Przyjęty event podczas kliknięcia przycisku
+     * Method handling the "Sign In" button click.
+     * @param evt Event triggered when the button is clicked.
      */
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performEmailValidation();
         performPasswordValidation();
 
-        if(emailCorrect && passwordCorrect) {
+        if (emailCorrect && passwordCorrect) {
             email = emailTextField.getText();
             password = new String(passwordField.getPassword());
             data.clear();
@@ -303,23 +315,20 @@ public class StartPage extends javax.swing.JFrame {
             clientLogged = Boolean.parseBoolean(returningData.get(3));
             message = returningData.get(5);
             if (!userExists) {
-                wrongEmailLabel.setText("Użytkownik o tym adresie e-mail nie istnieje. Podaj inny.");
+                wrongEmailLabel.setText("User with this email address does not exist. Provide another one.");
                 data.clear();
-            }
-            else {
-                if (!passwordValid){
-                    wrongPasswordLabel.setText("Błędne hasło.");
+            } else {
+                if (!passwordValid) {
+                    wrongPasswordLabel.setText("Incorrect password.");
                     data.clear();
-                }
-                else {
-                    if(!message.equals("")) {
-                        JOptionPane.showMessageDialog(this, message, "Informacja", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    if (!message.equals("")) {
+                        JOptionPane.showMessageDialog(this, message, "Information", JOptionPane.ERROR_MESSAGE);
                         data.clear();
-                    }
-                    else {
+                    } else {
                         if (adminLogged) {
                             this.dispose();
-                            new Dashboard(client,"").setVisible(true);
+                            new Dashboard(client, "").setVisible(true);
                         } else if (clientLogged) {
                             this.dispose();
                             new SearchEngine(client).setVisible(true);
@@ -330,8 +339,8 @@ public class StartPage extends javax.swing.JFrame {
         }
     }
     /**
-     * Metoda pozwalająca na uruchomienie okna
-     * @param args Argumenty przyjmowane podczas uruchamiania aplikacji
+     * Method allowing to run the window.
+     * @param args Arguments passed during application startup.
      */
     public static void main(String[] args) {
         try {
@@ -347,33 +356,33 @@ public class StartPage extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new StartPage().setVisible(true));
     }
-    //GUI variables
+    // GUI variables
     private final JPanel loginPanel = new JPanel();
     private final JLabel emailLabel = new JLabel();
     private final JLabel passwordLabel = new JLabel();
     private final JLabel photoLabel = new JLabel();
     /**
-     * Pole do wprowadzenia emailu
+     * Text field for entering the email.
      */
     private final javax.swing.JTextField emailTextField = new JTextField();
     /**
-     * Pole do wprowadzenia hasła
+     * Password field for entering the password.
      */
     private final javax.swing.JPasswordField passwordField = new JPasswordField();
     /**
-     * Przycisk umożliwiający zalogowanie się
+     * Button for logging in.
      */
     private final javax.swing.JButton registerButton = new JButton();
     /**
-     * Przycisk umożliwiający przejście do okna z rejestracją
+     * Button for proceeding to the registration window.
      */
     private final javax.swing.JButton signInButton = new JButton();
     /**
-     * Etykieta informująca, że email jest niepoprawny
+     * Label indicating that the email is incorrect.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
     /**
-     * Etykieta informująca, że hasło jest niepoprawne
+     * Label indicating that the password is incorrect.
      */
     private final javax.swing.JLabel wrongPasswordLabel = new JLabel();
 }
