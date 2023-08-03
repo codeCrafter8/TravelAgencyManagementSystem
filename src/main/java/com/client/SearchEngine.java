@@ -19,10 +19,31 @@ import java.util.concurrent.TimeUnit;
  * Class containing fields and methods for handling the main client page window along with the search functionality.
  */
 public class SearchEngine extends javax.swing.JFrame {
+
+    /**
+     * The main scrollable panel's dimension, representing the size of the scrollable area in the main window.
+     * The width is set to 1022 pixels, and the height is set to 400 pixels.
+     */
     private static final Dimension MAIN_SCROLL_DIMENSION = new Dimension(1022, 400);
+
+    /**
+     * The main window's dimension, representing the overall size of the main window in the application.
+     * The width is set to 1022 pixels, and the height is set to 729 pixels.
+     */
     private static final Dimension MAIN_WINDOW_DIMENSION = new Dimension(1022, 729);
+
+    /**
+     * The dimension of the text field used to input leave numbers. It represents the width and height of the text field.
+     * The width is set to 64 pixels, and the height is set to 22 pixels.
+     */
     private static final Dimension LEAVE_NUMBER_TF_DIMENSION = new Dimension(64, 22);
+
+    /**
+     * The dimension of the trips table, representing the size of the table that displays trip information.
+     * The width is set to 300 pixels, and the height is set to 355 pixels.
+     */
     private static final Dimension TRIPS_TABLE_DIMENSION = new Dimension(300, 355);
+
     /**
      * Attribute used as a counter for slideshow display.
      */
@@ -175,7 +196,6 @@ public class SearchEngine extends javax.swing.JFrame {
         setTextFields();
         setTable();
         setManaging();
-        setSpinners();
         createCountriesPanel();
         createSearchPanelIntroduction();
         createSearchPanel();
@@ -210,6 +230,10 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Sets properties and event handlers for various buttons in the GUI.
+     */
     private void setButtons(){
         tripsButton.setBackground(ColorUtils.LIGHT_BROWN);
         tripsButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -303,6 +327,10 @@ public class SearchEngine extends javax.swing.JFrame {
         sendButton.setFocusable(false);
         sendButton.addActionListener(this::sendButtonActionPerformed);
     }
+
+    /**
+     * Sets properties and styles for various JLabels in the GUI.
+     */
     private void setLabels(){
         agencyNameLabel.setBackground(ColorUtils.LIGHT_BROWN);
         agencyNameLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
@@ -325,6 +353,10 @@ public class SearchEngine extends javax.swing.JFrame {
         peopleQuantityLabel.setForeground(Color.white);
         peopleQuantityLabel.setText("Ilość dorosłych/dzieci");
     }
+
+    /**
+     * Creates the countriesPanel, which contains country-related buttons.
+     */
     private void createCountriesPanel(){
         javax.swing.GroupLayout countriesPanelLayout = new javax.swing.GroupLayout(countriesPanel);
         countriesPanel.setLayout(countriesPanelLayout);
@@ -367,6 +399,10 @@ public class SearchEngine extends javax.swing.JFrame {
                                 .addComponent(bulgariaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }
+
+    /**
+     * Sets properties and configurations for the main window.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(DimensionUtils.WINDOW_DIMENSION);
@@ -387,6 +423,10 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the main window (mainScroll) and its components.
+     */
     private void createMainWindow(){
         mainScroll.setBorder(null);
         mainScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -413,6 +453,10 @@ public class SearchEngine extends javax.swing.JFrame {
 
         mainScroll.setViewportView(mainWindow);
     }
+
+    /**
+     * Creates the introduction part of the searchPanel.
+     */
     private void createSearchPanelIntroduction(){
         searchPanelIntroduction.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout searchPanelIntroductionLayout = new javax.swing.GroupLayout(searchPanelIntroduction);
@@ -450,6 +494,10 @@ public class SearchEngine extends javax.swing.JFrame {
                                         .addComponent(childrenQuantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }
+
+    /**
+     * Creates the mainPanel, which contains various components.
+     */
     private void createMainPanel(){
         javax.swing.GroupLayout glowneLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(glowneLayout);
@@ -484,6 +532,10 @@ public class SearchEngine extends javax.swing.JFrame {
                                 .addComponent(tableScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the searchPanel and sets its properties and styles.
+     */
     private void createSearchPanel(){
         searchPanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
@@ -527,12 +579,18 @@ public class SearchEngine extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets up the ComboBoxes with initial values.
+     */
     private void setComboBoxes(){
         destinationChoiceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dokąd?"}));
-        destinationChoiceComboBox.setFocusable(false);
         departureCityChoice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Skąd?"}));
-        departureCityChoice.setFocusable(false);
     }
+
+    /**
+     * Configures several text fields with initial text values, colors, and focus listeners.
+     */
     private void setTextFields(){
         departureTextField.setForeground(ColorUtils.GREY);
         departureTextField.setText("04/07/2023");
@@ -594,10 +652,10 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         });
     }
-    private void setSpinners(){
-        adultsQuantitySpinner.setFocusable(false);
-        childrenQuantitySpinner.setFocusable(false);
-    }
+
+    /**
+     * Sets up the JTable with a custom table model, column names, and selection listeners.
+     */
     private void setTable(){
         tableScroll.setBorder(null);
         tableScroll.setToolTipText("");
@@ -634,6 +692,10 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Configures a ComboBox related to managing actions with specific properties and an action listener.
+     */
     private void setManaging(){
         managingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Strona Główna", "Moje Konto", "Wyloguj" }));
         managingComboBox.setBorder(null);
@@ -642,6 +704,10 @@ public class SearchEngine extends javax.swing.JFrame {
         managingComboBox.setLightWeightPopupEnabled(false);
         managingComboBox.addActionListener(this::managingActionPerformed);
     }
+
+    /**
+     * Creates a footer component with an icon, a text field, and a button.
+     */
     private void createFooter(){
         footer.setBackground(ColorUtils.LIGHT_BROWN);
         headphonesIconLabel.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
@@ -673,6 +739,10 @@ public class SearchEngine extends javax.swing.JFrame {
                                 .addGap(8, 8, 8))
         );
     }
+
+    /**
+     * Sets up the overall layout of the main window, including the placement and arrangement of GUI components.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -974,70 +1044,174 @@ public class SearchEngine extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new SearchEngine().setVisible(true));
     }
-    private final JScrollPane mainScroll = new JScrollPane();
-    private final JPanel mainWindow = new JPanel();
-    private final JPanel mainPanel = new JPanel();
-    private final JPanel countriesPanel = new JPanel();
-    private final JButton tripsButton = new JButton();
-    private final JButton summer2023Button = new JButton();
-    private final JButton lastMinuteButton = new JButton();
-    private final JButton exoticButton = new JButton();
-    private final JButton greeceButton = new JButton();
-    private final JButton spainButton = new JButton();
-    private final JButton turkeyButton = new JButton();
-    private final JButton egyptButton = new JButton();
-    private final JButton italyButton = new JButton();
-    private final JButton bulgariaButton = new JButton();
-    private final JLabel agencyNameLabel = new JLabel();
-    private final JPanel searchPanel = new JPanel();
-    private final JLabel tripDirectionLabel = new JLabel();
-    private final JLabel departureCityLabel = new JLabel();
-    private final JLabel departureArrivalLabel = new JLabel();
-    private final JLabel peopleQuantityLabel = new JLabel();
-    private final JPanel searchPanelIntroduction = new JPanel();
-    private final JButton searchButton = new JButton();
-    private final JScrollPane tableScroll = new JScrollPane();
-    private final JPanel footer = new JPanel();
-    private final JButton sendButton = new JButton();
-    private final JLabel headphonesIconLabel = new JLabel();
     /**
-     * Dropdown menu with travel destination options
+     * A scrollPane to provide scrolling functionality for the main window.
+     */
+    private final JScrollPane mainScroll = new JScrollPane();
+
+    /**
+     * A panel representing the main window.
+     */
+    private final JPanel mainWindow = new JPanel();
+
+    /**
+     * A panel representing the main panel containing various components.
+     */
+    private final JPanel mainPanel = new JPanel();
+
+    /**
+     * A panel representing the panel containing country-related buttons.
+     */
+    private final JPanel countriesPanel = new JPanel();
+
+    /**
+     * A button used for displaying trips.
+     */
+    private final JButton tripsButton = new JButton();
+
+    /**
+     * A button used for displaying summer 2023 trips.
+     */
+    private final JButton summer2023Button = new JButton();
+
+    /**
+     * A button used for displaying last-minute trips.
+     */
+    private final JButton lastMinuteButton = new JButton();
+
+    /**
+     * A button used for displaying exotic trips.
+     */
+    private final JButton exoticButton = new JButton();
+
+    /**
+     * A button used for displaying trips in Greece.
+     */
+    private final JButton greeceButton = new JButton();
+
+    /**
+     * A button used for displaying trips in Spain.
+     */
+    private final JButton spainButton = new JButton();
+
+    /**
+     * A button used for displaying trips in Turkey.
+     */
+    private final JButton turkeyButton = new JButton();
+
+    /**
+     * A button used for displaying trips in Egypt.
+     */
+    private final JButton egyptButton = new JButton();
+
+    /**
+     * A button used for displaying trips in Italy.
+     */
+    private final JButton italyButton = new JButton();
+
+    /**
+     * A button used for displaying trips in Bulgaria.
+     */
+    private final JButton bulgariaButton = new JButton();
+
+    /**
+     * A label displaying the agency name.
+     */
+    private final JLabel agencyNameLabel = new JLabel();
+
+    /**
+     * A panel representing the search panel.
+     */
+    private final JPanel searchPanel = new JPanel();
+
+    /**
+     * A label displaying the trip direction.
+     */
+    private final JLabel tripDirectionLabel = new JLabel();
+
+    /**
+     * A label displaying the departure city.
+     */
+    private final JLabel departureCityLabel = new JLabel();
+
+    /**
+     * A label displaying the departure and arrival information.
+     */
+    private final JLabel departureArrivalLabel = new JLabel();
+
+    /**
+     * A label displaying the people quantity.
+     */
+    private final JLabel peopleQuantityLabel = new JLabel();
+
+    /**
+     * A panel representing the introduction part of the search panel.
+     */
+    private final JPanel searchPanelIntroduction = new JPanel();
+
+    /**
+     * A button used for initiating the search.
+     */
+    private final JButton searchButton = new JButton();
+
+    /**
+     * A scrollPane to provide scrolling functionality for the trips table.
+     */
+    private final JScrollPane tableScroll = new JScrollPane();
+
+    /**
+     * A panel representing the footer at the bottom of the window.
+     */
+    private final JPanel footer = new JPanel();
+
+    /**
+     * A button used for sending a message.
+     */
+    private final JButton sendButton = new JButton();
+
+    /**
+     * A label displaying the headphones icon.
+     */
+    private final JLabel headphonesIconLabel = new JLabel();
+
+    /**
+     * A dropdown menu with travel destination options
      */
     private final javax.swing.JComboBox<String> destinationChoiceComboBox = new JComboBox<>();
     /**
-     * Element allowing selection of the number of adults
+     * An element allowing selection of the number of adults
      */
     private final javax.swing.JSpinner adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
     /**
-     * Element allowing selection of the number of children
+     * An element allowing selection of the number of children
      */
     private final javax.swing.JSpinner childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
     /**
-     * Label with images
+     * A label with images
      */
     private final javax.swing.JLabel imagesLabel = new JLabel();
     /**
-     * Field for entering the departure date of the trip
+     * A field for entering the departure date of the trip
      */
     private final javax.swing.JTextField arrivalTextField = new JTextField();
     /**
-     * Dropdown menu with departure city options
+     * A dropdown menu with departure city options
      */
     private final javax.swing.JComboBox<String> departureCityChoice = new JComboBox<>();
     /**
-     * Table with available trips
+     * A table with available trips
      */
     private final javax.swing.JTable tripsTable= new JTable();
     /**
-     * Field for entering the arrival date of the trip
+     * A field for entering the arrival date of the trip
      */
     private final javax.swing.JTextField departureTextField = new JTextField();
     /**
-     * Dropdown menu with options for Home, My Account, and Logout
+     * A dropdown menu with options for Home, My Account, and Logout
      */
     private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
     /**
-     * Field for entering the phone number
+     * A field for entering the phone number
      */
     private final javax.swing.JTextField leaveNumberTextField = new JTextField();
 }

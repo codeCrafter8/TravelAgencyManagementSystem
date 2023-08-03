@@ -1,59 +1,65 @@
 package com.client.validation;
 
 import java.util.regex.Pattern;
+
 /**
- * Klasa zawierająca pola i metody zapewniające możliwość przeprowadzenia walidacji
+ * A class that contains methods for validating clients information.
  */
 public class ClientValidator {
+
     /**
-     * Sprawdza, czy podany email jest poprawny.
+     * Checks if the given email is valid.
      *
-     * @param email adres email do sprawdzenia
-     * @return true, jeśli email jest poprawny, false w przeciwnym razie
+     * @param email The email address to be validated.
+     * @return true if the email is valid, false otherwise.
      */
     public static boolean isEmailValid(String email){
         String emailPattern = "^[\\w.-]+@([\\w-]+\\.)+[\\w-]{2,4}$";
         Pattern compiledEmailPattern = Pattern.compile(emailPattern);
         return compiledEmailPattern.matcher(email).matches();
     }
+
     /**
-     * Sprawdza, czy podane hasło jest poprawne.
+     * Checks if the given password is valid.
      *
-     * @param password hasło do sprawdzenia
-     * @return true, jeśli hasło jest poprawne, false w przeciwnym razie
+     * @param password The password to be validated.
+     * @return true if the password is valid, false otherwise.
      */
     public static boolean isPasswordValid(String password){
         String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
         Pattern compiledPasswordPattern = Pattern.compile(passwordPattern);
         return compiledPasswordPattern.matcher(password).matches();
     }
+
     /**
-     * Sprawdza, czy podany numer telefonu jest poprawny.
+     * Checks if the given phone number is valid.
      *
-     * @param phoneNumber numer telefonu do sprawdzenia
-     * @return true, jeśli numer telefonu jest poprawny, false w przeciwnym razie
+     * @param phoneNumber The phone number to be validated.
+     * @return true if the phone number is valid, false otherwise.
      */
     public static boolean isPhoneNumberValid(String phoneNumber){
         String phoneNumberPattern = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
         Pattern compiledPhoneNumberPattern = Pattern.compile(phoneNumberPattern);
         return compiledPhoneNumberPattern.matcher(phoneNumber).matches();
     }
+
     /**
-     * Sprawdza, czy podane imię jest poprawne.
+     * Checks if the given first name is valid.
      *
-     * @param firstName imię do sprawdzenia
-     * @return true, jeśli imię jest poprawne, false w przeciwnym razie
+     * @param firstName The first name to be validated.
+     * @return true if the first name is valid, false otherwise.
      */
     public static boolean isFirstNameValid(String firstName){
         String firstNamePattern = "[a-zA-Z-]{2,}";
         Pattern compiledFirstNamePattern = Pattern.compile(firstNamePattern);
         return compiledFirstNamePattern.matcher(firstName).matches();
     }
+
     /**
-     * Sprawdza, czy podane nazwisko jest poprawne.
+     * Checks if the given last name is valid.
      *
-     * @param lastName nazwisko do sprawdzenia
-     * @return true, jeśli nazwisko jest poprawne, false w przeciwnym razie
+     * @param lastName The last name to be validated.
+     * @return true if the last name is valid, false otherwise.
      */
     public static boolean isLastNameValid(String lastName){
         String lastNamePattern = "[a-zA-Z-']{2,}";

@@ -18,8 +18,19 @@ import javax.swing.table.DefaultTableModel;
  * Class containing fields and methods for handling the window with functionality of My Account for the client.
  */
 public class MyAccount extends javax.swing.JFrame {
+
+    /**
+     * The dimension used for the buttons in the user interface, specifying the width and height.
+     * The buttons created with this dimension will have a width of 150 pixels and a height of 43 pixels.
+     */
     private static final Dimension BUTTON_DIMENSION = new Dimension(150, 43);
+
+    /**
+     * The dimension used for the main window of the user interface, specifying the width and height.
+     * The main window created with this dimension will have a width of 989 pixels and a height of 770 pixels.
+     */
     private static final Dimension WINDOW_DIMENSION = new Dimension(989, 770);
+
     /**
      * List storing client's personal data.
      */
@@ -75,6 +86,11 @@ public class MyAccount extends javax.swing.JFrame {
         createLayout();
     }
 
+    /**
+     * Sets the properties of the window, such as the default close operation,
+     * title, preferred size, and window listener for handling the window closing event.
+     * When the window is closing, it performs necessary actions like logging out the user.
+     */
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Moje konto");
@@ -96,6 +112,10 @@ public class MyAccount extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Sets up the managing combo box with initial values and event listener.
+     * The combo box provides options for managing different sections of the user interface.
+     */
     private void setManagingComboBox() {
         managingComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Strona Główna", "Moje konto", "Wyloguj"}));
         managingComboBox.setSelectedIndex(1);
@@ -106,6 +126,10 @@ public class MyAccount extends javax.swing.JFrame {
         managingComboBox.addActionListener(this::managingActionPerformed);
     }
 
+    /**
+     * Creates and configures the reservation table along with the scroll pane used to display it.
+     * The table includes various columns to display reservation information.
+     */
     private void createResTable() {
         resTableScrollPane.setBackground(Color.WHITE);
         resTableScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -133,6 +157,9 @@ public class MyAccount extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Sets up various labels used in the user interface, including reservation labels and user data labels.
+     */
     private void setLabels() {
         myReservationsLabel.setFont(new java.awt.Font("Arial", Font.ITALIC, 18));
         myReservationsLabel.setText("Moje rezerwacje");
@@ -160,6 +187,10 @@ public class MyAccount extends javax.swing.JFrame {
         typePhoneNumberLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
     }
 
+    /**
+     * Sets up various buttons used in the user interface, such as canceling a reservation,
+     * downloading trip descriptions, editing user information, and changing passwords.
+     */
     private void setButtons() {
         cancelReservationButton.setBackground(ColorUtils.LIGHT_BROWN);
         cancelReservationButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 16));
@@ -198,6 +229,10 @@ public class MyAccount extends javax.swing.JFrame {
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
     }
 
+    /**
+     * Creates the user data panel that contains labels displaying the user's name, last name,
+     * email, phone number, along with user icon or avatar.
+     */
     private void createUserDataPanel() {
         userDataPanel.setBorder(javax.swing.BorderFactory.createLineBorder(ColorUtils.GREY));
         javax.swing.GroupLayout userDataPanelLayout = new javax.swing.GroupLayout(userDataPanel);
@@ -260,6 +295,10 @@ public class MyAccount extends javax.swing.JFrame {
         );
     }
 
+    /**
+     * Creates the layout for the user interface by arranging different components in a specific order.
+     * This includes managing combo box, user data panel, reservation table, and various labels and buttons.
+     */
     private void createLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -480,7 +519,7 @@ public class MyAccount extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new MyAccount().setVisible(true));
     }
-    // GUI variables
+
     /**
      * Table with client's reservations.
      */
@@ -506,18 +545,73 @@ public class MyAccount extends javax.swing.JFrame {
      */
     private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
 
+    /**
+     * A scroll pane used to display the reservation table in the user interface.
+     */
     private final JScrollPane resTableScrollPane = new JScrollPane();
+
+    /**
+     * A label that represents the caption for the "My Reservations" section in the user interface.
+     */
     private final JLabel myReservationsLabel = new JLabel();
+
+    /**
+     * A label that provides information or confirmation messages in the user interface.
+     */
     private final JLabel infoConfirmLabel = new JLabel();
+
+    /**
+     * A button used to cancel a reservation in the user interface.
+     */
     private final JButton cancelReservationButton = new JButton();
+
+    /**
+     * A button used to download the description of a trip.
+     */
     private final JButton downloadTripDescriptionButton = new JButton();
+
+    /**
+     * A label that provides information about insurance in the user interface.
+     */
     private final JLabel infoInsuranceLabel = new JLabel();
+
+    /**
+     * A panel that contains user data in the user interface.
+     */
     private final JPanel userDataPanel = new JPanel();
+
+    /**
+     * A label that represents the user icon or avatar in the user interface.
+     */
     private final JLabel userIconLabel = new JLabel();
+
+    /**
+     * A label that displays the user's first name in the user interface.
+     */
     private final JLabel nameLabel = new JLabel();
+
+    /**
+     * A label that displays the user's last name in the user interface.
+     */
     private final JLabel lastNameLabel = new JLabel();
+
+    /**
+     * A label that displays the user's email in the user interface.
+     */
     private final JLabel emailLabel = new JLabel();
+
+    /**
+     * A label that displays the user's phone number in the user interface.
+     */
     private final JLabel phoneNumberLabel = new JLabel();
+
+    /**
+     * A button used to edit user information in the user interface.
+     */
     private final JButton editButton = new JButton();
+
+    /**
+     * A button used to change the user's password in the user interface.
+     */
     private final JButton changePasswordButton = new JButton();
 }

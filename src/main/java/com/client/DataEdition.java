@@ -12,8 +12,19 @@ import java.util.List;
  * Class containing fields and methods for handling the window with functionality for data edition by the client.
  */
 class DataEdition extends javax.swing.JFrame {
+
+    /**
+     * The dimension representing the size of validation labels used in the data edition form.
+     * It specifies the width and height of the validation labels used for displaying error messages.
+     */
     private static final Dimension VALIDATION_LABEL_DIMENSION = new Dimension(363, 16);
+
+    /**
+     * The dimension representing the size of the data edition window.
+     * It specifies the width and height of the window used for editing client data.
+     */
     private static final Dimension WINDOW_DIMENSION = new Dimension(449, 510);
+
     /**
      * Attribute determining if the client's first name is correct.
      */
@@ -85,6 +96,12 @@ class DataEdition extends javax.swing.JFrame {
         createRegPanel();
         createLayout();
     }
+
+    /**
+     * Sets the properties of the window for the data edition form.
+     * It configures the close operation, title, preferred size, and makes the window non-resizable.
+     * Also, it adds a WindowListener to handle the closing event, which navigates to the MyAccount window.
+     */
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edytuj dane");
@@ -104,6 +121,11 @@ class DataEdition extends javax.swing.JFrame {
         });
     }
 
+
+    /**
+     * Creates and configures the labels used in the data edition form.
+     * This method sets the fonts and text for various labels in the form.
+     */
     private void createLabels() {
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Edytuj dane");
@@ -141,6 +163,10 @@ class DataEdition extends javax.swing.JFrame {
         validPhoneNumberLabel.setPreferredSize(VALIDATION_LABEL_DIMENSION);
     }
 
+    /**
+     * Sets the text fields with the existing client data.
+     * This method populates the text fields with the client's data for editing.
+     */
     private void setTextFields() {
         firstNameTextField.setText(clientData.get(0));
         lastNameTextField.setText(clientData.get(1));
@@ -148,6 +174,10 @@ class DataEdition extends javax.swing.JFrame {
         phoneNumberField.setText(clientData.get(3));
     }
 
+    /**
+     * Creates and configures the submit button for the data edition form.
+     * This method sets the background, font, text, action listener, and cursor for the submit button.
+     */
     private void createButton() {
         submitButton.setBackground(ColorUtils.LIGHT_BROWN);
         submitButton.setBackground(ColorUtils.LIGHT_BROWN);
@@ -157,6 +187,11 @@ class DataEdition extends javax.swing.JFrame {
         submitButton.addActionListener(this::submitButtonActionPerformed);
         submitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
+
+    /**
+     * Creates and configures the main registration panel for the data edition form.
+     * This method sets the size, layout, and components within the registration panel.
+     */
     private void createRegPanel(){
         regPanel.setPreferredSize(new java.awt.Dimension(450, 550));
         javax.swing.GroupLayout regPanelLayout = new javax.swing.GroupLayout(regPanel);
@@ -223,6 +258,11 @@ class DataEdition extends javax.swing.JFrame {
                                 .addContainerGap(26, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the layout for the data edition form.
+     * This method sets the layout of the content pane, arranging the main registration panel within it.
+     */
     private void createLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -339,13 +379,43 @@ class DataEdition extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new DataEdition(new ArrayList<>(), null).setVisible(true));
     }
-    // GUI variables
+
+    /**
+     * A label used to create a new label.
+     * It is a generic label used for various purposes throughout the application.
+     */
     private final JLabel createLabel = new JLabel();
+
+    /**
+     * A label that displays the text "First Name".
+     * It indicates the label used to represent the first name input field.
+     */
     private final JLabel firstNameLabel = new JLabel();
+
+    /**
+     * A label that displays the text "Last Name".
+     * It indicates the label used to represent the last name input field.
+     */
     private final JLabel lastNameLabel = new JLabel();
+
+    /**
+     * A label that displays the text "Email".
+     * It indicates the label used to represent the email input field.
+     */
     private final JLabel emailLabel = new JLabel();
+
+    /**
+     * A label that displays the text "Phone Number".
+     * It indicates the label used to represent the phone number input field.
+     */
     private final JLabel phoneNumberLabel = new JLabel();
+
+    /**
+     * A button used to submit the form or action.
+     * It is used to submit the data entered in the form or to perform a specific action.
+     */
     private final JButton submitButton = new JButton();
+
     /**
      * Text field for entering the client's email.
      */

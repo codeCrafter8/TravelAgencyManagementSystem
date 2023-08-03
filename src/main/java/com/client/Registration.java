@@ -117,6 +117,15 @@ public class Registration extends javax.swing.JFrame {
         setButtons();
         createLayout();
     }
+
+    /**
+     * Sets the properties for the registration window.
+     * Sets the default close operation to dispose on close, sets the title to "Rejestracja",
+     * sets the preferred size of the window to a predefined dimension,
+     * sets the background color to a predefined color (BEIGE),
+     * and adds a window listener to handle closing actions for the window,
+     * such as logging out the admin if they are currently logged in.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Rejestracja");
@@ -139,6 +148,14 @@ public class Registration extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the registration panel with various components for user registration.
+     * Sets the background color to a predefined color (LIGHT_BEIGE),
+     * and sets the preferred size of the panel to a predefined dimension.
+     * Configures the layout and placement of various labels, text fields, and error labels.
+     * Also adds action listeners and validation logic for certain text fields.
+     */
     private void createRegPanel(){
         regPanel.setBackground(ColorUtils.LIGHT_BEIGE);
         regPanel.setPreferredSize(DimensionUtils.REG_PANEL_DIMENSION);
@@ -228,6 +245,12 @@ public class Registration extends javax.swing.JFrame {
                                 .addGap(25, 25, 25))
         );
     }
+
+    /**
+     * Sets the labels for the registration panel.
+     * Configures the fonts and text for various labels related to user registration.
+     * Also sets the foreground color and preferred size for error labels used for validation.
+     */
     private void setLabels(){
         createAccountLabel.setFont(new java.awt.Font("Myanmar Text", Font.PLAIN, 24));
         createAccountLabel.setText("Utwórz konto");
@@ -269,6 +292,13 @@ public class Registration extends javax.swing.JFrame {
         wrongFirstNameLabel.setForeground(Color.RED);
         wrongFirstNameLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
+
+    /**
+     * Configures focus listeners for text fields in the registration panel.
+     * Performs validation actions when focus is lost on specific text fields
+     * to ensure that user input is valid for first name, last name, phone number, email, password, and confirm password.
+     * Displays error messages in error labels accordingly.
+     */
     private void setTextFields(){
         firstNameTextField.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {}
@@ -321,6 +351,12 @@ public class Registration extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Configures buttons in the registration panel.
+     * Sets background colors, fonts, text, dimensions, and action listeners for the "Utwórz" (Submit) and "Anuluj" (Cancel) buttons.
+     * Additionally, sets the cursor to a hand cursor when the button is in the rollover state.
+     */
     private void setButtons(){
         submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
@@ -344,6 +380,12 @@ public class Registration extends javax.swing.JFrame {
                 cancelButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
     }
+
+    /**
+     * Creates the layout for the registration window.
+     * Sets the layout for the content pane and places the registration panel in the center of the window.
+     * Configures the horizontal and vertical alignment of components within the panel.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -515,7 +557,7 @@ public class Registration extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Registration().setVisible(true));
     }
-    //GUI variables
+
     /**
      * Label informing that the confirmed password is incorrect.
      */
@@ -572,12 +614,51 @@ public class Registration extends javax.swing.JFrame {
      * Button allowing the account creation.
      */
     private final javax.swing.JButton submitButton = new JButton();
+    /**
+     * A registration panel that contains various components for user registration.
+     * Components such as labels, text fields, and buttons are placed in this panel.
+     */
     private final JPanel regPanel = new JPanel();
+
+    /**
+     * A label that displays the title "Utwórz konto" (Create Account) in a larger font.
+     * This label is used to indicate that the user is in the process of creating a new account.
+     */
     private final JLabel createAccountLabel = new JLabel();
+
+    /**
+     * A label that indicates the input field for the user's first name.
+     * It is associated with the input field where the user is expected to enter their first name.
+     */
     private final JLabel firstNameLabel = new JLabel();
+
+    /**
+     * A label that indicates the input field for the user's last name.
+     * It is associated with the input field where the user is expected to enter their last name.
+     */
     private final JLabel lastNameLabel = new JLabel();
+
+    /**
+     * A label that indicates the input field for the user's phone number.
+     * It is associated with the input field where the user is expected to enter their phone number.
+     */
     private final JLabel phoneNumberLabel = new JLabel();
+
+    /**
+     * A label that indicates the input field for the user's email address.
+     * It is associated with the input field where the user is expected to enter their email address.
+     */
     private final JLabel emailLabel = new JLabel();
+
+    /**
+     * A label that indicates the input field for the user's password.
+     * It is associated with the input field where the user is expected to enter their password.
+     */
     private final JLabel passwordLabel = new JLabel();
+
+    /**
+     * A label that indicates the input field for confirming the user's password.
+     * It is associated with the input field where the user is expected to re-enter their password for confirmation.
+     */
     private final JLabel confirmPasswordLabel = new JLabel();
 }

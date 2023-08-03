@@ -14,7 +14,17 @@ import javax.swing.*;
  * Class containing fields and methods for handling the window with login functionality.
  */
 public class StartPage extends javax.swing.JFrame {
+
+    /**
+     * The preferred dimension for text fields.
+     * The width is set to 64 pixels, and the height is set to 28 pixels.
+     */
     private static final Dimension TEXT_FIELD_DIMENSION = new Dimension(64, 28);
+
+    /**
+     * The preferred dimension for buttons.
+     * The width is set to 105 pixels, and the height is set to 25 pixels.
+     */
     private static final Dimension BUTTON_DIMENSION = new Dimension(105, 25);
 
     /**
@@ -90,6 +100,15 @@ public class StartPage extends javax.swing.JFrame {
         createLoginPanel();
         createLayout();
     }
+
+    /**
+     * Sets properties for the main window.
+     * The window title is set to "Logowanie".
+     * The window is always on top.
+     * The background color is set to ColorUtils.BEIGE.
+     * The preferred size is set to DimensionUtils.WINDOW_DIMENSION.
+     * The content pane background color is set to ColorUtils.BEIGE.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logowanie");
@@ -98,6 +117,13 @@ public class StartPage extends javax.swing.JFrame {
         setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
     }
+
+    /**
+     * Creates the loginPanel and sets its properties and styles.
+     * The panel background color is set to ColorUtils.LIGHT_BEIGE.
+     * The panel border is created with a bevel border.
+     * The panel contains labels, text fields, and buttons related to the login functionality.
+     */
     private void createLoginPanel(){
         loginPanel.setBackground(ColorUtils.LIGHT_BEIGE);
         loginPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, ColorUtils.LIGHT_BEIGE, null, null));
@@ -153,6 +179,11 @@ public class StartPage extends javax.swing.JFrame {
                                 .addContainerGap(46, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the layout for the main window (frame).
+     * The layout contains the loginPanel and a photoLabel (e.g., displaying an image of Paris).
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,6 +211,12 @@ public class StartPage extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
+    /**
+     * Sets properties and styles for various JLabels in the loginPanel.
+     * It sets the text, font, and preferred size for labels related to email, password, and error messages.
+     * Additionally, it creates and adds JLabels for "Travel" and "Agency" to the layout.
+     */
     private void setLabels(){
         emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         emailLabel.setText("E-mail");
@@ -202,6 +239,13 @@ public class StartPage extends javax.swing.JFrame {
         agencyLabel.setBounds(247, 85, 250, 100);
         add(agencyLabel);
     }
+
+    /**
+     * Sets properties and styles for the emailTextField and passwordField in the loginPanel.
+     * The fields' borders are set using a SoftBevelBorder.
+     * The fields' preferred size is set to a constant defined by TEXT_FIELD_DIMENSION.
+     * Focus listeners are added to perform email and password validation when the fields lose focus.
+     */
     private void setTextFields(){
         emailTextField.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, ColorUtils.MILK, ColorUtils.GREY, ColorUtils.GREY, ColorUtils.GREY));
         emailTextField.setPreferredSize(TEXT_FIELD_DIMENSION);
@@ -226,6 +270,12 @@ public class StartPage extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Sets properties and styles for signInButton and registerButton in the loginPanel.
+     * The buttons' background colors, fonts, text, and action listeners are configured.
+     * Change listeners are added to handle cursor changes on button rollover.
+     */
     private void setButtons(){
         signInButton.setBackground(ColorUtils.DARK_BEIGE);
         signInButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 13));
@@ -356,33 +406,47 @@ public class StartPage extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new StartPage().setVisible(true));
     }
-    // GUI variables
+    /**
+     * A login panel containing login-related components.
+     */
     private final JPanel loginPanel = new JPanel();
+
+    /**
+     * A label displaying the text "E-mail".
+     */
     private final JLabel emailLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Hasło".
+     */
     private final JLabel passwordLabel = new JLabel();
+
+    /**
+     * A label displaying a photo or image.
+     */
     private final JLabel photoLabel = new JLabel();
     /**
-     * Text field for entering the email.
+     * A text field for entering the email.
      */
     private final javax.swing.JTextField emailTextField = new JTextField();
     /**
-     * Password field for entering the password.
+     * A password field for entering the password.
      */
     private final javax.swing.JPasswordField passwordField = new JPasswordField();
     /**
-     * Button for logging in.
+     * A button for logging in.
      */
     private final javax.swing.JButton registerButton = new JButton();
     /**
-     * Button for proceeding to the registration window.
+     * A button for proceeding to the registration window.
      */
     private final javax.swing.JButton signInButton = new JButton();
     /**
-     * Label indicating that the email is incorrect.
+     * A label indicating that the email is incorrect.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
     /**
-     * Label indicating that the password is incorrect.
+     * A label indicating that the password is incorrect.
      */
     private final javax.swing.JLabel wrongPasswordLabel = new JLabel();
 }

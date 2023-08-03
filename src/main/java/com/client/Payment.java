@@ -13,6 +13,11 @@ import javax.swing.border.LineBorder;
  * Class containing fields and methods for handling the payment window functionality.
  */
 public class Payment extends javax.swing.JFrame {
+
+    /**
+     * The dimension representing the preferred size of the payment window.
+     * The width is set to 548 pixels, and the height is set to 640 pixels.
+     */
     private static final Dimension WINDOW_DIMENSION = new Dimension(548, 640);
     /**
      * Attribute indicating whether a payment method has been chosen.
@@ -70,12 +75,22 @@ public class Payment extends javax.swing.JFrame {
         createExpirationDatePanel();
         createLayout();
     }
+
+    /**
+     * Sets the properties for the payment window, including the close operation, background color,
+     * preferred window dimension, and title.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(Color.WHITE);
         setPreferredSize(WINDOW_DIMENSION);
         setTitle("Płatność kartą kredytową");
     }
+
+    /**
+     * Sets the labels for various components in the payment window, such as error messages, payment method,
+     * owner name, card number, CVV, and expiration date.
+     */
     private void setLabels(){
         errorLabel.setBackground(Color.WHITE);
         errorLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
@@ -121,6 +136,11 @@ public class Payment extends javax.swing.JFrame {
         yearLabel.setFont(new java.awt.Font("sansserif", Font.BOLD, 12));
         yearLabel.setText("Rok:");
     }
+
+    /**
+     * Sets the buttons for various actions in the payment window, including the choice of payment method,
+     * payment initiation, etc.
+     */
     private void setButtons(){
         mastercardButton.setIcon(new javax.swing.ImageIcon("img\\mastercard.png"));
         mastercardButton.addActionListener(this::mastercardActionPerformed);
@@ -142,6 +162,11 @@ public class Payment extends javax.swing.JFrame {
         payButton.addActionListener(this::payButtonActionPerformed);
         payButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
+
+    /**
+     * Creates the choice panel for selecting the payment method, which contains buttons for Mastercard,
+     * Visa, and Discover cards.
+     */
     private void createChoicePanel(){
         choicePanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
@@ -168,11 +193,19 @@ public class Payment extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets the text fields' properties for payment data input, including the background color.
+     */
     private void setTextFields(){
         firstNameLastNameTextField.setBackground(ColorUtils.MILK);
         cardNumberTextField.setBackground(ColorUtils.MILK);
         monthTextField.setBackground(ColorUtils.MILK);
     }
+
+    /**
+     * Creates the panel for entering the first and last name of the card owner.
+     */
     private void createFirstNameLastNamePanel(){
         firstNameLastNamePanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout firstNameLastNamePanelLayout = new javax.swing.GroupLayout(firstNameLastNamePanel);
@@ -198,6 +231,10 @@ public class Payment extends javax.swing.JFrame {
                                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the panel for entering the card number and CVV.
+     */
     private void createNumberPanel(){
         numberPanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout numberPanelLayout = new javax.swing.GroupLayout(numberPanel);
@@ -229,6 +266,10 @@ public class Payment extends javax.swing.JFrame {
                                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the panel for entering the card's expiration date.
+     */
     private void createExpirationDatePanel(){
         expirationDatePanel.setBackground(ColorUtils.LIGHT_BROWN);
         javax.swing.GroupLayout expirationDatePanelLayout = new javax.swing.GroupLayout(expirationDatePanel);
@@ -260,6 +301,10 @@ public class Payment extends javax.swing.JFrame {
                                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the layout for the payment window, positioning various components and setting their appearance.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -318,17 +363,17 @@ public class Payment extends javax.swing.JFrame {
      */
     private void payButtonActionPerformed(ActionEvent evt) {
         if (!methodChosen) {
-            errorLabel.setText("No payment method selected.");
+            errorLabel.setText("Nie wybrano metody płatności.");
         } else if (!CreditCardValidator.isFirstNameAndLastNameValid(firstNameLastNameTextField.getText())) {
-            errorLabel.setText("Invalid first name and last name.");
+            errorLabel.setText("Nieprawidłowe imię i nazwisko.");
         } else if (!CreditCardValidator.isCreditCardNumberValid(cardNumberTextField.getText())) {
-            errorLabel.setText("Invalid credit card number.");
+            errorLabel.setText("Nieprawidłowy numer karty.");
         } else if (!CreditCardValidator.isCvvValid(cvvData.getText())) {
-            errorLabel.setText("Invalid CVV number.");
+            errorLabel.setText("Nieprawidłowy numer cvv.");
         } else if (!DateValidator.isMonthValid(monthTextField.getText())) {
-            errorLabel.setText("Invalid credit card expiration month.");
+            errorLabel.setText("Nieprawidłowy miesiąc ważności.");
         } else if (!DateValidator.isYearValid(yearData.getText())) {
-            errorLabel.setText("Invalid credit card expiration year.");
+            errorLabel.setText("Nieprawidłowy rok ważności.");
         } else {
             data.clear();
             data.add("addReservation");
@@ -392,7 +437,7 @@ public class Payment extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Payment().setVisible(true));
     }
-    //GUI variables
+
     /**
      * Text field for entering the CVV number.
      */
@@ -429,18 +474,73 @@ public class Payment extends javax.swing.JFrame {
      * Button allowing the "Visa" selection.
      */
     private final javax.swing.JButton visaButton = new JButton();
+    /**
+     * Label representing the "Metoda płatności" section in the payment window.
+     */
     private final JLabel paymentMethodLabel = new JLabel();
+
+    /**
+     * Panel containing the user's choice of payment method in the payment window.
+     */
     private final JPanel choicePanel = new JPanel();
+
+    /**
+     * Label representing the "Właściciel" section in the payment window.
+     */
     private final JLabel ownerLabel = new JLabel();
+
+    /**
+     * Panel containing the user's first and last name for payment in the payment window.
+     */
     private final JPanel firstNameLastNamePanel = new JPanel();
+
+    /**
+     * Label representing the "Imię i nazwisko" section in the payment window.
+     */
     private final JLabel firstNameLastNameLabel = new JLabel();
+
+    /**
+     * Label representing the "Numer" section in the payment window.
+     */
     private final JLabel numberLabel = new JLabel();
+
+    /**
+     * Panel containing the user's card number for payment in the payment window.
+     */
     private final JPanel numberPanel = new JPanel();
+
+    /**
+     * Label representing the "Numer karty" label for payment in the payment window.
+     */
     private final JLabel cardNumberLabel = new JLabel();
+
+    /**
+     * Label representing the "CVV" (Card Verification Value) section in the payment window.
+     */
     private final JLabel cvvLabel = new JLabel();
+
+    /**
+     * Label representing the "Data ważności" section in the payment window.
+     */
     private final JLabel expirationDateLabel = new JLabel();
+
+    /**
+     * Panel containing the user's card expiration date for payment in the payment window.
+     */
     private final JPanel expirationDatePanel = new JPanel();
+
+    /**
+     * Label representing the "Miesiąc" label in the expiration date section of the payment window.
+     */
     private final JLabel monthLabel = new JLabel();
+
+    /**
+     * Label representing the "Rok" label in the expiration date section of the payment window.
+     */
     private final JLabel yearLabel = new JLabel();
+
+    /**
+     * Button used to initiate the payment process in the payment window.
+     */
     private final JButton payButton = new JButton();
 }

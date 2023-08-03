@@ -16,6 +16,12 @@ import java.util.List;
  * Class containing fields and methods for handling a window with functionality to add a trip.
  */
 public class TripAddition extends javax.swing.JFrame {
+
+    /**
+     * A constant representing the small dimension used for wrong item labels.
+     * The small dimension is typically used for error message labels to display
+     * short error messages with limited width and height.
+     */
     public static final Dimension WRONG_ITEM_LABEL_DIMENSION_SMALL = new Dimension(100, 16);
     /**
      * Attribute representing a list holding data passed to the Client class.
@@ -117,6 +123,12 @@ public class TripAddition extends javax.swing.JFrame {
         createRegPanel();
         createLayout();
     }
+
+    /**
+     * Sets the properties of the window for adding a trip.
+     * The properties include setting the default close operation, title, background color,
+     * minimum size, and adding a window listener to handle the window closing event.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dodaj wycieczkę");
@@ -137,6 +149,11 @@ public class TripAddition extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates labels for various input fields and error messages.
+     * Sets the fonts, texts, and other properties for each label.
+     */
     private void createLabels(){
         createLabel.setFont(new java.awt.Font("Arial", Font.PLAIN, 24));
         createLabel.setText("Dodaj wycieczkę");
@@ -168,8 +185,8 @@ public class TripAddition extends javax.swing.JFrame {
         wrongLimitLabel.setText(" ");
         wrongDepartureLabel.setForeground(Color.red);
         wrongDepartureLabel.setText(" ");
-        validCountryLabel6.setForeground(Color.red);
-        validCountryLabel6.setText(" ");
+        validCountryLabel.setForeground(Color.red);
+        validCountryLabel.setText(" ");
         wrongArrivalLabel.setForeground(Color.red);
         wrongArrivalLabel.setText(" ");
         wrongHotelNameLabel.setForeground(Color.red);
@@ -182,6 +199,11 @@ public class TripAddition extends javax.swing.JFrame {
         wrongPriceLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
         wrongHotelNameLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
+
+    /**
+     * Creates buttons for submitting and canceling the trip addition process.
+     * Sets the fonts, texts, action listeners, and other properties for each button.
+     */
     private void createButtons(){
         submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
@@ -196,6 +218,12 @@ public class TripAddition extends javax.swing.JFrame {
         cancelButton.addActionListener(this::cancelButtonActionPerformed);
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
+
+    /**
+     * Creates a registration panel with various input fields for trip details.
+     * Sets the background color, preferred size, fonts, and layout for the panel.
+     * Configures date choosers, text fields, and error message labels within the panel.
+     */
     private void createRegPanel(){
         regPanel.setBackground(ColorUtils.LIGHT_BEIGE);
         regPanel.setPreferredSize(DimensionUtils.REG_PANEL_DIMENSION);
@@ -256,7 +284,7 @@ public class TripAddition extends javax.swing.JFrame {
                         .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(regPanelLayout.createSequentialGroup()
                                         .addGap(53, 53, 53)
-                                        .addComponent(validCountryLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(validCountryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(292, Short.MAX_VALUE)))
         );
         regPanelLayout.setVerticalGroup(
@@ -320,10 +348,15 @@ public class TripAddition extends javax.swing.JFrame {
                         .addGroup(regPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, regPanelLayout.createSequentialGroup()
                                         .addContainerGap(340, Short.MAX_VALUE)
-                                        .addComponent(validCountryLabel6)
+                                        .addComponent(validCountryLabel)
                                         .addGap(245, 245, 245)))
         );
     }
+
+    /**
+     * Creates the overall layout for the window by arranging the registration panel.
+     * Uses GroupLayout to set the layout constraints and positions for the components.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -537,82 +570,132 @@ public class TripAddition extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new TripAddition(null, null).setVisible(true));
     }
 
-    // GUI variables
+    /**
+     * A panel that holds the components for registering a trip.
+     */
     private final JPanel regPanel = new JPanel();
+
+    /**
+     * A label displaying the title for the trip registration section.
+     */
     private final JLabel createLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Kraj" for the country input field.
+     */
     private final JLabel countryLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Miasto" for the city input field.
+     */
     private final JLabel cityLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Miasto wylotu/przylotu" for the departure city input field.
+     */
     private final JLabel departureCityLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Cena za osobę" for the price input field.
+     */
     private final JLabel priceLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Limit osób" for the participant limit input field.
+     */
     private final JLabel limitLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Wyjazd" for the departure date input field.
+     */
     private final JLabel departureLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Przyjazd" for the arrival date input field.
+     */
     private final JLabel arrivalLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Nazwa hotelu" for the hotel name input field.
+     */
     private final JLabel hotelNameLabel = new JLabel();
+
+    /**
+     * A button used for submitting the trip registration form.
+     */
     private final JButton submitButton = new JButton();
+
+    /**
+     * A button used for canceling the trip registration.
+     */
     private final JButton cancelButton = new JButton();
-    private final JLabel validCountryLabel6 = new JLabel();
+
+    /**
+     * A label used to display a valid country message.
+     */
+    private final JLabel validCountryLabel = new JLabel();
+
     /**
      * Text field for entering the people limit.
      */
     private final javax.swing.JTextField limitTextField = new JTextField();
     /**
-     * Element for choosing the arrival date.
+     * An element for choosing the arrival date.
      */
     private final com.toedter.calendar.JDateChooser arrivalDateChooser = new com.toedter.calendar.JDateChooser();
     /**
-     * Text field for entering the city.
+     * A text field for entering the city.
      */
     private final javax.swing.JTextField cityTextField = new JTextField();
     /**
-     * Text field for entering the country.
+     * A text field for entering the country.
      */
     private final javax.swing.JTextField countryTextField = new JTextField();
     /**
-     * Element for choosing the departure date.
+     * An element for choosing the departure date.
      */
     private final com.toedter.calendar.JDateChooser departureDateChooser = new com.toedter.calendar.JDateChooser();
-    /**
-     * Text field for entering the departure city.
+    /**Al* A text field for entering the departure city.
      */
     private final javax.swing.JTextField departureCityField = new JTextField();
     /**
-     * Text field for entering the hotel name.
+     * A text field for entering the hotel name.
      */
     private final javax.swing.JTextField nameHotelTextField = new JTextField();
     /**
-     * Text field for entering the price.
+     * A text field for entering the price.
      */
     private final javax.swing.JTextField priceField = new JTextField();
     /**
-     * Label indicating that the arrival date is incorrect.
+     * A label indicating that the arrivalA ldate is incorrect.
      */
     private final javax.swing.JLabel wrongArrivalLabel = new JLabel();
     /**
-     * Label indicating that the city is incorrect.
+     * A label indicating that the city is incorrect.
      */
     private final javax.swing.JLabel wrongCityLabel = new JLabel();
     /**
-     * Label indicating that the country is incorrect.
+     * A label indicating that the country is incorrect.
      */
     private final javax.swing.JLabel wrongCountryLabel = new JLabel();
     /**
-     * Label indicating that the departure city is incorrect.
+     * A label indicating that the departure city is incorrect.
      */
     private final javax.swing.JLabel wrongDepartureCityLabel = new JLabel();
     /**
-     * Label indicating that the departure date is incorrect.
+     * A label indicating that the departure date is incorrect.
      */
     private final javax.swing.JLabel wrongDepartureLabel = new JLabel();
     /**
-     * Label indicating that the people limit is incorrect.
+     * A label indicating that the people limit is incorrect.
      */
     private final javax.swing.JLabel wrongLimitLabel = new JLabel();
     /**
-     * Label indicating that the hotel name is incorrect.
+     * A label indicating that the hotel name is incorrect.
      */
     private final javax.swing.JLabel wrongHotelNameLabel = new JLabel();
     /**
-     * Label indicating that the price is incorrect.
+     * A label indicating that the price is incorrect.
      */
     private final javax.swing.JLabel wrongPriceLabel = new JLabel();
 }

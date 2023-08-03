@@ -78,6 +78,13 @@ public class Reservations extends javax.swing.JFrame {
         setResTable();
         createLayout();
     }
+
+    /**
+     * Set the properties for the reservation window. It configures the window's close operation,
+     * title, minimum size, background color, and position relative to the screen. It also adds a
+     * window listener to handle the window closing event, which logs out the current user and disposes
+     * the window.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Rezerwacje");
@@ -102,6 +109,11 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the menu panel with admin information and options. The panel is configured to display
+     * the admin's name, an icon, and navigation buttons for clients, trips, and reservations.
+     */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
         menuPanel.setPreferredSize(DimensionUtils.MENU_PANEL_DIMENSION);
@@ -121,6 +133,10 @@ public class Reservations extends javax.swing.JFrame {
                                 .addContainerGap(321, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the admin panel displaying the admin's name and an icon.
+     */
     private void createAdminPanel(){
         adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanel1Layout = new javax.swing.GroupLayout(adminPanel);
@@ -146,6 +162,11 @@ public class Reservations extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Set the labels and icons for various components in the GUI. This method sets the admin icon,
+     * admin name label, admin label, search reservation label, and wrong reservation label.
+     */
     private void setLabels(){
         adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
@@ -164,6 +185,11 @@ public class Reservations extends javax.swing.JFrame {
         wrongResLabel.setForeground(Color.RED);
         wrongResLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
+
+    /**
+     * Creates the options panel with navigation buttons for the admin to access different sections
+     * such as panel, clients, trips, and reservations.
+     */
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
         optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
@@ -190,6 +216,11 @@ public class Reservations extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Set the properties and event handlers for the navigation buttons and other buttons in the GUI.
+     * It configures the font, text, background color, and cursor behavior for the buttons.
+     */
     private void setButtons(){
         panelButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         panelButton.setText("    Panel");
@@ -298,6 +329,10 @@ public class Reservations extends javax.swing.JFrame {
         editResButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editResButton.setVisible(false);
     }
+
+    /**
+     * Creates the top panel, which contains the logout button for the admin to log out of the application.
+     */
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
@@ -317,6 +352,11 @@ public class Reservations extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Set up the reservation table, including its model and appearance. This method configures the
+     * table columns, cell editors, selection background, and header renderer.
+     */
     private void setResTable(){
         resTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -342,6 +382,11 @@ public class Reservations extends javax.swing.JFrame {
             resTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
     }
+
+    /**
+     * Creates the layout for the entire reservation window. It positions all the components, such as
+     * the menu panel, top panel, search labels, and reservation table, within the window.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

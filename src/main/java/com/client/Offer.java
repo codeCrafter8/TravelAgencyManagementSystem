@@ -13,7 +13,14 @@ import java.util.Date;
  * Class containing fields and methods for handling the offer window functionality
  */
 public class Offer extends javax.swing.JFrame {
+    /**
+     * The dimension for the hotel photo, representing its width and height in pixels.
+     */
     private static final Dimension HOTEL_PHOTO_DIMENSION = new Dimension(550, 225);
+
+    /**
+     * The dimension for this window, representing its width and height in pixels.
+     */
     private static final Dimension WINDOW_DIMENSION = new Dimension(1067, 388);
     /**
      * Attribute representing the number of people
@@ -134,6 +141,12 @@ public class Offer extends javax.swing.JFrame {
         createTripDataPanel();
         createLayout();
     }
+
+    /**
+     * Sets the properties of the main application window.
+     * Configures the window's default close operation, minimum size, and adds a window listener
+     * to handle the window closing event, allowing the user to log out before closing the application.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(WINDOW_DIMENSION);
@@ -152,6 +165,11 @@ public class Offer extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the main panel that contains the entire user interface of the travel agency application.
+     * This panel includes various labels, buttons, and other components to display trip details and information.
+     */
     private void createMainPanel(){
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -209,6 +227,10 @@ public class Offer extends javax.swing.JFrame {
                                 .addContainerGap(19, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets the labels used in the user interface to display information about the trips and the travel agency.
+     */
     private void setLabels(){
         travelAgencyLabel.setBackground(ColorUtils.LIGHT_BROWN);
         travelAgencyLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
@@ -245,6 +267,10 @@ public class Offer extends javax.swing.JFrame {
 
         hotelDescriptionLabel.setText("Opis hotelu:");
     }
+
+    /**
+     * Sets the buttons used in the user interface for actions such as reservation and canceling.
+     */
     private void setButtons(){
         reservationButton.setBackground(ColorUtils.LIGHT_BROWN);
         reservationButton.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 14));
@@ -259,6 +285,10 @@ public class Offer extends javax.swing.JFrame {
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelButton.addActionListener(this::cancelActionPerformed);
     }
+
+    /**
+     * Creates the panel that displays detailed information about a specific trip, such as date, length, price, etc.
+     */
     private void createTripDataPanel(){
         javax.swing.GroupLayout tripDataPanelLayout = new javax.swing.GroupLayout(tripDataPanel);
         tripDataPanel.setLayout(tripDataPanelLayout);
@@ -328,6 +358,10 @@ public class Offer extends javax.swing.JFrame {
                                 .addContainerGap())
         );
     }
+
+    /**
+     * Creates the layout of the main application window by arranging the components within the main panel.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -476,16 +510,63 @@ public class Offer extends javax.swing.JFrame {
      * Label with the hotel photo
      */
     private final javax.swing.JLabel hotelPhotoLabel = new JLabel();
+    /**
+     * A main panel that contains the entire user interface of the travel agency application.
+     */
     private final JPanel mainPanel = new JPanel();
+
+    /**
+     * A label displaying the name or title of the travel agency.
+     */
     private final JLabel travelAgencyLabel = new JLabel();
+
+    /**
+     * A panel that displays the details and information about a specific trip.
+     */
     private final JPanel tripDataPanel = new JPanel();
+
+    /**
+     * A label displaying the date of the trip.
+     */
     private final JLabel dateLabel = new JLabel();
+
+    /**
+     * A label displaying the length or duration of the trip.
+     */
     private final JLabel tripLengthLabel = new JLabel();
+
+    /**
+     * A label displaying the departure city of the trip.
+     */
     private final JLabel departureCityLabel = new JLabel();
+
+    /**
+     * A button used to make a reservation for the displayed trip.
+     */
     private final JButton reservationButton = new JButton();
+
+    /**
+     * A label displaying the price of the trip.
+     */
     private final JLabel priceLabel = new JLabel();
+
+    /**
+     * A label displaying the number of people or participants for the trip.
+     */
     private final JLabel peopleNumberLabel = new JLabel();
+
+    /**
+     * A label displaying information about the insurance for the trip.
+     */
     private final JLabel insuranceLabel = new JLabel();
+
+    /**
+     * A label displaying the description of the hotel for the trip.
+     */
     private final JLabel hotelDescriptionLabel = new JLabel();
+
+    /**
+     * A button used to cancel the reservation for the displayed trip.
+     */
     private final JButton cancelButton = new JButton();
 }

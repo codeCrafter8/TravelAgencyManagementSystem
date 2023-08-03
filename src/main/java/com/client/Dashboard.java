@@ -88,6 +88,11 @@ class Dashboard extends javax.swing.JFrame {
         createLayout();
     }
 
+    /**
+     * Sets various properties of the window, such as the default close operation, title, and background color.
+     * Additionally, it adds a window listener to handle the window closing event, where it performs some cleanup actions
+     * and logs any exceptions that may occur during the process.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Panel Admina");
@@ -109,6 +114,10 @@ class Dashboard extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the menu panel and sets its layout and background color.
+     */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
@@ -127,6 +136,10 @@ class Dashboard extends javax.swing.JFrame {
                                 .addContainerGap(318, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the admin panel and sets its layout and background color.
+     */
     private void createAdminPanel(){
         adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
@@ -152,6 +165,10 @@ class Dashboard extends javax.swing.JFrame {
                                 .addContainerGap(30, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets the properties and text for various JLabel components.
+     */
     private void setLabels(){
         adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
         adminIconLabel.setText("jLabel1");
@@ -205,6 +222,10 @@ class Dashboard extends javax.swing.JFrame {
         phoneNumbersLabel.setFont(new java.awt.Font("Segoe UI", Font.ITALIC, 18));
         phoneNumbersLabel.setText("Numery telefonów klientów do kontaktu");
     }
+
+    /**
+     * Creates the options panel and sets its layout and background color.
+     */
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
         optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
@@ -231,6 +252,11 @@ class Dashboard extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets properties for various buttons, including their fonts, text, and appearance.
+     * Additionally, it configures listeners for some buttons to handle rollover effects and actions.
+     */
     private void setButtons(){
         panelButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         panelButton.setText("   Panel");
@@ -318,6 +344,11 @@ class Dashboard extends javax.swing.JFrame {
 
         logOutButton.addActionListener(this::logOutButtonActionPerformed);
     }
+
+    /**
+     * Creates the top panel and sets its layout and background color.
+     * This panel is used to display the logout button.
+     */
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
@@ -337,6 +368,11 @@ class Dashboard extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the trips number panel and sets its layout and background color.
+     * This panel displays the number of trips available.
+     */
     private void createTripsNumberPanel(){
         tripsNumberPanel.setBackground(ColorUtils.NUDE);
         tripsNumberPanel.setPreferredSize(NUMBER_PANEL_DIMENSION);
@@ -357,6 +393,11 @@ class Dashboard extends javax.swing.JFrame {
                                 .addGap(17, 17, 17))
         );
     }
+
+    /**
+     * Creates the reservations number panel and sets its layout and background color.
+     * This panel displays the number of reservations made.
+     */
     private void createReservationsNumberPanel(){
         reservationsNumberPanel.setBackground(ColorUtils.NUDE);
         reservationsNumberPanel.setPreferredSize(new java.awt.Dimension(215, 108));
@@ -377,6 +418,11 @@ class Dashboard extends javax.swing.JFrame {
                                 .addGap(17, 17, 17))
         );
     }
+
+    /**
+     * Creates the income number panel and sets its layout and background color.
+     * This panel displays the income generated.
+     */
     private void createIncomeNumberPanel(){
         incomeNumberPanel.setBackground(ColorUtils.NUDE);
         incomeNumberPanel.setPreferredSize(DimensionUtils.NUMBER_PANEL_DIMENSION);
@@ -397,6 +443,11 @@ class Dashboard extends javax.swing.JFrame {
                                 .addContainerGap(17, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the clients number panel and sets its layout and background color.
+     * This panel displays the number of clients in the system.
+     */
     private void createClientsNumberPanel(){
         clientsNumberPanel.setBackground(ColorUtils.NUDE);
         clientsNumberPanel.setPreferredSize(NUMBER_PANEL_DIMENSION);
@@ -417,6 +468,11 @@ class Dashboard extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the phone numbers list and sets its background color and font.
+     * This list displays the phone numbers of clients for contact purposes.
+     */
     private void createPhoneNumbersList(){
         phoneNumbersList.setBackground(LIGHT);
         phoneNumbersList.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
@@ -434,6 +490,10 @@ class Dashboard extends javax.swing.JFrame {
         });
         phoneNumbersListScrollPane.setViewportView(phoneNumbersList);
     }
+
+    /**
+     * Creates the overall layout of the window, including the placement of various panels and components.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -580,7 +640,7 @@ class Dashboard extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));
     }
-    // GUI variables
+
     /**
      * Label displaying the administrator's name.
      */
@@ -625,20 +685,99 @@ class Dashboard extends javax.swing.JFrame {
      * Label displaying the number of trips.
      */
     private final javax.swing.JLabel tripsNumberLabel = new JLabel();
+    /**
+     * A menu panel that contains the admin panel and options panel.
+     * It is used as a container for the admin and options panels.
+     */
     private final JPanel menuPanel = new JPanel();
+
+    /**
+     * A admin panel that displays the admin's name and icon.
+     * It is used to show information about the logged-in admin.
+     */
     private final JPanel adminPanel = new JPanel();
+
+    /**
+     * A label that displays the icon of the admin.
+     * It shows the icon associated with the logged-in admin.
+     */
     private final JLabel adminIconLabel = new JLabel();
+
+    /**
+     * A label that displays the label "Admin".
+     * It indicates that the displayed icon represents an admin.
+     */
     private final JLabel adminLabel = new JLabel();
+
+    /**
+     * A panel that contains various options available to the admin.
+     * It is used as a container for the buttons representing different options.
+     */
     private final JPanel optionsPanel = new JPanel();
+
+    /**
+     * A top panel of the window that contains the logout button.
+     * It is used to display the logout button for the admin to log out of the system.
+     */
     private final JPanel topPanel = new JPanel();
+
+    /**
+     * A panel that displays the number of trips available.
+     * It is used to show the total number of trips available in the system.
+     */
     private final JPanel tripsNumberPanel = new JPanel();
+
+    /**
+     * A label that displays the caption "Wycieczek".
+     * It indicates the type of data shown in the tripsNumberLabel.
+     */
     private final JLabel tripsCaption = new JLabel();
+
+    /**
+     * A panel that displays the number of reservations made.
+     * It is used to show the total number of reservations made in the system.
+     */
     private final JPanel reservationsNumberPanel = new JPanel();
+
+    /**
+     * A label that displays the caption "Rezerwacji".
+     * It indicates the type of data shown in the reservationsNumberLabel.
+     */
     private final JLabel reservationsCaption = new JLabel();
+
+    /**
+     * A panel that displays the total income generated.
+     * It is used to show the total income generated by the system.
+     */
     private final JPanel incomeNumberPanel = new JPanel();
+
+    /**
+     * A label that displays the caption "Wpływów".
+     * It indicates the type of data shown in the incomeNumberLabel.
+     */
     private final JLabel incomeCaption = new JLabel();
+
+    /**
+     * The panel that displays the number of clients in the system.
+     * It is used to show the total number of clients registered in the system.
+     */
     private final JPanel clientsNumberPanel = new JPanel();
+
+    /**
+     * A label that displays the caption "Klientów".
+     * It indicates the type of data shown in the clientsNumberLabel.
+     */
     private final JLabel clientsCaption = new JLabel();
+
+    /**
+     * A label that displays the text "Numery telefonów klientów do kontaktu".
+     * It indicates that the following list contains phone numbers of clients for contact purposes.
+     */
     private final JLabel phoneNumbersLabel = new JLabel();
+
+    /**
+     * A scroll pane that contains the list of phone numbers of clients.
+     * It is used to display the phone numbers of clients in a scrollable list.
+     */
     private final JScrollPane phoneNumbersListScrollPane = new JScrollPane();
 }

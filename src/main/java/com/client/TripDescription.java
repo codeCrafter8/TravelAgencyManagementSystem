@@ -12,7 +12,14 @@ import java.util.List;
  * Class containing fields and methods for handling a window with functionality to display reservation details.
  */
 public class TripDescription extends javax.swing.JFrame {
+    /**
+     * A constant representing the color blue with RGB values (102, 102, 255).
+     */
     private static final Color BLUE = new Color(102, 102, 255);
+
+    /**
+     * A constant representing the dimension of the question mark button, with width 22 and height 24.
+     */
     public static final Dimension QUESTION_MARK_BUTTON_DIMENSION = new Dimension(22, 24);
 
     /**
@@ -95,6 +102,10 @@ public class TripDescription extends javax.swing.JFrame {
         setButton();
         createLayout();
     }
+
+    /**
+     * Sets the text for various labels in the user interface.
+     */
     private void setLabels(){
         countryLabel.setText("Kraj:");
         cityLabel.setText("Miasto:");
@@ -108,10 +119,18 @@ public class TripDescription extends javax.swing.JFrame {
         hotelDescriptionLabel.setText("Opis hotelu:");
         typeHotelDescriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
     }
+
+    /**
+     * Sets the properties of the window.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Szczegóły wycieczki");
     }
+
+    /**
+     * Sets the properties of the question mark button and adds an ActionListener to it.
+     */
     private void setButton(){
         questionMarkButton.setBackground(BLUE);
         questionMarkButton.setIcon(new javax.swing.ImageIcon("img\\questionMark.png"));
@@ -121,6 +140,10 @@ public class TripDescription extends javax.swing.JFrame {
         questionMarkButton.setPreferredSize(QUESTION_MARK_BUTTON_DIMENSION);
         questionMarkButton.addActionListener(this::jButtonActionPerformed);
     }
+
+    /**
+     * Creates the layout of the user interface.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -271,57 +294,99 @@ public class TripDescription extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new TripDescription().setVisible(true));
     }
 
-    // GUI variables
+    /**
+     * A label displaying the text "Kraj" for the country input field.
+     */
     private final JLabel countryLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Miasto" for the city input field.
+     */
     private final JLabel cityLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Miasto wylotu/przylotu" for the departure city input field.
+     */
     private final JLabel departureCityLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Data" for the date input field.
+     */
     private final JLabel dateLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Długość wycieczki (w dniach)" for the trip duration input field.
+     */
     private final JLabel daysLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Liczba uczestników" for the number of participants input field.
+     */
     private final JLabel peopleLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Cena za osobę" for the price input field.
+     */
     private final JLabel priceLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Ubezpieczenie" for the insurance input field.
+     */
     private final JLabel insuranceLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Nazwa hotelu" for the hotel name input field.
+     */
     private final JLabel hotelNameLabel = new JLabel();
+
+    /**
+     * A label displaying the text "Opis hotelu" for the hotel description input field.
+     */
     private final JLabel hotelDescriptionLabel = new JLabel();
+
+    /**
+     * A button used for displaying additional information or help related to the input fields.
+     */
     private final JButton questionMarkButton = new JButton();
 
     /**
-     * Label for the trip city.
+     * A label for the trip city.
      */
     private final javax.swing.JLabel typeCityLabel = new JLabel();
     /**
-     * Label for the trip country.
+     * A label for the trip country.
      */
     private final javax.swing.JLabel typeCountryLabel = new JLabel();
     /**
-     * Label for the trip date.
+     * A label for the trip date.
      */
     private final javax.swing.JLabel typeDateLabel = new JLabel();
     /**
-     * Label for the trip duration in days.
+     * A label for the trip duration in days.
      */
     private final javax.swing.JLabel typeDaysLabel = new JLabel();
     /**
-     * Label for the trip departure/arrival city.
+     * A label for the trip departure/arrival city.
      */
     private final javax.swing.JLabel typeDepartureCityLabel = new JLabel();
     /**
-     * Label for the trip hotel description.
+     * A label for the trip hotel description.
      */
     private final javax.swing.JLabel typeHotelDescriptionLabel = new JLabel();
     /**
-     * Label for the trip hotel name.
+     * A label for the trip hotel name.
      */
     private final javax.swing.JLabel typeHotelNameLabel = new JLabel();
     /**
-     * Label for the trip insurance.
+     * A label for the trip insurance.
      */
     private final javax.swing.JLabel typeInsuranceLabel = new JLabel();
     /**
-     * Label for the trip number of people.
+     * A label for the trip number of people.
      */
     private final javax.swing.JLabel typePeopleLabel = new JLabel();
     /**
-     * Label for the trip price.
+     * A label for the trip price.
      */
     private final javax.swing.JLabel typePriceLabel = new JLabel();
 }

@@ -2,34 +2,40 @@ package com.client.validation;
 
 import java.util.regex.Pattern;
 
+/**
+ * A class that contains methods for validating dates and date components.
+ */
 public class DateValidator {
+
     /**
-     * Sprawdza, czy podany miesiąc jest poprawny.
+     * Checks if the given month is valid.
      *
-     * @param month miesiąc do sprawdzenia
-     * @return true, jeśli miesiąc jest poprawny, false w przeciwnym razie
+     * @param month The month to be validated.
+     * @return true if the month is valid, false otherwise.
      */
     public static boolean isMonthValid(String month){
         String monthPattern = "^(0?[1-9]|1[0-2])$";
         Pattern compiledMonthPattern = Pattern.compile(monthPattern);
         return compiledMonthPattern.matcher(month).matches();
     }
+
     /**
-     * Sprawdza, czy podany rok jest poprawny.
+     * Checks if the given year is valid.
      *
-     * @param year rok do sprawdzenia
-     * @return true, jeśli rok jest poprawny, false w przeciwnym razie
+     * @param year The year to be validated.
+     * @return true if the year is valid, false otherwise.
      */
     public static boolean isYearValid(String year){
         String yearPattern = "^((20)\\d{2}|\\d{2})$";
         Pattern compiledYearPattern = Pattern.compile(yearPattern);
         return compiledYearPattern.matcher(year).matches();
     }
+
     /**
-     * Sprawdza, czy podana data jest poprawna.
+     * Checks if the given date is valid.
      *
-     * @param date data do sprawdzenia
-     * @return true, jeśli data jest poprawna, false w przeciwnym razie
+     * @param date The date to be validated.
+     * @return true if the date is valid, false otherwise.
      */
     public static boolean isDateValid(String date){
         String datePattern = "^\\d{2}/\\d{2}/\\d{4}$";

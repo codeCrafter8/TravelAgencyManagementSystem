@@ -270,36 +270,58 @@ public class AdminsLogs extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new AdminsLogs().setVisible(true));
     }
 
-    // GUI variables
+    /**
+     * A main panel that contains the menu, server panel, and options panel.
+     */
     private final JPanel menuPanel = new JPanel();
+
+    /**
+     * A panel that displays the server icon and label.
+     */
     private final JPanel serverPanel = new JPanel();
+
+    /**
+     * A label that displays the server icon.
+     */
     private final JLabel serverIconLabel = new JLabel();
+
+    /**
+     * A label that displays the "Server" text.
+     */
     private final JLabel serverLabel = new JLabel();
+
+    /**
+     * A panel that contains various options for the server.
+     */
     private final JPanel optionsPanel = new JPanel();
+
+    /**
+     * A label that displays the "Admins Logs" text.
+     */
     private final JLabel adminsLogsLabel = new JLabel();
 
     /**
-     * Button allowing switching to the Administrators Logs tab.
+     * A button allowing switching to the Administrators Logs tab.
      */
     private final javax.swing.JButton adminsLogsButton = new JButton();
 
     /**
-     * Button allowing switching to the Clients Logs tab.
+     * A button allowing switching to the Clients Logs tab.
      */
     private final javax.swing.JButton clientsLogsButton = new JButton();
 
     /**
-     * Button allowing switching to the Manage Server tab.
+     * A button allowing switching to the Manage Server tab.
      */
     private final javax.swing.JButton manageServerButton = new JButton();
 
     /**
-     * Button allowing switching to the Server Logs tab.
+     * A button allowing switching to the Server Logs tab.
      */
     private final javax.swing.JButton serverLogsButton = new JButton();
 
     /**
-     * List containing administrators logs.
+     * A list containing administrators logs.
      */
     private final javax.swing.JList<String> adminsLogsList = new JList<>();
 }

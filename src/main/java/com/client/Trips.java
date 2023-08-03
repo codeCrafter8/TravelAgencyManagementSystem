@@ -77,6 +77,12 @@ public class Trips extends javax.swing.JFrame {
         setButtons();
         createLayout();
     }
+
+    /**
+     * Sets the properties of the window.
+     * The window will be disposed and the "logOut" action will be sent to the server
+     * when the window is closed.
+     */
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wycieczki");
@@ -98,6 +104,10 @@ public class Trips extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the menu panel with admin-related options.
+     */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
         menuPanel.setPreferredSize(DimensionUtils.MENU_PANEL_DIMENSION);
@@ -117,6 +127,10 @@ public class Trips extends javax.swing.JFrame {
                                 .addContainerGap(284, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets the text and properties for various labels in the user interface.
+     */
     private void setLabels(){
         adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
 
@@ -135,6 +149,10 @@ public class Trips extends javax.swing.JFrame {
         wrongTripLabel.setForeground(Color.red);
         wrongTripLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
+
+    /**
+     * Creates the admin panel with admin information and icon.
+     */
     private void createAdminPanel(){
         adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanel1Layout = new javax.swing.GroupLayout(adminPanel);
@@ -160,6 +178,10 @@ public class Trips extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the options panel with buttons for different sections.
+     */
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
         optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
@@ -186,6 +208,10 @@ public class Trips extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the top panel with a log-out button.
+     */
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
@@ -205,6 +231,10 @@ public class Trips extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the table to display trips information.
+     */
     private void createTable(){
         tripsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -230,6 +260,10 @@ public class Trips extends javax.swing.JFrame {
             tripsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
     }
+
+    /**
+     * Sets the properties and action listeners for various buttons.
+     */
     private void setButtons(){
         addTripButton.setBackground(ColorUtils.CREAM);
         addTripButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 13));
@@ -337,6 +371,10 @@ public class Trips extends javax.swing.JFrame {
         });
         reservationsButton.addActionListener(this::reservationsButtonActionPerformed);
     }
+
+    /**
+     * Creates the overall layout of the user interface.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -590,54 +628,95 @@ public class Trips extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Trips().setVisible(true));
     }
-
-    // GUI variables
+    /**
+     * A main panel that contains the menu, admin panel, and options panel.
+     */
     private final JPanel menuPanel = new JPanel();
+
+    /**
+     * A panel that displays the admin icon and name.
+     */
     private final JPanel adminPanel = new JPanel();
+
+    /**
+     * A panel that contains various options for the admin.
+     */
     private final JPanel optionsPanel = new JPanel();
+
+    /**
+     * A label that displays the admin icon.
+     */
     private final JLabel adminIconLabel = new JLabel();
+
+    /**
+     * A label that displays the "Admin" text.
+     */
     private final JLabel adminLabel = new JLabel();
+
+    /**
+     * A top panel that contains the log-out button.
+     */
     private final JPanel topPanel = new JPanel();
+
+    /**
+     * A label that displays the "Wyszukaj wycieczkę po mieście" text.
+     */
     private final JLabel searchTripLabel = new JLabel();
+
+    /**
+     * A button to add a new trip.
+     */
     private final JButton addTripButton = new JButton();
+
+    /**
+     * A scroll pane that contains the table to display trips information.
+     */
     private final JScrollPane tripsTableScrollPane = new JScrollPane();
+
+    /**
+     * A button to delete a trip.
+     */
     private final JButton deleteTripButton = new JButton();
+
+    /**
+     * A button to edit a trip.
+     */
     private final JButton editTripButton = new JButton();
 
     /**
-     * Label for the administrator's name.
+     * A lA abel for the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
     /**
-     * Button for navigating to the "Clients" tab.
+     * A button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
     /**
-     * Button for logging out.
+     * A button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
     /**
-     * Button for navigating to the "Panel" tab.
+     * A button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
     /**
-     * Button for navigating to the "Reservations" tab.
+     * A button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
     /**
-     * Field for entering the city during the search.
+     * A field for entering the city during the search.
      */
     private final javax.swing.JTextField searchClientTextField = new JTextField();
     /**
-     * Button for navigating to the "Trips" tab.
+     * A button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
     /**
-     * Table holding the trips.
+     * A table holding the trips.
      */
     private final javax.swing.JTable tripsTable = new JTable();
     /**
-     * Label informing that the city during the search is incorrect.
+     * A label informing that the city during the search is incorrect.
      */
     private final javax.swing.JLabel wrongTripLabel = new JLabel();
 }

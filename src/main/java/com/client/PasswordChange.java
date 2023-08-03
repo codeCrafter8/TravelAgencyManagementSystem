@@ -13,6 +13,9 @@ import java.util.List;
  * Class containing fields and methods for handling the password change window for the client.
  */
 public class PasswordChange extends javax.swing.JFrame {
+    /**
+     * Attribute determining whether the current client password is correct.
+     */
     private boolean currentPasswordCorrect;
     /**
      * Attribute determining whether the new client password is correct.
@@ -57,10 +60,22 @@ public class PasswordChange extends javax.swing.JFrame {
         setButton();
         createLayout();
     }
+
+    /**
+     * Sets the window properties for the password change window.
+     * The window will be disposed (closed) when the user clicks the close button.
+     * The window title will be set to "Zmiana hasła".
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Zmiana hasła");
     }
+
+    /**
+     * Sets the labels and their fonts for the password change window.
+     * Configures the labels for "Aktualne hasło", "Podaj nowe hasło", and "Potwierdź nowe hasło".
+     * Also sets up labels to display error messages when the entered passwords are incorrect.
+     */
     private void setLabels(){
         currentPasswordLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         currentPasswordLabel.setText("Aktualne hasło:");
@@ -81,6 +96,11 @@ public class PasswordChange extends javax.swing.JFrame {
         wrongConfirmPasswordLabel.setForeground(Color.RED);
         wrongConfirmPasswordLabel.setMinimumSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
+
+    /**
+     * Sets the properties of the "Zmień hasło" button in the password change window.
+     * Configures the button's appearance, font, text, and action listener to handle password change.
+     */
     private void setButton(){
         changeButton.setBackground(ColorUtils.LIGHT_BROWN);
         changeButton.setFont(new java.awt.Font("Arial", Font.ITALIC, 14));
@@ -88,6 +108,12 @@ public class PasswordChange extends javax.swing.JFrame {
         changeButton.setText("Zmień hasło");
         changeButton.addActionListener(this::changeButtonActionPerformed);
     }
+
+    /**
+     * Creates the layout for the password change window.
+     * Places labels and input fields for current password, new password, and confirm password.
+     * Also includes error message labels and the "Zmień hasło" button.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,7 +254,7 @@ public class PasswordChange extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(() -> new PasswordChange(null, null).setVisible(true));
     }
-    // GUI variables
+
     /**
      * Field for entering the confirmed client password.
      */
@@ -257,7 +283,18 @@ public class PasswordChange extends javax.swing.JFrame {
      * Attribute determining whether the current client password is correct.
      */
     private final JLabel currentPasswordLabel = new JLabel();
+    /**
+     * A label for displaying the "New Password" text in the change password panel.
+     */
     private final JLabel newPasswordLabel = new JLabel();
+
+    /**
+     * A label for displaying the "Confirm Password" text in the change password panel.
+     */
     private final JLabel confirmPasswordLabel = new JLabel();
+
+    /**
+     * A button for initiating the password change process in the change password panel.
+     */
     private final JButton changeButton = new JButton();
 }

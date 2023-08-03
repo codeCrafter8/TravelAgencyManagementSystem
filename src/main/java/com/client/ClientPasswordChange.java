@@ -11,8 +11,19 @@ import java.util.List;
  * Class containing fields and methods for handling the client password change window by the administrator.
  */
 public class ClientPasswordChange extends javax.swing.JFrame {
-    private static final Dimension LABEL_DIMENSION = new java.awt.Dimension(205, 16);
-    private static final Dimension WINDOW_DIMENSION = new java.awt.Dimension(330, 300);
+
+    /**
+     * The dimension representing the size of labels used in this window.
+     * It specifies the width and height of the labels used for displaying text or captions.
+     */
+    private static final Dimension LABEL_DIMENSION = new Dimension(205, 16);
+
+    /**
+     * The dimension representing the size of this window.
+     * It specifies the width and height of the window used for displaying content or user interfaces.
+     */
+    private static final Dimension WINDOW_DIMENSION = new Dimension(330, 300);
+
     /**
      * Attribute holding the client ID whose password is being changed.
      */
@@ -51,29 +62,43 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         createLayout();
     }
 
+    /**
+     * Sets the default close operation, title, background color,
+     * and preferred window dimension.
+     */
     private void setWindowProperties() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Change Client Password");
+        setTitle("Zmień hasło klienta");
         getContentPane().setBackground(ColorUtils.LIGHT_BEIGE);
         setPreferredSize(WINDOW_DIMENSION);
     }
 
+    /**
+     * Sets the text and preferred size for various labels used in the window.
+     */
     private void setLabels() {
-        newPasswordLabel.setText("New Password");
-        confirmNewPasswordLabel.setText("Confirm New Password");
+        newPasswordLabel.setText("Nowe hasło");
+        confirmNewPasswordLabel.setText("Powtórz nowe hasło");
         wrongNewPasswordLabel.setForeground(Color.RED);
         wrongNewPasswordLabel.setPreferredSize(LABEL_DIMENSION);
         wrongConfirmNewPasswordLabel.setForeground(Color.RED);
         wrongConfirmNewPasswordLabel.setPreferredSize(LABEL_DIMENSION);
     }
 
+    /**
+     * Sets the background color, text, cursor, and action listener
+     * for the "Change Password" button.
+     */
     private void setButton() {
         changePasswordButton.setBackground(ColorUtils.DARK_BEIGE);
-        changePasswordButton.setText("Change Password");
+        changePasswordButton.setText("Zmień hasło");
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changePasswordButton.addActionListener(this::changePasswordButtonActionPerformed);
     }
 
+    /**
+     * Sets up the GroupLayout for arranging the components in the window.
+     */
     private void createLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,13 +149,13 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         newPassword = new String(newPasswordField.getPassword());
         if (newPassword.equals("")) {
             newPasswordCorrect = false;
-            wrongNewPasswordLabel.setText("Field is required.");
+            wrongNewPasswordLabel.setText("Pole jest wymagane.");
         } else {
             newPasswordCorrect = ClientValidator.isPasswordValid(newPassword);
             if (newPasswordCorrect)
                 wrongNewPasswordLabel.setText("");
             else
-                wrongNewPasswordLabel.setText("Password does not meet the requirements.");
+                wrongNewPasswordLabel.setText("Hasło nie spełnia wymagań.");
         }
     }
     /**
@@ -139,7 +164,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
     private void performConfirmPasswordValidation() {
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
         if (!confirmPasswordFromPasswordField.equals(newPassword)) {
-            wrongConfirmNewPasswordLabel.setText("Passwords do not match.");
+            wrongConfirmNewPasswordLabel.setText("Hasła nie zgadzają się.");
             confirmPasswordCorrect = false;
         } else {
             wrongConfirmNewPasswordLabel.setText("");
@@ -183,8 +208,17 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new ClientPasswordChange(-1).setVisible(true));
     }
-    //GUI variables
+
+    /**
+     * Button used for changing the client's password.
+     * This button allows the admin to submit the new password for the client.
+     */
     private final javax.swing.JButton changePasswordButton = new javax.swing.JButton();
+
+    /**
+     * Label for displaying the "New Password" text.
+     * This label is used to prompt the user to enter the new password for the client.
+     */
     private final javax.swing.JLabel newPasswordLabel = new javax.swing.JLabel();
     /**
      * Label for confirming the new password

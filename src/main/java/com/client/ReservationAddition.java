@@ -58,6 +58,12 @@ public class ReservationAddition extends javax.swing.JFrame {
         setInsuranceComponents();
         createLayout();
     }
+
+    /**
+     * Sets the window properties for the reservation addition window.
+     * This method configures the window closing operation, title, preferred size, and background color.
+     * It also adds a window listener to perform necessary actions when the window is closed.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
@@ -81,6 +87,12 @@ public class ReservationAddition extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Sets up the trips table with the necessary configurations and a default table model.
+     * This method configures the table's column names, cell editability, and appearance.
+     * The table is placed inside a scroll pane for proper display if the content exceeds the visible area.
+     */
     private void setTripsTable(){
         tripsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -105,6 +117,12 @@ public class ReservationAddition extends javax.swing.JFrame {
         tripsTable.setSelectionBackground(ColorUtils.BEIGE);
         tripsTableScrollPane.setViewportView(tripsTable);
     }
+
+    /**
+     * Sets up the clients table with the necessary configurations and a default table model.
+     * This method configures the table's column names, cell editability, and appearance.
+     * The table is placed inside a scroll pane for proper display if the content exceeds the visible area.
+     */
     private void setClientsTable(){
         clientsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -129,6 +147,11 @@ public class ReservationAddition extends javax.swing.JFrame {
         clientsTable.setSelectionBackground(ColorUtils.BEIGE);
         clientsTableScrollPane.setViewportView(clientsTable);
     }
+
+    /**
+     * Sets up the buttons in the reservation addition window.
+     * This method configures the appearance and functionality of the submit and cancel buttons.
+     */
     private void setButtons(){
         submitButton.setBackground(ColorUtils.DARK_BEIGE);
         submitButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 14));
@@ -143,14 +166,29 @@ public class ReservationAddition extends javax.swing.JFrame {
         cancelButton.addActionListener(evt -> cancelButtonActionPerformed());
         cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
+
+    /**
+     * Sets up the components related to the quantity of people for the reservation.
+     * This method configures a spinner for selecting the number of people and an associated label.
+     */
     private void setPeopleQuantityComponents(){
         peopleQuantitySpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 6, 1));
         peopleQuantityLabel.setText("Liczba osób:");
     }
+
+    /**
+     * Sets up the components related to the insurance selection for the reservation.
+     * This method configures a combo box for selecting the type of insurance and an associated label.
+     */
     private void setInsuranceComponents(){
         insuranceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Brak", "Standard", "Komfort", "Premium" }));
         insuranceLabel.setText("Ubezpieczenie:");
     }
+
+    /**
+     * Creates the layout for the reservation addition window.
+     * This method configures the layout of various components, including tables, buttons, and other UI elements.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,27 +335,54 @@ public class ReservationAddition extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new ReservationAddition(null,null).setVisible(true));
     }
-    //GUI variables
+
     /**
-     * Table with clients
+     * A table with clients
      */
     private final javax.swing.JTable clientsTable = new JTable();
     /**
-     * Dropdown menu with insurance options
+     * A dropdown menu with insurance options
      */
     private final javax.swing.JComboBox<String> insuranceComboBox = new JComboBox<>();
     /**
-     * Element allowing for the selection of the number of people
+     * An element allowing for the selection of the number of people
      */
     private final javax.swing.JSpinner peopleQuantitySpinner = new JSpinner();
     /**
-     * Table with trips
+     * A table with trips
      */
     private final javax.swing.JTable tripsTable = new JTable();
+    /**
+     * A scrollPane used to display the trips table. The table shows trip information such as
+     * id, country/city, price per person, maximum number of people, and the date.
+     */
     private final JScrollPane tripsTableScrollPane = new JScrollPane();
+
+    /**
+     * A scrollPane used to display the clients table. The table shows client information such as
+     * id, first name, last name, email, and phone number.
+     */
     private final JScrollPane clientsTableScrollPane = new JScrollPane();
+
+    /**
+     * A button for submitting the reservation addition. When clicked, it triggers the action
+     * for adding the reservation with the selected trip and client data.
+     */
     private final JButton submitButton = new JButton();
+
+    /**
+     * A button for canceling the reservation addition. When clicked, it cancels the addition
+     * process and closes the window.
+     */
     private final JButton cancelButton = new JButton();
+
+    /**
+     * A label displaying the label for selecting the number of people for the reservation.
+     */
     private final JLabel peopleQuantityLabel = new JLabel();
+
+    /**
+     * A label displaying the label for selecting the type of insurance for the reservation.
+     */
     private final JLabel insuranceLabel = new JLabel();
 }

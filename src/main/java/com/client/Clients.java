@@ -73,6 +73,11 @@ public class Clients extends javax.swing.JFrame {
         createTable();
         createLayout();
     }
+
+    /**
+     * Sets the properties of the window, such as default close operation, title, background color, and window size.
+     * Also adds a window listener to handle the window closing event, which logs out the client and disposes the window.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Klienci");
@@ -95,6 +100,10 @@ public class Clients extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the top panel, sets its background color, and initializes the buttons and labels on the panel.
+     */
     private void createTopPanel(){
         topPanel.setBackground(ColorUtils.LIGHT_BROWN);
         topPanel.setPreferredSize(DimensionUtils.TOP_PANEL_DIMENSION);
@@ -114,6 +123,10 @@ public class Clients extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets properties for the buttons such as background color, text, and action listeners.
+     */
     private void setButtons(){
         logOutButton.setBackground(ColorUtils.MILK);
         logOutButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
@@ -225,6 +238,10 @@ public class Clients extends javax.swing.JFrame {
         editPasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         editPasswordButton.addActionListener(this::editPasswordButtonActionPerformed);
     }
+
+    /**
+     * Creates the menu panel, sets its background color, and adds components such as adminPanel and optionsPanel to it.
+     */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
@@ -243,6 +260,10 @@ public class Clients extends javax.swing.JFrame {
                                 .addContainerGap(316, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the admin panel, sets its background color, and initializes the labels and icon on the panel.
+     */
     private void createAdminPanel(){
         adminPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
@@ -268,6 +289,10 @@ public class Clients extends javax.swing.JFrame {
                                 .addContainerGap(30, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets properties for the labels such as icon, font, and text.
+     */
     private void setLabels(){
         adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
@@ -284,6 +309,10 @@ public class Clients extends javax.swing.JFrame {
         wrongEmailLabel.setText("");
         wrongEmailLabel.setPreferredSize(DimensionUtils.WRONG_ITEM_LABEL_DIMENSION);
     }
+
+    /**
+     * Creates the options panel, sets its minimum and preferred sizes, and initializes the buttons on the panel.
+     */
     private void createOptionsPanel(){
         optionsPanel.setMinimumSize(DimensionUtils.OPTIONS_PANEL_MIN_SIZE_DIMENSION);
         optionsPanel.setPreferredSize(DimensionUtils.OPTIONS_PANEL_PREF_SIZE_DIMENSION);
@@ -310,6 +339,10 @@ public class Clients extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the clients table, sets its model, appearance, and header renderer.
+     */
     private void createTable(){
         clientsTable.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {},
@@ -332,6 +365,10 @@ public class Clients extends javax.swing.JFrame {
             clientsTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
     }
+
+    /**
+     * Creates the layout for the main window, arranging and positioning various components within it.
+     */
     private void createLayout() {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -606,7 +643,7 @@ public class Clients extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Clients().setVisible(true));
     }
-    // GUI variables
+
     /**
      * Label displaying the administrator's name.
      */
@@ -640,19 +677,67 @@ public class Clients extends javax.swing.JFrame {
      */
     private final javax.swing.JTextField searchClientTextField = new JTextField();
     /**
-     * Label informing if the client's email provided for searching is incorrect.
+     * A label to display an error message if the provided email is invalid.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
+
+    /**
+     * A panel representing the top portion of the window, containing the administrator information.
+     */
     private final JPanel topPanel = new JPanel();
+
+    /**
+     * A panel representing the menu portion of the window, containing navigation options.
+     */
     private final JPanel menuPanel = new JPanel();
+
+    /**
+     * A panel representing the administrator information and icon in the menu panel.
+     */
     private final JPanel adminPanel = new JPanel();
+
+    /**
+     * A label displaying the administrator icon.
+     */
     private final JLabel adminIconLabel = new JLabel();
+
+    /**
+     * A label displaying the role of the administrator.
+     */
     private final JLabel adminLabel = new JLabel();
+
+    /**
+     * A panel representing the options available in the menu panel.
+     */
     private final JPanel optionsPanel = new JPanel();
+
+    /**
+     * A scroll pane to display a table of clients.
+     */
     private final JScrollPane jScrollPane1 = new JScrollPane();
+
+    /**
+     * A label displaying text indicating a search operation for clients.
+     */
     private final JLabel searchClientLabel = new JLabel();
+
+    /**
+     * A button to add a new client to the system.
+     */
     private final JButton addClientButton = new JButton();
+
+    /**
+     * A button to delete an existing client from the system.
+     */
     private final JButton deleteClientButton = new JButton();
+
+    /**
+     * A button to edit the information of an existing client.
+     */
     private final JButton editClientButton = new JButton();
+
+    /**
+     * A button to edit the password of an existing client.
+     */
     private final JButton editPasswordButton = new JButton();
 }
