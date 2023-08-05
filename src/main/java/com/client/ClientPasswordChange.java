@@ -7,45 +7,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling the client password change window by the administrator.
+ * A class containing fields and methods for handling the client password change window by the administrator.
  */
 public class ClientPasswordChange extends javax.swing.JFrame {
 
     /**
-     * The dimension representing the size of labels used in this window.
+     * A dimension representing the size of labels used in this window.
      * It specifies the width and height of the labels used for displaying text or captions.
      */
     private static final Dimension LABEL_DIMENSION = new Dimension(205, 16);
 
     /**
-     * The dimension representing the size of this window.
+     * A dimension representing the size of this window.
      * It specifies the width and height of the window used for displaying content or user interfaces.
      */
     private static final Dimension WINDOW_DIMENSION = new Dimension(330, 300);
 
     /**
-     * Attribute holding the client ID whose password is being changed.
+     * An attribute holding the client ID whose password is being changed.
      */
     private final int clientId;
+
     /**
-     * Attribute that is a list holding data passed to the Client class.
+     * An attribute that is a list holding data passed to the Client class.
      */
     public List<String> data = new ArrayList<>();
+
     /**
-     * Attribute holding the new password of the client whose password is being changed.
+     * An attribute holding the new password of the client whose password is being changed.
      */
     private String newPassword;
+
     /**
-     * Attribute indicating whether the new client password is valid.
+     * An attribute indicating whether the new client password is valid.
      */
     private boolean newPasswordCorrect;
+
     /**
-     * Attribute indicating whether the confirmed client password is valid.
+     * An attribute indicating whether the confirmed client password is valid.
      */
     private boolean confirmPasswordCorrect;
+
     /**
-     * Constructor responsible for initializing the GUI and its components.
+     * A constructor responsible for initializing the GUI and its components.
      * @param clientId parameter holding the client ID whose password is being changed.
      */
     public ClientPasswordChange(int clientId) {
@@ -53,7 +59,7 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         initComponents();
     }
     /**
-     * Method initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -142,8 +148,9 @@ public class ClientPasswordChange extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method responsible for validating the new client password.
+     * Validates the new client password.
      */
     private void performPasswordValidation() {
         newPassword = new String(newPasswordField.getPassword());
@@ -158,8 +165,9 @@ public class ClientPasswordChange extends javax.swing.JFrame {
                 wrongNewPasswordLabel.setText("Hasło nie spełnia wymagań.");
         }
     }
+
     /**
-     * Method responsible for validating the confirmed client password.
+     * Validates the confirmed client password.
      */
     private void performConfirmPasswordValidation() {
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
@@ -171,8 +179,9 @@ public class ClientPasswordChange extends javax.swing.JFrame {
             confirmPasswordCorrect = true;
         }
     }
+
     /**
-     * Method handling the click event of the "Change Password" button.
+     * Handles the click event of the "Change Password" button.
      * @param evt Event generated on button click.
      */
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,8 +199,9 @@ public class ClientPasswordChange extends javax.swing.JFrame {
             }
         }
     }
+
     /**
-     * Method allowing to run the window.
+     * Allows to run the window.
      * @param args Arguments received when running the application.
      */
     public static void main(String[] args) {
@@ -210,34 +220,34 @@ public class ClientPasswordChange extends javax.swing.JFrame {
     }
 
     /**
-     * Button used for changing the client's password.
+     * A button used for changing the client's password.
      * This button allows the admin to submit the new password for the client.
      */
     private final javax.swing.JButton changePasswordButton = new javax.swing.JButton();
 
     /**
-     * Label for displaying the "New Password" text.
+     * A label for displaying the "New Password" text.
      * This label is used to prompt the user to enter the new password for the client.
      */
     private final javax.swing.JLabel newPasswordLabel = new javax.swing.JLabel();
     /**
-     * Label for confirming the new password
+     * A label for confirming the new password
      */
     private final javax.swing.JLabel confirmNewPasswordLabel = new javax.swing.JLabel();
     /**
-     * Field for entering the confirmed password of the client.
+     * A field for entering the confirmed password of the client.
      */
     private final javax.swing.JPasswordField confirmPasswordField = new javax.swing.JPasswordField();
     /**
-     * Field for entering the new password of the client.
+     * A field for entering the new password of the client.
      */
     private final javax.swing.JPasswordField newPasswordField = new javax.swing.JPasswordField();
     /**
-     * Label indicating that the confirmed password of the client is incorrect.
+     * A label indicating that the confirmed password of the client is incorrect.
      */
     private final javax.swing.JLabel wrongConfirmNewPasswordLabel = new javax.swing.JLabel();
     /**
-     * Label indicating that the new password of the client is incorrect.
+     * A label indicating that the new password of the client is incorrect.
      */
     private final javax.swing.JLabel wrongNewPasswordLabel = new javax.swing.JLabel();
 }

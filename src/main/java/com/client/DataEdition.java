@@ -8,73 +8,86 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling the window with functionality for data edition by the client.
+ * A class containing fields and methods for handling the window with functionality for data edition by the client.
  */
 class DataEdition extends javax.swing.JFrame {
 
     /**
-     * The dimension representing the size of validation labels used in the data edition form.
+     * A dimension representing the size of validation labels used in the data edition form.
      * It specifies the width and height of the validation labels used for displaying error messages.
      */
     private static final Dimension VALIDATION_LABEL_DIMENSION = new Dimension(363, 16);
 
     /**
-     * The dimension representing the size of the data edition window.
+     * A dimension representing the size of the data edition window.
      * It specifies the width and height of the window used for editing client data.
      */
     private static final Dimension WINDOW_DIMENSION = new Dimension(449, 510);
 
     /**
-     * Attribute determining if the client's first name is correct.
+     * An attribute determining if the client's first name is correct.
      */
     private boolean firstNameCorrect;
+    
     /**
-     * Attribute determining if the client's email is correct.
+     * An attribute determining if the client's email is correct.
      */
     private boolean emailCorrect;
+    
     /**
-     * Attribute determining if the client's phone number is correct.
+     * An attribute determining if the client's phone number is correct.
      */
     private boolean phoneNumberCorrect;
+    
     /**
-     * Attribute determining if the client's last name is correct.
+     * An attribute determining if the client's last name is correct.
      */
     private boolean lastNameCorrect;
+    
     /**
-     * Attribute storing the first name of the client whose data is being edited.
+     * An attribute storing the first name of the client whose data is being edited.
      */
     private String firstName;
+    
     /**
-     * Attribute storing the last name of the client whose data is being edited.
+     * An attribute storing the last name of the client whose data is being edited.
      */
     private String lastName;
+    
     /**
-     * Attribute storing the email of the client whose data is being edited.
+     * An attribute storing the email of the client whose data is being edited.
      */
     private String email;
+    
     /**
-     * Attribute storing the phone number of the client whose data is being edited.
+     * An attribute storing the phone number of the client whose data is being edited.
      */
     private String phoneNumber;
+    
     /**
-     * Attribute being a list that stores data passed to the Client class.
+     * An attribute being a list that stores data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+    
     /**
-     * Attribute storing the ID of the client whose data is being edited.
+     * An attribute storing the ID of the client whose data is being edited.
      */
     private final String clientId;
+    
     /**
-     * Attribute being a list that stores client data.
+     * An attribute being a list that stores client data.
      */
     private final List<String> clientData = new ArrayList<>();
+    
     /**
-     * Attribute being an object of the Client class.
+     * An attribute being an object of the Client class.
      */
     private final Client client;
+    
     /**
-     * Constructor responsible for GUI initialization and relevant attributes.
+     * A constructor responsible for GUI initialization and relevant attributes.
      *
      * @param clientData list storing client data
      * @param client     object of the Client class
@@ -85,8 +98,9 @@ class DataEdition extends javax.swing.JFrame {
         this.clientId = clientData.get(4);
         initComponents();
     }
+    
     /**
-     * Method for initializing graphic components used in the window.
+     * Initializes graphic components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -277,8 +291,9 @@ class DataEdition extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    
     /**
-     * Method responsible for performing first name validation for the client.
+     * Performs first name validation for the client.
      */
     private void performFirstNameValidation() {
         firstName = firstNameTextField.getText();
@@ -293,8 +308,9 @@ class DataEdition extends javax.swing.JFrame {
                 validFirstNameLabel.setText("Please check if the entered first name is valid.");
         }
     }
+
     /**
-     * Method responsible for performing last name validation for the client.
+     * Performs last name validation for the client.
      */
     private void performLastNameValidation() {
         lastName = lastNameTextField.getText();
@@ -309,8 +325,9 @@ class DataEdition extends javax.swing.JFrame {
                 validLastNameLabel.setText("Please check if the entered last name is valid.");
         }
     }
+
     /**
-     * Method responsible for performing email validation for the client.
+     * Performs email validation for the client.
      */
     private void performEmailValidation() {
         email = emailTextField.getText();
@@ -325,8 +342,9 @@ class DataEdition extends javax.swing.JFrame {
                 validEmailLabel.setText("Please check if the entered email is valid.");
         }
     }
+
     /**
-     * Method responsible for performing phone number validation for the client.
+     * Performs phone number validation for the client.
      */
     public void performPhoneNumberValidation() {
         phoneNumber = phoneNumberField.getText();
@@ -336,8 +354,9 @@ class DataEdition extends javax.swing.JFrame {
         else
             validPhoneNumberLabel.setText("Please check if the entered phone number is valid.");
     }
+
     /**
-     * Method handling the "Submit" button click.
+     * Handles the "Submit" button click.
      * @param evt The event received when the button is clicked.
      */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -361,8 +380,9 @@ class DataEdition extends javax.swing.JFrame {
             new MyAccount(client).setVisible(true);
         }
     }
+
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments received when launching the application.
      */
     public static void main(String[] args) {
@@ -417,39 +437,47 @@ class DataEdition extends javax.swing.JFrame {
     private final JButton submitButton = new JButton();
 
     /**
-     * Text field for entering the client's email.
+     * A text field for entering the client's email.
      */
     private final JTextField emailTextField = new JTextField();
+
     /**
-     * Text field for entering the client's first name.
+     * A text field for entering the client's first name.
      */
     private final JTextField firstNameTextField = new JTextField();
+
     /**
-     * Text field for entering the client's last name.
+     * A text field for entering the client's last name.
      */
     private final JTextField lastNameTextField = new JTextField();
+
     /**
-     * Text field for entering the client's phone number.
+     * A text field for entering the client's phone number.
      */
     private final JTextField phoneNumberField = new JTextField();
+
     /**
-     * Label indicating that the client's email is invalid.
+     * A label indicating that the client's email is invalid.
      */
     private final JLabel validEmailLabel = new JLabel();
+
     /**
-     * Label indicating that the client's first name is invalid.
+     * A label indicating that the client's first name is invalid.
      */
     private final JLabel validFirstNameLabel = new JLabel();
+
     /**
-     * Label indicating that the client's last name is invalid.
+     * A label indicating that the client's last name is invalid.
      */
     private final JLabel validLastNameLabel = new JLabel();
+
     /**
-     * Label indicating that the client's phone number is invalid.
+     * A label indicating that the client's phone number is invalid.
      */
     private final JLabel validPhoneNumberLabel = new JLabel();
+
     /**
-     * Panel for the registration form.
+     * A panel for the registration form.
      */
     private final JPanel regPanel = new JPanel();
 

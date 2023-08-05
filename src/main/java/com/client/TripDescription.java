@@ -8,10 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling a window with functionality to display reservation details.
+ * A class containing fields and methods for handling a window with functionality to display reservation details.
  */
 public class TripDescription extends javax.swing.JFrame {
+
     /**
      * A constant representing the color blue with RGB values (102, 102, 255).
      */
@@ -23,29 +25,29 @@ public class TripDescription extends javax.swing.JFrame {
     public static final Dimension QUESTION_MARK_BUTTON_DIMENSION = new Dimension(22, 24);
 
     /**
-     * Attribute holding the trip insurance.
+     * An attribute holding the trip insurance.
      */
     private String insurance;
 
     /**
-     * Attribute being a list containing trip data.
+     * An attribute being a list containing trip data.
      */
     private List<String> resData = new ArrayList<>();
 
     /**
-     * Attribute holding the selected row number in the reservation table in the MyAccount class.
+     * An attribute holding the selected row number in the reservation table in the MyAccount class.
      */
     private int selectedRow;
 
     /**
-     * Helper constructor responsible for initializing the GUI.
+     * A helper constructor responsible for initializing the GUI.
      */
     public TripDescription() {
         initComponents();
     }
 
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      *
      * @param resData     parameter being a list holding trip data.
      * @param selectedRow parameter holding the selected row number in the reservation table in the MyAccount class.
@@ -58,7 +60,7 @@ public class TripDescription extends javax.swing.JFrame {
     }
 
     /**
-     * Method filling the corresponding labels with trip data.
+     * Fills the corresponding labels with trip data.
      */
     private void fillLabels() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -94,7 +96,7 @@ public class TripDescription extends javax.swing.JFrame {
     }
 
     /**
-     * Method initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -233,8 +235,9 @@ public class TripDescription extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method handling the click event of the question mark button.
+     * Handles the click event of the question mark button.
      * @param evt The event triggered by clicking the button.
      */
     private void jButtonActionPerformed(ActionEvent evt) {
@@ -276,7 +279,7 @@ public class TripDescription extends javax.swing.JFrame {
     }
 
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments passed when launching the application.
      */
     public static void main(String[] args) {

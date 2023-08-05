@@ -4,82 +4,101 @@ import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.ClientValidator;
 import com.server.Logs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling the registration window functionality.
+ * A class containing fields and methods for handling the registration window functionality.
  */
 public class Registration extends javax.swing.JFrame {
+
     /**
-     * Attribute indicating whether the client exists in the database.
+     * An attribute indicating whether the client exists in the database.
      */
     public String clientExists;
+
     /**
-     * Attribute representing the first name.
+     * An attribute representing the first name.
      */
     public String firstName;
+
     /**
-     * Attribute representing the last name.
+     * An attribute representing the last name.
      */
     public String lastName;
+
     /**
-     * Attribute representing the phone number.
+     * An attribute representing the phone number.
      */
     public String phoneNumber;
+
     /**
-     * Attribute representing the email.
+     * An attribute representing the email.
      */
     public String email;
+
     /**
-     * Attribute representing the password.
+     * An attribute representing the password.
      */
     public String password;
+
     /**
-     * Attribute indicating whether the first name is valid.
+     * An attribute indicating whether the first name is valid.
      */
     private boolean firstNameCorrect;
+
     /**
-     * Attribute indicating whether the last name is valid.
+     * An attribute indicating whether the last name is valid.
      */
     private boolean lastNameCorrect;
+
     /**
-     * Attribute indicating whether the phone number is valid.
+     * An attribute indicating whether the phone number is valid.
      */
     private boolean phoneNumberCorrect;
+
     /**
-     * Attribute indicating whether the email is valid.
+     * An attribute indicating whether the email is valid.
      */
     private boolean emailCorrect;
+
     /**
-     * Attribute indicating whether the password is valid.
+     * An attribute indicating whether the password is valid.
      */
     private boolean passwordCorrect;
+
     /**
-     * Attribute indicating whether the confirmed password is valid.
+     * An attribute indicating whether the confirmed password is valid.
      */
     private boolean confirmPasswordCorrect;
+
     /**
-     * Attribute storing data passed to the Client class.
+     * An attribute storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute indicating whether an administrator is logged in.
+     * An attribute indicating whether an administrator is logged in.
      */
     private boolean adminLogged;
+
     /**
-     * Attribute representing the Client object.
+     * An attribute representing the Client object.
      */
     private Client client;
+
     /**
-     * Attribute representing the administrator's name.
+     * An attribute representing the administrator's name.
      */
     private String adminName;
+
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param adminLogged Parameter indicating whether an administrator is logged in.
      * @param client Parameter storing the Client object.
      */
@@ -88,8 +107,9 @@ public class Registration extends javax.swing.JFrame {
         this.adminLogged = adminLogged;
         initComponents();
     }
+
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param adminLogged Parameter indicating whether an administrator is logged in.
      * @param client Parameter storing the Client object.
      * @param adminName Parameter representing the administrator's name.
@@ -100,14 +120,16 @@ public class Registration extends javax.swing.JFrame {
         this.adminName = adminName;
         initComponents();
     }
+
     /**
-     * Auxiliary constructor responsible for initializing the GUI.
+     * An auxiliary constructor responsible for initializing the GUI.
      */
     public Registration() {
         initComponents();
     }
+
     /**
-     * Method initializing the graphical components used in the window.
+     * Initializes the graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -407,8 +429,9 @@ public class Registration extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method handling the "Cancel" button click event.
+     * Handles the "Cancel" button click event.
      * @param evt The event received when the button is clicked.
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -418,8 +441,9 @@ public class Registration extends javax.swing.JFrame {
         else
             new StartPage().setVisible(true);
     }
+
     /**
-     * Method handling the validation of the first name.
+     * Handles the validation of the first name.
      */
     private void performFirstNameValidation() {
         firstName = firstNameTextField.getText();
@@ -434,8 +458,9 @@ public class Registration extends javax.swing.JFrame {
                 wrongFirstNameLabel.setText("Check if the provided first name is correct.");
         }
     }
+
     /**
-     * Method handling the validation of the last name.
+     * Handles the validation of the last name.
      */
     private void performLastNameValidation() {
         lastName = lastNameTextField.getText();
@@ -450,8 +475,9 @@ public class Registration extends javax.swing.JFrame {
                 wrongLastNameLabel.setText("Check if the provided last name is correct.");
         }
     }
+
     /**
-     * Method handling the validation of the phone number.
+     * Handles the validation of the phone number.
      */
     private void performPhoneNumberValidation() {
         phoneNumber = phoneNumberTextField.getText();
@@ -461,8 +487,9 @@ public class Registration extends javax.swing.JFrame {
         else
             wrongPhoneNumberLabel.setText("Check if the provided phone number is correct.");
     }
+
     /**
-     * Method handling the validation of the email.
+     * Handles the validation of the email.
      */
     private void performEmailValidation() {
         email = emailTextField.getText();
@@ -477,8 +504,9 @@ public class Registration extends javax.swing.JFrame {
                 wrongEmailLabel.setText("Check if the provided email address is correct.");
         }
     }
+
     /**
-     * Method handling the validation of the password.
+     * Handles the validation of the password.
      */
     private void performPasswordValidation() {
         password = new String(passwordField.getPassword());
@@ -493,8 +521,9 @@ public class Registration extends javax.swing.JFrame {
                 wrongPasswordLabel.setText("Minimum 8 characters including one digit, one uppercase letter, and one lowercase letter.");
         }
     }
+
     /**
-     * Method handling the validation of the confirmed password.
+     * Handles the validation of the confirmed password.
      */
     private void performConfirmPasswordValidation() {
         String confirmPasswordFromPasswordField = new String(confirmPasswordField.getPassword());
@@ -506,8 +535,9 @@ public class Registration extends javax.swing.JFrame {
             confirmPasswordCorrect = true;
         }
     }
+
     /**
-     * Method handling the "Submit" button click event.
+     * Handles the "Submit" button click event.
      * @param evt The event received when the button is clicked.
      */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -539,8 +569,9 @@ public class Registration extends javax.swing.JFrame {
             }
         }
     }
+
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments passed when running the application.
      */
     public static void main(String[] args) {
@@ -559,61 +590,75 @@ public class Registration extends javax.swing.JFrame {
     }
 
     /**
-     * Label informing that the confirmed password is incorrect.
+     * A label informing that the confirmed password is incorrect.
      */
     private final javax.swing.JLabel wrongConfirmPasswordLabel = new JLabel();
+
     /**
-     * Label informing that the email is incorrect.
+     * A label informing that the email is incorrect.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
+
     /**
-     * Label informing that the first name is incorrect.
+     * A label informing that the first name is incorrect.
      */
     private final javax.swing.JLabel wrongFirstNameLabel = new JLabel();
+
     /**
-     * Label informing that the last name is incorrect.
+     * A label informing that the last name is incorrect.
      */
     private final javax.swing.JLabel wrongLastNameLabel = new JLabel();
+
     /**
-     * Label informing that the password is incorrect.
+     * A label informing that the password is incorrect.
      */
     private final javax.swing.JLabel wrongPasswordLabel = new JLabel();
+
     /**
-     * Label informing that the phone number is incorrect.
+     * A label informing that the phone number is incorrect.
      */
     private final javax.swing.JLabel wrongPhoneNumberLabel = new JLabel();
+
     /**
-     * Button allowing the cancellation and returning to the login page.
+     * A button allowing the cancellation and returning to the login page.
      */
     private final javax.swing.JButton cancelButton = new JButton();
+
     /**
-     * Text field for entering the confirmed password.
+     * A text field for entering the confirmed password.
      */
     private final javax.swing.JPasswordField confirmPasswordField = new JPasswordField();
+
     /**
-     * Text field for entering the email.
+     * A text field for entering the email.
      */
     private final javax.swing.JTextField emailTextField = new JTextField();
+
     /**
-     * Text field for entering the first name.
+     * A text field for entering the first name.
      */
     private final javax.swing.JTextField firstNameTextField = new JTextField();
+
     /**
-     * Text field for entering the last name.
+     * A text field for entering the last name.
      */
     private final javax.swing.JTextField lastNameTextField = new JTextField();
+
     /**
-     * Text field for entering the password.
+     * A text field for entering the password.
      */
     private final javax.swing.JPasswordField passwordField = new JPasswordField();
+
     /**
-     * Text field for entering the phone number.
+     * A text field for entering the phone number.
      */
     private final javax.swing.JTextField phoneNumberTextField = new JTextField();
+
     /**
-     * Button allowing the account creation.
+     * A button allowing the account creation.
      */
     private final javax.swing.JButton submitButton = new JButton();
+
     /**
      * A registration panel that contains various components for user registration.
      * Components such as labels, text fields, and buttons are placed in this panel.

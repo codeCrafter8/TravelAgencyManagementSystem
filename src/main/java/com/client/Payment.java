@@ -9,42 +9,50 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
 /**
- * Class containing fields and methods for handling the payment window functionality.
+ * A class containing fields and methods for handling the payment window functionality.
  */
 public class Payment extends javax.swing.JFrame {
 
     /**
-     * The dimension representing the preferred size of the payment window.
+     * A dimension representing the preferred size of the payment window.
      * The width is set to 548 pixels, and the height is set to 640 pixels.
      */
     private static final Dimension WINDOW_DIMENSION = new Dimension(548, 640);
+
     /**
-     * Attribute indicating whether a payment method has been chosen.
+     * An attribute indicating whether a payment method has been chosen.
      */
     private boolean methodChosen = false;
+
     /**
-     * Attribute representing the trip ID.
+     * An attribute representing the trip ID.
      */
     private int idTrip;
+
     /**
-     * Attribute representing the selected insurance.
+     * An attribute representing the selected insurance.
      */
     private String insurance;
+
     /**
-     * Attribute representing the number of people.
+     * An attribute representing the number of people.
      */
     private int peopleQuantity;
+
     /**
-     * Attribute representing the client ID.
+     * An attribute representing the client ID.
      */
     private int clientId;
+
     /**
-     * Attribute representing the list storing data passed to the Client class.
+     * An attribute representing the list storing data passed to the Client class.
      */
     private final java.util.List<String> data = new ArrayList<>();
+
     /**
-     * Constructor responsible for initializing the GUI and related elements.
+     * A constructor responsible for initializing the GUI and related elements.
      * @param client Parameter holding an object of the Client class.
      * @param idTrip Parameter representing the trip ID.
      * @param insurance Parameter representing the selected insurance.
@@ -57,12 +65,14 @@ public class Payment extends javax.swing.JFrame {
         this.clientId = client.getOfferClientID();
         initComponents();
     }
+
     /**
-     * Helper constructor responsible for initializing the GUI.
+     * A helper constructor responsible for initializing the GUI.
      */
     Payment() { initComponents(); }
+
     /**
-     * Method initializing the graphic components used in the window.
+     * Initializes the graphic components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -357,8 +367,9 @@ public class Payment extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method handling the "Pay" button click event.
+     * Handles the "Pay" button click event.
      * @param evt The event received when the button is clicked.
      */
     private void payButtonActionPerformed(ActionEvent evt) {
@@ -386,8 +397,9 @@ public class Payment extends javax.swing.JFrame {
             dispose();
         }
     }
+
     /**
-     * Method handling the "Discover" button click event.
+     * Handles the "Discover" button click event.
      * @param evt The event received when the button is clicked.
      */
     private void discoverActionPerformed(ActionEvent evt) {
@@ -397,8 +409,9 @@ public class Payment extends javax.swing.JFrame {
         visaButton.setBorder(null);
         mastercardButton.setBorder(null);
     }
+
     /**
-     * Method handling the "Visa" button click event.
+     * Handles the "Visa" button click event.
      * @param evt The event received when the button is clicked.
      */
     private void visaActionPerformed(ActionEvent evt) {
@@ -408,8 +421,9 @@ public class Payment extends javax.swing.JFrame {
         mastercardButton.setBorder(null);
         discoverButton.setBorder(null);
     }
+
     /**
-     * Method handling the "Mastercard" button click event.
+     * Handles the "Mastercard" button click event.
      * @param evt The event received when the button is clicked.
      */
     private void mastercardActionPerformed(ActionEvent evt) {
@@ -419,8 +433,9 @@ public class Payment extends javax.swing.JFrame {
         visaButton.setBorder(null);
         discoverButton.setBorder(null);
     }
+
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments passed when running the application.
      */
     public static void main(String[] args) {
@@ -439,108 +454,117 @@ public class Payment extends javax.swing.JFrame {
     }
 
     /**
-     * Text field for entering the CVV number.
+     * A text field for entering the CVV number.
      */
     private final javax.swing.JTextField cvvData = new JTextField();
+
     /**
-     * Button allowing the "Discover" selection.
+     * A button allowing the "Discover" selection.
      */
     private final javax.swing.JButton discoverButton = new JButton();
+
     /**
-     * Text field for entering the first name and last name.
+     * A text field for entering the first name and last name.
      */
     private final javax.swing.JTextField firstNameLastNameTextField = new JTextField();
+
     /**
-     * Button allowing the "Mastercard" selection.
+     * A button allowing the "Mastercard" selection.
      */
     private final javax.swing.JButton mastercardButton = new JButton();
+
     /**
-     * Label with payment operation error.
+     * A label with payment operation error.
      */
     private final javax.swing.JLabel errorLabel = new JLabel();
+
     /**
-     * Text field for entering the credit card expiration month.
+     * A text field for entering the credit card expiration month.
      */
     private final javax.swing.JTextField monthTextField = new JTextField();
+
     /**
-     * Text field for entering the credit card number.
+     * A text field for entering the credit card number.
      */
     private final javax.swing.JTextField cardNumberTextField = new JTextField();
+
     /**
-     * Text field for entering the credit card expiration year.
+     * A text field for entering the credit card expiration year.
      */
     private final javax.swing.JTextField yearData = new JTextField();
+
     /**
-     * Button allowing the "Visa" selection.
+     * A button allowing the "Visa" selection.
      */
     private final javax.swing.JButton visaButton = new JButton();
+
     /**
-     * Label representing the "Metoda płatności" section in the payment window.
+     * A label representing the "Metoda płatności" section in the payment window.
      */
     private final JLabel paymentMethodLabel = new JLabel();
 
     /**
-     * Panel containing the user's choice of payment method in the payment window.
+     * A panel containing the user's choice of payment method in the payment window.
      */
     private final JPanel choicePanel = new JPanel();
 
     /**
-     * Label representing the "Właściciel" section in the payment window.
+     * A label representing the "Właściciel" section in the payment window.
      */
     private final JLabel ownerLabel = new JLabel();
 
     /**
-     * Panel containing the user's first and last name for payment in the payment window.
+     * A panel containing the user's first and last name for payment in the payment window.
      */
     private final JPanel firstNameLastNamePanel = new JPanel();
 
     /**
-     * Label representing the "Imię i nazwisko" section in the payment window.
+     * A label representing the "Imię i nazwisko" section in the payment window.
      */
     private final JLabel firstNameLastNameLabel = new JLabel();
 
     /**
-     * Label representing the "Numer" section in the payment window.
+     * A label representing the "Numer" section in the payment window.
      */
     private final JLabel numberLabel = new JLabel();
 
     /**
-     * Panel containing the user's card number for payment in the payment window.
+     * A panel containing the user's card number for payment in the payment window.
      */
     private final JPanel numberPanel = new JPanel();
 
     /**
-     * Label representing the "Numer karty" label for payment in the payment window.
+     * A label representing the "Numer karty" label for payment in the payment window.
      */
     private final JLabel cardNumberLabel = new JLabel();
 
     /**
-     * Label representing the "CVV" (Card Verification Value) section in the payment window.
+     * A label representing the "CVV" (Card Verification Value) section in the payment window.
      */
     private final JLabel cvvLabel = new JLabel();
 
     /**
-     * Label representing the "Data ważności" section in the payment window.
+     * A label representing the "Data ważności" section in the payment window.
      */
     private final JLabel expirationDateLabel = new JLabel();
 
     /**
-     * Panel containing the user's card expiration date for payment in the payment window.
+     * A panel containing the user's card expiration date for payment in the payment window.
      */
     private final JPanel expirationDatePanel = new JPanel();
 
     /**
-     * Label representing the "Miesiąc" label in the expiration date section of the payment window.
+     * A label representing the "Miesiąc" label in the expiration date section of the payment window.
      */
     private final JLabel monthLabel = new JLabel();
 
     /**
-     * Label representing the "Rok" label in the expiration date section of the payment window.
+     * A label representing the "Rok" label in the expiration date section of the payment window.
      */
     private final JLabel yearLabel = new JLabel();
 
     /**
-     * Button used to initiate the payment process in the payment window.
+     * A button used to initiate the payment process in the payment window.
      */
     private final JButton payButton = new JButton();
 }

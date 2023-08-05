@@ -14,56 +14,62 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
 /**
- * Class containing fields and methods for handling the window with functionality of My Account for the client.
+ * A class containing fields and methods for handling the window with functionality of My Account for the client.
  */
 public class MyAccount extends javax.swing.JFrame {
 
     /**
-     * The dimension used for the buttons in the user interface, specifying the width and height.
+     * A dimension used for the buttons in the user interface, specifying the width and height.
      * The buttons created with this dimension will have a width of 150 pixels and a height of 43 pixels.
      */
     private static final Dimension BUTTON_DIMENSION = new Dimension(150, 43);
 
     /**
-     * The dimension used for the main window of the user interface, specifying the width and height.
-     * The main window created with this dimension will have a width of 989 pixels and a height of 770 pixels.
+     * A dimension used for the main window of the user interface, specifying the width and height.
+     * The window created with this dimension will have a width of 989 pixels and a height of 770 pixels.
      */
     private static final Dimension WINDOW_DIMENSION = new Dimension(989, 770);
 
     /**
-     * List storing client's personal data.
+     * A list storing client's personal data.
      */
     private final List<String> clientData = new ArrayList<>();
+    
     /**
-     * Attribute representing the selected row number in the table.
+     * An attribute representing the selected row number in the table.
      */
     private int row;
+    
     /**
-     * Attribute being an object of the Client class.
+     * An attribute being an object of the Client class.
      */
     private Client client;
+    
     /**
-     * Attribute being a list that stores data passed to the Client class.
+     * An attribute being a list that stores data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+    
     /**
-     * List storing client's reservation data.
+     * A list storing client's reservation data.
      */
     private final List<String> resData = new ArrayList<>();
+    
     /**
-     * Attribute being a list that stores data returned from the Client class.
+     * An attribute being a list that stores data returned from the Client class.
      */
     List<String> returningData = new ArrayList<>();
 
     /**
-     * Helper constructor.
+     * A helper constructor.
      */
     public MyAccount() {
     }
 
     /**
-     * Constructor responsible for GUI initialization and relevant elements.
+     * A constructor responsible for GUI initialization and relevant elements.
      *
      * @param client object of the Client class
      */
@@ -74,7 +80,7 @@ public class MyAccount extends javax.swing.JFrame {
     }
 
     /**
-     * Method for initializing graphic components used in the window.
+     * Initializes graphic components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -361,16 +367,18 @@ public class MyAccount extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    
     /**
-     * Method handling the click event of the "Change Password" button.
+     * Handles the click event of the "Change Password" button.
      *
      * @param evt ActionEvent object generated on button click
      */
     private void changePasswordButtonActionPerformed(ActionEvent evt) {
         new PasswordChange(this.returningData.get(4), client).setVisible(true);
     }
+    
     /**
-     * Method handling the click event of the "Cancel Reservation" button.
+     * Handles the click event of the "Cancel Reservation" button.
      *
      * @param evt ActionEvent object generated on button click
      */
@@ -406,8 +414,9 @@ public class MyAccount extends javax.swing.JFrame {
             }
         }
     }
+    
     /**
-     * Method handling the popup menu.
+     * Handles the popup menu.
      *
      * @param evt ActionEvent object generated on button click
      */
@@ -434,8 +443,9 @@ public class MyAccount extends javax.swing.JFrame {
             }
         }
     }
+    
     /**
-     * Method populating the reservation table.
+     * Populates the reservation table.
      */
     private void populateTable() {
         int counter = 0;
@@ -448,8 +458,9 @@ public class MyAccount extends javax.swing.JFrame {
                 counter += 11;
         }
     }
+    
     /**
-     * Method updating the labels with client's personal data.
+     * Updates the labels with client's personal data.
      */
     public void updateLabels() {
         typeNameLabel.setText(returningData.get(0));
@@ -457,8 +468,9 @@ public class MyAccount extends javax.swing.JFrame {
         typeEmailLabel.setText(returningData.get(2));
         typePhoneNumberLabel.setText(returningData.get(3));
     }
+
     /**
-     * Method fetching data from the Client class.
+     * Fetches data from the Client class.
      */
     public void generateData() {
         data.clear();
@@ -478,8 +490,9 @@ public class MyAccount extends javax.swing.JFrame {
         updateLabels();
         populateTable();
     }
+
     /**
-     * Method handling the click event of the "Edit Data" button.
+     * Handles the click event of the "Edit Data" button.
      *
      * @param evt ActionEvent object generated on button click
      */
@@ -487,8 +500,9 @@ public class MyAccount extends javax.swing.JFrame {
         dispose();
         new DataEdition(clientData, client).setVisible(true);
     }
+
     /**
-     * Method handling the click event of the "Trip Details" button.
+     * Handles the click event of the "Trip Details" button.
      *
      * @param evt ActionEvent object generated on button click
      */
@@ -500,8 +514,9 @@ public class MyAccount extends javax.swing.JFrame {
             new TripDescription(this.resData, row).setVisible(true);
         }
     }
+
     /**
-     * Main method allowing the window to run.
+     * Allows the window to run.
      *
      * @param args Arguments passed during application startup
      */
@@ -521,27 +536,32 @@ public class MyAccount extends javax.swing.JFrame {
     }
 
     /**
-     * Table with client's reservations.
+     * A table with client's reservations.
      */
     private final javax.swing.JTable resTable = new JTable();
+
     /**
-     * Label with the client's email.
+     * A label with the client's email.
      */
     private final javax.swing.JLabel typeEmailLabel = new JLabel();
+
     /**
-     * Label with the client's first name.
+     * A label with the client's first name.
      */
     private final javax.swing.JLabel typeNameLabel = new JLabel();
+
     /**
-     * Label with the client's phone number.
+     * A label with the client's phone number.
      */
     private final javax.swing.JLabel typePhoneNumberLabel = new JLabel();
+
     /**
-     * Label with the client's last name.
+     * A label with the client's last name.
      */
     private final javax.swing.JLabel typeLastNameLabel = new JLabel();
+
     /**
-     * Popup menu with options: Logout, Home Page.
+     * A popup menu with options: Logout, Home Page.
      */
     private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
 

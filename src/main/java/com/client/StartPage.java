@@ -10,87 +10,88 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
 /**
- * Class containing fields and methods for handling the window with login functionality.
+ * A class containing fields and methods for handling the window with login functionality.
  */
 public class StartPage extends javax.swing.JFrame {
 
     /**
-     * The preferred dimension for text fields.
+     * A dimension for text fields.
      * The width is set to 64 pixels, and the height is set to 28 pixels.
      */
     private static final Dimension TEXT_FIELD_DIMENSION = new Dimension(64, 28);
 
     /**
-     * The preferred dimension for buttons.
+     * A dimension for buttons.
      * The width is set to 105 pixels, and the height is set to 25 pixels.
      */
     private static final Dimension BUTTON_DIMENSION = new Dimension(105, 25);
 
     /**
-     * Attribute representing a list storing data passed to the Client class.
+     * An attribute representing a list storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
 
     /**
-     * Attribute specifying whether the user exists in the database.
+     * An attribute specifying whether the user exists in the database.
      */
     boolean userExists;
 
     /**
-     * Attribute specifying whether the password matches the one in the database for the given email.
+     * An attribute specifying whether the password matches the one in the database for the given email.
      */
     boolean passwordValid;
 
     /**
-     * Attribute specifying whether the administrator is logged in.
+     * An attribute specifying whether the administrator is logged in.
      */
     boolean adminLogged;
 
     /**
-     * Attribute specifying whether the client is logged in.
+     * An attribute specifying whether the client is logged in.
      */
     boolean clientLogged;
 
     /**
-     * Attribute storing the email.
+     * An attribute storing the email.
      */
     String email;
 
     /**
-     * Attribute storing the password.
+     * An attribute storing the password.
      */
     String password;
 
     /**
-     * Attribute storing the message passed from the Client class.
+     * An attribute storing the message passed from the Client class.
      */
     String message;
 
     /**
-     * Attribute specifying whether the email is correct.
+     * An attribute specifying whether the email is correct.
      */
     private boolean emailCorrect;
 
     /**
-     * Attribute specifying whether the password is correct.
+     * An attribute specifying whether the password is correct.
      */
     private boolean passwordCorrect;
 
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private Client client;
 
     /**
-     * Constructor responsible for initializing the GUI and related elements.
+     * A constructor responsible for initializing the GUI and related elements.
      */
     StartPage() {
         initComponents();
     }
 
     /**
-     * Method initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -300,16 +301,18 @@ public class StartPage extends javax.swing.JFrame {
                 registerButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         });
     }
+
     /**
-     * Method handling the "Create Account" button click.
+     * Handles the "Create Account" button click.
      * @param evt Event triggered when the button is clicked.
      */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new Registration(false, client).setVisible(true);
     }
+
     /**
-     * Method responsible for email validation.
+     * Validates email.
      */
     private void performEmailValidation() {
         String emailFromTextField = emailTextField.getText();
@@ -324,8 +327,9 @@ public class StartPage extends javax.swing.JFrame {
                 wrongEmailLabel.setText("Check if the provided email address is valid.");
         }
     }
+
     /**
-     * Method responsible for password validation.
+     * Validates password.
      */
     private void performPasswordValidation() {
         String passwordFromPasswordField = new String(passwordField.getPassword());
@@ -340,8 +344,9 @@ public class StartPage extends javax.swing.JFrame {
                 wrongPasswordLabel.setText("Minimum 8 characters, including at least one digit, uppercase, and lowercase letter.");
         }
     }
+
     /**
-     * Method handling the "Sign In" button click.
+     * Handles the "Sign In" button click.
      * @param evt Event triggered when the button is clicked.
      */
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -388,8 +393,9 @@ public class StartPage extends javax.swing.JFrame {
             }
         }
     }
+
     /**
-     * Method allowing to run the window.
+     * Allows to run the window.
      * @param args Arguments passed during application startup.
      */
     public static void main(String[] args) {
@@ -406,6 +412,7 @@ public class StartPage extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new StartPage().setVisible(true));
     }
+
     /**
      * A login panel containing login-related components.
      */
@@ -433,18 +440,22 @@ public class StartPage extends javax.swing.JFrame {
      * A password field for entering the password.
      */
     private final javax.swing.JPasswordField passwordField = new JPasswordField();
+
     /**
      * A button for logging in.
      */
     private final javax.swing.JButton registerButton = new JButton();
+
     /**
      * A button for proceeding to the registration window.
      */
     private final javax.swing.JButton signInButton = new JButton();
+
     /**
      * A label indicating that the email is incorrect.
      */
     private final javax.swing.JLabel wrongEmailLabel = new JLabel();
+
     /**
      * A label indicating that the password is incorrect.
      */

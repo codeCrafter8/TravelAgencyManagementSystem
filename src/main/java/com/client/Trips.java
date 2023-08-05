@@ -4,6 +4,7 @@ import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.TripValidator;
 import com.server.LogsAdmins;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -15,42 +16,51 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 /**
- * Class containing fields and methods for handling a window with functionality related to trips.
+ * A class containing fields and methods for handling a window with functionality related to trips.
  */
 public class Trips extends javax.swing.JFrame {
+    
     /**
-     * Attribute representing a list storing data passed to the Client class.
+     * An attribute representing a list storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+    
     /**
-     * Attribute representing a list storing data returned from the Client class.
+     * An attribute representing a list storing data returned from the Client class.
      */
     List<String> tripsData = new ArrayList<>();
+    
     /**
      * Element for sorting the trips table.
      */
     private TableRowSorter<TableModel> rowSorter;
+    
     /**
-     * Attribute holding the city during the search for a trip.
+     * An attribute holding the city during the search for a trip.
      */
     private String cityToSearch;
+    
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private Client client;
+    
     /**
-     * Attribute holding the user's email.
+     * An attribute holding the user's email.
      */
     private String email;
+    
     /**
-     * Constructor responsible for initializing the GUI.
+     * A constructor responsible for initializing the GUI.
      */
     public Trips() {
         initComponents();
     }
+    
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param client parameter storing an object of the Client class.
      * @param adminName parameter holding the administrator's name.
      */
@@ -63,8 +73,9 @@ public class Trips extends javax.swing.JFrame {
         populateTable();
         searchTrips();
     }
+    
     /**
-     * Method for initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -434,8 +445,9 @@ public class Trips extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    
     /**
-     * Method handling the click event of the "Edit Trip" button.
+     * Handles the click event of the "Edit Trip" button.
      * @param evt The event triggered by clicking the button.
      */
     private void editTripButtonActionPerformed(ActionEvent evt) {
@@ -465,7 +477,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the "Log Out" button.
+     * Handles the click event of the "Log Out" button.
      * @param evt The event triggered by clicking the button.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -479,7 +491,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method for retrieving appropriate data from the Client class.
+     * Retrieves appropriate data from the Client class.
      */
     private void generateData() {
         data.clear();
@@ -489,7 +501,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method for populating the table holding the trips.
+     * Populates the table holding the trips.
      */
     private void populateTable() {
         int counter = 0;
@@ -504,7 +516,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method responsible for validating the city of the searched trip.
+     * Validates the city of the searched trip.
      */
     private void performCityValidation() {
         cityToSearch = searchClientTextField.getText();
@@ -517,7 +529,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method allowing searching for trips by city.
+     * Allows searching for trips by city.
      */
     private void searchTrips() {
         tripsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -553,7 +565,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the "Delete Trip" button.
+     * Handles the click event of the "Delete Trip" button.
      * @param evt The event triggered by clicking the button.
      */
     private void deleteTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -571,7 +583,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the "Add Trip" button.
+     * Handles the click event of the "Add Trip" button.
      * @param evt The event triggered by clicking the button.
      */
     private void addTripButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -581,7 +593,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the "Clients" button.
+     * Handles the click event of the "Clients" button.
      * @param evt The event triggered by clicking the button.
      */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -591,7 +603,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the "Reservations" button.
+     * Handles the click event of the "Reservations" button.
      * @param evt The event triggered by clicking the button.
      */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
@@ -601,7 +613,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the "Panel" button.
+     * Handles the click event of the "Panel" button.
      * @param evt The event triggered by clicking the button.
      */
     private void panelButtonActionPerformed(ActionEvent evt) {
@@ -611,7 +623,7 @@ public class Trips extends javax.swing.JFrame {
     }
 
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments passed when launching the application.
      */
     public static void main(String[] args) {
@@ -628,6 +640,7 @@ public class Trips extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Trips().setVisible(true));
     }
+
     /**
      * A main panel that contains the menu, admin panel, and options panel.
      */
@@ -687,34 +700,42 @@ public class Trips extends javax.swing.JFrame {
      * A lA abel for the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
+
     /**
      * A button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
+
     /**
      * A button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
+
     /**
      * A button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
+
     /**
      * A button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
+
     /**
      * A field for entering the city during the search.
      */
     private final javax.swing.JTextField searchClientTextField = new JTextField();
+
     /**
      * A button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
+
     /**
      * A table holding the trips.
      */
     private final javax.swing.JTable tripsTable = new JTable();
+
     /**
      * A label informing that the city during the search is incorrect.
      */

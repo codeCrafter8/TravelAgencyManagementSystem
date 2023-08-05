@@ -12,8 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling a window with functionality to add a trip.
+ * A class containing fields and methods for handling a window with functionality to add a trip.
  */
 public class TripAddition extends javax.swing.JFrame {
 
@@ -23,80 +24,99 @@ public class TripAddition extends javax.swing.JFrame {
      * short error messages with limited width and height.
      */
     public static final Dimension WRONG_ITEM_LABEL_DIMENSION_SMALL = new Dimension(100, 16);
+
     /**
-     * Attribute representing a list holding data passed to the Client class.
+     * An attribute representing a list holding data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute representing a list holding possible departure/arrival cities.
+     * An attribute representing a list holding possible departure/arrival cities.
      */
     private final List<String> departureCities = new ArrayList<>();
+
     /**
-     * Attribute indicating whether the country is correct.
+     * An attribute indicating whether the country is correct.
      */
     private boolean countryCorrect;
+
     /**
-     * Attribute indicating whether the city is correct.
+     * An attribute indicating whether the city is correct.
      */
     private boolean cityCorrect;
+
     /**
-     * Attribute indicating whether the departure/arrival city is correct.
+     * An attribute indicating whether the departure/arrival city is correct.
      */
     private boolean departureCityCorrect;
+
     /**
-     * Attribute indicating whether the price is correct.
+     * An attribute indicating whether the price is correct.
      */
     private boolean priceCorrect;
+
     /**
-     * Attribute indicating whether the hotel name is correct.
+     * An attribute indicating whether the hotel name is correct.
      */
     private boolean hotelNameCorrect;
+
     /**
-     * Attribute indicating whether the people limit is correct.
+     * An attribute indicating whether the people limit is correct.
      */
     private boolean peopleLimitCorrect;
+
     /**
-     * Attribute holding the country.
+     * An attribute holding the country.
      */
     private String country;
+
     /**
-     * Attribute holding the city.
+     * An attribute holding the city.
      */
     private String city;
+
     /**
-     * Attribute holding the departure/arrival city.
+     * An attribute holding the departure/arrival city.
      */
     private String departureCity;
+
     /**
-     * Attribute holding the price.
+     * An attribute holding the price.
      */
     private String price;
+
     /**
-     * Attribute holding the people limit.
+     * An attribute holding the people limit.
      */
     private String peopleLimit;
+
     /**
-     * Attribute holding the hotel name.
+     * An attribute holding the hotel name.
      */
     private String hotelName;
+
     /**
-     * Attribute holding the arrival date.
+     * An attribute holding the arrival date.
      */
     private Date arrivalDate;
+
     /**
-     * Attribute holding the departure date.
+     * An attribute holding the departure date.
      */
     private Date departureDate;
+
     /**
-     * Attribute being an object of the Client class.
+     * An attribute being an object of the Client class.
      */
     private final Client client;
+
     /**
-     * Attribute holding the administrator's name.
+     * An attribute holding the administrator's name.
      */
     private final String adminName;
+
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param client parameter holding an object of the Client class.
      * @param adminName parameter holding the administrator's name.
      */
@@ -106,6 +126,11 @@ public class TripAddition extends javax.swing.JFrame {
         initComponents();
         setDepartureCities();
     }
+
+    /**
+     * Adds a predefined list of departure cities to the departureCities collection.
+     * These cities are commonly used as departure points for flights or travel destinations.
+     */
     private void setDepartureCities(){
         departureCities.add("Krakow");
         departureCities.add("Warsaw");
@@ -113,8 +138,9 @@ public class TripAddition extends javax.swing.JFrame {
         departureCities.add("Katowice");
         departureCities.add("Gdansk");
     }
+
     /**
-     * Method initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -379,7 +405,7 @@ public class TripAddition extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Method handling the "Add Trip" button click.
+     * Handles the "Add Trip" button click.
      */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         performCountryValidation();
@@ -544,7 +570,7 @@ public class TripAddition extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Cancel" button click.
+     * Handles the "Cancel" button click.
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
@@ -552,7 +578,7 @@ public class TripAddition extends javax.swing.JFrame {
     }
 
     /**
-     * Method allowing to run the window.
+     * Allows to run the window.
      * @param args Arguments passed during application startup.
      */
     public static void main(String[] args) {
@@ -636,64 +662,80 @@ public class TripAddition extends javax.swing.JFrame {
     private final JLabel validCountryLabel = new JLabel();
 
     /**
-     * Text field for entering the people limit.
+     * A text field for entering the people limit.
      */
     private final javax.swing.JTextField limitTextField = new JTextField();
+
     /**
      * An element for choosing the arrival date.
      */
     private final com.toedter.calendar.JDateChooser arrivalDateChooser = new com.toedter.calendar.JDateChooser();
+
     /**
      * A text field for entering the city.
      */
     private final javax.swing.JTextField cityTextField = new JTextField();
+
     /**
      * A text field for entering the country.
      */
     private final javax.swing.JTextField countryTextField = new JTextField();
+
     /**
      * An element for choosing the departure date.
      */
     private final com.toedter.calendar.JDateChooser departureDateChooser = new com.toedter.calendar.JDateChooser();
-    /**Al* A text field for entering the departure city.
+
+    /**
+     * A text field for entering the departure city.
      */
     private final javax.swing.JTextField departureCityField = new JTextField();
+
     /**
      * A text field for entering the hotel name.
      */
     private final javax.swing.JTextField nameHotelTextField = new JTextField();
+
     /**
      * A text field for entering the price.
      */
     private final javax.swing.JTextField priceField = new JTextField();
+
     /**
      * A label indicating that the arrivalA ldate is incorrect.
      */
     private final javax.swing.JLabel wrongArrivalLabel = new JLabel();
+
     /**
      * A label indicating that the city is incorrect.
      */
     private final javax.swing.JLabel wrongCityLabel = new JLabel();
+
     /**
      * A label indicating that the country is incorrect.
      */
     private final javax.swing.JLabel wrongCountryLabel = new JLabel();
+
     /**
      * A label indicating that the departure city is incorrect.
      */
     private final javax.swing.JLabel wrongDepartureCityLabel = new JLabel();
+
     /**
      * A label indicating that the departure date is incorrect.
      */
     private final javax.swing.JLabel wrongDepartureLabel = new JLabel();
+
     /**
      * A label indicating that the people limit is incorrect.
      */
     private final javax.swing.JLabel wrongLimitLabel = new JLabel();
+
     /**
      * A label indicating that the hotel name is incorrect.
      */
     private final javax.swing.JLabel wrongHotelNameLabel = new JLabel();
+
     /**
      * A label indicating that the price is incorrect.
      */

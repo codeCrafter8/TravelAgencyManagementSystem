@@ -16,42 +16,51 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
 /**
- * Class containing fields and methods to handle the window for performing operations related to reservations.
+ * A class containing fields and methods to handle the window for performing operations related to reservations.
  */
 public class Reservations extends javax.swing.JFrame {
+
     /**
-     * Attribute representing a list for storing data passed to the Client class.
+     * An attribute representing a list for storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute representing a list for storing reservation data returned from the Client class.
+     * An attribute representing a list for storing reservation data returned from the Client class.
      */
     List<String> resData = new ArrayList<>();
+
     /**
-     * Element for sorting the reservations table.
+     * An element for sorting the reservations table.
      */
     private TableRowSorter<TableModel> rowSorter;
+
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private Client client;
+
     /**
-     * Attribute storing the administrator's email.
+     * An attribute storing the administrator's email.
      */
     private String email;
+
     /**
-     * Attribute storing the last name of the client when searching for reservations.
+     * An attribute storing the last name of the client when searching for reservations.
      */
     private String lastNameToSearch;
+
     /**
-     * Auxiliary constructor for initializing the GUI.
+     * An auxiliary constructor for initializing the GUI.
      */
     public Reservations() {
         initComponents();
     }
+
     /**
-     * Constructor for initializing the GUI and appropriate elements.
+     * A constructor for initializing the GUI and appropriate elements.
      * @param client Parameter storing an object of the Client class.
      * @param adminName Parameter storing the administrator's name.
      */
@@ -64,8 +73,9 @@ public class Reservations extends javax.swing.JFrame {
         populateTable();
         searchRes();
     }
+
     /**
-     * Method for initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -112,7 +122,7 @@ public class Reservations extends javax.swing.JFrame {
 
     /**
      * Creates the menu panel with admin information and options. The panel is configured to display
-     * the admin's name, an icon, and navigation buttons for clients, trips, and reservations.
+     * the admin name, an icon, and navigation buttons for clients, trips, and reservations.
      */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
@@ -135,7 +145,7 @@ public class Reservations extends javax.swing.JFrame {
     }
 
     /**
-     * Creates the admin panel displaying the admin's name and an icon.
+     * Creates the admin panel displaying the admin name and an icon.
      */
     private void createAdminPanel(){
         adminPanel.setBackground(ColorUtils.BROWN);
@@ -218,7 +228,7 @@ public class Reservations extends javax.swing.JFrame {
     }
 
     /**
-     * Set the properties and event handlers for the navigation buttons and other buttons in the GUI.
+     * Sets the properties and event handlers for the navigation buttons and other buttons in the GUI.
      * It configures the font, text, background color, and cursor behavior for the buttons.
      */
     private void setButtons(){
@@ -354,7 +364,7 @@ public class Reservations extends javax.swing.JFrame {
     }
 
     /**
-     * Set up the reservation table, including its model and appearance. This method configures the
+     * Sets up the reservation table, including its model and appearance. This method configures the
      * table columns, cell editors, selection background, and header renderer.
      */
     private void setResTable(){
@@ -439,8 +449,9 @@ public class Reservations extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }
+
     /**
-     * Method handling the action when the "Add reservation" button is clicked.
+     * Handles the action when the "Add reservation" button is clicked.
      * @param evt The event received when the button is clicked.
      */
     private void addResButtonActionPerformed(ActionEvent evt) {
@@ -448,8 +459,9 @@ public class Reservations extends javax.swing.JFrame {
         data.clear();
         new ReservationAddition(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Method handling the action when the "Log out" button is clicked.
+     * Handles the action when the "Log out" button is clicked.
      * @param evt The event received when the button is clicked.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,8 +473,9 @@ public class Reservations extends javax.swing.JFrame {
         dispose();
         new StartPage().setVisible(true);
     }
+
     /**
-     * Method handling the action when the "Clients" button is clicked.
+     * Handles the action when the "Clients" button is clicked.
      * @param evt The event received when the button is clicked.
      */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -470,8 +483,9 @@ public class Reservations extends javax.swing.JFrame {
         data.clear();
         new Clients(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Method handling the action when the "Trips" button is clicked.
+     * Handles the action when the "Trips" button is clicked.
      * @param evt The event received when the button is clicked.
      */
     private void tripsButtonActionPerformed(ActionEvent evt) {
@@ -479,8 +493,9 @@ public class Reservations extends javax.swing.JFrame {
         data.clear();
         new Trips(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Method handling the action when the "Panel" button is clicked.
+     * Handles the action when the "Panel" button is clicked.
      * @param evt The event received when the button is clicked.
      */
     private void panelButtonActionPerformed(ActionEvent evt) {
@@ -488,8 +503,9 @@ public class Reservations extends javax.swing.JFrame {
         data.clear();
         new Dashboard(client, adminNameLabel.getText()).setVisible(true);
     }
+
     /**
-     * Method handling the action when the "Delete reservation" button is clicked.
+     * Handles the action when the "Delete reservation" button is clicked.
      * @param evt The event received when the button is clicked.
      */
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -505,8 +521,9 @@ public class Reservations extends javax.swing.JFrame {
             model.removeRow(resTable.getSelectedRow());
         }
     }
+
     /**
-     * Method fetching the appropriate data from the Client class.
+     * Fetches the appropriate data from the Client class.
      */
     private void generateData(){
         data.clear();
@@ -514,8 +531,9 @@ public class Reservations extends javax.swing.JFrame {
         Client client1 = new Client(data);
         resData.addAll(client1.getReturningData());
     }
+
     /**
-     * Method populating the table with reservations.
+     * Populates the table with reservations.
      */
     private void populateTable(){
         int counter = 0;
@@ -528,8 +546,9 @@ public class Reservations extends javax.swing.JFrame {
                 counter+=6;
         }
     }
+
     /**
-     * Method allowing searching for reservations by last name.
+     * Allows searching for reservations by last name.
      */
     private void searchRes(){
         resTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -561,8 +580,9 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
     }
+
     /**
-     * Method handling last name validation for reservation search.
+     * Handles last name validation for reservation search.
      */
     private void performLastNameValidation() {
         lastNameToSearch = searchResTextField.getText();
@@ -573,8 +593,9 @@ public class Reservations extends javax.swing.JFrame {
         if(lastNameToSearch.equals(""))
             wrongResLabel.setText("");
     }
+
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments received during application startup.
      */
     public static void main(String[] args) {
@@ -591,52 +612,104 @@ public class Reservations extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Reservations().setVisible(true));
     }
-    //GUI variables
+
     /**
-     * Label displaying the administrator's name.
+     * A label displaying the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
+
     /**
-     * Button for navigating to the "Clients" tab.
+     * A button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
+
     /**
-     * Button for logging out.
+     * A button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
+
     /**
-     * Button for navigating to the "Panel" tab.
+     * A button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
+
     /**
-     * Table displaying reservations.
+     * A table displaying reservations.
      */
     private final javax.swing.JTable resTable = new JTable();
+
     /**
-     * Button for navigating to the "Reservations" tab.
+     * A button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
+
     /**
-     * Field for entering the last name of the client when searching for reservations.
+     * A field for entering the last name of the client when searching for reservations.
      */
     private final javax.swing.JTextField searchResTextField = new JTextField();
+
     /**
-     * Button for navigating to the "Trips" tab.
+     * A button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
+
     /**
-    * Label indicating that the last name entered for searching reservations is incorrect.
+    * A label indicating that the last name entered for searching reservations is incorrect.
     */
     private final javax.swing.JLabel wrongResLabel = new JLabel();
+
+    /**
+     * A panel representing the menu panel used in the application.
+     */
     private final JPanel menuPanel = new JPanel();
+
+    /**
+     * A panel representing the admin panel used in the application.
+     */
     private final JPanel adminPanel = new JPanel();
+
+    /**
+     * A label representing the admin icon label used in the application.
+     */
     private final JLabel adminIconLabel = new JLabel();
+
+    /**
+     * A label representing the admin label used in the application.
+     */
     private final JLabel adminLabel = new JLabel();
+
+    /**
+     * A panel representing the options panel used in the application.
+     */
     private final JPanel optionsPanel = new JPanel();
+
+    /**
+     * A panel representing the top panel used in the application.
+     */
     private final JPanel topPanel = new JPanel();
+
+    /**
+     * A label representing the search result label used in the application.
+     */
     private final JLabel searchResLabel = new JLabel();
+
+    /**
+     * A scrollPane representing the result table scroll pane used in the application.
+     */
     private final JScrollPane resTableScrollPane = new JScrollPane();
+
+    /**
+     * A button representing the "Add Resource" button used in the application.
+     */
     private final JButton addResButton = new JButton();
+
+    /**
+     * A button representing the "Delete Resource" button used in the application.
+     */
     private final JButton deleteResButton = new JButton();
+
+    /**
+     * A button representing the "Edit Resource" button used in the application.
+     */
     private final JButton editResButton = new JButton();
- }
+}

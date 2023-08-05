@@ -5,6 +5,7 @@ import com.client.utils.DimensionUtils;
 import com.client.validation.DateValidator;
 import com.client.validation.ClientValidator;
 import com.server.LogsClients;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -15,99 +16,115 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 /**
- * Class containing fields and methods for handling the main client page window along with the search functionality.
+ * A class containing fields and methods for handling the main client page window along with the search functionality.
  */
 public class SearchEngine extends javax.swing.JFrame {
 
     /**
-     * The main scrollable panel's dimension, representing the size of the scrollable area in the main window.
+     * A main scrollable panel's dimension, representing the size of the scrollable area in the main window.
      * The width is set to 1022 pixels, and the height is set to 400 pixels.
      */
     private static final Dimension MAIN_SCROLL_DIMENSION = new Dimension(1022, 400);
 
     /**
-     * The main window's dimension, representing the overall size of the main window in the application.
+     * A main window's dimension, representing the overall size of the main window in the application.
      * The width is set to 1022 pixels, and the height is set to 729 pixels.
      */
     private static final Dimension MAIN_WINDOW_DIMENSION = new Dimension(1022, 729);
 
     /**
-     * The dimension of the text field used to input leave numbers. It represents the width and height of the text field.
+     * A dimension of the text field used to input leave numbers. It represents the width and height of the text field.
      * The width is set to 64 pixels, and the height is set to 22 pixels.
      */
     private static final Dimension LEAVE_NUMBER_TF_DIMENSION = new Dimension(64, 22);
 
     /**
-     * The dimension of the trips table, representing the size of the table that displays trip information.
+     * A dimension of the trips table, representing the size of the table that displays trip information.
      * The width is set to 300 pixels, and the height is set to 355 pixels.
      */
     private static final Dimension TRIPS_TABLE_DIMENSION = new Dimension(300, 355);
 
     /**
-     * Attribute used as a counter for slideshow display.
+     * An attribute used as a counter for slideshow display.
      */
     private int counter = 1;
+    
     /**
-     * Attribute representing the quantity of data in the list of available trips.
+     * An attribute representing the quantity of data in the list of available trips.
      */
     private final int attributesQuantity = 10;
+    
     /**
-     * Attribute representing a list storing data passed to the Client class.
+     * An attribute representing a list storing data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+    
     /**
-     * Attribute representing a list of trip data.
+     * An attribute representing a list of trip data.
      */
     List<String> tripsData = new ArrayList<>();
+    
     /**
-     * Attribute representing a list of client phone numbers for contact.
+     * An attribute representing a list of client phone numbers for contact.
      */
     List<String> phoneNumberData = new ArrayList<>();
+    
     /**
-     * Attribute representing a list of travel destinations.
+     * An attribute representing a list of travel destinations.
      */
     List<String> destination = new ArrayList<>();
+    
     /**
-     * Attribute representing a list of departure places.
+     * An attribute representing a list of departure places.
      */
     List<String> departure = new ArrayList<>();
+    
     /**
-     * Attribute representing the selected row number in the trips table.
+     * An attribute representing the selected row number in the trips table.
      */
     private int selectedRow;
+   
     /**
-     * Attribute specifying the number of adults.
+     * An attribute specifying the number of adults.
      */
     private int adultsQuantity = 1;
+    
     /**
-     * Attribute specifying the number of children.
+     * An attribute specifying the number of children.
      */
     private int childrenQuantity = 0;
+    
     /**
      * Map storing the row number as a key and the trip ID as a value.
      */
     private final Map<Integer, Integer> idRows = new TreeMap<>();
+   
     /**
-     * Attribute specifying the ID of the selected trip.
+     * An attribute specifying the ID of the selected trip.
      */
     private int idSelectedTrip;
+   
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private Client client;
+   
     /**
-     * Attribute specifying the client's email.
+     * An attribute specifying the client's email.
      */
     private String email;
+    
     /**
-     * Helper constructor responsible for initializing the GUI.
+     * A helper constructor responsible for initializing the GUI.
      */
     SearchEngine() {
         initComponents();
     }
+    
     /**
-     * Constructor responsible for initializing the GUI and related elements.
+     * A constructor responsible for initializing the GUI and related elements.
      *
      * @param client A parameter storing an object of the Client class.
      */
@@ -119,8 +136,9 @@ public class SearchEngine extends javax.swing.JFrame {
         generateData();
         populateTable();
     }
+   
     /**
-     * Method retrieving travel destinations from the Client class and adding them to the GUI.
+     * Retrieves travel destinations from the Client class and adding them to the GUI.
      */
     private void getDestination() {
         data.clear();
@@ -132,8 +150,9 @@ public class SearchEngine extends javax.swing.JFrame {
         for (String s : destination)
             destinationChoiceComboBox.addItem(s);
     }
+    
     /**
-     * Method retrieving departure places from the Client class and adding them to the GUI.
+     * Retrieves departure places from the Client class and adding them to the GUI.
      */
     private void getDeparture() {
         data.clear();
@@ -145,8 +164,9 @@ public class SearchEngine extends javax.swing.JFrame {
         for (String s : departure)
             departureCityChoice.addItem(s);
     }
+    
     /**
-     * Method generating data for the GUI.
+     * Generates data for the GUI.
      */
     private void generateData() {
         data.clear();
@@ -156,8 +176,9 @@ public class SearchEngine extends javax.swing.JFrame {
         getDestination();
         getDeparture();
     }
+    
     /**
-     * Method populating the table with available trips.
+     * Populates the table with available trips.
      */
     private void populateTable() {
         int counter = 0;
@@ -173,8 +194,9 @@ public class SearchEngine extends javax.swing.JFrame {
                 counter += 10;
         }
     }
+    
     /**
-     * Method displaying the slideshow.
+     * Displays the slideshow.
      */
     private void showPhotos() {
         imagesLabel.setIcon(new javax.swing.ImageIcon("img\\photo1.jpg"));
@@ -185,8 +207,9 @@ public class SearchEngine extends javax.swing.JFrame {
         });
         time.start();
     }
+    
     /**
-     * Method initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -204,8 +227,9 @@ public class SearchEngine extends javax.swing.JFrame {
         createFooter();
         createLayout();
     }
+    
     /**
-     * Method handling the context menu.
+     * Handles the context menu.
      *
      * @param evt Accepted event during button click.
      */
@@ -765,7 +789,7 @@ public class SearchEngine extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
     /**
-     * Method handling the click of the "Summer 2023" button
+     * Handles the click of the "Summer 2023" button
      * @param evt The event received when the button is clicked
      */
     private void summer2023ButtonActionPerformed(ActionEvent evt) {
@@ -807,8 +831,9 @@ public class SearchEngine extends javax.swing.JFrame {
                 counter += 10;
         }
     }
+    
     /**
-     * Method handling the click of the "Send" button
+     * Handles the click of the "Send" button
      * @param evt The event received when the button is clicked
      */
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -824,50 +849,57 @@ public class SearchEngine extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Invalid phone number entered.", "Information", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
     /**
-     * Method handling the click of the "Bulgaria" button
+     * Handles the click of the "Bulgaria" button
      * @param evt The event received when the button is clicked
      */
     private void bulgariaButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Bulgaria");
     }
+    
     /**
-     * Method handling the click of the "Italy" button
+     * Handles the click of the "Italy" button
      * @param evt The event received when the button is clicked
      */
     private void italyButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Italy");
     }
+    
     /**
-     * Method handling the click of the "Egypt" button
+     * Handles the click of the "Egypt" button
      * @param evt The event received when the button is clicked
      */
     private void egyptButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Egypt");
     }
+   
     /**
-     * Method handling the click of the "Turkey" button
+     * Handles the click of the "Turkey" button
      * @param evt The event received when the button is clicked
      */
     private void turkeyButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Turkey");
     }
+    
     /**
-     * Method handling the click of the "Spain" button
+     * Handles the click of the "Spain" button
      * @param evt The event received when the button is clicked
      */
     private void spainButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Spain");
     }
+    
     /**
-     * Method handling the click of the "Greece" button
+     * Handles the click of the "Greece" button
      * @param evt The event received when the button is clicked
      */
     private void greeceButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Greece");
     }
+   
     /**
-     * Method filtering the table with available trips for the selected country
+     * Filters the table with available trips for the selected country
      * @param country The selected country
      */
     private void filterTable(String country) {
@@ -888,8 +920,9 @@ public class SearchEngine extends javax.swing.JFrame {
                 counter += 10;
         }
     }
+    
     /**
-     * Method filtering the table with available trips for the selected options
+     * Filters the table with available trips for the selected options
      * @param country1 The first country
      * @param country2 The second country
      */
@@ -911,15 +944,17 @@ public class SearchEngine extends javax.swing.JFrame {
                 counter += 10;
         }
     }
+    
     /**
-     * Method handling the click of the "Exotic" button
+     * Handles the click of the "Exotic" button
      * @param evt The event received when the button is clicked
      */
     private void exoticButtonActionPerformed(java.awt.event.ActionEvent evt) {
         filterTable("Cuba", "United Arab Emirates");
     }
+    
     /**
-     * Method handling the click of the "Last Minute" button
+     * Handles the click of the "Last Minute" button
      * @param evt The event received when the button is clicked
      */
     private void lastMinuteButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -949,8 +984,9 @@ public class SearchEngine extends javax.swing.JFrame {
                 counter += 10;
         }
     }
+    
     /**
-     * Method calculating the difference in days between dates
+     * Calculates the difference in days between dates
      * @param d1 The first date
      * @param d2 The second date
      * @return The number of days difference
@@ -959,15 +995,17 @@ public class SearchEngine extends javax.swing.JFrame {
         long diff = d2.getTime() - d1.getTime();
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
+    
     /**
-     * Method handling the click of the "Vacations" button
+     * Handles the click of the "Vacations" button
      * @param evt The event received when the button is clicked
      */
     private void tripsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         populateTable();
     }
+    
     /**
-     * Method handling the click of the magnifying glass button
+     * Handles the click of the magnifying glass button
      * @param evt The event received when the button is clicked
      */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1016,8 +1054,9 @@ public class SearchEngine extends javax.swing.JFrame {
             }
         }
     }
+    
     /**
-     * Method performing validation of departure and arrival dates
+     * Performs validation of departure and arrival dates
      */
     private boolean performDateValidation() {
         if (!DateValidator.isDateValid(departureTextField.getText()) || !DateValidator.isDateValid(arrivalTextField.getText())) {
@@ -1026,8 +1065,9 @@ public class SearchEngine extends javax.swing.JFrame {
         }
         return true;
     }
+
     /**
-     * Method allowing to run the window
+     * Allows to run the window
      * @param args Arguments passed when the application is launched
      */
     public static void main(String[] args) {
@@ -1044,6 +1084,7 @@ public class SearchEngine extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new SearchEngine().setVisible(true));
     }
+
     /**
      * A scrollPane to provide scrolling functionality for the main window.
      */
@@ -1178,38 +1219,47 @@ public class SearchEngine extends javax.swing.JFrame {
      * A dropdown menu with travel destination options
      */
     private final javax.swing.JComboBox<String> destinationChoiceComboBox = new JComboBox<>();
+
     /**
-     * An element allowing selection of the number of adults
+     * A spinner allowing selection of the number of adults
      */
     private final javax.swing.JSpinner adultsQuantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+
     /**
-     * An element allowing selection of the number of children
+     * A spinner allowing selection of the number of children
      */
     private final javax.swing.JSpinner childrenQuantitySpinner = new JSpinner(new SpinnerNumberModel(0, 0, 4, 1));
+
     /**
      * A label with images
      */
     private final javax.swing.JLabel imagesLabel = new JLabel();
+
     /**
      * A field for entering the departure date of the trip
      */
     private final javax.swing.JTextField arrivalTextField = new JTextField();
+
     /**
      * A dropdown menu with departure city options
      */
     private final javax.swing.JComboBox<String> departureCityChoice = new JComboBox<>();
+
     /**
      * A table with available trips
      */
     private final javax.swing.JTable tripsTable= new JTable();
+
     /**
      * A field for entering the arrival date of the trip
      */
     private final javax.swing.JTextField departureTextField = new JTextField();
+
     /**
      * A dropdown menu with options for Home, My Account, and Logout
      */
     private final javax.swing.JComboBox<String> managingComboBox = new JComboBox<>();
+
     /**
      * A field for entering the phone number
      */

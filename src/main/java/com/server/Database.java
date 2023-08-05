@@ -3,32 +3,39 @@ package com.server;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class that receives data from the server and connects to the database
+ * A class that receives data from the server and connects to the database
  */
 public class Database {
+
     /**
-     * Attribute allowing executing queries to the database
+     * An attribute allowing executing queries to the database
      */
     private Statement statement;
+
     /**
-     * Attribute allowing connection to the database
+     * An attribute allowing connection to the database
      */
     private Connection connection;
+
     /**
-     * Attribute specifying the type of operation being performed
+     * An attribute specifying the type of operation being performed
      */
     private final String operation;
+
     /**
-     * Attribute being a list containing data received from the server
+     * An attribute being a list containing data received from the server
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute being a list containing data returned to the server
+     * An attribute being a list containing data returned to the server
      */
     private final List<String> returningData = new ArrayList<>();
+
     /**
-     * Constructor allowing creating an instance of the class
+     * A constructor allowing creating an instance of the class
      * @param operation The type of operation being performed
      * @param data List containing data received from the server
      */
@@ -37,15 +44,17 @@ public class Database {
         this.data.addAll(data);
         connectWithDatabase();
     }
+    
     /**
-     * Method returning a list containing data returned to the server
+     * Returns a list containing data returned to the server
      * @return Returns a list containing data returned to the server
      */
     public List<String> getReturningData(){
         return returningData;
     }
+    
     /**
-     * Method allowing initializing connection parameters with the database and choosing the appropriate operation
+     * Allows initializing connection parameters with the database and choosing the appropriate operation
      */
     public void connectWithDatabase() {
         try {
@@ -81,8 +90,9 @@ public class Database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+    
     /**
-     * Method retrieving user data from the database
+     * Retrieves user data from the database
      */
     public void findClientData(){
         try{
@@ -102,8 +112,9 @@ public class Database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+    
     /**
-     * Method retrieving from the database information whether the user is logged in
+     * Retrieves from the database information whether the user is logged in
      * @return true if the user is logged in, false if not
      */
     public boolean getUserLogged(){
@@ -122,8 +133,9 @@ public class Database {
         }
         return userLogged != 0;
     }
+    
     /**
-     * Method retrieving trip data from the database
+     * Retrieves trip data from the database
      */
     public void findTrip(){
         int id = 0;
@@ -159,7 +171,7 @@ public class Database {
         }
     }
     /**
-     * Method retrieving reservations data from the database
+     * Retrieves reservations data from the database
      */
     public void findReservation(){
         try{
@@ -187,7 +199,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving contact numbers of customers from the database
+     * Retrieves contact numbers of customers from the database
      */
     public void getNumbers() {
         try {
@@ -203,7 +215,7 @@ public class Database {
     }
 
     /**
-     * Method saving contact numbers of customers to the database
+     * Saves contact numbers of customers to the database
      */
     public void sendNumbers(){
         try{
@@ -221,7 +233,7 @@ public class Database {
     }
 
     /**
-     * Method adding a new trip to the database
+     * Adds a new trip to the database
      */
     public void addTrip() {
         try {
@@ -249,7 +261,7 @@ public class Database {
     }
 
     /**
-     * Method deleting a selected reservation from the database
+     * Deletes a selected reservation from the database
      */
     private void deleteRes() {
         try{
@@ -281,7 +293,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving all reservations from the database
+     * Retrieves all reservations from the database
      */
     private void updateRes() {
         String departure;
@@ -311,7 +323,7 @@ public class Database {
     }
 
     /**
-     * Method adding a new reservation to the database
+     * Adds a new reservation to the database
      */
     public void addReservation() {
         try {
@@ -338,7 +350,7 @@ public class Database {
     }
 
     /**
-     * Method deleting a selected trip from the database
+     * Deletes a selected trip from the database
      */
     public void deleteTrip() {
         try{
@@ -356,7 +368,7 @@ public class Database {
     }
 
     /**
-     * Method saving new data of an edited trip to the database
+     * Saves new data of an edited trip to the database
      */
     private void editTrip() {
         try{
@@ -380,7 +392,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving available travel destinations from the database
+     * Retrieves available travel destinations from the database
      */
     public void getDestination() {
         try{
@@ -397,7 +409,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving available departure/arrival cities from the database
+     * Retrieves available departure/arrival cities from the database
      */
     private void getDeparture() {
         try{
@@ -412,8 +424,9 @@ public class Database {
             new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+    
     /**
-     * Method retrieving available trips from the database
+     * Retrieves available trips from the database
      */
     public void tripsListPopulate() {
         try {
@@ -445,7 +458,7 @@ public class Database {
     }
 
     /**
-     * Method saving the new password of an edited user to the database
+     * Saves the new password of an edited user to the database
      */
     public void changeClientPassword() {
         try {
@@ -464,7 +477,7 @@ public class Database {
     }
 
     /**
-     * Method deleting a selected client from the database
+     * Deletes a selected client from the database
      */
     private void deleteClient() {
         try {
@@ -482,7 +495,7 @@ public class Database {
     }
 
     /**
-     * Method saving new data of an edited user to the database
+     * Saves new data of an edited user to the database
      */
     public void editData() {
         try {
@@ -509,7 +522,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving the administrator's first name from the database
+     * Retrieves the administrator's first name from the database
      */
     private void findAdminName() {
         try {
@@ -527,7 +540,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving information displayed in the administrator's dashboard from the database
+     * Retrieves information displayed in the administrator's dashboard from the database
      */
     public void updateDashboard() {
         try {
@@ -564,7 +577,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving all clients from the database
+     * Retrieves all clients from the database
      */
     public void updateClients() {
         try {
@@ -584,7 +597,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving all trips from the database
+     * Retrieves all trips from the database
      */
     public void updateTrips() {
         try {
@@ -604,7 +617,7 @@ public class Database {
     }
 
     /**
-     * Method adding a new client to the database
+     * Adds a new client to the database
      */
     public void addClient() {
         try {
@@ -641,7 +654,7 @@ public class Database {
     }
 
     /**
-     * Method filling the list containing data returned to the server
+     * Fills the list containing data returned to the server
      * @param startPageMessage message sent to the StartPage class
      * @param isExisting information whether the user already exists in the database
      */
@@ -657,7 +670,7 @@ public class Database {
     }
 
     /**
-     * Method allowing a single user to log in
+     * Allows a single user to log in
      */
     public void login() {
         try {
@@ -716,7 +729,7 @@ public class Database {
     }
 
     /**
-     * Method retrieving information displayed in the "My Account" window from the database
+     * Retrieves information displayed in the "My Account" window from the database
      */
     public void updateMyAccount() {
         findClientData();
@@ -758,7 +771,7 @@ public class Database {
     }
 
     /**
-     * Method allowing a single user to log out
+     * Allows a single user to log out
      */
     public void logOut() {
         try {
@@ -786,7 +799,7 @@ public class Database {
     }
 
     /**
-     * Method allowing all users to log out
+     * Allows all users to log out
      */
     public void logOutEveryone() {
         try {

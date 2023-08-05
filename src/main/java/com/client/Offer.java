@@ -9,65 +9,79 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 /**
- * Class containing fields and methods for handling the offer window functionality
+ * A class containing fields and methods for handling the offer window functionality
  */
 public class Offer extends javax.swing.JFrame {
+    
     /**
-     * The dimension for the hotel photo, representing its width and height in pixels.
+     * A dimension for the hotel photo, representing its width and height in pixels.
      */
     private static final Dimension HOTEL_PHOTO_DIMENSION = new Dimension(550, 225);
 
     /**
-     * The dimension for this window, representing its width and height in pixels.
+     * A dimension for this window, representing its width and height in pixels.
      */
     private static final Dimension WINDOW_DIMENSION = new Dimension(1067, 388);
+    
     /**
-     * Attribute representing the number of people
+     * An attribute representing the number of people
      */
     private int peopleQuantity;
+    
     /**
-     * Attribute representing the client identifier
+     * An attribute representing the client identifier
      */
     int userID;
+    
     /**
-     * Attribute representing the selected insurance
+     * An attribute representing the selected insurance
      */
     private String insurance;
+    
     /**
-     * Attribute representing the list of offer data
+     * An attribute representing the list of offer data
      */
     private final java.util.List<String> offerData = new ArrayList<>();
+    
     /**
-     * Attribute representing the list of data sent to the Client class
+     * An attribute representing the list of data sent to the Client class
      */
     private final java.util.List<String> data = new ArrayList<>();
+    
     /**
-     * Attribute representing the quantity of data in the offer data list
+     * An attribute representing the quantity of data in the offer data list
      */
     private int attributeQuantity;
+    
     /**
-     * Attribute representing the quantity of adults
+     * An attribute representing the quantity of adults
      */
     private int adultsQuantity;
+    
     /**
-     * Attribute representing the quantity of children
+     * An attribute representing the quantity of children
      */
     private int childrenQuantity;
+    
     /**
-     * Attribute representing the trip ID
+     * An attribute representing the trip ID
      */
     private int idTrip;
+    
     /**
-     * Attribute representing the selected row number in the trip table in the SearchEngine class
+     * An attribute representing the selected row number in the trip table in the SearchEngine class
      */
     private int selectedRow;
+    
     /**
-     * Attribute representing the Client class object
+     * An attribute representing the Client class object
      */
     private Client client;
+    
     /**
-     * Constructor responsible for initializing GUI and relevant elements
+     * A constructor responsible for initializing GUI and relevant elements
      * @param client Parameter holding an object of the Client class
      * @param offerData Parameter representing a list containing offer data
      * @param attributeQuantity Parameter representing the quantity of data in the offer data list
@@ -87,12 +101,14 @@ public class Offer extends javax.swing.JFrame {
         initComponents();
         fillLabels();
     }
+    
     /**
-     * Helper constructor responsible for initializing GUI
+     * A helper constructor responsible for initializing GUI
      */
     public Offer(){initComponents();}
+    
     /**
-     * Method filling the appropriate labels with offer data
+     * Fills the appropriate labels with offer data
      */
     private void fillLabels() {
         int counter = 0;
@@ -130,8 +146,9 @@ public class Offer extends javax.swing.JFrame {
                 counter+= attributeQuantity;
         }
     }
+
     /**
-     * Method initializing graphical components used in the window
+     * Initializes graphical components used in the window
      */
     private void initComponents() {
         setWindowProperties();
@@ -380,15 +397,17 @@ public class Offer extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method handling the "Reserve" button click
+     * Handles the "Reserve" button click
      * @param evt The received event when the button is clicked
      */
     private void reservationButtonActionPerformed(java.awt.event.ActionEvent evt) {
         new Payment(client, idTrip, insurance, peopleQuantity).setVisible(true);
     }
+
     /**
-     * Method handling the first insurance checkbox selection
+     * Handles the first insurance checkbox selection
      * @param evt The received event when the checkbox is clicked
      */
     private void insurance1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,8 +422,9 @@ public class Offer extends javax.swing.JFrame {
                 insurance3Label.setSelected(false);
         }
     }
+
     /**
-     * Method handling the second insurance checkbox selection
+     * Handles the second insurance checkbox selection
      * @param evt The received event when the checkbox is clicked
      */
     private void insurance2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -419,8 +439,9 @@ public class Offer extends javax.swing.JFrame {
                 insurance3Label.setSelected(false);
         }
     }
+
     /**
-     * Method handling the third insurance checkbox selection
+     * Handles the third insurance checkbox selection
      * @param evt The received event when the checkbox is clicked
      */
     private void insurance3ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,16 +456,18 @@ public class Offer extends javax.swing.JFrame {
                 insurance2Label.setSelected(false);
         }
     }
+
     /**
-     * Method handling the "Cancel" button click
+     * Handles the "Cancel" button click
      * @param evt The received event when the button is clicked
      */
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new SearchEngine(client).setVisible(true);
     }
+
     /**
-     * Method allowing the window to run
+     * Allows the window to run
      * @param args Arguments received when running the application
      */
     public static void main(String[] args) {
@@ -461,55 +484,67 @@ public class Offer extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(() -> new Offer().setVisible(true));
     }
-    // GUI variables
+
     /**
-     * Label displaying the trip length
+     * A label displaying the trip length
      */
     private final javax.swing.JLabel tripLengthData = new JLabel();
+
     /**
-     * Label displaying the number of people
+     * A label displaying the number of people
      */
     private final javax.swing.JLabel peopleNumberData = new JLabel();
+
     /**
-     * Label displaying the city and country of the trip
+     * A label displaying the city and country of the trip
      */
     private final javax.swing.JLabel cityCountryLabel = new JLabel();
+
     /**
-     * Label displaying the hotel description
+     * A label displaying the hotel description
      */
     private final javax.swing.JLabel descriptionSpaceLabel = new JLabel();
+
     /**
-     * Label displaying the departure city
+     * A label displaying the departure city
      */
     private final javax.swing.JLabel departureCityData = new JLabel();
+
     /**
-     * Label displaying the hotel name
+     * A label displaying the hotel name
      */
     private final javax.swing.JLabel hotelName = new JLabel();
+
     /**
-     * Label displaying the trip dates
+     * A label displaying the trip dates
      */
     private final javax.swing.JLabel dateData = new JLabel();
+
     /**
-     * Label displaying the trip price
+     * A label displaying the trip price
      */
     private final javax.swing.JLabel typePrice = new JLabel();
+
     /**
-     * Checkbox for the first insurance option
+     * A checkbox for the first insurance option
      */
     private final javax.swing.JCheckBox insurance1Label = new JCheckBox();
+
     /**
-     * Checkbox for the second insurance option
+     * A checkbox for the second insurance option
      */
     private final javax.swing.JCheckBox insurance2Label = new JCheckBox();
+
     /**
-     * Checkbox for the third insurance option
+     * A checkbox for the third insurance option
      */
     private final javax.swing.JCheckBox insurance3Label = new JCheckBox();
+
     /**
-     * Label with the hotel photo
+     * A label with the hotel photo
      */
     private final javax.swing.JLabel hotelPhotoLabel = new JLabel();
+
     /**
      * A main panel that contains the entire user interface of the travel agency application.
      */

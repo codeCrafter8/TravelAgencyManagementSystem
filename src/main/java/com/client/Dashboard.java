@@ -9,52 +9,83 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling an administrator panel window.
+ * A class containing fields and methods for handling an administrator panel window.
  */
 class Dashboard extends javax.swing.JFrame {
-    private static final Color LIGHT = new Color(209, 197, 178);
-    private static final Dimension NUMBER_PANEL_DIMENSION = new Dimension(215, 130);
-    private static final Dimension CAPTION_DIMENSION = new Dimension(61, 22);
-    private static final Dimension NUMBER_LABEL_DIMENSION = new Dimension(48, 57);
+
     /**
-     * Attribute holding the administrator's name.
+     * A constant representing the light color used in the application.
+     * The color is represented by RGB values (209, 197, 178).
+     */
+    private static final Color LIGHT = new Color(209, 197, 178);
+
+    /**
+     * A constant representing the dimension of a number panel used in the application.
+     * The dimension is represented by width: 215 and height: 130.
+     */
+    private static final Dimension NUMBER_PANEL_DIMENSION = new Dimension(215, 130);
+
+    /**
+     * A constant representing the dimension of a caption used in the application.
+     * The dimension is represented by width: 61 and height: 22.
+     */
+    private static final Dimension CAPTION_DIMENSION = new Dimension(61, 22);
+
+    /**
+     * A constant representing the dimension of a number label used in the application.
+     * The dimension is represented by width: 48 and height: 57.
+     */
+    private static final Dimension NUMBER_LABEL_DIMENSION = new Dimension(48, 57);
+
+    /**
+     * An attribute holding the administrator's name.
      */
     public String adminName;
+
     /**
-     * Attribute holding the number of clients.
+     * An attribute holding the number of clients.
      */
     public int clientsQuantity;
+
     /**
-     * Attribute holding the number of trips.
+     * An attribute holding the number of trips.
      */
     public int tripsQuantity;
+
     /**
-     * Attribute holding the number of reservations.
+     * An attribute holding the number of reservations.
      */
     public int reservationsQuantity;
+
     /**
-     * Attribute holding the number of income.
+     * An attribute holding the number of income.
      */
     public int incomeQuantity;
+
     /**
-     * Attribute representing a list holding phone numbers of clients for contact.
+     * An attribute representing a list holding phone numbers of clients for contact.
      */
     List<String> phoneNumbers = new ArrayList<>();
+
     /**
-     * Attribute representing a list holding data passed to the Client class.
+     * An attribute representing a list holding data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private Client client;
+
     /**
-     * Attribute holding the user's email.
+     * An attribute holding the user's email.
      */
     public String email;
+
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param client The parameter holding an object of the Client class.
      * @param adminName The parameter holding the administrator's name.
      */
@@ -65,12 +96,14 @@ class Dashboard extends javax.swing.JFrame {
         initComponents();
         generateData();
     }
+
     /**
-     * Auxiliary constructor responsible for initializing the GUI.
+     * An auxiliary constructor responsible for initializing the GUI.
      */
     public Dashboard(){initComponents();}
+
     /**
-     * Method to initialize graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -548,24 +581,27 @@ class Dashboard extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method handling the "Trips" button click.
+     * Handles the "Trips" button click.
      * @param evt The event received when the button is clicked.
      */
     private void tripsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new Trips(client, adminName).setVisible(true);
     }
+
     /**
-     * Method handling the "Reservations" button click.
+     * Handles the "Reservations" button click.
      * @param evt The event received when the button is clicked.
      */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
         dispose();
         new Reservations(client, adminName).setVisible(true);
     }
+    
     /**
-     * Method fetching relevant data from the Client class.
+     * Fetches relevant data from the Client class.
      */
     public void generateData() {
         data.clear();
@@ -601,8 +637,9 @@ class Dashboard extends javax.swing.JFrame {
             model.addElement(number);
         phoneNumbersList.setModel(model);
     }
+    
     /**
-     * Method handling the "Log Out" button click.
+     * Handles the "Log Out" button click.
      * @param evt The event received when the button is clicked.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -614,16 +651,18 @@ class Dashboard extends javax.swing.JFrame {
         dispose();
         new StartPage().setVisible(true);
     }
+    
     /**
-     * Method handling the "Clients" button click.
+     * Handles the "Clients" button click.
      * @param evt The event received when the button is clicked.
      */
     private void clientsButtonActionPerformed(java.awt.event.ActionEvent evt) {
         dispose();
         new Clients(client, adminName).setVisible(true);
     }
+    
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments received when launching the application.
      */
     public static void main(String[] args) {
@@ -642,49 +681,60 @@ class Dashboard extends javax.swing.JFrame {
     }
 
     /**
-     * Label displaying the administrator's name.
+     * A label displaying the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
+    
     /**
-     * Button for navigating to the "Clients" tab.
+     * A button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
+    
     /**
-     * Label displaying the number of clients.
+     * A label displaying the number of clients.
      */
     private final javax.swing.JLabel clientsNumberLabel = new JLabel();
+    
     /**
-     * List holding phone numbers of clients for contact.
+     * A list holding phone numbers of clients for contact.
      */
     private final javax.swing.JList<String> phoneNumbersList = new JList<>();
+    
     /**
-     * Label displaying the income number.
+     * A label displaying the income number.
      */
     private final javax.swing.JLabel incomeNumberLabel = new JLabel();
+    
     /**
-     * Button for logging out.
+     * A button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
+    
     /**
-     * Button for navigating to the "Panel" tab.
+     * A button for navigating to the "Panel" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
+    
     /**
-     * Button for navigating to the "Reservations" tab.
+     * A button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
+    
     /**
-     * Label displaying the number of reservations.
+     * A label displaying the number of reservations.
      */
     private final javax.swing.JLabel reservationsNumberLabel = new JLabel();
+    
     /**
-     * Button for navigating to the "Trips" tab.
+     * A button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
+    
     /**
-     * Label displaying the number of trips.
+     * A label displaying the number of trips.
      */
     private final javax.swing.JLabel tripsNumberLabel = new JLabel();
+    
     /**
      * A menu panel that contains the admin panel and options panel.
      * It is used as a container for the admin and options panels.
@@ -692,7 +742,7 @@ class Dashboard extends javax.swing.JFrame {
     private final JPanel menuPanel = new JPanel();
 
     /**
-     * A admin panel that displays the admin's name and icon.
+     * An admin panel that displays the admin name and icon.
      * It is used to show information about the logged-in admin.
      */
     private final JPanel adminPanel = new JPanel();

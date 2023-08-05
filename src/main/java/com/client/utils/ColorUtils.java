@@ -10,7 +10,7 @@ import java.awt.*;
 public final class ColorUtils {
 
     /**
-     * Private constructor to prevent instantiation of the utility class.
+     * A private constructor to prevent instantiation of the utility class.
      */
     private ColorUtils() {}
 

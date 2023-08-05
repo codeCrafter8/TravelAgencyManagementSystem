@@ -11,38 +11,46 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling GUI construction and server technical aspects.
+ * A class containing fields and methods for handling GUI construction and server technical aspects.
  */
 public class ServerGUI extends javax.swing.JFrame {
+    
     /**
-     * Attribute representing a list of all server threads.
+     * An attribute representing a list of all server threads.
      */
     private final List<Thread> threads = new ArrayList<>();
+    
     /**
-     * Attribute specifying the number of connected users.
+     * An attribute specifying the number of connected users.
      */
     public int connectedUsersNumber;
+   
     /**
-     * Attribute indicating whether the server is running.
+     * An attribute indicating whether the server is running.
      */
     private boolean running = true;
+   
     /**
-     * Attribute representing the socket to which the client is connected.
+     * An attribute representing the socket to which the client is connected.
      */
     public Socket socket;
+   
     /**
-     * Attribute representing the server socket.
+     * An attribute representing the server socket.
      */
     public ServerSocket serverSocket;
+   
     /**
-     * Constructor responsible for initializing the server application GUI.
+     * A constructor responsible for initializing the server application GUI.
      */
     public ServerGUI() {
         initComponents();
     }
+   
     /**
-     * Method for saving the number of connected users to a file.
+     * Saves the number of connected users to a file.
      */
     public void saveConnectedUsersNumber(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("connectedUsersNumber.dat"))) {
@@ -51,15 +59,17 @@ public class ServerGUI extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
+  
     /**
-     * Method for setting the variable that determines whether the server is running.
+     * Sets the variable that determines whether the server is running.
      * @param running specifies whether the server is running
      */
     public void setRunning(boolean running){
         this.running = running;
     }
+   
     /**
-     * Method for initializing the graphical components of the server application.
+     * Initializes the graphical components of the server application.
      */
     private void initComponents() {
         setWindowProperties();
@@ -71,6 +81,12 @@ public class ServerGUI extends javax.swing.JFrame {
         createConnectedUsersPanel();
         createLayout();
     }
+
+    /**
+     * Sets the properties for the main application window.
+     * Configures the close operation, title, preferred size, and background color.
+     * Also handles the window closing event to clean up resources and terminate the application gracefully.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aplikacja Serwera");
@@ -95,6 +111,11 @@ public class ServerGUI extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Creates the menu panel for the main application window.
+     * This panel contains the server information and additional options for the application.
+     */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
@@ -113,6 +134,11 @@ public class ServerGUI extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the server panel that displays server information.
+     * This panel includes a server icon and a label describing the server.
+     */
     private void createServerPanel(){
         serverPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
@@ -135,6 +161,11 @@ public class ServerGUI extends javax.swing.JFrame {
                                 .addContainerGap(31, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets the labels for various components in the application.
+     * Configures icons, fonts, and texts for server and connected users labels.
+     */
     private void setLabels(){
         serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
         serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
@@ -159,6 +190,11 @@ public class ServerGUI extends javax.swing.JFrame {
         connectedUsersLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         connectedUsersLabel.setText("Połączonych Użytkowników");
     }
+
+    /**
+     * Creates the options panel that contains additional application options.
+     * This panel includes buttons for managing the server and accessing various logs.
+     */
     private void createOptionsPanel(){
         optionsPanel.setBackground(ColorUtils.LIGHT_BROWN);
         optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -186,6 +222,11 @@ public class ServerGUI extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Configures the buttons used in the application.
+     * Sets fonts, texts, actions, and behavior for the buttons.
+     */
     private void setButtons(){
         manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
         manageServerButton.setText("   Zarządzaj pracą serwera");
@@ -274,6 +315,11 @@ public class ServerGUI extends javax.swing.JFrame {
         restartServerButton.setText("<html><center>Zrestartuj<br><center>Serwer</html>");
         stopServerButton.setText("<html><center>Zatrzymaj<br><center>Serwer</html>");
     }
+
+    /**
+     * Creates the panel that displays the number of connected users.
+     * This panel includes a label showing the number of connected users and a descriptive label.
+     */
     private void createConnectedUsersPanel(){
         connectedUsersPanel.setBackground(ColorUtils.NUDE);
         connectedUsersPanel.setPreferredSize(DimensionUtils.NUMBER_PANEL_DIMENSION);
@@ -294,6 +340,11 @@ public class ServerGUI extends javax.swing.JFrame {
                                 .addContainerGap(20, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the main layout for the application window.
+     * Configures the layout and arrangement of various components in the window.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -334,8 +385,9 @@ public class ServerGUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    
     /**
-     * Method handling the situation when the "Server Logs" button is pressed
+     * Handles the situation when the "Server Logs" button is pressed
      * @param evt Event buffer created during the button click
      */
     private void serverLogsButtonActionPerformed(ActionEvent evt) {
@@ -345,7 +397,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the situation when the "Admins Logs" button is pressed
+     * Handles the situation when the "Admins Logs" button is pressed
      * @param evt Event buffer created during the button click
      */
     private void adminsLogsButtonActionPerformed(ActionEvent evt) {
@@ -355,7 +407,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the situation when the "Clients Logs" button is pressed
+     * Handles the situation when the "Clients Logs" button is pressed
      * @param evt Event buffer created during the button click
      */
     private void clientsLogsButtonActionPerformed(ActionEvent evt) {
@@ -365,7 +417,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the situation when the "Restart Server" button is pressed
+     * Handles the situation when the "Restart Server" button is pressed
      * @param evt Event buffer created during the button click
      */
     private void restartServerButtonActionPerformed(ActionEvent evt) {
@@ -379,7 +431,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the situation when the "Stop Server" button is pressed
+     * Handles the situation when the "Stop Server" button is pressed
      * @param evt Event buffer created during the button click
      */
     private void stopServerButtonActionPerformed(ActionEvent evt) {
@@ -392,7 +444,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the situation when the "Start Server" button is pressed
+     * Handles the situation when the "Start Server" button is pressed
      * @param evt Event buffer created during the button click
      */
     private void startServerButtonActionPerformed(ActionEvent evt) {
@@ -405,7 +457,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method responsible for accepting new client connections to the server
+     * Accepts new client connections to the server
      */
     private void operate() {
         try {
@@ -423,7 +475,7 @@ public class ServerGUI extends javax.swing.JFrame {
     }
 
     /**
-     * Method to launch the server application window
+     * Launches the server application window
      * @param args Arguments passed during the application launch
      */
     public static void main(String[] args) {
@@ -450,7 +502,7 @@ public class ServerGUI extends javax.swing.JFrame {
     class GUIHandler extends SwingWorker<Void, Void> implements Serializable {
 
         /**
-         * Overridden method converting data to a string type
+         * An overridden method converting data to a string type
          */
         @Override
         public String toString() {
@@ -458,17 +510,17 @@ public class ServerGUI extends javax.swing.JFrame {
         }
 
         /**
-         * Class implementing the Runnable interface to create new threads on the server
+         * A class implementing the Runnable interface to create new threads on the server
          */
         private class ClientThread implements Runnable {
 
             /**
-             * Attribute holding a list containing data passed from the server to the database
+             * An attribute holding a list containing data passed from the server to the database
              */
             private final List<String> data = new ArrayList<>();
 
             /**
-             * Method sending data to the client
+             * Sends data to the client
              */
             private void sendData() {
                 try {
@@ -486,7 +538,7 @@ public class ServerGUI extends javax.swing.JFrame {
             }
 
             /**
-             * Overridden method run, handling the running thread
+             * An overridden method run, handling the running thread
              */
             @Override
             public void run() {
@@ -504,7 +556,7 @@ public class ServerGUI extends javax.swing.JFrame {
         }
 
         /**
-         * Overridden method doInBackground, allowing threads to work in the background without affecting the server GUI
+         * An overridden method doInBackground, allowing threads to work in the background without affecting the server GUI
          * @return No return value
          */
         @Override
@@ -517,52 +569,79 @@ public class ServerGUI extends javax.swing.JFrame {
         }
     }
 
-// GUI variables
     /**
-     * Button to navigate to the "Admins Logs" tab
+     * A button to navigate to the "Admins Logs" tab
      */
     private final javax.swing.JButton adminsLogsButton = new JButton();
 
     /**
-     * Button to navigate to the "Clients Logs" tab
+     * A button to navigate to the "Clients Logs" tab
      */
     private final javax.swing.JButton clientsLogsButton = new JButton();
 
     /**
-     * Button to navigate to the "Manage Server" tab
+     * A button to navigate to the "Manage Server" tab
      */
     private final javax.swing.JButton manageServerButton = new JButton();
 
     /**
-     * Button to restart the server
+     * A button to restart the server
      */
     private final javax.swing.JButton restartServerButton = new JButton();
 
     /**
-     * Button to navigate to the "Server Logs" tab
+     * A button to navigate to the "Server Logs" tab
      */
     private final javax.swing.JButton serverLogsButton = new JButton();
 
     /**
-     * Button to start the server
+     * A button to start the server
      */
     private final javax.swing.JButton startServerButton = new JButton();
 
     /**
-     * Button to stop the server
+     * A button to stop the server
      */
     private final javax.swing.JButton stopServerButton = new JButton();
 
     /**
-     * Label displaying the number of connected users
+     * A label displaying the number of connected users
      */
     private final javax.swing.JLabel connectedUsersNumberLabel = new JLabel();
 
+    /**
+     * A panel that contains the main menu options for the application.
+     */
     private final JPanel menuPanel = new JPanel();
+
+    /**
+     * A panel that displays server information.
+     */
     private final JPanel serverPanel = new JPanel();
+
+    /**
+     * A label that displays the server icon.
+     */
     private final JLabel serverIconLabel = new JLabel();
+
+    /**
+     * A label that displays the server name or description.
+     */
     private final JLabel serverLabel = new JLabel();
+
+    /**
+     * A panel that contains additional options for the application.
+     */
     private final JPanel optionsPanel = new JPanel();
+
+    /**
+     * A panel that displays connected users or clients.
+     */
     private final JPanel connectedUsersPanel = new JPanel();
+
+    /**
+     * A label that describes the displayed connected users.
+     */
     private final JLabel connectedUsersLabel = new JLabel();
+
 }

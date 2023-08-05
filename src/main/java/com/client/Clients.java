@@ -4,6 +4,7 @@ import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.ClientValidator;
 import com.server.LogsAdmins;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -15,38 +16,46 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Class containing fields and methods for handling a window with client-related operations.
+ * A class containing fields and methods for handling a window with client-related operations.
  */
 public class Clients extends javax.swing.JFrame {
+
     /**
-     * Attribute representing a list holding data passed to the Client class.
+     * An attribute representing a list holding data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute representing a list holding data returned from the Client class.
+     * An attribute representing a list holding data returned from the Client class.
      */
     List<String> clientsData = new ArrayList<>();
+
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private Client client;
+
     /**
-     * Attribute holding the user's email.
+     * An attribute holding the user's email.
      */
     private String email;
+
     /**
-     * Attribute holding the administrator's name.
+     * An attribute holding the administrator's name.
      */
     private String adminName;
+
     /**
-     * Constructor responsible for initializing the GUI.
+     * A constructor responsible for initializing the GUI.
      */
     public Clients() {
         initComponents();
     }
+
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param client The parameter holding an object of the Client class.
      * @param adminName The parameter holding the administrator's name.
      */
@@ -59,8 +68,9 @@ public class Clients extends javax.swing.JFrame {
         populateTable();
         searchClients();
     }
+    
     /**
-     * Method to initialize graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -432,8 +442,9 @@ public class Clients extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    
     /**
-     * Method handling the "Trips" button click.
+     * Handles the "Trips" button click.
      * @param evt The event received when the button is clicked.
      */
     private void tripsButtonActionPerformed(ActionEvent evt) {
@@ -443,7 +454,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Reservations" button click.
+     * Handles the "Reservations" button click.
      * @param evt The event received when the button is clicked.
      */
     private void reservationsButtonActionPerformed(ActionEvent evt) {
@@ -453,7 +464,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Log Out" button click.
+     * Handles the "Log Out" button click.
      * @param evt The event received when the button is clicked.
      */
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -467,7 +478,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Dashboard" button click.
+     * Handles the "Dashboard" button click.
      * @param evt The event received when the button is clicked.
      */
     private void panelButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -477,7 +488,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Edit Client Password" button click.
+     * Handles the "Edit Client Password" button click.
      * @param evt The event received when the button is clicked.
      */
     private void editPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -492,7 +503,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method to retrieve relevant data from the Client class.
+     * Retrieves relevant data from the Client class.
      */
     private void generateData() {
         data.clear();
@@ -502,7 +513,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method populating the table holding clients' data.
+     * Populates the table holding clients' data.
      */
     private void populateTable() {
         int counter = 0;
@@ -517,7 +528,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling email validation for searching clients.
+     * Handles email validation for searching clients
      */
     private void performEmailValidation() {
         String emailFromTextField = searchClientTextField.getText();
@@ -530,7 +541,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method enabling client search by email.
+     * Enables client search by email
      */
     private void searchClients() {
         clientsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -568,7 +579,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Delete Client" button click.
+     * Handles the "Delete Client" button click.
      * @param evt The event received when the button is clicked.
      */
     private void deleteClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -586,7 +597,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Add Client" button click.
+     * Handles the "Add Client" button click.
      * @param evt The event received when the button is clicked.
      */
     private void addClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -595,7 +606,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the "Edit Client" button click.
+     * Handles the "Edit Client" button click.
      * @param evt The event received when the button is clicked.
      */
     private void editClientButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -626,7 +637,7 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments received during application startup.
      */
     public static void main(String[] args) {
@@ -645,37 +656,45 @@ public class Clients extends javax.swing.JFrame {
     }
 
     /**
-     * Label displaying the administrator's name.
+     * A label displaying the administrator's name.
      */
     private final javax.swing.JLabel adminNameLabel = new JLabel();
+    
     /**
-     * Button for navigating to the "Clients" tab.
+     * A button for navigating to the "Clients" tab.
      */
     private final javax.swing.JButton clientsButton = new JButton();
+    
     /**
-     * Button for logging out.
+     * A button for logging out.
      */
     private final javax.swing.JButton logOutButton = new JButton();
+    
     /**
-     * Button for navigating to the "Dashboard" tab.
+     * A button for navigating to the "Dashboard" tab.
      */
     private final javax.swing.JButton panelButton = new JButton();
+    
     /**
-     * Button for navigating to the "Reservations" tab.
+     * A button for navigating to the "Reservations" tab.
      */
     private final javax.swing.JButton reservationsButton = new JButton();
+    
     /**
-     * Table holding data for all clients.
+     * A table holding data for all clients.
      */
     private final javax.swing.JTable clientsTable = new JTable();
+    
     /**
-     * Button for navigating to the "Trips" tab.
+     * A button for navigating to the "Trips" tab.
      */
     private final javax.swing.JButton tripsButton = new JButton();
+    
     /**
-     * Text field for entering a client's email for searching.
+     * A text field for entering a client's email for searching.
      */
     private final javax.swing.JTextField searchClientTextField = new JTextField();
+    
     /**
      * A label to display an error message if the provided email is invalid.
      */

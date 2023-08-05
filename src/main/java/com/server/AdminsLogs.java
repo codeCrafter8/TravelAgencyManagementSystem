@@ -6,17 +6,22 @@ import com.client.utils.DimensionUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+
 /**
- * Class containing fields and methods for handling GUI components related to administrator logs.
+ * A class containing fields and methods for handling GUI components related to administrator logs.
  */
 public class AdminsLogs extends javax.swing.JFrame {
+
     /**
-     * Constructor responsible for initializing the GUI.
+     * A constructor responsible for initializing the GUI.
      */
     public AdminsLogs() {
         initComponents();
     }
 
+    /**
+     * Sets the content of the adminsLogsList with the logs from the LogsAdmins class.
+     */
     private void setLogsList() {
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
         for (String log : LogsAdmins.logs) {
@@ -24,8 +29,9 @@ public class AdminsLogs extends javax.swing.JFrame {
         }
         adminsLogsList.setModel(defaultListModel);
     }
+
     /**
-     * Method for initializing graphical components used in the window.
+     * Initializes graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -37,12 +43,20 @@ public class AdminsLogs extends javax.swing.JFrame {
         setButtons();
         createLayout();
     }
+
+    /**
+     * Sets properties for the main window.
+     */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Logi administratorów");
         setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
     }
+
+    /**
+     * Creates the menu panel and sets its layout.
+     */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
@@ -61,6 +75,10 @@ public class AdminsLogs extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Creates the server panel and sets its layout.
+     */
     private void createServerPanel(){
         serverPanel.setBackground(ColorUtils.BROWN);
         javax.swing.GroupLayout serverPanelLayout = new javax.swing.GroupLayout(serverPanel);
@@ -83,6 +101,10 @@ public class AdminsLogs extends javax.swing.JFrame {
                                 .addContainerGap(31, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets properties for labels.
+     */
     private void setLabels(){
         serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
         serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
@@ -96,6 +118,10 @@ public class AdminsLogs extends javax.swing.JFrame {
         adminsLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
         adminsLogsLabel.setText("Logi Administratorów");
     }
+
+    /**
+     * Creates the options panel and sets its layout.
+     */
     private void createOptionsPanel(){
         optionsPanel.setBackground(ColorUtils.LIGHT_BROWN);
         optionsPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -123,6 +149,10 @@ public class AdminsLogs extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
+
+    /**
+     * Sets properties for buttons and defines their action listeners.
+     */
     private void setButtons(){
         manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         manageServerButton.setText("    Zarządzaj pracą serwera");
@@ -193,6 +223,10 @@ public class AdminsLogs extends javax.swing.JFrame {
         });
         serverLogsButton.addActionListener(this::serverLogsButtonActionPerformed);
     }
+
+    /**
+     * Creates the overall layout of the main window.
+     */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,8 +257,9 @@ public class AdminsLogs extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method handling the click event of the serverLogsButton.
+     * Handles the click event of the serverLogsButton.
      * @param evt The event triggered by clicking the button.
      */
     private void serverLogsButtonActionPerformed(ActionEvent evt) {
@@ -233,7 +268,7 @@ public class AdminsLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the manageServerButton.
+     * Handles the click event of the manageServerButton.
      * @param evt The event triggered by clicking the button.
      */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
@@ -242,7 +277,7 @@ public class AdminsLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Method handling the click event of the clientsLogsButton.
+     * Handles the click event of the clientsLogsButton.
      * @param evt The event triggered by clicking the button.
      */
     private void clientsLogsButtonActionPerformed(ActionEvent evt) {
@@ -251,7 +286,7 @@ public class AdminsLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Method allowing the window to be launched.
+     * Allows the window to be launched.
      * @param args Arguments accepted during application launch.
      */
     public static void main(String[] args) {

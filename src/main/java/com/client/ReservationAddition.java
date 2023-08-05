@@ -3,38 +3,46 @@ package com.client;
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.server.LogsAdmins;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 /**
- * Class containing fields and methods for handling the window that allows adding reservations.
+ * A class containing fields and methods for handling the window that allows adding reservations.
  */
 public class ReservationAddition extends javax.swing.JFrame {
+
     /**
-     * Attribute representing a list that stores data passed to the Client class.
+     * An attribute representing a list that stores data passed to the Client class.
      */
     private final List<String> data = new ArrayList<>();
+
     /**
-     * Attribute representing a list that stores trip data returned from the Client class.
+     * An attribute representing a list that stores trip data returned from the Client class.
      */
     private final List<String> tripsData = new ArrayList<>();
+
     /**
-     * Attribute representing a list that stores client data returned from the Client class.
+     * An attribute representing a list that stores client data returned from the Client class.
      */
     private final List<String> clientsData = new ArrayList<>();
+
     /**
-     * Attribute representing an object of the Client class.
+     * An attribute representing an object of the Client class.
      */
     private final Client client;
+
     /**
-     * Attribute representing the name of the administrator.
+     * An attribute representing the name of the administrator.
      */
     private final String adminName;
+
     /**
-     * Constructor responsible for initializing the GUI and relevant elements.
+     * A constructor responsible for initializing the GUI and relevant elements.
      * @param client Parameter storing an object of the Client class.
      * @param adminName Parameter storing the administrator's name.
      */
@@ -46,8 +54,9 @@ public class ReservationAddition extends javax.swing.JFrame {
         populateClientsTable();
         populateTripsTable();
     }
+
     /**
-     * Method for initializing the graphical components used in the window.
+     * Initializes the graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
@@ -241,8 +250,9 @@ public class ReservationAddition extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
     /**
-     * Method for fetching relevant data from the Client class.
+     * Fetches relevant data from the Client class.
      */
     private void generateData() {
         data.clear();
@@ -254,8 +264,9 @@ public class ReservationAddition extends javax.swing.JFrame {
         Client client2 = new Client(data);
         tripsData.addAll(client2.getReturningData());
     }
+    
     /**
-     * Method for populating the clients table.
+     * Populates the clients table.
      */
     private void populateClientsTable() {
         int counter = 0;
@@ -268,8 +279,9 @@ public class ReservationAddition extends javax.swing.JFrame {
                 counter += 5;
         }
     }
+    
     /**
-     * Method for populating the trips table.
+     * Populates the trips table.
      */
     private void populateTripsTable() {
         int counter = 0;
@@ -283,8 +295,9 @@ public class ReservationAddition extends javax.swing.JFrame {
                 counter += 10;
         }
     }
+    
     /**
-     * Method handling the "Add Reservation" button click.
+     * Handles the "Add Reservation" button click.
      */
     private void submitButtonActionPerformed() {
         DefaultTableModel clientsModel = (DefaultTableModel) clientsTable.getModel();
@@ -310,15 +323,17 @@ public class ReservationAddition extends javax.swing.JFrame {
             new Reservations(client, adminName).setVisible(true);
         }
     }
+    
     /**
-     * Method handling the "Cancel Reservation" button click.
+     * Handles the "Cancel Reservation" button click.
      */
     private void cancelButtonActionPerformed() {
         dispose();
         new Reservations(client, adminName).setVisible(true);
     }
+    
     /**
-     * Method allowing for the window to be launched.
+     * Allows for the window to be launched.
      * @param args Arguments passed when starting the application
      */
     public static void main(String[] args) {
@@ -340,18 +355,22 @@ public class ReservationAddition extends javax.swing.JFrame {
      * A table with clients
      */
     private final javax.swing.JTable clientsTable = new JTable();
+    
     /**
      * A dropdown menu with insurance options
      */
     private final javax.swing.JComboBox<String> insuranceComboBox = new JComboBox<>();
+    
     /**
-     * An element allowing for the selection of the number of people
+     * A spinner allowing for the selection of the number of people
      */
     private final javax.swing.JSpinner peopleQuantitySpinner = new JSpinner();
+   
     /**
      * A table with trips
      */
     private final javax.swing.JTable tripsTable = new JTable();
+   
     /**
      * A scrollPane used to display the trips table. The table shows trip information such as
      * id, country/city, price per person, maximum number of people, and the date.
