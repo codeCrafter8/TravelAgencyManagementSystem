@@ -106,7 +106,7 @@ public class AdminsLogs extends javax.swing.JFrame {
      * Sets properties for labels.
      */
     private void setLabels(){
-        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
+        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\server.png"));
         serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
         serverIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);
         serverIconLabel.setPreferredSize(DimensionUtils.ICON_LABEL_DIMENSION);

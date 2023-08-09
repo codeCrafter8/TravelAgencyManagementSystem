@@ -709,7 +709,7 @@ public class Database {
                         }
                         returningData.add(startPageMessage);
                     } else {
-                        startPageMessage = "The user is already logged in.";
+                        startPageMessage = "Użytkownik jest już zalogowany.";
                         fillLoginReturningData(startPageMessage, true);
                         new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Failed attempt to log in to the account with email: " + data.get(1) + ".");
                     }

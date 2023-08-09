@@ -304,7 +304,7 @@ public class Clients extends javax.swing.JFrame {
      * Sets properties for the labels such as icon, font, and text.
      */
     private void setLabels(){
-        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\admin.png"));
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

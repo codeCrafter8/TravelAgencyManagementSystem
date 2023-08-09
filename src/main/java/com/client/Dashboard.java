@@ -203,7 +203,7 @@ class Dashboard extends javax.swing.JFrame {
      * Sets the properties and text for various JLabel components.
      */
     private void setLabels(){
-        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\admin.png"));
         adminIconLabel.setText("jLabel1");
         adminIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
         adminIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);

@@ -173,7 +173,7 @@ public class MyAccount extends javax.swing.JFrame {
         infoConfirmLabel.setForeground(Color.RED);
         infoConfirmLabel.setText("   ");
 
-        userIconLabel.setIcon(new javax.swing.ImageIcon("img\\345564670_3623767247845558_3120332870085421246_n.png"));
+        userIconLabel.setIcon(new javax.swing.ImageIcon("img\\user.png"));
 
         nameLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
         nameLabel.setText("Imię:");
@@ -398,12 +398,12 @@ public class MyAccount extends javax.swing.JFrame {
             }
             assert date1 != null;
             if (SearchEngine.getDifferenceDays(now, date1) < 14) {
-                JOptionPane.showMessageDialog(this, "You cannot cancel this reservation as it's less than 14 days before the trip.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Nie można anulować rezerwacji, do której zostało mniej niż 14 dni.", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
                 Object[] options = {"Yes", "No"};
-                if (JOptionPane.showOptionDialog(null, "Are you sure you want to cancel this reservation?", "Confirmation",
+                if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz anulować rezerwację?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Reservation successfully canceled. The money will be refunded to the credit card used for payment within 14 business days.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Pomyślnie anulowano rezerwację. Pieniądze zostaną zwrócone na konto, z którego dokonano rezerwacji w przeciągu 14 dni roboczych.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
                     data.clear();
                     data.add("deleteRes");
                     data.add(resTable.getValueAt(resTable.getSelectedRow(), 0).toString());
@@ -422,9 +422,9 @@ public class MyAccount extends javax.swing.JFrame {
      */
     private void managingActionPerformed(ActionEvent evt) {
         switch (String.valueOf(managingComboBox.getSelectedItem())) {
-            case "Logout" -> {
+            case "Wyloguj" -> {
                 Object[] options = {"Yes", "No"};
-                if (JOptionPane.showOptionDialog(null, "Are you sure you want to log out?", "Confirmation",
+                if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz się wylogować?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     dispose();
                     resData.clear();
@@ -436,7 +436,7 @@ public class MyAccount extends javax.swing.JFrame {
                     new StartPage().setVisible(true);
                 }
             }
-            case "Home Page" -> {
+            case "Strona Główna" -> {
                 dispose();
                 resData.clear();
                 new SearchEngine(client).setVisible(true);

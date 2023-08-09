@@ -134,7 +134,7 @@ public class Offer extends javax.swing.JFrame {
                 insurance = "";
                 peopleNumberData.setText(peopleQuantity + " (" +
                         adultsQuantity + " adults, " + childrenQuantity + " children)");
-                hotelPhotoLabel.setIcon(new javax.swing.ImageIcon("img\\photo" + (selectedRow + 1) + ".jpg"));
+                hotelPhotoLabel.setIcon(new javax.swing.ImageIcon("img\\hotel" + (selectedRow + 1) + ".jpg"));
                 descriptionSpaceLabel.setText("<html>" + offerData.get(counter+8) + "<html>");
                 hotelName.setText(offerData.get(counter+9));
                 if(adultsQuantity == 0 && childrenQuantity == 0)

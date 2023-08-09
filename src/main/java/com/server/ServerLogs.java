@@ -142,7 +142,7 @@ public class ServerLogs extends javax.swing.JFrame {
      * server label, and server logs label.
      */
     private void setLabels(){
-        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\serverICON.png"));
+        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\server.png"));
         serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
         serverIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);
         serverIconLabel.setPreferredSize(DimensionUtils.ICON_LABEL_DIMENSION);

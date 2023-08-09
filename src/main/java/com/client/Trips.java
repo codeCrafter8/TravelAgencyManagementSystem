@@ -143,7 +143,7 @@ public class Trips extends javax.swing.JFrame {
      * Sets the text and properties for various labels in the user interface.
      */
     private void setLabels(){
-        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\admin.png"));
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

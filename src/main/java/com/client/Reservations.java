@@ -178,7 +178,7 @@ public class Reservations extends javax.swing.JFrame {
      * admin name label, admin label, search reservation label, and wrong reservation label.
      */
     private void setLabels(){
-        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\adminLOGO.png"));
+        adminIconLabel.setIcon(new javax.swing.ImageIcon("img\\admin.png"));
 
         adminNameLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18));
         adminNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

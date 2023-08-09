@@ -235,9 +235,9 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private void managingActionPerformed(ActionEvent evt) {
         switch (String.valueOf(managingComboBox.getSelectedItem())) {
-            case "Logout" -> {
+            case "Wyloguj" -> {
                 Object[] options = {"Yes", "No"};
-                if (JOptionPane.showOptionDialog(null, "Are you sure you want to log out?", "Confirmation",
+                if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz się wylogować?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     dispose();
                     data.clear();
@@ -248,7 +248,7 @@ public class SearchEngine extends javax.swing.JFrame {
                     new StartPage().setVisible(true);
                 }
             }
-            case "My Account" -> {
+            case "Moje Konto" -> {
                 dispose();
                 new MyAccount(client).setVisible(true);
             }
@@ -340,7 +340,7 @@ public class SearchEngine extends javax.swing.JFrame {
         bulgariaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bulgariaButton.addActionListener(this::bulgariaButtonActionPerformed);
 
-        searchButton.setIcon(new javax.swing.ImageIcon("img\\search-icon-png-0.png"));
+        searchButton.setIcon(new javax.swing.ImageIcon("img\\search-icon.png"));
         searchButton.setContentAreaFilled(false);
         searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         searchButton.addActionListener(this::searchButtonActionPerformed);
@@ -734,7 +734,7 @@ public class SearchEngine extends javax.swing.JFrame {
      */
     private void createFooter(){
         footer.setBackground(ColorUtils.LIGHT_BROWN);
-        headphonesIconLabel.setIcon(new javax.swing.ImageIcon("img\\slucahwki.png"));
+        headphonesIconLabel.setIcon(new javax.swing.ImageIcon("img\\headphones.png"));
 
         javax.swing.GroupLayout footerLayout = new javax.swing.GroupLayout(footer);
         footer.setLayout(footerLayout);
