@@ -2,6 +2,8 @@ package com.server;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.server.logging.LogsAdmins;
+import com.server.logging.LogsServer;
 
 import javax.swing.*;
 import java.awt.*;

@@ -4,7 +4,7 @@ import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.DateValidator;
 import com.client.validation.ClientValidator;
-import com.server.LogsClients;
+import com.server.logging.LogsClients;
 
 import java.awt.*;
 import javax.swing.*;
@@ -236,7 +236,7 @@ public class SearchEngine extends javax.swing.JFrame {
     private void managingActionPerformed(ActionEvent evt) {
         switch (String.valueOf(managingComboBox.getSelectedItem())) {
             case "Wyloguj" -> {
-                Object[] options = {"Yes", "No"};
+                Object[] options = {"Tak", "Nie"};
                 if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz się wylogować?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     dispose();
@@ -359,7 +359,7 @@ public class SearchEngine extends javax.swing.JFrame {
         agencyNameLabel.setBackground(ColorUtils.LIGHT_BROWN);
         agencyNameLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
         agencyNameLabel.setForeground(ColorUtils.LIGHT_BROWN);
-        agencyNameLabel.setText("Travel Agency");
+        agencyNameLabel.setText("Travel Sphere");
 
         tripDirectionLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
         tripDirectionLabel.setForeground(Color.white);

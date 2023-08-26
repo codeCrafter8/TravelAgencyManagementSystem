@@ -1,4 +1,4 @@
-package com.server;
+package com.server.logging;
 
 import org.apache.logging.log4j.*;
 

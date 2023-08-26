@@ -2,7 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
-import com.server.LogsClients;
+import com.server.logging.LogsClients;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -400,7 +400,7 @@ public class MyAccount extends javax.swing.JFrame {
             if (SearchEngine.getDifferenceDays(now, date1) < 14) {
                 JOptionPane.showMessageDialog(this, "Nie można anulować rezerwacji, do której zostało mniej niż 14 dni.", "Błąd", JOptionPane.ERROR_MESSAGE);
             } else {
-                Object[] options = {"Yes", "No"};
+                Object[] options = {"Tak", "Nie"};
                 if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz anulować rezerwację?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Pomyślnie anulowano rezerwację. Pieniądze zostaną zwrócone na konto, z którego dokonano rezerwacji w przeciągu 14 dni roboczych.", "Informacja", JOptionPane.INFORMATION_MESSAGE);
@@ -423,7 +423,7 @@ public class MyAccount extends javax.swing.JFrame {
     private void managingActionPerformed(ActionEvent evt) {
         switch (String.valueOf(managingComboBox.getSelectedItem())) {
             case "Wyloguj" -> {
-                Object[] options = {"Yes", "No"};
+                Object[] options = {"Tak", "Nie"};
                 if (JOptionPane.showOptionDialog(null, "Czy na pewno chcesz się wylogować?", "Potwierdzenie",
                         JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null) == JOptionPane.YES_OPTION) {
                     dispose();

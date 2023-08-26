@@ -216,7 +216,7 @@ public class StartPage extends javax.swing.JFrame {
     /**
      * Sets properties and styles for various JLabels in the loginPanel.
      * It sets the text, font, and preferred size for labels related to email, password, and error messages.
-     * Additionally, it creates and adds JLabels for "Travel" and "Agency" to the layout.
+     * Additionally, it creates and adds JLabels for "Travel" and "Sphere" to the layout.
      */
     private void setLabels(){
         emailLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
@@ -235,7 +235,7 @@ public class StartPage extends javax.swing.JFrame {
         travelLabel.setFont(new Font("Monotype Corsiva", Font.ITALIC, 65));
         travelLabel.setBounds(182, 50, 250, 65);
         add(travelLabel);
-        JLabel agencyLabel = new JLabel("Agency");
+        JLabel agencyLabel = new JLabel("Sphere");
         agencyLabel.setFont(new Font("Monotype Corsiva", Font.ITALIC, 65));
         agencyLabel.setBounds(247, 85, 250, 100);
         add(agencyLabel);

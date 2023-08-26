@@ -1,7 +1,7 @@
 package com.client;
 
 import com.client.utils.ColorUtils;
-import com.server.LogsClients;
+import com.server.logging.LogsClients;
 
 import javax.swing.*;
 import java.awt.*;
@@ -252,7 +252,7 @@ public class Offer extends javax.swing.JFrame {
         travelAgencyLabel.setBackground(ColorUtils.LIGHT_BROWN);
         travelAgencyLabel.setFont(new java.awt.Font("Segoe Print", Font.BOLD, 24));
         travelAgencyLabel.setForeground(ColorUtils.LIGHT_BROWN);
-        travelAgencyLabel.setText("Travel Agency");
+        travelAgencyLabel.setText("Travel Sphere");
 
         hotelPhotoLabel.setPreferredSize(HOTEL_PHOTO_DIMENSION);
 
