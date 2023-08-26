@@ -654,3 +654,5 @@
 [INFO] ServerGUI: [ Sat Aug 26 16:09:50 CEST 2023 ] New thread named Thread-7 has been created.
 [INFO] ServerGUI: [ Sat Aug 26 16:09:53 CEST 2023 ] New thread named Thread-8 has been created.
 [INFO] database: [ Sat Aug 26 16:09:53 CEST 2023 ] Client with email: julia@interia.pl logged out.
+[INFO] database: [ Sat Aug 26 16:14:55 CEST 2023 ] Logged out everyone from the server.
+[INFO] database: [ Sat Aug 26 16:14:55 CEST 2023 ] Logged out everyone from the server.
