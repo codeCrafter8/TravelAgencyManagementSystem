@@ -1,6 +1,6 @@
 package database;
 
-import com.server.Database;
+import com.server.database.DatabaseHandler;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Klasa zawierająca pola i metody testujące klasę Database
  */
-public class DatabaseTest {
+public class DatabaseHandlerTest {
     /**
      * Lista z danymi przekazywanymi do bazy danych
      */
@@ -32,14 +32,14 @@ public class DatabaseTest {
         data.add("jacek@wp.pl");
         data.add("Jacek123");
         data.add("false");
-        new Database("addClient", data);
+        new DatabaseHandler("addClient", data);
         data.clear();
         data.add("");
         data.add("jacek@wp.pl");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        database.findClientData();
-        returningData = database.getReturningData();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        databaseHandler.findClientData();
+        returningData = databaseHandler.getReturningData();
         assertEquals(returningData.get(0), "Jacek");
         assertEquals(returningData.get(1), "Jas");
         assertEquals(returningData.get(2), "jacek@wp.pl");
@@ -47,7 +47,7 @@ public class DatabaseTest {
         data.clear();
         data.add("");
         data.add(returningData.get(4));
-        new Database("deleteClient", data);
+        new DatabaseHandler("deleteClient", data);
     }
     /**
      * Testuje edytowanie danych klienta
@@ -62,14 +62,14 @@ public class DatabaseTest {
         data.add("555666777");
         data.add("74");
         data.add("true");
-        new Database("dataEdition", data);
+        new DatabaseHandler("dataEdition", data);
         data.clear();
         data.add("");
         data.add("jakub@wp.pl");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        database.findClientData();
-        returningData = database.getReturningData();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        databaseHandler.findClientData();
+        returningData = databaseHandler.getReturningData();
         assertEquals(returningData.get(0), "Jakub");
         assertEquals(returningData.get(1), "Hajduk");
         assertEquals(returningData.get(2), "jakub@wp.pl");
@@ -82,7 +82,7 @@ public class DatabaseTest {
         data.add("123555678");
         data.add("74");
         data.add("true");
-        new Database("dataEdition", data);
+        new DatabaseHandler("dataEdition", data);
     }
     /**
      * Testuje dodawanie wycieczki
@@ -99,14 +99,14 @@ public class DatabaseTest {
         data.add("Gruzja Hotel");
         data.add("2023-09-10");
         data.add("2023-09-17");
-        new Database("addTrip", data);
+        new DatabaseHandler("addTrip", data);
         data.clear();
         data.add("");
         data.add("add");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        database.findTrip();
-        returningData = database.getReturningData();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        databaseHandler.findTrip();
+        returningData = databaseHandler.getReturningData();
         assertEquals(returningData.get(0), "Gruzja");
         assertEquals(returningData.get(1), "Tbilisi");
         assertEquals(returningData.get(2), "Warszawa");
@@ -118,7 +118,7 @@ public class DatabaseTest {
         data.clear();
         data.add("");
         data.add(returningData.get(8));
-        new Database("deleteTrip", data);
+        new DatabaseHandler("deleteTrip", data);
     }
     /**
      * Testuje edytowanie wycieczki
@@ -132,15 +132,15 @@ public class DatabaseTest {
         data.add("Holandia");
         data.add("1300");
         data.add("3");
-        new Database("editTrip", data);
+        new DatabaseHandler("editTrip", data);
         data.clear();
         data.add("");
         data.add("edit");
         data.add("19");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        database.findTrip();
-        returningData = database.getReturningData();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        databaseHandler.findTrip();
+        returningData = databaseHandler.getReturningData();
         assertEquals(returningData.get(0), "Holandia");
         assertEquals(returningData.get(1), "Amsterdam");
         assertEquals(returningData.get(3), "1300");
@@ -152,7 +152,7 @@ public class DatabaseTest {
         data.add("Dubaj");
         data.add("3600");
         data.add("4");
-        new Database("editTrip", data);
+        new DatabaseHandler("editTrip", data);
     }
     /**
      * Testuje dodawanie rezerwacji
@@ -165,13 +165,13 @@ public class DatabaseTest {
         data.add("1");
         data.add("2");
         data.add("Standard");
-        new Database("addReservation", data);
+        new DatabaseHandler("addReservation", data);
         data.clear();
         data.add("");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        database.findReservation();
-        returningData = database.getReturningData();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        databaseHandler.findReservation();
+        returningData = databaseHandler.getReturningData();
         assertEquals(returningData.get(1), "19");
         assertEquals(returningData.get(2), "1");
         assertEquals(returningData.get(3), "2");
@@ -179,7 +179,7 @@ public class DatabaseTest {
         data.clear();
         data.add("");
         data.add(returningData.get(0));
-        new Database("deleteRes", data);
+        new DatabaseHandler("deleteRes", data);
     }
     /**
      * Testuje logowanie się
@@ -190,15 +190,15 @@ public class DatabaseTest {
         data.add("");
         data.add("jan@wp.pl");
         data.add("Haslo123");
-        new Database("login", data);
+        new DatabaseHandler("login", data);
         data.clear();
         data.add("");
         data.add("jan@wp.pl");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        boolean userLogged = database.getUserLogged();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        boolean userLogged = databaseHandler.getUserLogged();
         assertTrue(userLogged);
-        new Database("logOut", data);
+        new DatabaseHandler("logOut", data);
     }
     /**
      * Testuje wylogowywanie się
@@ -208,13 +208,13 @@ public class DatabaseTest {
         data.clear();
         data.add("");
         data.add("jan@wp.pl");
-        new Database("logOut", data);
+        new DatabaseHandler("logOut", data);
         data.clear();
         data.add("");
         data.add("jan@wp.pl");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        boolean userLogged = database.getUserLogged();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        boolean userLogged = databaseHandler.getUserLogged();
         assertFalse(userLogged);
     }
     /**
@@ -224,20 +224,20 @@ public class DatabaseTest {
     public void testLogOutEveryone(){
         data.clear();
         data.add("");
-        new Database("logOutEveryone", data);
+        new DatabaseHandler("logOutEveryone", data);
         data.clear();
         data.add("");
         data.add("jan@wp.pl");
-        Database database = new Database("", data);
-        database.connectWithDatabase();
-        boolean userLogged = database.getUserLogged();
+        DatabaseHandler databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        boolean userLogged = databaseHandler.getUserLogged();
         assertFalse(userLogged);
         data.clear();
         data.add("");
         data.add("julia@interia.pl");
-        database = new Database("", data);
-        database.connectWithDatabase();
-        userLogged = database.getUserLogged();
+        databaseHandler = new DatabaseHandler("", data);
+        databaseHandler.connectWithDatabase();
+        userLogged = databaseHandler.getUserLogged();
         assertFalse(userLogged);
     }
 }

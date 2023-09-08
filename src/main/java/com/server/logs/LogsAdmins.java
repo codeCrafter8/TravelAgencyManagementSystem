@@ -1,6 +1,4 @@
-package com.server.logging;
-
-import com.server.logging.Logs;
+package com.server.logs;
 
 import java.util.ArrayList;
 import java.util.List;

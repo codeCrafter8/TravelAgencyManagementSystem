@@ -3,7 +3,7 @@ package com.client;
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.TripValidator;
-import com.server.logging.LogsAdmins;
+import com.server.logs.LogsAdmins;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -2,7 +2,8 @@ package com.server;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
-import com.server.logging.LogsServer;
+import com.server.database.DatabaseHandler;
+import com.server.logs.LogsServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,7 +98,7 @@ public class ServerGUI extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 try {
-                    new Database("logOutEveryone", new ArrayList<>()).connectWithDatabase();
+                    new DatabaseHandler("logOutEveryone", new ArrayList<>());
                     connectedUsersNumberLabel.setText("0");
                     saveConnectedUsersNumber();
                     running = false;
@@ -528,8 +529,8 @@ public class ServerGUI extends javax.swing.JFrame {
                     OutputStream outputStream = socket.getOutputStream();
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                    Database database = new Database(data.get(0), data);
-                    objectOutputStream.writeObject(database.getReturningData());
+                    DatabaseHandler databaseHandler = new DatabaseHandler(data.get(0), data);
+                    objectOutputStream.writeObject(databaseHandler.getReturningData());
                     byte[] byteArray = byteArrayOutputStream.toByteArray();
                     outputStream.write(byteArray);
                     outputStream.flush();

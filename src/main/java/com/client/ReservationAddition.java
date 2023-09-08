@@ -2,7 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
-import com.server.logging.LogsAdmins;
+import com.server.logs.LogsAdmins;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

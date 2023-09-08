@@ -2,7 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
-import com.server.logging.LogsClients;
+import com.server.logs.LogsClients;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

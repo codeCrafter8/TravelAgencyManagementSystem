@@ -3,7 +3,7 @@ package com.client;
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.ClientValidator;
-import com.server.logging.Logs;
+import com.server.logs.Logs;
 
 import javax.swing.*;
 import java.awt.*;

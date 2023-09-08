@@ -2,7 +2,7 @@ package com.client;
 
 import com.client.utils.ColorUtils;
 import com.client.validation.ClientValidator;
-import com.server.logging.LogsClients;
+import com.server.logs.LogsClients;
 
 import javax.swing.*;
 import java.awt.*;

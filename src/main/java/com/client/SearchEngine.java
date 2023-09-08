@@ -4,7 +4,7 @@ import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
 import com.client.validation.DateValidator;
 import com.client.validation.ClientValidator;
-import com.server.logging.LogsClients;
+import com.server.logs.LogsClients;
 
 import java.awt.*;
 import javax.swing.*;
