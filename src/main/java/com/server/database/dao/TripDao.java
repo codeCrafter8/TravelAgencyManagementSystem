@@ -1,5 +1,6 @@
 package com.server.database.dao;
 
+import com.server.database.DBContext;
 import com.server.logs.LogsAdmins;
 import com.server.logs.LogsServer;
 
@@ -8,10 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripDao {
+    /**
+     * An attribute allowing connection to the database
+     */
     Connection connection;
     List<String> data;
-    public TripDao(Connection connection, List<String> data){
-        this.connection = connection;
+    public TripDao(List<String> data){
+        try {
+            connection = new DBContext().getConnection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         this.data = data;
     }
     /**
@@ -36,10 +44,10 @@ public class TripDao {
             preparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator added a trip to: " + data.get(1) + ".");
+            new LogsAdmins("TripDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał wycieczkę o ID: " + data.get(1) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -55,10 +63,10 @@ public class TripDao {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator deleted a trip with ID: " + data.get(1) + ".");
+            new LogsAdmins("TripDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął wycieczkę o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -80,10 +88,10 @@ public class TripDao {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator edited trip data with ID: " + data.get(1) + ".");
+            new LogsAdmins("TripDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane wycieczki o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -122,7 +130,7 @@ public class TripDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -142,7 +150,7 @@ public class TripDao {
             result.close();
         }catch(Exception ex){
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -162,7 +170,7 @@ public class TripDao {
             result.close();
         }catch(Exception ex){
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -197,7 +205,7 @@ public class TripDao {
             }
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -219,7 +227,23 @@ public class TripDao {
             }
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public List<String> countAllTrips() {
+        List<String> list = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String howManyTripsQuery = "SELECT COUNT(*) as tripsCount FROM trips";
+            ResultSet resultHowManyTrips = statement.executeQuery(howManyTripsQuery);
+            if (resultHowManyTrips.next()) {
+                list.add(Integer.toString(resultHowManyTrips.getInt("tripsCount")));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("TripDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }

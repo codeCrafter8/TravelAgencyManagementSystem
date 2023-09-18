@@ -1,5 +1,6 @@
 package com.server.database.dao;
 
+import com.server.database.DBContext;
 import com.server.logs.LogsAdmins;
 import com.server.logs.LogsServer;
 
@@ -8,10 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDao {
+    /**
+     * An attribute allowing connection to the database
+     */
     Connection connection;
     List<String> data;
-    public ReservationDao(Connection connection, List<String> data){
-        this.connection = connection;
+    public ReservationDao(List<String> data){
+        try {
+            connection = new DBContext().getConnection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         this.data = data;
     }
     /**
@@ -130,6 +138,78 @@ public class ReservationDao {
                 index = arrival.indexOf("00:");
                 list.add(arrival.substring(0, index - 1));
                 list.add(result.getString("phonenumber"));
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+        return list;
+    }
+    public List<String> countAllReservations() {
+        List<String> list = new ArrayList<>();
+        try{
+            Statement statement = connection.createStatement();
+            String howManyReservationsQuery = "SELECT COUNT(*) as resCount FROM reservations";
+            ResultSet resultHowManyReservations = statement.executeQuery(howManyReservationsQuery);
+            if (resultHowManyReservations.next()) {
+                list.add(Integer.toString(resultHowManyReservations.getInt("resCount")));
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+        return list;
+    }
+    public List<String> countIncome() {
+        List<String> list = new ArrayList<>();
+        try{
+            Statement statement = connection.createStatement();
+            String howMuchIncomeQuery = "SELECT people_quantity, price_per_person FROM reservations " +
+                    "JOIN trips ON trips.id_trip = reservations.id_trip";
+            ResultSet resultHowMuchIncome = statement.executeQuery(howMuchIncomeQuery);
+            int incomeQuantity = 0;
+            while (resultHowMuchIncome.next()) {
+                int peopleQuantity = resultHowMuchIncome.getInt("people_quantity");
+                int price = resultHowMuchIncome.getInt("price_per_person");
+                incomeQuantity += peopleQuantity * price;
+            }
+            list.add(Integer.toString(incomeQuantity));
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public List<String> findUserReservations() {
+        List<String> list = new ArrayList<>();
+        try {
+            String query = "SELECT id_reservation, country, city, price_per_person, people_quantity, departure, arrival, insurance, departure_city, hotel_name, description FROM reservations " +
+                    "JOIN trips ON trips.id_trip = reservations.id_trip " +
+                    "JOIN users ON users.ID_user = reservations.ID_user " +
+                    "WHERE email = ?";
+            PreparedStatement preparedState = connection.prepareStatement(query);
+            preparedState.setString(1, data.get(1));
+            ResultSet result = preparedState.executeQuery();
+            while (result.next()) {
+                list.add(Integer.toString(result.getInt("id_reservation")));
+                list.add(result.getString("country"));
+                list.add(result.getString("city"));
+                list.add(Integer.toString(result.getInt("price_per_person")));
+                list.add(Integer.toString(result.getInt("people_quantity")));
+                String departure = result.getString("departure");
+                int index = departure.indexOf("00:");
+                list.add(departure.substring(0, index - 1));
+                String arrival = result.getString("arrival");
+                index = arrival.indexOf("00:");
+                list.add(arrival.substring(0, index - 1));
+                if (result.getString("insurance") != null)
+                    list.add(result.getString("insurance"));
+                else
+                    list.add("Brak");
+                list.add(result.getString("departure_city"));
+                list.add(result.getString("hotel_name"));
+                list.add(result.getString("description"));
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);

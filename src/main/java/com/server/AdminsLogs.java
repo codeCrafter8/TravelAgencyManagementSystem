@@ -275,7 +275,7 @@ public class AdminsLogs extends javax.swing.JFrame {
      */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
         dispose();
-        new ServerGUI().setVisible(true);
+        new Server().setVisible(true);
     }
 
     /**

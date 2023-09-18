@@ -1,14 +1,23 @@
 package com.server.database.dao;
 
+import com.server.database.DBContext;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NumberDao {
+    /**
+     * An attribute allowing connection to the database
+     */
     Connection connection;
     List<String> data;
-    public NumberDao(Connection connection, List<String> data){
-        this.connection = connection;
+    public NumberDao(List<String> data){
+        try {
+            connection = new DBContext().getConnection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         this.data = data;
     }
     /**

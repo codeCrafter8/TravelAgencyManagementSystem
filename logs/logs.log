@@ -670,3 +670,38 @@
 [INFO] ServerGUI: [ Fri Sep 08 19:21:41 CEST 2023 ] New thread named Thread-3 has been created.
 [INFO] ServerGUI: [ Fri Sep 08 19:21:42 CEST 2023 ] New thread named Thread-4 has been created.
 [INFO] database: [ Fri Sep 08 19:21:42 CEST 2023 ] Administrator with email: admin@wp.pl logged out.
+[INFO] ServerGUI: [ Mon Sep 11 10:36:27 CEST 2023 ] Server has been started.
+[INFO] database: [ Mon Sep 11 10:36:33 CEST 2023 ] Logged out everyone from the server.
+[INFO] ServerGUI: [ Mon Sep 18 14:00:38 CEST 2023 ] Server has been started.
+[INFO] ServerGUI: [ Mon Sep 18 14:01:04 CEST 2023 ] New thread named Thread-0 has been created.
+[ERROR] database: [ Mon Sep 18 14:01:05 CEST 2023 ] ORA-28001: hasło wygasło
+
+[ERROR] database: [ Mon Sep 18 14:01:05 CEST 2023 ] Cannot invoke "java.sql.Connection.createStatement()" because "this.connection" is null
+[INFO] ServerGUI: [ Mon Sep 18 14:03:58 CEST 2023 ] New thread named Thread-2 has been created.
+[ERROR] database: [ Mon Sep 18 14:03:58 CEST 2023 ] ORA-28001: hasło wygasło
+
+[ERROR] database: [ Mon Sep 18 14:03:58 CEST 2023 ] Cannot invoke "java.sql.Connection.createStatement()" because "this.connection" is null
+[INFO] ServerGUI: [ Mon Sep 18 14:04:12 CEST 2023 ] New thread named Thread-3 has been created.
+[ERROR] database: [ Mon Sep 18 14:04:12 CEST 2023 ] ORA-28001: hasło wygasło
+
+[ERROR] database: [ Mon Sep 18 14:04:12 CEST 2023 ] Cannot invoke "java.sql.Connection.createStatement()" because "this.connection" is null
+[INFO] ServerGUI: [ Mon Sep 18 14:05:49 CEST 2023 ] Server has been started.
+[INFO] ServerGUI: [ Mon Sep 18 14:05:57 CEST 2023 ] Server has been started.
+[INFO] ServerGUI: [ Mon Sep 18 14:06:01 CEST 2023 ] New thread named Thread-0 has been created.
+[ERROR] database: [ Mon Sep 18 14:06:01 CEST 2023 ] ORA-28001: hasło wygasło
+
+[ERROR] database: [ Mon Sep 18 14:06:02 CEST 2023 ] Cannot invoke "java.sql.Connection.createStatement()" because "this.connection" is null
+[INFO] ServerGUI: [ Mon Sep 18 14:09:04 CEST 2023 ] Server has been started.
+[INFO] ServerGUI: [ Mon Sep 18 14:09:17 CEST 2023 ] New thread named Thread-0 has been created.
+[INFO] UserDao: [ Mon Sep 18 14:09:17 CEST 2023 ] Administrator o emailu: admin@wp.pl zalogował się.
+[INFO] ServerGUI: [ Mon Sep 18 14:09:17 CEST 2023 ] New thread named Thread-2 has been created.
+[INFO] ServerGUI: [ Mon Sep 18 14:09:17 CEST 2023 ] New thread named Thread-3 has been created.
+[INFO] ServerGUI: [ Mon Sep 18 14:09:21 CEST 2023 ] New thread named Thread-4 has been created.
+[INFO] UserDao: [ Mon Sep 18 14:09:21 CEST 2023 ] Administrator o emailu: admin@wp.pl wylogował się.
+[INFO] ServerGUI: [ Mon Sep 18 14:26:25 CEST 2023 ] Server has been started.
+[INFO] ServerGUI: [ Mon Sep 18 14:26:42 CEST 2023 ] New thread named Thread-0 has been created.
+[INFO] UserDao: [ Mon Sep 18 14:26:44 CEST 2023 ] Administrator o emailu: admin@wp.pl zalogował się.
+[INFO] ServerGUI: [ Mon Sep 18 14:26:44 CEST 2023 ] New thread named Thread-2 has been created.
+[INFO] ServerGUI: [ Mon Sep 18 14:26:44 CEST 2023 ] New thread named Thread-3 has been created.
+[INFO] ServerGUI: [ Mon Sep 18 14:26:46 CEST 2023 ] New thread named Thread-4 has been created.
+[INFO] UserDao: [ Mon Sep 18 14:26:46 CEST 2023 ] Administrator o emailu: admin@wp.pl wylogował się.

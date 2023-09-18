@@ -1,5 +1,6 @@
 package com.server.database.dao;
 
+import com.server.database.DBContext;
 import com.server.logs.LogsAdmins;
 import com.server.logs.LogsClients;
 import com.server.logs.LogsServer;
@@ -9,16 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao {
+    /**
+     * An attribute allowing connection to the database
+     */
     Connection connection;
     List<String> data;
-    public UserDao(Connection connection, List<String> data){
-        this.connection = connection;
+    public UserDao(List<String> data) {
+        try {
+            connection = new DBContext().getConnection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         this.data = data;
     }
     /**
      * Retrieves user data from the database
      */
-    public List<String> findUser(){
+    public List<String> findUser() {
         List<String> list = new ArrayList<>();
         try{
             String adminQuery = "SELECT * FROM users WHERE email = ?";
@@ -34,7 +42,7 @@ public class UserDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -72,31 +80,31 @@ public class UserDao {
                             list.add("true");
                             list.add("false");
                             list.add(Integer.toString(resultPassword.getInt("ID_user")));
-                            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator o emailu: " + data.get(1) + " zalogował się.");
+                            new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator o emailu: " + data.get(1) + " zalogował się.");
                         } else {
                             list.add("false");
                             list.add("true");
                             list.add(Integer.toString(resultPassword.getInt("ID_user")));
-                            new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o emailu: " + data.get(1) + " zalogował się.");
+                            new LogsClients("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Klient o emailu: " + data.get(1) + " zalogował się.");
                         }
                         list.add(startPageMessage);
                     } else {
                         startPageMessage = "Użytkownik jest już zalogowany.";
                         list.addAll(fillLoginReturningData(startPageMessage, true));
-                        new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto o emailu: " + data.get(1) + ".");
+                        new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto o emailu: " + data.get(1) + ".");
                     }
                 } else {
                     list.add("false");
                     list.addAll(fillLoginReturningData(startPageMessage, true));
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto o emailu: " + data.get(1) + ".");
+                    new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto o emailu: " + data.get(1) + ".");
                 }
             } else {
                 list.addAll(fillLoginReturningData(startPageMessage, true));
-                new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto o emailu: " + data.get(1) + ".");
+                new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Nieudana próba logowania na konto o emailu: " + data.get(1) + ".");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -131,10 +139,10 @@ public class UserDao {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator changed the password of user with ID: " + data.get(2) + ".");
+            new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator zmienił haslo klienta o ID: " + data.get(2) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
     /**
@@ -149,10 +157,10 @@ public class UserDao {
             preparedState.executeUpdate();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator deleted a client with ID: " + data.get(1) + ".");
+            new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął klienta o ID: " + data.get(1) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -175,12 +183,12 @@ public class UserDao {
             String commit = "COMMIT";
             statement.executeUpdate(commit);
             if (Boolean.parseBoolean(data.get(6)))
-                new LogsAdmins("com.server.database.Database", "info", "[ " + new java.util.Date() + " ] " + "Administrator edited user data with ID: " + data.get(5) + ".");
+                new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator zedytował dane klienta o ID: " + data.get(5) + ".");
             else
-                new LogsClients("com.server.database.Database", "info", "[ " + new java.util.Date() + " ] " + "Client with ID: " + data.get(5) + " edited their data.");
+                new LogsClients("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Klient o ID: " + data.get(5) + " zedytował swoje dane.");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("com.server.database.Database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -199,7 +207,7 @@ public class UserDao {
             }
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -221,7 +229,7 @@ public class UserDao {
             }
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -253,14 +261,14 @@ public class UserDao {
                 String commit = "COMMIT";
                 statement.executeUpdate(commit);
                 if (data.get(6).equals("true")) {
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał klienta o emailu: " + data.get(4) + ".");
+                    new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał klienta o emailu: " + data.get(4) + ".");
                 }
-                new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Klient o emailu: " + data.get(4) + " zarejestrował się.");
+                new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Klient o emailu: " + data.get(4) + " zarejestrował się.");
             }
             emailPreparedState.close();
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
@@ -283,14 +291,14 @@ public class UserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 if (resultSet.getString("userRank").equals("admin"))
-                    new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator with email: " + data.get(1) + " logged out.");
+                    new LogsAdmins("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator o emailu: " + data.get(1) + " wylogował się.");
                 else
-                    new LogsClients("database", "info", "[ " + new java.util.Date() + " ] " + "Client with email: " + data.get(1) + " logged out.");
+                    new LogsClients("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Klient o emailu: " + data.get(1) + " wylogował się.");
             }
 
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -304,10 +312,10 @@ public class UserDao {
             statement.executeQuery(query);
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsServer("database", "info", "[ " + new java.util.Date() + " ] " + "Logged out everyone from the server.");
+            new LogsServer("UserDao", "info", "[ " + new java.util.Date() + " ] " + "Wylogowano wszystkich z serwera.");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -315,7 +323,7 @@ public class UserDao {
      * Retrieves from the database information whether the user is logged in
      * @return true if the user is logged in, false if not
      */
-    public List<String> getUserLogged(){
+    public List<String> getUserLogged() {
         List<String> list = new ArrayList<>();
         try {
             String query = "SELECT userLogged FROM users WHERE email = ?";
@@ -327,7 +335,23 @@ public class UserDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public List<String> countAllClients() {
+        List<String> list = new ArrayList<>();
+        try {
+            Statement statement = connection.createStatement();
+            String howManyClientsQuery = "SELECT COUNT(*) as clientsCount FROM users WHERE userRank = 'client'";
+            ResultSet resultHowManyClients = statement.executeQuery(howManyClientsQuery);
+            if (resultHowManyClients.next()) {
+                list.add(Integer.toString(resultHowManyClients.getInt("clientsCount")));
+            }
+        }catch (SQLException ex) {
+            System.out.println("Ex: " + ex);
+            new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }

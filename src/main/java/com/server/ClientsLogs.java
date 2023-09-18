@@ -277,7 +277,7 @@ public class ClientsLogs extends javax.swing.JFrame {
      */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
         dispose();
-        new ServerGUI().setVisible(true);
+        new Server().setVisible(true);
     }
 
     /**

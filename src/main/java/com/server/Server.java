@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * A class containing fields and methods for handling GUI construction and server technical aspects.
  */
-public class ServerGUI extends javax.swing.JFrame {
+public class Server extends javax.swing.JFrame {
     
     /**
      * An attribute representing a list of all server threads.
@@ -47,7 +47,7 @@ public class ServerGUI extends javax.swing.JFrame {
     /**
      * A constructor responsible for initializing the server application GUI.
      */
-    public ServerGUI() {
+    public Server() {
         initComponents();
     }
    
@@ -493,9 +493,9 @@ public class ServerGUI extends javax.swing.JFrame {
             new LogsServer("ServerGUI", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been started.");
-        ServerGUI serverGUI = new ServerGUI();
-        java.awt.EventQueue.invokeLater(() -> serverGUI.setVisible(true));
-        serverGUI.operate();
+        Server server = new Server();
+        java.awt.EventQueue.invokeLater(() -> server.setVisible(true));
+        server.operate();
     }
 
     /**
