@@ -45,7 +45,7 @@ This project was designed as a multithreaded client-server application. Client a
 
 ![Zrzut ekranu 2023-07-17 180828](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/4fbe0fed-6532-4204-8d11-6fdc1bbb7d75)
 ![Zrzut ekranu 2023-08-26 184137](https://github.com/codeCrafter8/Arkanoid/assets/126499182/6f9155c9-cae9-4638-b9e5-5911a7f5f7bf)
-![Zrzut ekranu 2023-07-17 180837](https://github.com/codeCrafter8/Arkanoid/assets/126499182/d98507d2-5c7c-4b29-9013-a7c292331587)
+![Zrzut ekranu 2023-07-17 180837](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/79d70db2-9e85-48c6-aea5-4dd4705c089b)
 
 ### Admin side
 
