@@ -1,64 +1,65 @@
-package com.server;
+package com.server.logs.gui;
 
 import com.client.utils.ColorUtils;
 import com.client.utils.DimensionUtils;
+import com.server.Server;
+import com.server.logs.LogsAdmins;
 import com.server.logs.LogsServer;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import javax.swing.*;
 
 /**
- * A class containing fields and methods for handling the GUI components related to server logs
+ * A class containing fields and methods handling GUI components related to client logs.
  */
-public class ServerLogs extends javax.swing.JFrame {
-
+public class ClientsLogs extends javax.swing.JFrame {
+    
     /**
-     * A constructor responsible for initializing the GUI
+     * A constructor responsible for GUI initialization.
      */
-    public ServerLogs() {
+    public ClientsLogs() {
         initComponents();
     }
 
     /**
-     * Sets the serverLogsList with log entries from the LogsServer.
+     * Sets the client logs list.
      */
     private void setLogsList() {
         DefaultListModel<String> defaultListModel = new DefaultListModel<>();
-        for (String log : LogsServer.logs) {
+        for (String log : LogsAdmins.logs) {
             defaultListModel.addElement(log);
         }
-        serverLogsList.setModel(defaultListModel);
+        clientsLogsList.setModel(defaultListModel);
+        clientsLogsScrollPane.setViewportView(clientsLogsList);
     }
 
     /**
-     * Initializes the graphical components used in the window
+     * Initializes the graphical components used in the window.
      */
     private void initComponents() {
         setWindowProperties();
         createMenuPanel();
         createServerPanel();
-        createOptionsPanel();
         setLabels();
+        createOptionsPanel();
         setButtons();
-        setLogsList();
         createLayout();
+        setLogsList();
     }
 
     /**
-     * Sets the properties of this application window.
-     * Configures the default close operation, title, preferred size, and background color.
+     * Sets properties for the main window.
      */
     private void setWindowProperties(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Logi Serwera");
+        setTitle("Logi Klientów");
         setPreferredSize(DimensionUtils.WINDOW_DIMENSION);
         getContentPane().setBackground(ColorUtils.BEIGE);
     }
 
     /**
-     * Creates and configures the menu panel for this application window.
-     * The menu panel contains the server information and additional options.
+     * Creates the menu panel and sets its layout.
      */
     private void createMenuPanel(){
         menuPanel.setBackground(ColorUtils.BROWN);
@@ -74,14 +75,13 @@ public class ServerLogs extends javax.swing.JFrame {
                         .addGroup(menuPanelLayout.createSequentialGroup()
                                 .addComponent(serverPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
 
     /**
-     * Creates and configures the server panel in this application window.
-     * The server panel displays server information, including a server icon and a label.
+     * Creates the server panel and sets its layout.
      */
     private void createServerPanel(){
         serverPanel.setBackground(ColorUtils.BROWN);
@@ -107,8 +107,24 @@ public class ServerLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Creates and configures the options panel in this application window.
-     * The options panel contains various buttons for managing the server and accessing logs.
+     * Sets properties for labels.
+     */
+    private void setLabels(){
+        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\server.png"));
+        serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
+        serverIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);
+        serverIconLabel.setPreferredSize(DimensionUtils.ICON_LABEL_DIMENSION);
+
+        serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
+        serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        serverLabel.setText("Serwer");
+
+        clientsLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
+        clientsLogsLabel.setText("Logi Klientów");
+    }
+
+    /**
+     * Creates the options panel and sets its layout.
      */
     private void createOptionsPanel(){
         optionsPanel.setBackground(ColorUtils.LIGHT_BROWN);
@@ -133,32 +149,13 @@ public class ServerLogs extends javax.swing.JFrame {
                                 .addGap(0, 0, 0)
                                 .addComponent(adminsLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(serverLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(serverLogsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
 
     /**
-     * Sets up the labels, including the server icon label,
-     * server label, and server logs label.
-     */
-    private void setLabels(){
-        serverIconLabel.setIcon(new javax.swing.ImageIcon("img\\server.png"));
-        serverIconLabel.setMaximumSize(DimensionUtils.ICON_LABEL_DIMENSION);
-        serverIconLabel.setMinimumSize(DimensionUtils.ICON_LABEL_DIMENSION);
-        serverIconLabel.setPreferredSize(DimensionUtils.ICON_LABEL_DIMENSION);
-
-        serverLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 20));
-        serverLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        serverLabel.setText("Serwer");
-
-        serverLogsLabel.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 22));
-        serverLogsLabel.setText("Logi Serwera");
-    }
-
-    /**
-     * Sets up the buttons, including the manage server button,
-     * clients logs button, admins logs button, and server logs button.
+     * Sets properties for buttons and defines their action listeners.
      */
     private void setButtons(){
         manageServerButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
@@ -178,9 +175,9 @@ public class ServerLogs extends javax.swing.JFrame {
         });
         manageServerButton.addActionListener(this::manageServerButtonActionPerformed);
 
-        clientsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
-        clientsLogsButton.setText("    Logi klientów");
-        clientsLogsButton.setBorder(null);
+        clientsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
+        clientsLogsButton.setText("   Logi klientów");
+        clientsLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.white));
         clientsLogsButton.setContentAreaFilled(false);
         clientsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clientsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -194,11 +191,9 @@ public class ServerLogs extends javax.swing.JFrame {
             else
                 clientsLogsButton.setForeground(null);
         });
-        clientsLogsButton.addActionListener(this::clientsLogsButtonActionPerformed);
 
         adminsLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
-        adminsLogsButton.setText("    Logi administratorów");
-        adminsLogsButton.setBorder(null);
+        adminsLogsButton.setText("Logi administratorów");
         adminsLogsButton.setContentAreaFilled(false);
         adminsLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         adminsLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -214,15 +209,12 @@ public class ServerLogs extends javax.swing.JFrame {
         });
         adminsLogsButton.addActionListener(this::adminsLogsButtonActionPerformed);
 
-        serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 16));
-        serverLogsButton.setText("   Logi serwera");
-        serverLogsButton.setBorder(javax.swing.BorderFactory.createLineBorder(Color.white));
+        serverLogsButton.setFont(new java.awt.Font("Segoe UI", Font.PLAIN, 16));
+        serverLogsButton.setText("Logi serwera");
         serverLogsButton.setContentAreaFilled(false);
         serverLogsButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         serverLogsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        serverLogsButton.setMaximumSize(new java.awt.Dimension(166, 24));
-        serverLogsButton.setMinimumSize(new java.awt.Dimension(166, 25));
-        serverLogsButton.setPreferredSize(new java.awt.Dimension(166, 25));
+        serverLogsButton.setPreferredSize(DimensionUtils.OPTION_BUTTON_DIMENSION);
         serverLogsButton.getModel().addChangeListener(e -> {
             ButtonModel model = (ButtonModel) e.getSource();
             if(model.isRollover()) {
@@ -232,12 +224,11 @@ public class ServerLogs extends javax.swing.JFrame {
             else
                 serverLogsButton.setForeground(null);
         });
+        serverLogsButton.addActionListener(this::serverLogsButtonActionPerformed);
     }
 
     /**
-     * Creates the layout for this application window.
-     * It uses GroupLayout for arranging the components, including the menu panel
-     * and the server logs list.
+     * Creates the overall layout of the main window.
      */
     private void createLayout(){
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -248,22 +239,22 @@ public class ServerLogs extends javax.swing.JFrame {
                                 .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(328, 328, 328)
-                                                .addComponent(serverLogsLabel))
+                                                .addGap(320, 320, 320)
+                                                .addComponent(clientsLogsLabel))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(67, 67, 67)
-                                                .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 88, Short.MAX_VALUE))
+                                                .addGap(65, 65, 65)
+                                                .addComponent(clientsLogsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(415, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(serverLogsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(clientsLogsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(serverLogsList, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(85, Short.MAX_VALUE))
+                                .addComponent(clientsLogsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -271,8 +262,19 @@ public class ServerLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Handles the click event of the manageServerButton
-     * @param evt The event generated when the button is clicked
+     * Handles the action when the serverLogsButton is clicked.
+     *
+     * @param evt The event that occurred (in this case, a button click).
+     */
+    private void serverLogsButtonActionPerformed(ActionEvent evt) {
+        dispose();
+        new ServerLogs().setVisible(true);
+    }
+
+    /**
+     * Handles the action when the manageServerButton is clicked.
+     *
+     * @param evt The event that occurred (in this case, a button click).
      */
     private void manageServerButtonActionPerformed(ActionEvent evt) {
         dispose();
@@ -280,8 +282,9 @@ public class ServerLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Handles the click event of the adminsLogsButton
-     * @param evt The event generated when the button is clicked
+     * Handles the action when the adminsLogsButton is clicked.
+     *
+     * @param evt The event that occurred (in this case, a button click).
      */
     private void adminsLogsButtonActionPerformed(ActionEvent evt) {
         dispose();
@@ -289,17 +292,9 @@ public class ServerLogs extends javax.swing.JFrame {
     }
 
     /**
-     * Handles the click event of the clientsLogsButton
-     * @param evt The event generated when the button is clicked
-     */
-    private void clientsLogsButtonActionPerformed(ActionEvent evt) {
-        dispose();
-        new ClientsLogs().setVisible(true);
-    }
-
-    /**
-     * Allows to run the window
-     * @param args Arguments passed during application launch
+     * Allows the window to be run as a standalone application.
+     *
+     * @param args Command-line arguments (if any) passed to the application.
      */
     public static void main(String[] args) {
         try {
@@ -311,66 +306,69 @@ public class ServerLogs extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ServerLogs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            new LogsServer("ServerLogs", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            java.util.logging.Logger.getLogger(ClientsLogs.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            new LogsServer("ClientsLogs", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
-        java.awt.EventQueue.invokeLater(() -> new ServerLogs().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ClientsLogs().setVisible(true));
     }
 
     /**
-     * A button for navigating to the administrators' logs tab
+     * A button for navigating to the administrators' logs tab.
      */
     private final javax.swing.JButton adminsLogsButton = new JButton();
 
     /**
-     * A button for navigating to the clients' logs tab
+     * A button for navigating to the clients' logs tab.
      */
     private final javax.swing.JButton clientsLogsButton = new JButton();
 
     /**
-     * A button for navigating to the server management tab
+     * A button for navigating to the server management tab.
      */
     private final javax.swing.JButton manageServerButton = new JButton();
 
     /**
-     * A button for navigating to the server logs tab
+     * A button for navigating to the server logs tab.
      */
     private final javax.swing.JButton serverLogsButton = new JButton();
 
     /**
-     * A list containing server logs
+     * A list of client logs.
      */
-    private final javax.swing.JList<String> serverLogsList = new JList<>();
+    private final javax.swing.JList<String> clientsLogsList = new JList<>();
+
     /**
-     * A menu panel in the main application window.
-     * This panel contains the server information and additional options for the application.
+     * A menu panel that contains various options for the application.
      */
     private final JPanel menuPanel = new JPanel();
 
     /**
-     * A server panel displaying server information.
-     * This panel includes a server icon and a label describing the server.
+     * A panel that displays server information.
      */
     private final JPanel serverPanel = new JPanel();
 
     /**
-     * A label displaying the server icon in the server panel.
+     * A label that displays the server icon.
      */
     private final JLabel serverIconLabel = new JLabel();
 
     /**
-     * A label displaying the server text in the server panel.
+     * A label that displays the server name or description.
      */
     private final JLabel serverLabel = new JLabel();
 
     /**
-     * An options panel containing additional application options.
-     * This panel includes buttons for managing the server and accessing various logs.
+     * A panel that contains options for the application.
      */
     private final JPanel optionsPanel = new JPanel();
 
     /**
-     * A label for the server logs section of the application.
+     * A scroll pane that wraps the logs for clients.
      */
-    private final JLabel serverLogsLabel = new JLabel();
+    private final JScrollPane clientsLogsScrollPane = new JScrollPane();
+
+    /**
+     * A label that describes the displayed logs for clients.
+     */
+    private final JLabel clientsLogsLabel = new JLabel();
 }
