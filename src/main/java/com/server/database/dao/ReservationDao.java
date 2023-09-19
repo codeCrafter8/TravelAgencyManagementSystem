@@ -8,12 +8,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that performs operations on reservations table
+ */
 public class ReservationDao {
+
     /**
      * An attribute allowing connection to the database
      */
     Connection connection;
+
+    /**
+     * An attribute being a list containing data received from the server
+     */
     List<String> data;
+
+    /**
+     * A constructor allowing creating an instance of the class
+     * @param data List containing data received from the server
+     */
     public ReservationDao(List<String> data){
         try {
             connection = new DBContext().getConnection();
@@ -22,6 +35,7 @@ public class ReservationDao {
         }
         this.data = data;
     }
+
     /**
      * Adds a new reservation to the database
      */
@@ -43,14 +57,16 @@ public class ReservationDao {
             updateTripsPreparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator added a reservation for trip ID: " + Integer.parseInt(data.get(1)) + ".");
+            new LogsAdmins("ReservationDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator dodał rezerwację wycieczki o ID: " + Integer.parseInt(data.get(1)) + ".");
         } catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
-     * Retrieves reservations data from the database
+     * Retrieves reservation data from the database
+     * @return List of reservation data
      */
     public List<String> findReservation(){
         List<String> list = new ArrayList<>();
@@ -75,10 +91,11 @@ public class ReservationDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
+
     /**
      * Deletes a selected reservation from the database
      */
@@ -106,15 +123,16 @@ public class ReservationDao {
             updateTripsPreparedStatement.close();
             String commit = "COMMIT";
             statement.executeUpdate(commit);
-            new LogsAdmins("database", "info", "[ " + new java.util.Date() + " ] " + "Administrator deleted a reservation with ID: " + data.get(1) + ".");
+            new LogsAdmins("ReservationDao", "info", "[ " + new java.util.Date() + " ] " + "Administrator usunął rezerwację o ID: " + data.get(1) + ".");
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
     /**
      * Retrieves all reservations from the database
+     * @return List of reservations data
      */
     public List<String> findAllReservations() {
         String departure;
@@ -141,10 +159,15 @@ public class ReservationDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
+
+    /**
+     * Retrieves the reservations count
+     * @return List of reservations count
+     */
     public List<String> countAllReservations() {
         List<String> list = new ArrayList<>();
         try{
@@ -156,10 +179,15 @@ public class ReservationDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
+
+    /**
+     * Retrieves income data from the database
+     * @return List of income data
+     */
     public List<String> countIncome() {
         List<String> list = new ArrayList<>();
         try{
@@ -176,11 +204,15 @@ public class ReservationDao {
             list.add(Integer.toString(incomeQuantity));
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }
 
+    /**
+     * Retrieves all user reservations from the database
+     * @return List of user reservations data
+     */
     public List<String> findUserReservations() {
         List<String> list = new ArrayList<>();
         try {
@@ -213,7 +245,7 @@ public class ReservationDao {
             }
         }catch (SQLException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("database", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("ReservationDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
         return list;
     }

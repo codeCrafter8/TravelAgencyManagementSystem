@@ -26,9 +26,25 @@ public class DatabaseHandler {
      * An attribute being a list containing data returned to the server
      */
     protected List<String> returningData = new ArrayList<>();
+
+    /**
+     * An attribute being a userDao object
+     */
     private final UserDao userDao;
+
+    /**
+     * An attribute being a tripDao object
+     */
     private final TripDao tripDao;
+
+    /**
+     * An attribute being a reservationDao object
+     */
     private final ReservationDao reservationDao;
+
+    /**
+     * An attribute being a numberDao object
+     */
     private final NumberDao numberDao;
 
     /**
@@ -53,6 +69,7 @@ public class DatabaseHandler {
     public List<String> getReturningData(){
         return returningData;
     }
+
     /**
      * Allows initializing connection parameters with the database and choosing the appropriate operation
      */

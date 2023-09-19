@@ -1,17 +1,31 @@
 package com.server.database.dao;
 
 import com.server.database.DBContext;
+import com.server.logs.LogsServer;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that performs operations on numbers table
+ */
 public class NumberDao {
+
     /**
      * An attribute allowing connection to the database
      */
     Connection connection;
+
+    /**
+     * An attribute being a list containing data received from the server
+     */
     List<String> data;
+
+    /**
+     * A constructor allowing creating an instance of the class
+     * @param data List containing data received from the server
+     */
     public NumberDao(List<String> data){
         try {
             connection = new DBContext().getConnection();
@@ -22,6 +36,7 @@ public class NumberDao {
     }
     /**
      * Retrieves contact numbers of customers from the database
+     * @return List of numbers
      */
     public List<String> getNumbers() {
         List<String> list = new ArrayList<>();
@@ -33,8 +48,9 @@ public class NumberDao {
                 list.add(resultSet.getString("phoneNumber"));
             }
             resultSet.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException ex) {
+            new LogsServer("NumberDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            System.out.println(ex.getMessage());
         }
         return list;
     }
@@ -53,8 +69,9 @@ public class NumberDao {
             String commit = "COMMIT";
             statement.executeUpdate(commit);
         }
-        catch(SQLException e){
-            System.out.println(e.getMessage());
+        catch(SQLException ex){
+            new LogsServer("NumberDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            System.out.println(ex.getMessage());
         }
     }
 }

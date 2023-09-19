@@ -9,12 +9,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that performs operations on users table
+ */
 public class UserDao {
+
     /**
      * An attribute allowing connection to the database
      */
     Connection connection;
+
+    /**
+     * An attribute being a list containing data received from the server
+     */
     List<String> data;
+
+    /**
+     * A constructor allowing creating an instance of the class
+     * @param data List containing data received from the server
+     */
     public UserDao(List<String> data) {
         try {
             connection = new DBContext().getConnection();
@@ -23,8 +36,10 @@ public class UserDao {
         }
         this.data = data;
     }
+
     /**
      * Retrieves user data from the database
+     * @return List of user data
      */
     public List<String> findUser() {
         List<String> list = new ArrayList<>();
@@ -49,6 +64,7 @@ public class UserDao {
 
     /**
      * Allows a single user to log in
+     * @return List of login data
      */
     public List<String> login() {
         List<String> list = new ArrayList<>();
@@ -113,6 +129,7 @@ public class UserDao {
      * Fills the list containing data returned to the server
      * @param startPageMessage message sent to the StartPage class
      * @param isExisting information whether the user already exists in the database
+     * @return List of login data
      */
     public List<String> fillLoginReturningData(String startPageMessage, boolean isExisting) {
         List<String> data = new ArrayList<>();
@@ -126,6 +143,7 @@ public class UserDao {
         data.add(startPageMessage);
         return data;
     }
+
     /**
      * Saves the new password of an edited user to the database
      */
@@ -145,6 +163,7 @@ public class UserDao {
             new LogsServer("UserDao", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
+
     /**
      * Deletes a selected user from the database
      */
@@ -194,6 +213,7 @@ public class UserDao {
 
     /**
      * Retrieves the administrator's first name from the database
+     * @return List of admin name data
      */
     public List<String> findAdminName() {
         List<String> list = new ArrayList<>();
@@ -211,8 +231,10 @@ public class UserDao {
         }
         return list;
     }
+
     /**
      * Retrieves all clients from the database
+     * @return List of clients data
      */
     public List<String> findAllClients() {
         List<String> list = new ArrayList<>();
@@ -233,8 +255,10 @@ public class UserDao {
         }
         return list;
     }
+
     /**
      * Adds a new client to the database
+     * @return List of information if user already exists
      */
     public List<String> addUser() {
         List<String> list = new ArrayList<>();
@@ -321,7 +345,7 @@ public class UserDao {
 
     /**
      * Retrieves from the database information whether the user is logged in
-     * @return true if the user is logged in, false if not
+     * @return List of information if user is logged
      */
     public List<String> getUserLogged() {
         List<String> list = new ArrayList<>();
@@ -340,6 +364,10 @@ public class UserDao {
         return list;
     }
 
+    /**
+     * Retrieves the clients count
+     * @return List of clients count
+     */
     public List<String> countAllClients() {
         List<String> list = new ArrayList<>();
         try {

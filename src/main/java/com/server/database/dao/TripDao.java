@@ -8,12 +8,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class that performs operations on trips table
+ */
 public class TripDao {
+
     /**
      * An attribute allowing connection to the database
      */
     Connection connection;
+
+    /**
+     * An attribute being a list containing data received from the server
+     */
     List<String> data;
+
+    /**
+     * A constructor allowing creating an instance of the class
+     * @param data List containing data received from the server
+     */
     public TripDao(List<String> data){
         try {
             connection = new DBContext().getConnection();
@@ -22,6 +35,7 @@ public class TripDao {
         }
         this.data = data;
     }
+
     /**
      * Adds a new trip to the database
      */
@@ -97,6 +111,7 @@ public class TripDao {
 
     /**
      * Retrieves trip data from the database
+     * @return List of user trip data
      */
     public List<String> findTrip(){
         List<String> list = new ArrayList<>();
@@ -137,6 +152,7 @@ public class TripDao {
 
     /**
      * Retrieves available travel destinations from the database
+     * @return List of travel destinations
      */
     public List<String> getDestination() {
         List<String> list = new ArrayList<>();
@@ -157,6 +173,7 @@ public class TripDao {
 
     /**
      * Retrieves available departure/arrival cities from the database
+     * @return List of user trip departures
      */
     public List<String> getDeparture() {
         List<String> list = new ArrayList<>();
@@ -177,6 +194,7 @@ public class TripDao {
 
     /**
      * Retrieves available trips from the database
+     * @return List of unreserved trips data
      */
     public List<String> findUnreservedTrips() {
         List<String> list = new ArrayList<>();
@@ -209,8 +227,10 @@ public class TripDao {
         }
         return list;
     }
+
     /**
      * Retrieves all trips from the database
+     * @return List of trips data
      */
     public List<String> findAllTrips() {
         List<String> list = new ArrayList<>();
@@ -232,6 +252,10 @@ public class TripDao {
         return list;
     }
 
+    /**
+     * Retrieves the trips count
+     * @return List of trips count
+     */
     public List<String> countAllTrips() {
         List<String> list = new ArrayList<>();
         try {
