@@ -110,7 +110,7 @@ public class Server extends javax.swing.JFrame {
                     }
                     dispose();
                 } catch (Exception ex) {
-                    new LogsServer("ServerGUI", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+                    new LogsServer("Server", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
                     dispose();
                 }
             }
@@ -429,9 +429,9 @@ public class Server extends javax.swing.JFrame {
         if (running) {
             setRunning(false);
             setRunning(true);
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been restarted.");
+            new LogsServer("Server", "info", "[ " + new java.util.Date() + " ] " + "Serwer został zrestartowany.");
         } else {
-            JOptionPane.showMessageDialog(null, "The server is not running.", "Information", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Serwer nie jest uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -442,9 +442,9 @@ public class Server extends javax.swing.JFrame {
     private void stopServerButtonActionPerformed(ActionEvent evt) {
         if (running) {
             setRunning(false);
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been stopped.");
+            new LogsServer("Server", "info", "[ " + new java.util.Date() + " ] " + "Serwer został zatrzymany.");
         } else {
-            JOptionPane.showMessageDialog(null, "The server is not running.", "Information", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Serwer nie jest uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -455,9 +455,9 @@ public class Server extends javax.swing.JFrame {
     private void startServerButtonActionPerformed(ActionEvent evt) {
         if (!running) {
             setRunning(true);
-            new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been started.");
+            new LogsServer("Server", "info", "[ " + new java.util.Date() + " ] " + "Server has been started.");
         } else {
-            JOptionPane.showMessageDialog(null, "The server is already running.", "Information", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Serwer jest już uruchomiony.", "Informacja", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -475,7 +475,7 @@ public class Server extends javax.swing.JFrame {
             }
         } catch (IOException ex) {
             System.out.println("Ex: " + ex);
-            new LogsServer("ServerGUI", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("Server", "fatal", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
     }
 
@@ -493,9 +493,9 @@ public class Server extends javax.swing.JFrame {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
                  UnsupportedLookAndFeelException ex) {
-            new LogsServer("ServerGUI", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
+            new LogsServer("Server", "error", "[ " + new java.util.Date() + " ] " + ex.getMessage());
         }
-        new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "Server has been started.");
+        new LogsServer("Server", "info", "[ " + new java.util.Date() + " ] " + "Serwer został uruchomiony.");
         Server server = new Server();
         java.awt.EventQueue.invokeLater(() -> server.setVisible(true));
         server.operate();

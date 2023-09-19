@@ -92,7 +92,7 @@ class BackgroundHandler extends SwingWorker<Void, Void> implements Serializable 
         Thread thread = new Thread(new ClientThread());
         threads.add(thread);
         thread.start();
-        new LogsServer("ServerGUI", "info", "[ " + new java.util.Date() + " ] " + "New thread named " + thread.getName() + " has been created.");
+        new LogsServer("Background", "info", "[ " + new java.util.Date() + " ] " + "Nowy wątek o nazwie " + thread.getName() + " został utworzony.");
         return null;
     }
 }
