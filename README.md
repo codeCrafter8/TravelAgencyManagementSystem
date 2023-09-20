@@ -9,7 +9,8 @@
 
 
 ## General Information
-This project was designed as a multithreaded client-server application. Client and server are connecting by sockets. It is a fully functional system which allows to manage a travel agency both from a client and admin side.
+This project was designed as a multithreaded client-server application. Client and server are connecting by sockets. The app supports connections to multiple clients at the same time 
+     due to multithreading. It is a fully functional system which allows to manage a travel agency both from a client and admin side.
 
 
 ## Technologies Used
