@@ -51,11 +51,11 @@ The app supports connections to multiple clients at the same time
 ### Client side
 
 ![Zrzut ekranu 2023-07-17 180828](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/4fbe0fed-6532-4204-8d11-6fdc1bbb7d75)
-![Zrzut ekranu 2023-08-26 184137](https://github.com/codeCrafter8/Arkanoid/assets/126499182/6f9155c9-cae9-4638-b9e5-5911a7f5f7bf)
+![Zrzut ekranu 2023-08-26 184137](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/fa5a640e-6790-4339-802e-c5e28042b42a)
 ![Zrzut ekranu 2023-07-17 180837](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/79d70db2-9e85-48c6-aea5-4dd4705c089b)
 
 ### Admin side
+![Zrzut ekranu 2023-07-17 180655](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/ef0e0b81-1751-4459-a3d1-7dbc925f255c)
+![Zrzut ekranu 2023-07-17 180718](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/cf88a4d4-1284-472c-95f5-55bedd00fc4c)
 
-![Zrzut ekranu 2023-07-17 180655](https://github.com/codeCrafter8/Arkanoid/assets/126499182/05d88244-17e5-48c1-a887-b63e7523a13f)
-![Zrzut ekranu 2023-07-17 180718](https://github.com/codeCrafter8/Arkanoid/assets/126499182/c61e415b-d20f-4fac-8ed7-aebe5f887954)
   
