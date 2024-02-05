@@ -46,14 +46,13 @@ The app supports connections to multiple clients at the same time
 
 ## Screenshots
   
- ![Zrzut ekranu 2023-07-17 180744](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/23d892e6-f70d-4a73-be70-fd76a509664b)
+ ![Zrzut ekranu 2023-07-17 180744](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/afab7aeb-90ad-47bd-848c-416f2ffbc97a)
 
 ### Client side
 
-![Zrzut ekranu 2023-07-17 180828](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/4fbe0fed-6532-4204-8d11-6fdc1bbb7d75)
+![Zrzut ekranu 2023-08-26 160922](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/46bf03d5-68ff-40af-94c3-5cc8fac969ea)
 ![Zrzut ekranu 2023-08-26 184137](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/fa5a640e-6790-4339-802e-c5e28042b42a)
-![Zrzut ekranu 2023-07-17 180837](https://github.com/codeCrafter8/TravelAgencyManagementSystem2/assets/126499182/79d70db2-9e85-48c6-aea5-4dd4705c089b)
-
+![Zrzut ekranu 2023-07-17 180837](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/8898b041-674f-42b6-9eac-6cd8eed92187)
 ### Admin side
 ![Zrzut ekranu 2023-07-17 180655](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/ef0e0b81-1751-4459-a3d1-7dbc925f255c)
 ![Zrzut ekranu 2023-07-17 180718](https://github.com/codeCrafter8/TravelAgencyManagementSystem/assets/126499182/cf88a4d4-1284-472c-95f5-55bedd00fc4c)
